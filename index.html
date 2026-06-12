@@ -3,1814 +3,831 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GlobalCompass — Your Path to International Education</title>
-  <meta name="description" content="GlobalCompass helps students navigate international curricula, find the right schools, and chart a course to top universities worldwide." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet" />
-
+  <title>Global Compass — Education Worldwide</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet" />
   <style>
-    /* ─── Reset & Base ─────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
-      --navy:       #1B3A7A;
-      --navy-deep:  #122866;
-      --navy-mid:   #24509E;
-      --navy-light: #2D6FD4;
-      --yellow:     #F5C842;
-      --yellow-dk:  #D9A800;
-      --yellow-lt:  #FDE99A;
-      --white:      #FFFFFF;
-      --off-white:  #F7F9FC;
-      --gray-100:   #EEF1F7;
-      --gray-200:   #D5DCE8;
-      --gray-400:   #8A99B3;
-      --gray-600:   #4A5568;
-      --gray-800:   #1E293B;
-      --text:       #1A2845;
-      --font:       'Montserrat', sans-serif;
-      --max-w:      1200px;
-      --radius:     12px;
-      --radius-sm:  6px;
-      --shadow-sm:  0 2px 8px rgba(27,58,122,0.08);
-      --shadow-md:  0 6px 24px rgba(27,58,122,0.12);
-      --shadow-lg:  0 16px 48px rgba(27,58,122,0.18);
-      --transition: 0.25s cubic-bezier(0.4,0,0.2,1);
+      --royal: #1B3A7A;
+      --royal-dark: #112653;
+      --royal-mid: #1e4491;
+      --gold: #F5C842;
+      --gold-dim: #c9a22e;
+      --white: #ffffff;
+      --off-white: #F7F6F2;
+      --text-dark: #1a1a2e;
+      --text-mid: #4a4a6a;
+      --text-light: #8888aa;
     }
+
     html { scroll-behavior: smooth; }
-    body {
-      font-family: var(--font);
-      color: var(--text);
-      background: var(--white);
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
-    a { color: inherit; text-decoration: none; }
-    img { display: block; max-width: 100%; }
-    ul { list-style: none; }
-    button, input, select, textarea {
-      font-family: var(--font);
-      outline: none;
-    }
-    button:focus-visible, a:focus-visible, input:focus-visible {
-      outline: 3px solid var(--yellow);
-      outline-offset: 2px;
-    }
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+    body { font-family: 'Montserrat', sans-serif; background: var(--off-white); color: var(--text-dark); overflow-x: hidden; }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--royal);
+      position: sticky; top: 0; z-index: 900;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px;
+      height: 64px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.3);
     }
 
-    /* ─── Layout helpers ───────────────────────────────────────── */
-    .container { max-width: var(--max-w); margin: 0 auto; padding: 0 24px; }
-    .section { padding: 96px 0; }
-    .section-sm { padding: 64px 0; }
-    .eyebrow {
-      display: inline-block;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.14em;
+    .nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+
+    /* Globe SVG */
+    .globe-wrap { width: 42px; height: 42px; flex-shrink: 0; }
+
+    .wordmark { display: flex; flex-direction: column; gap: 1px; }
+    .wordmark-top {
+      display: flex; align-items: center; gap: 6px;
+    }
+    .wordmark-rule { height: 1px; background: var(--gold); opacity: 0.6; }
+    .wordmark-rule-left { width: 18px; }
+    .wordmark-rule-right { width: 18px; }
+    .wm-global {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300; font-size: 11px;
+      letter-spacing: 0.35em; color: rgba(255,255,255,0.75);
       text-transform: uppercase;
-      color: var(--navy-mid);
-      margin-bottom: 12px;
     }
-    .eyebrow--light { color: var(--yellow-lt); }
-    h1,h2,h3,h4 { line-height: 1.18; }
+    .wm-compass-row { display: flex; align-items: baseline; gap: 0; }
+    .wm-compass {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800; font-size: 22px;
+      letter-spacing: 0.04em; color: var(--white);
+      text-transform: uppercase; line-height: 1;
+    }
+    .wm-compass .gold-o { color: var(--gold); }
+    .wm-tagline {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300; font-size: 8.5px;
+      letter-spacing: 0.25em; color: rgba(255,255,255,0.5);
+      text-transform: uppercase; margin-top: 1px;
+    }
 
-    /* ─── Navigation ───────────────────────────────────────────── */
-    .nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 1000;
-      background: rgba(27,58,122,0.96);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      transition: box-shadow var(--transition);
+    .nav-links { display: flex; align-items: center; gap: 4px; }
+    .nav-item { position: relative; }
+    .nav-btn {
+      background: none; border: none; cursor: pointer;
+      font-family: 'Montserrat', sans-serif; font-weight: 500; font-size: 13px;
+      color: rgba(255,255,255,0.85); padding: 8px 14px; border-radius: 4px;
+      letter-spacing: 0.02em; transition: color .2s, background .2s;
+      display: flex; align-items: center; gap: 5px;
     }
-    .nav.scrolled { box-shadow: 0 4px 32px rgba(0,0,0,0.25); }
-    .nav__inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 68px;
-    }
-    .nav__logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 800;
-      font-size: 1.25rem;
-      color: var(--white);
-      letter-spacing: -0.02em;
-    }
-    .nav__logo-mark {
-      width: 36px; height: 36px;
-      background: var(--yellow);
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .nav__logo-mark svg { width: 22px; height: 22px; }
-    .nav__logo span { color: var(--yellow); }
-    .nav__links {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .nav__links a {
-      color: rgba(255,255,255,0.82);
-      font-size: 0.875rem;
-      font-weight: 500;
-      padding: 8px 14px;
-      border-radius: var(--radius-sm);
-      transition: color var(--transition), background var(--transition);
-    }
-    .nav__links a:hover {
-      color: var(--white);
-      background: rgba(255,255,255,0.1);
-    }
-    .nav__cta {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-family: var(--font);
-      font-weight: 600;
-      font-size: 0.9rem;
-      cursor: pointer;
-      border: none;
-      border-radius: var(--radius-sm);
-      transition: all var(--transition);
-      white-space: nowrap;
-      padding: 10px 22px;
-    }
-    .btn--primary {
-      background: var(--yellow);
-      color: var(--navy-deep);
-    }
-    .btn--primary:hover { background: var(--yellow-dk); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(245,200,66,0.4); }
-    .btn--outline {
-      background: transparent;
-      color: var(--white);
-      border: 1.5px solid rgba(255,255,255,0.4);
-    }
-    .btn--outline:hover { border-color: var(--white); background: rgba(255,255,255,0.08); }
-    .btn--navy {
-      background: var(--navy);
-      color: var(--white);
-    }
-    .btn--navy:hover { background: var(--navy-deep); transform: translateY(-1px); box-shadow: var(--shadow-md); }
-    .btn--lg { padding: 14px 32px; font-size: 1rem; border-radius: var(--radius); }
+    .nav-btn:hover { color: var(--gold); background: rgba(255,255,255,0.07); }
+    .nav-btn .caret { font-size: 9px; opacity: 0.6; transition: transform .2s; }
+    .nav-item:hover .caret { transform: rotate(180deg); }
 
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      padding: 6px;
-      background: none;
-      border: none;
+    .dropdown {
+      display: none; position: absolute; top: calc(100% + 4px); left: 0;
+      background: var(--white); border-radius: 8px; min-width: 200px;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.18); overflow: hidden;
+      border-top: 3px solid var(--gold);
     }
-    .hamburger span {
-      display: block; width: 24px; height: 2px;
-      background: var(--white);
-      border-radius: 2px;
-      transition: all var(--transition);
+    .nav-item:hover .dropdown { display: block; }
+    .dropdown a {
+      display: block; padding: 11px 18px; text-decoration: none;
+      font-size: 13px; font-weight: 500; color: var(--text-dark);
+      transition: background .15s, color .15s;
+      border-bottom: 1px solid rgba(0,0,0,0.04);
     }
-    .mobile-menu {
-      display: none;
-      position: fixed;
-      inset: 68px 0 0;
-      background: var(--navy-deep);
-      z-index: 999;
-      padding: 24px;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .mobile-menu.open { display: flex; }
-    .mobile-menu a {
-      color: rgba(255,255,255,0.88);
-      font-size: 1.1rem;
-      font-weight: 500;
-      padding: 14px 16px;
-      border-radius: var(--radius-sm);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-    }
-    .mobile-menu a:hover { background: rgba(255,255,255,0.08); color: var(--white); }
-    .mobile-menu .btn { margin-top: 16px; width: 100%; justify-content: center; }
+    .dropdown a:hover { background: var(--off-white); color: var(--royal); }
 
-    /* ─── Hero ─────────────────────────────────────────────────── */
+    .nav-right { display: flex; align-items: center; gap: 10px; }
+    .btn-pro {
+      background: var(--gold); color: var(--royal-dark);
+      border: none; cursor: pointer;
+      font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 12px;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 8px 18px; border-radius: 4px;
+      transition: transform .15s, box-shadow .15s;
+    }
+    .btn-pro:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(245,200,66,0.4); }
+    .btn-sign {
+      background: none; border: 1px solid rgba(255,255,255,0.3); cursor: pointer;
+      font-family: 'Montserrat', sans-serif; font-weight: 500; font-size: 12px;
+      color: rgba(255,255,255,0.8); padding: 7px 16px; border-radius: 4px;
+      transition: border-color .2s, color .2s;
+    }
+    .btn-sign:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ── HERO ── */
     .hero {
-      min-height: 100vh;
-      background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 45%, var(--navy-mid) 100%);
-      position: relative;
-      display: flex;
-      align-items: center;
-      overflow: hidden;
-      padding: 120px 0 80px;
+      background: linear-gradient(145deg, var(--royal-dark) 0%, var(--royal) 45%, #1e4a9e 100%);
+      min-height: 580px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 80px 40px 60px; text-align: center;
+      position: relative; overflow: hidden;
     }
-    .hero__bg {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 80%, rgba(245,200,66,0.07) 0%, transparent 70%);
       pointer-events: none;
     }
-    /* Globe grid lines background */
-    .hero__grid {
-      position: absolute;
-      inset: -20%;
-      background-image:
-        radial-gradient(ellipse 80% 50% at 70% 50%, rgba(245,200,66,0.06) 0%, transparent 60%),
-        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-      background-size: 100% 100%, 60px 60px, 60px 60px;
+    .hero-eyebrow {
+      font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 11px;
+      letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 18px;
     }
-    .hero__orb {
-      position: absolute;
-      border-radius: 50%;
+    .hero-eyebrow em { font-style: normal; text-transform: lowercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.6); }
+    .hero h1 {
+      font-family: 'Playfair Display', serif; font-weight: 700;
+      font-size: clamp(36px, 5vw, 62px); line-height: 1.15;
+      color: var(--white); max-width: 760px; margin-bottom: 10px;
     }
-    .hero__orb--1 {
-      width: 600px; height: 600px;
-      right: -100px; top: -100px;
-      background: radial-gradient(circle, rgba(245,200,66,0.12) 0%, transparent 70%);
-    }
-    .hero__orb--2 {
-      width: 400px; height: 400px;
-      left: -120px; bottom: -80px;
-      background: radial-gradient(circle, rgba(45,111,212,0.3) 0%, transparent 70%);
-    }
-    .hero__content {
-      position: relative;
-      z-index: 1;
-      max-width: 640px;
-    }
-    .hero__badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(245,200,66,0.15);
-      border: 1px solid rgba(245,200,66,0.3);
-      border-radius: 50px;
-      padding: 6px 16px 6px 8px;
-      margin-bottom: 28px;
-    }
-    .hero__badge-dot {
-      width: 8px; height: 8px;
-      background: var(--yellow);
-      border-radius: 50%;
-      animation: pulse 2s infinite;
-    }
-    .hero__badge span {
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--yellow-lt);
-      letter-spacing: 0.04em;
-    }
-    @keyframes pulse {
-      0%,100% { opacity: 1; transform: scale(1); }
-      50%      { opacity: 0.6; transform: scale(1.3); }
-    }
-    .hero__headline {
-      font-size: clamp(2.6rem, 5.5vw, 4rem);
-      font-weight: 900;
-      color: var(--white);
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      margin-bottom: 24px;
-    }
-    .hero__headline em {
-      font-style: normal;
-      color: var(--yellow);
-      position: relative;
-    }
-    .hero__headline em::after {
-      content: '';
-      position: absolute;
-      bottom: 2px; left: 0; right: 0;
-      height: 3px;
-      background: var(--yellow);
-      opacity: 0.4;
-      border-radius: 2px;
-    }
-    .hero__sub {
-      font-size: 1.15rem;
-      font-weight: 400;
-      color: rgba(255,255,255,0.72);
-      line-height: 1.7;
-      margin-bottom: 40px;
-      max-width: 520px;
-    }
-    .hero__actions {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-    .hero__stats {
-      display: flex;
-      gap: 40px;
-      margin-top: 56px;
-      padding-top: 40px;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      flex-wrap: wrap;
-    }
-    .hero__stat-val {
-      font-size: 2rem;
-      font-weight: 800;
-      color: var(--white);
-      letter-spacing: -0.03em;
-      line-height: 1;
-    }
-    .hero__stat-val span { color: var(--yellow); }
-    .hero__stat-label {
-      font-size: 0.78rem;
-      font-weight: 500;
-      color: rgba(255,255,255,0.5);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin-top: 4px;
+    .hero h1 em { font-style: italic; color: var(--gold); }
+    .hero-sub {
+      font-family: 'Playfair Display', serif; font-style: italic;
+      font-size: clamp(18px, 2.5vw, 26px); color: rgba(255,255,255,0.7);
+      margin-bottom: 36px;
     }
 
-    /* Hero visual (compass card) */
-    .hero__visual {
-      position: absolute;
-      right: 0; top: 0; bottom: 0;
-      width: 48%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 120px 40px 80px;
-      pointer-events: none;
+    /* Search */
+    .search-wrap {
+      display: flex; gap: 0; max-width: 600px; width: 100%;
+      border: 2px solid var(--gold); border-radius: 6px;
+      overflow: hidden; background: var(--white);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
     }
-    .hero__compass-card {
-      background: rgba(255,255,255,0.06);
-      backdrop-filter: blur(16px);
-      border: 1px solid rgba(255,255,255,0.14);
-      border-radius: 20px;
-      padding: 32px;
-      width: 100%;
-      max-width: 380px;
-      pointer-events: auto;
-      box-shadow: 0 24px 64px rgba(0,0,0,0.3);
-      animation: floatCard 6s ease-in-out infinite;
+    .search-wrap input {
+      flex: 1; border: none; outline: none; padding: 14px 20px;
+      font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 500;
+      color: var(--text-dark); background: var(--white);
     }
-    @keyframes floatCard {
-      0%,100% { transform: translateY(0); }
-      50%      { transform: translateY(-12px); }
+    .search-wrap input::placeholder { color: var(--text-light); }
+    .search-wrap button {
+      background: var(--gold); border: none; cursor: pointer; padding: 14px 24px;
+      font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 13px;
+      letter-spacing: 0.06em; color: var(--royal-dark); text-transform: uppercase;
+      transition: background .2s;
     }
-    .compass-card__header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 24px;
+    .search-wrap button:hover { background: var(--gold-dim); }
+    .hero-hint {
+      margin-top: 14px; font-size: 11.5px; color: rgba(255,255,255,0.4);
+      letter-spacing: 0.05em;
     }
-    .compass-card__label {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--yellow);
+    .hero-hint a { color: var(--gold); text-decoration: none; }
+
+    /* ── MISSION ── */
+    .mission {
+      background: var(--white); padding: 56px 40px; text-align: center;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
     }
-    .compass-card__badge {
-      background: rgba(245,200,66,0.18);
-      color: var(--yellow);
-      font-size: 0.7rem;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 50px;
+    .mission p {
+      font-family: 'Playfair Display', serif; font-size: clamp(20px, 2.8vw, 30px);
+      font-weight: 400; line-height: 1.5; color: var(--royal);
+      max-width: 780px; margin: 0 auto;
     }
-    .compass-card__title {
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: var(--white);
-      margin-bottom: 6px;
-    }
-    .compass-card__sub {
-      font-size: 0.82rem;
-      color: rgba(255,255,255,0.55);
+    .mission p span { color: var(--gold-dim); font-weight: 600; }
+    .mission-line {
+      display: flex; align-items: center; justify-content: center; gap: 16px;
       margin-bottom: 20px;
     }
-    .compass-card__track {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+    .mission-line-rule { height: 2px; width: 48px; background: var(--gold); }
+    .mission-label {
+      font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+      font-weight: 600; color: var(--text-light);
     }
-    .track-item {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: rgba(255,255,255,0.06);
-      border-radius: 8px;
-      padding: 10px 14px;
-    }
-    .track-item__icon {
-      width: 32px; height: 32px;
-      border-radius: 8px;
-      background: rgba(245,200,66,0.2);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1rem;
-      flex-shrink: 0;
-    }
-    .track-item__name {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--white);
-    }
-    .track-item__detail {
-      font-size: 0.72rem;
-      color: rgba(255,255,255,0.45);
-    }
-    .track-item__arrow {
-      margin-left: auto;
-      color: rgba(255,255,255,0.3);
-      font-size: 0.8rem;
-    }
-    .compass-card__divider { height: 1px; background: rgba(255,255,255,0.08); margin: 16px 0; }
-    .compass-card__match {
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .match-label { font-size: 0.75rem; color: rgba(255,255,255,0.5); font-weight: 500; }
-    .match-bar {
-      flex: 1;
-      height: 4px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 2px;
-      margin: 0 10px;
-      overflow: hidden;
-    }
-    .match-bar__fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--yellow), #FF9F2B);
-      border-radius: 2px;
-    }
-    .match-pct { font-size: 0.75rem; font-weight: 700; color: var(--yellow); }
 
-    /* ─── Trusted by ───────────────────────────────────────────── */
-    .trust {
-      background: var(--gray-100);
-      padding: 28px 0;
-      border-top: 1px solid var(--gray-200);
-      border-bottom: 1px solid var(--gray-200);
+    /* ── FEATURES ── */
+    .features { padding: 72px 40px; background: var(--off-white); }
+    .section-head { text-align: center; margin-bottom: 48px; }
+    .section-eyebrow {
+      font-size: 10.5px; letter-spacing: 0.3em; text-transform: uppercase;
+      font-weight: 700; color: var(--gold-dim); margin-bottom: 10px;
     }
-    .trust__inner {
-      display: flex;
-      align-items: center;
-      gap: 40px;
-      flex-wrap: wrap;
+    .section-head h2 {
+      font-family: 'Playfair Display', serif; font-size: clamp(26px, 3.5vw, 38px);
+      font-weight: 700; color: var(--royal); line-height: 1.2;
     }
-    .trust__label {
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--gray-400);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      white-space: nowrap;
-    }
-    .trust__logos {
-      display: flex;
-      align-items: center;
-      gap: 32px;
-      flex-wrap: wrap;
-      flex: 1;
-    }
-    .trust__logo-item {
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: var(--gray-400);
-      letter-spacing: -0.01em;
-      opacity: 0.7;
-      transition: opacity var(--transition);
-    }
-    .trust__logo-item:hover { opacity: 1; }
-
-    /* ─── Features ─────────────────────────────────────────────── */
-    .features { background: var(--white); }
-    .features__header { text-align: center; max-width: 580px; margin: 0 auto 64px; }
-    .features__header h2 {
-      font-size: clamp(1.9rem, 3.5vw, 2.7rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      color: var(--navy);
-      margin-bottom: 16px;
-    }
-    .features__header p { font-size: 1.05rem; color: var(--gray-600); line-height: 1.7; }
-    .features__grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
+    .features-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px; max-width: 1100px; margin: 0 auto;
     }
     .feature-card {
-      background: var(--off-white);
-      border: 1px solid var(--gray-100);
-      border-radius: var(--radius);
-      padding: 32px 28px;
-      transition: all var(--transition);
-      position: relative;
-      overflow: hidden;
+      background: var(--white); border-radius: 10px; padding: 32px 28px;
+      border-left: 4px solid transparent;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      transition: transform .2s, box-shadow .2s, border-color .2s;
     }
-    .feature-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--navy), var(--yellow));
-      opacity: 0;
-      transition: opacity var(--transition);
+    .feature-card:hover {
+      transform: translateY(-4px); box-shadow: 0 8px 28px rgba(0,0,0,0.1);
+      border-left-color: var(--gold);
     }
-    .feature-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: var(--gray-200); }
-    .feature-card:hover::before { opacity: 1; }
-    .feature-card__icon {
-      width: 52px; height: 52px;
-      background: linear-gradient(135deg, var(--navy), var(--navy-mid));
-      border-radius: 12px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.5rem;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 16px rgba(27,58,122,0.2);
-    }
+    .feature-icon { font-size: 28px; margin-bottom: 14px; }
     .feature-card h3 {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--navy);
-      margin-bottom: 10px;
-      letter-spacing: -0.01em;
+      font-family: 'Playfair Display', serif; font-weight: 600; font-size: 18px;
+      color: var(--royal); margin-bottom: 8px;
     }
-    .feature-card p { font-size: 0.9rem; color: var(--gray-600); line-height: 1.65; }
-    .feature-card--highlight {
-      background: var(--navy);
-      border-color: var(--navy-mid);
-    }
-    .feature-card--highlight::before { opacity: 1; background: linear-gradient(90deg, var(--yellow), #FF9F2B); }
-    .feature-card--highlight h3 { color: var(--white); }
-    .feature-card--highlight p { color: rgba(255,255,255,0.65); }
-    .feature-card--highlight .feature-card__icon {
-      background: rgba(245,200,66,0.2);
-    }
+    .feature-card p { font-size: 13.5px; color: var(--text-mid); line-height: 1.65; }
 
-    /* ─── Curricula section ─────────────────────────────────────── */
-    .curricula { background: var(--off-white); }
-    .curricula__layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 72px;
-      align-items: center;
+    /* ── FINAL YEARS ── */
+    .final-years {
+      background: var(--royal-dark); padding: 72px 40px; color: var(--white);
     }
-    .curricula__text h2 {
-      font-size: clamp(1.8rem, 3vw, 2.5rem);
-      font-weight: 800;
-      color: var(--navy);
-      letter-spacing: -0.03em;
-      margin-bottom: 18px;
+    .final-years .section-head h2 { color: var(--white); }
+    .final-years .section-eyebrow { color: var(--gold); }
+    .fy-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px; max-width: 1100px; margin: 0 auto;
     }
-    .curricula__text p { font-size: 1rem; color: var(--gray-600); line-height: 1.75; margin-bottom: 32px; }
-    .curricula__list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 36px; }
-    .curricula__item {
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
+    .fy-card {
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px; padding: 28px 24px;
+      transition: background .2s, border-color .2s;
     }
-    .curricula__check {
-      width: 22px; height: 22px;
-      background: var(--navy);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-    .curricula__check svg { width: 12px; height: 12px; }
-    .curricula__item-text strong { display: block; font-size: 0.93rem; font-weight: 700; color: var(--navy); margin-bottom: 2px; }
-    .curricula__item-text span { font-size: 0.85rem; color: var(--gray-600); }
-
-    /* Curricula cards */
-    .curricula__cards {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-    .curric-card {
-      background: var(--white);
-      border: 1px solid var(--gray-200);
-      border-radius: var(--radius);
-      padding: 24px 20px;
-      text-align: center;
-      transition: all var(--transition);
-      cursor: pointer;
-    }
-    .curric-card:hover { border-color: var(--navy-mid); box-shadow: var(--shadow-sm); transform: translateY(-3px); }
-    .curric-card--active {
-      border-color: var(--navy);
-      background: var(--navy);
-      color: var(--white);
-    }
-    .curric-card__abbr {
-      font-size: 1.6rem;
-      font-weight: 900;
-      color: var(--navy);
-      letter-spacing: -0.04em;
-      margin-bottom: 4px;
-    }
-    .curric-card--active .curric-card__abbr { color: var(--yellow); }
-    .curric-card__name {
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: var(--gray-400);
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-    .curric-card--active .curric-card__name { color: rgba(255,255,255,0.65); }
-    .curric-card__badge {
-      display: inline-block;
-      background: rgba(27,58,122,0.1);
-      color: var(--navy-mid);
-      font-size: 0.68rem;
-      font-weight: 700;
-      padding: 3px 8px;
-      border-radius: 50px;
-      margin-top: 8px;
-    }
-    .curric-card--active .curric-card__badge { background: rgba(245,200,66,0.2); color: var(--yellow-lt); }
-
-    /* ─── Countries grid ────────────────────────────────────────── */
-    .countries { background: var(--white); }
-    .countries__header { text-align: center; max-width: 560px; margin: 0 auto 56px; }
-    .countries__header h2 {
-      font-size: clamp(1.9rem, 3.5vw, 2.7rem);
-      font-weight: 800;
-      color: var(--navy);
-      letter-spacing: -0.03em;
-      margin-bottom: 16px;
-    }
-    .countries__header p { font-size: 1rem; color: var(--gray-600); line-height: 1.7; }
-    .countries__grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-    }
-    .country-card {
-      background: var(--off-white);
-      border: 1px solid var(--gray-100);
-      border-radius: var(--radius);
-      padding: 28px 20px;
-      text-align: center;
-      transition: all var(--transition);
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-    }
-    .country-card::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, var(--navy), var(--navy-mid));
-      opacity: 0;
-      transition: opacity var(--transition);
-      z-index: 0;
-    }
-    .country-card:hover::after { opacity: 1; }
-    .country-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
-    .country-card > * { position: relative; z-index: 1; }
-    .country-card__flag { font-size: 2.8rem; margin-bottom: 12px; line-height: 1; }
-    .country-card__name {
-      font-size: 0.92rem;
-      font-weight: 700;
-      color: var(--navy);
-      margin-bottom: 6px;
-      transition: color var(--transition);
-    }
-    .country-card:hover .country-card__name { color: var(--white); }
-    .country-card__meta {
-      font-size: 0.75rem;
-      color: var(--gray-400);
-      transition: color var(--transition);
-    }
-    .country-card:hover .country-card__meta { color: rgba(255,255,255,0.65); }
-    .country-card__tag {
-      display: inline-block;
-      background: rgba(27,58,122,0.08);
-      color: var(--navy-mid);
-      font-size: 0.68rem;
-      font-weight: 600;
-      padding: 3px 9px;
-      border-radius: 50px;
-      margin-top: 8px;
-      transition: all var(--transition);
-    }
-    .country-card:hover .country-card__tag { background: rgba(245,200,66,0.25); color: var(--yellow); }
-    .countries__cta { text-align: center; margin-top: 40px; }
-    .countries__cta p { font-size: 0.9rem; color: var(--gray-400); margin-top: 12px; }
-
-    /* ─── Spotlight ─────────────────────────────────────────────── */
-    .spotlight {
-      background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 60%, var(--navy-mid) 100%);
-      position: relative;
-      overflow: hidden;
-    }
-    .spotlight::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 60% 70% at 85% 50%, rgba(245,200,66,0.08) 0%, transparent 60%);
-    }
-    .spotlight__layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
-      position: relative;
-      z-index: 1;
-    }
-    .spotlight__eyebrow { color: var(--yellow-lt); }
-    .spotlight__text h2 {
-      font-size: clamp(1.8rem, 3vw, 2.5rem);
-      font-weight: 800;
-      color: var(--white);
-      letter-spacing: -0.03em;
-      margin-bottom: 20px;
-    }
-    .spotlight__text p { font-size: 1rem; color: rgba(255,255,255,0.7); line-height: 1.75; margin-bottom: 36px; }
-    .spotlight__steps { display: flex; flex-direction: column; gap: 20px; }
-    .spotlight__step {
-      display: flex;
-      gap: 16px;
-      align-items: flex-start;
-    }
-    .spotlight__step-num {
-      width: 36px; height: 36px;
-      background: rgba(245,200,66,0.15);
-      border: 1px solid rgba(245,200,66,0.3);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.82rem;
-      font-weight: 800;
-      color: var(--yellow);
-      flex-shrink: 0;
-    }
-    .spotlight__step-title { font-size: 0.92rem; font-weight: 700; color: var(--white); margin-bottom: 3px; }
-    .spotlight__step-desc { font-size: 0.83rem; color: rgba(255,255,255,0.5); line-height: 1.6; }
-
-    /* Testimonial card */
-    .spotlight__testimonial {
-      background: rgba(255,255,255,0.07);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 20px;
-      padding: 36px;
-    }
-    .testimonial__quote {
-      font-size: 1.05rem;
-      font-weight: 500;
-      color: var(--white);
-      line-height: 1.7;
-      margin-bottom: 28px;
-      font-style: italic;
-    }
-    .testimonial__quote::before { content: '\201C'; color: var(--yellow); font-size: 1.5rem; font-style: normal; }
-    .testimonial__author {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .testimonial__avatar {
-      width: 48px; height: 48px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--yellow), #FF9F2B);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.2rem;
-      font-weight: 800;
-      color: var(--navy);
-      flex-shrink: 0;
-    }
-    .testimonial__name { font-size: 0.9rem; font-weight: 700; color: var(--white); }
-    .testimonial__detail { font-size: 0.78rem; color: rgba(255,255,255,0.5); margin-top: 2px; }
-    .testimonial__stars { display: flex; gap: 3px; margin-bottom: 6px; }
-    .testimonial__stars span { color: var(--yellow); font-size: 0.9rem; }
-    .spotlight__more-stories { display: flex; gap: 12px; margin-top: 28px; }
-    .story-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.25);
-      cursor: pointer;
-      transition: background var(--transition);
-    }
-    .story-dot.active { background: var(--yellow); width: 24px; border-radius: 4px; }
-
-    /* ─── Forum preview ─────────────────────────────────────────── */
-    .forum { background: var(--off-white); }
-    .forum__header { text-align: center; max-width: 560px; margin: 0 auto 56px; }
-    .forum__header h2 {
-      font-size: clamp(1.9rem, 3.5vw, 2.7rem);
-      font-weight: 800;
-      color: var(--navy);
-      letter-spacing: -0.03em;
-      margin-bottom: 16px;
-    }
-    .forum__header p { font-size: 1rem; color: var(--gray-600); line-height: 1.7; }
-    .forum__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-    .forum-card {
-      background: var(--white);
-      border: 1px solid var(--gray-200);
-      border-radius: var(--radius);
-      padding: 24px;
-      transition: all var(--transition);
-    }
-    .forum-card:hover { box-shadow: var(--shadow-md); border-color: var(--navy-mid); transform: translateY(-3px); }
-    .forum-card__tag {
-      display: inline-block;
-      background: rgba(27,58,122,0.08);
-      color: var(--navy-mid);
-      font-size: 0.68rem;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 50px;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      margin-bottom: 14px;
-    }
-    .forum-card h3 {
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--navy);
-      line-height: 1.4;
-      margin-bottom: 10px;
-    }
-    .forum-card p { font-size: 0.83rem; color: var(--gray-600); line-height: 1.65; margin-bottom: 18px; }
-    .forum-card__meta {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 0.75rem;
-      color: var(--gray-400);
-      border-top: 1px solid var(--gray-100);
-      padding-top: 14px;
-    }
-    .forum-card__author { font-weight: 600; color: var(--gray-600); }
-    .forum__cta { text-align: center; margin-top: 40px; }
-
-    /* ─── Universities ──────────────────────────────────────────── */
-    .universities { background: var(--white); }
-    .universities__header { text-align: center; max-width: 560px; margin: 0 auto 56px; }
-    .universities__header h2 {
-      font-size: clamp(1.9rem, 3.5vw, 2.7rem);
-      font-weight: 800;
-      color: var(--navy);
-      letter-spacing: -0.03em;
-      margin-bottom: 16px;
-    }
-    .universities__header p { font-size: 1rem; color: var(--gray-600); line-height: 1.7; }
-    .uni-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-    .uni-card {
-      background: var(--off-white);
-      border: 1px solid var(--gray-100);
-      border-radius: var(--radius);
-      padding: 24px 20px;
-      text-align: center;
-      transition: all var(--transition);
-    }
-    .uni-card:hover { box-shadow: var(--shadow-md); border-color: var(--navy-mid); transform: translateY(-3px); }
-    .uni-card__rank {
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: var(--yellow-dk);
-      background: rgba(245,200,66,0.15);
-      display: inline-block;
-      padding: 3px 8px;
-      border-radius: 50px;
+    .fy-card:hover { background: rgba(255,255,255,0.1); border-color: var(--gold); }
+    .fy-tag {
+      display: inline-block; background: var(--gold); color: var(--royal-dark);
+      font-size: 9.5px; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; padding: 3px 9px; border-radius: 3px;
       margin-bottom: 12px;
     }
-    .uni-card__initial {
-      width: 52px; height: 52px;
-      border-radius: 12px;
-      background: var(--navy);
-      color: var(--white);
-      font-size: 1.3rem;
-      font-weight: 900;
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 12px;
+    .fy-card h3 {
+      font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700;
+      color: var(--white); margin-bottom: 7px;
     }
-    .uni-card__name { font-size: 0.88rem; font-weight: 700; color: var(--navy); margin-bottom: 4px; }
-    .uni-card__location { font-size: 0.75rem; color: var(--gray-400); }
-    .uni-card__flags { margin-top: 10px; font-size: 1rem; }
-    .universities__cta { text-align: center; margin-top: 40px; }
+    .fy-card p { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.6; }
 
-    /* ─── Waitlist ──────────────────────────────────────────────── */
+    /* ── COUNTRIES ── */
+    .countries { padding: 72px 40px; background: var(--white); }
+    .countries-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 16px; max-width: 1100px; margin: 0 auto;
+    }
+    .country-card {
+      border: 1px solid rgba(0,0,0,0.08); border-radius: 8px; padding: 20px 16px;
+      text-align: center; cursor: pointer; text-decoration: none; color: inherit;
+      transition: border-color .2s, box-shadow .2s, transform .2s;
+      display: block;
+    }
+    .country-card:hover {
+      border-color: var(--gold); box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+    }
+    .country-flag { font-size: 32px; display: block; margin-bottom: 8px; }
+    .country-name { font-size: 13px; font-weight: 600; color: var(--royal); }
+    .country-count { font-size: 11px; color: var(--text-light); margin-top: 2px; }
+
+    /* ── SPOTLIGHT ── */
+    .spotlight {
+      padding: 72px 40px; background: var(--off-white);
+    }
+    .spotlight-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+    }
+    .spotlight-content {}
+    .spotlight-content h2 {
+      font-family: 'Playfair Display', serif; font-size: clamp(26px, 3vw, 36px);
+      font-weight: 700; color: var(--royal); margin-bottom: 14px; line-height: 1.2;
+    }
+    .spotlight-content p { font-size: 14.5px; color: var(--text-mid); line-height: 1.75; margin-bottom: 18px; }
+    .spotlight-quote {
+      border-left: 3px solid var(--gold); padding-left: 18px;
+      font-family: 'Playfair Display', serif; font-style: italic;
+      font-size: 17px; color: var(--royal); margin: 24px 0; line-height: 1.55;
+    }
+    .spotlight-school {
+      background: var(--white); border-radius: 10px; padding: 32px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      border-top: 4px solid var(--gold);
+    }
+    .school-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--royal); color: var(--white);
+      font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; padding: 5px 12px; border-radius: 4px;
+      margin-bottom: 16px;
+    }
+    .school-badge span { color: var(--gold); }
+    .school-name {
+      font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700;
+      color: var(--royal); margin-bottom: 6px;
+    }
+    .school-location { font-size: 13px; color: var(--text-light); margin-bottom: 14px; }
+    .school-stats { display: flex; gap: 20px; }
+    .school-stat { text-align: center; }
+    .school-stat .num {
+      font-size: 22px; font-weight: 800; color: var(--royal); display: block;
+    }
+    .school-stat .lbl { font-size: 10.5px; color: var(--text-light); letter-spacing: 0.05em; }
+
+    /* ── WAITLIST ── */
     .waitlist {
-      background: var(--navy);
-      position: relative;
-      overflow: hidden;
+      background: linear-gradient(135deg, var(--royal) 0%, var(--royal-mid) 100%);
+      padding: 72px 40px; text-align: center;
     }
-    .waitlist::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background:
-        radial-gradient(circle 500px at 20% 50%, rgba(245,200,66,0.07) 0%, transparent 60%),
-        radial-gradient(circle 400px at 80% 50%, rgba(45,111,212,0.25) 0%, transparent 60%);
+    .waitlist h2 {
+      font-family: 'Playfair Display', serif; font-size: clamp(26px, 3.5vw, 40px);
+      font-weight: 700; color: var(--white); margin-bottom: 12px;
     }
-    .waitlist__inner {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      max-width: 600px;
-      margin: 0 auto;
+    .waitlist p { font-size: 15px; color: rgba(255,255,255,0.7); margin-bottom: 32px; max-width: 520px; margin-left: auto; margin-right: auto; }
+    .waitlist-form { display: flex; gap: 0; max-width: 500px; margin: 0 auto; border-radius: 6px; overflow: hidden; border: 2px solid var(--gold); }
+    .waitlist-form input {
+      flex: 1; border: none; outline: none; padding: 14px 20px;
+      font-family: 'Montserrat', sans-serif; font-size: 14px; color: var(--text-dark);
     }
-    .waitlist__icon {
-      width: 72px; height: 72px;
-      background: rgba(245,200,66,0.15);
-      border: 2px solid rgba(245,200,66,0.3);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 2rem;
-      margin: 0 auto 24px;
+    .waitlist-form button {
+      background: var(--gold); border: none; cursor: pointer;
+      font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 12.5px;
+      letter-spacing: 0.07em; color: var(--royal-dark); text-transform: uppercase;
+      padding: 14px 22px; transition: background .2s;
+      white-space: nowrap;
     }
-    .waitlist__inner h2 {
-      font-size: clamp(1.9rem, 3.5vw, 2.7rem);
-      font-weight: 800;
-      color: var(--white);
-      letter-spacing: -0.03em;
+    .waitlist-form button:hover { background: var(--gold-dim); }
+    .waitlist-note { margin-top: 12px; font-size: 11px; color: rgba(255,255,255,0.4); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--text-dark); padding: 52px 40px 32px; color: rgba(255,255,255,0.6);
+    }
+    .footer-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px;
+      margin-bottom: 40px;
+    }
+    .footer-brand .wm-compass { font-size: 20px; }
+    .footer-brand .wm-global { color: rgba(255,255,255,0.45); }
+    .footer-tagline {
+      margin-top: 10px; font-family: 'Playfair Display', serif; font-style: italic;
+      font-size: 14px; color: rgba(255,255,255,0.45); line-height: 1.6;
+    }
+    .footer-col h4 {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 14px;
+    }
+    .footer-col a {
+      display: block; font-size: 13px; color: rgba(255,255,255,0.5);
+      text-decoration: none; margin-bottom: 8px; transition: color .15s;
+    }
+    .footer-col a:hover { color: var(--white); }
+    .footer-bottom {
+      max-width: 1100px; margin: 0 auto;
+      border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 12px; color: rgba(255,255,255,0.3);
+    }
+
+    /* ── PRO MODAL ── */
+    .modal-backdrop {
+      display: none; position: fixed; inset: 0; z-index: 9999;
+      background: rgba(10,20,50,0.75); backdrop-filter: blur(4px);
+      align-items: center; justify-content: center;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal {
+      background: var(--white); border-radius: 14px; padding: 48px 44px;
+      max-width: 520px; width: 90%; position: relative;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.35);
+      animation: modalIn .25s ease;
+    }
+    @keyframes modalIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .modal-close {
+      position: absolute; top: 16px; right: 18px;
+      background: none; border: none; cursor: pointer;
+      font-size: 22px; color: var(--text-light); transition: color .15s;
+    }
+    .modal-close:hover { color: var(--text-dark); }
+    .modal-badge {
+      display: inline-block; background: var(--gold); color: var(--royal-dark);
+      font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+      text-transform: uppercase; padding: 4px 12px; border-radius: 3px;
       margin-bottom: 16px;
     }
-    .waitlist__inner p { font-size: 1rem; color: rgba(255,255,255,0.65); line-height: 1.7; margin-bottom: 40px; }
-    .waitlist__form {
-      display: flex;
-      gap: 12px;
-      max-width: 480px;
-      margin: 0 auto 16px;
+    .modal h2 {
+      font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700;
+      color: var(--royal); margin-bottom: 10px; line-height: 1.2;
     }
-    .waitlist__input {
-      flex: 1;
-      background: rgba(255,255,255,0.1);
-      border: 1.5px solid rgba(255,255,255,0.2);
-      border-radius: var(--radius-sm);
-      padding: 13px 18px;
-      font-size: 0.93rem;
-      color: var(--white);
-      transition: border-color var(--transition), background var(--transition);
+    .modal-intro { font-size: 14px; color: var(--text-mid); line-height: 1.65; margin-bottom: 28px; }
+    .modal-perks { list-style: none; margin-bottom: 28px; }
+    .modal-perks li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 13.5px; color: var(--text-dark); margin-bottom: 12px;
+      line-height: 1.5;
     }
-    .waitlist__input::placeholder { color: rgba(255,255,255,0.45); }
-    .waitlist__input:focus { border-color: var(--yellow); background: rgba(255,255,255,0.14); outline: none; }
-    .waitlist__form .btn--primary { flex-shrink: 0; }
-    .waitlist__note {
-      font-size: 0.78rem;
-      color: rgba(255,255,255,0.4);
+    .modal-perks li::before {
+      content: '✦'; color: var(--gold); font-size: 12px; margin-top: 2px; flex-shrink: 0;
     }
-    .waitlist__social-proof {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      margin-top: 32px;
+    .modal-cta {
+      width: 100%; background: var(--royal); color: var(--white);
+      border: none; cursor: pointer; border-radius: 6px;
+      font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 13.5px;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 15px; transition: background .2s, transform .15s;
+      margin-bottom: 10px;
     }
-    .waitlist__avatars { display: flex; }
-    .waitlist__avatar {
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      border: 2px solid var(--navy);
-      background: linear-gradient(135deg, var(--navy-mid), var(--yellow));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--white);
-      margin-left: -8px;
-    }
-    .waitlist__avatar:first-child { margin-left: 0; }
-    .waitlist__social-text {
-      font-size: 0.82rem;
-      color: rgba(255,255,255,0.55);
-    }
-    .waitlist__social-text strong { color: var(--yellow); }
+    .modal-cta:hover { background: var(--royal-mid); transform: translateY(-1px); }
+    .modal-fine { text-align: center; font-size: 11px; color: var(--text-light); }
 
-    /* ─── Footer ────────────────────────────────────────────────── */
-    .footer {
-      background: var(--navy-deep);
-      padding: 72px 0 32px;
+    /* Responsive */
+    @media (max-width: 900px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .spotlight-inner { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr 1fr; }
     }
-    .footer__grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 48px;
-      padding-bottom: 56px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-      margin-bottom: 32px;
-    }
-    .footer__brand {}
-    .footer__logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 800;
-      font-size: 1.2rem;
-      color: var(--white);
-      letter-spacing: -0.02em;
-      margin-bottom: 16px;
-    }
-    .footer__logo span { color: var(--yellow); }
-    .footer__logo-mark {
-      width: 32px; height: 32px;
-      background: var(--yellow);
-      border-radius: 7px;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .footer__logo-mark svg { width: 20px; height: 20px; }
-    .footer__desc { font-size: 0.875rem; color: rgba(255,255,255,0.5); line-height: 1.7; max-width: 260px; margin-bottom: 24px; }
-    .footer__social { display: flex; gap: 10px; }
-    .footer__social a {
-      width: 36px; height: 36px;
-      background: rgba(255,255,255,0.08);
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      color: rgba(255,255,255,0.6);
-      font-size: 0.85rem;
-      font-weight: 700;
-      transition: all var(--transition);
-    }
-    .footer__social a:hover { background: rgba(255,255,255,0.15); color: var(--yellow); }
-    .footer__col-title {
-      font-size: 0.78rem;
-      font-weight: 700;
-      color: rgba(255,255,255,0.4);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      margin-bottom: 20px;
-    }
-    .footer__col ul { display: flex; flex-direction: column; gap: 10px; }
-    .footer__col ul a {
-      font-size: 0.875rem;
-      color: rgba(255,255,255,0.6);
-      transition: color var(--transition);
-    }
-    .footer__col ul a:hover { color: var(--white); }
-    .footer__bottom {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 16px;
-    }
-    .footer__copy { font-size: 0.8rem; color: rgba(255,255,255,0.3); }
-    .footer__legal { display: flex; gap: 24px; }
-    .footer__legal a { font-size: 0.8rem; color: rgba(255,255,255,0.3); transition: color var(--transition); }
-    .footer__legal a:hover { color: rgba(255,255,255,0.6); }
-
-    /* ─── Responsive ─────────────────────────────────────────────── */
-    @media (max-width: 1024px) {
-      .features__grid { grid-template-columns: repeat(2, 1fr); }
-      .countries__grid { grid-template-columns: repeat(3, 1fr); }
-      .uni-grid { grid-template-columns: repeat(3, 1fr); }
-      .hero__visual { display: none; }
-      .hero__content { max-width: 100%; }
-      .curricula__layout { grid-template-columns: 1fr; gap: 48px; }
-      .spotlight__layout { grid-template-columns: 1fr; gap: 48px; }
-      .footer__grid { grid-template-columns: 1fr 1fr; gap: 32px; }
-    }
-    @media (max-width: 768px) {
-      .section { padding: 72px 0; }
-      .nav__links, .nav__cta { display: none; }
-      .hamburger { display: flex; }
-      .features__grid { grid-template-columns: 1fr; }
-      .countries__grid { grid-template-columns: repeat(2, 1fr); }
-      .forum__grid { grid-template-columns: 1fr; }
-      .uni-grid { grid-template-columns: repeat(2, 1fr); }
-      .waitlist__form { flex-direction: column; }
-      .footer__grid { grid-template-columns: 1fr; gap: 28px; }
-      .footer__bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
-      .curricula__cards { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 480px) {
-      .countries__grid { grid-template-columns: repeat(2, 1fr); }
-      .uni-grid { grid-template-columns: 1fr 1fr; }
-      .hero__stats { gap: 24px; }
+    @media (max-width: 600px) {
+      .hero { padding: 60px 20px 48px; }
+      .mission, .features, .final-years, .countries, .spotlight, .waitlist { padding: 52px 20px; }
+      .footer-inner { grid-template-columns: 1fr; gap: 28px; }
+      .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ─── Navigation ─────────────────────────────────────────── -->
-  <nav class="nav" id="mainNav">
-    <div class="container">
-      <div class="nav__inner">
-        <a href="#" class="nav__logo" aria-label="GlobalCompass Home">
-          <div class="nav__logo-mark">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <circle cx="12" cy="12" r="10" stroke="#1B3A7A" stroke-width="2"/>
-              <path d="M12 2C12 2 8 7 8 12C8 17 12 22 12 22" stroke="#1B3A7A" stroke-width="1.5"/>
-              <path d="M12 2C12 2 16 7 16 12C16 17 12 22 12 22" stroke="#1B3A7A" stroke-width="1.5"/>
-              <line x1="2" y1="12" x2="22" y2="12" stroke="#1B3A7A" stroke-width="1.5"/>
-              <line x1="3.5" y1="7" x2="20.5" y2="7" stroke="#1B3A7A" stroke-width="1.5"/>
-              <line x1="3.5" y1="17" x2="20.5" y2="17" stroke="#1B3A7A" stroke-width="1.5"/>
-            </svg>
-          </div>
-          Global<span>Compass</span>
-        </a>
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">
+    <div class="globe-wrap">
+      <!-- Gold globe with needle SVG -->
+      <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="21" cy="22" r="17" stroke="#F5C842" stroke-width="1.8"/>
+        <!-- Latitude lines -->
+        <ellipse cx="21" cy="22" rx="17" ry="6.5" stroke="#F5C842" stroke-width="1" stroke-dasharray="2.5 2"/>
+        <line x1="4" y1="22" x2="38" y2="22" stroke="#F5C842" stroke-width="1" stroke-dasharray="2.5 2"/>
+        <!-- Longitude lines -->
+        <ellipse cx="21" cy="22" rx="6.5" ry="17" stroke="#F5C842" stroke-width="1"/>
+        <!-- Needle / compass rose -->
+        <line x1="21" y1="4" x2="21" y2="22" stroke="#F5C842" stroke-width="2" stroke-linecap="round"/>
+        <polygon points="21,4 18.5,12 21,10 23.5,12" fill="#F5C842"/>
+        <circle cx="21" cy="22" r="2.5" fill="#F5C842"/>
+      </svg>
+    </div>
+    <div class="wordmark">
+      <div class="wordmark-top">
+        <div class="wordmark-rule wordmark-rule-left"></div>
+        <span class="wm-global">Global</span>
+        <div class="wordmark-rule wordmark-rule-right"></div>
+      </div>
+      <div class="wm-compass-row">
+        <span class="wm-compass">C<span class="gold-o">O</span>MPASS</span>
+      </div>
+      <span class="wm-tagline">Education Worldwide</span>
+    </div>
+  </a>
 
-        <ul class="nav__links" role="navigation" aria-label="Main navigation">
-          <li><a href="#schools">Schools</a></li>
-          <li><a href="#curricula">Curricula</a></li>
-          <li><a href="#final-years">Final Years</a></li>
-          <li><a href="#countries">Countries</a></li>
-          <li><a href="#forum">Forum</a></li>
-          <li><a href="#universities">Universities</a></li>
-        </ul>
-
-        <div class="nav__cta">
-          <a href="#" class="btn btn--outline">Sign In</a>
-          <a href="#waitlist" class="btn btn--primary">Get Early Access</a>
-        </div>
-
-        <button class="hamburger" aria-label="Open menu" onclick="toggleMenu()">
-          <span></span><span></span><span></span>
-        </button>
+  <div class="nav-links">
+    <div class="nav-item">
+      <button class="nav-btn">Schools <span class="caret">▾</span></button>
+      <div class="dropdown">
+        <a href="#">Find a School</a>
+        <a href="#">Compare Schools</a>
+        <a href="#">School Reviews</a>
+        <a href="#">New Openings</a>
       </div>
     </div>
-  </nav>
-
-  <!-- Mobile Menu -->
-  <div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="Mobile navigation">
-    <a href="#schools" onclick="closeMenu()">Schools</a>
-    <a href="#curricula" onclick="closeMenu()">Curricula</a>
-    <a href="#final-years" onclick="closeMenu()">Final Years</a>
-    <a href="#countries" onclick="closeMenu()">Countries</a>
-    <a href="#forum" onclick="closeMenu()">Forum</a>
-    <a href="#universities" onclick="closeMenu()">Universities</a>
-    <a href="#" class="btn btn--outline">Sign In</a>
-    <a href="#waitlist" class="btn btn--primary" onclick="closeMenu()">Get Early Access</a>
+    <div class="nav-item">
+      <button class="nav-btn">Curricula <span class="caret">▾</span></button>
+      <div class="dropdown">
+        <a href="#">IB Programme</a>
+        <a href="#">British / IGCSE</a>
+        <a href="#">American / AP</a>
+        <a href="#">French / AEFE</a>
+        <a href="#">Montessori</a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <button class="nav-btn">Final Years <span class="caret">▾</span></button>
+      <div class="dropdown">
+        <a href="#">IB Diploma</a>
+        <a href="#">A-Levels</a>
+        <a href="#">AP Courses</a>
+        <a href="#">Baccalauréat</a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <button class="nav-btn">Countries <span class="caret">▾</span></button>
+      <div class="dropdown">
+        <a href="#">United Arab Emirates</a>
+        <a href="#">United Kingdom</a>
+        <a href="#">Singapore</a>
+        <a href="#">Switzerland</a>
+        <a href="#">Kenya</a>
+        <a href="#">Australia</a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <button class="nav-btn">Forum <span class="caret">▾</span></button>
+      <div class="dropdown">
+        <a href="#">Expat Families</a>
+        <a href="#">School Advice</a>
+        <a href="#">Transitions</a>
+        <a href="#">University Prep</a>
+      </div>
+    </div>
+    <div class="nav-item">
+      <button class="nav-btn">Universities <span class="caret">▾</span></button>
+      <div class="dropdown">
+        <a href="#">UK Universities</a>
+        <a href="#">US Universities</a>
+        <a href="#">EU Universities</a>
+        <a href="#">Applications Hub</a>
+      </div>
+    </div>
   </div>
 
-  <!-- ─── Hero ──────────────────────────────────────────────── -->
-  <section class="hero" aria-label="Hero">
-    <div class="hero__bg">
-      <div class="hero__grid"></div>
-      <div class="hero__orb hero__orb--1"></div>
-      <div class="hero__orb hero__orb--2"></div>
+  <div class="nav-right">
+    <button class="btn-sign">Sign In</button>
+    <button class="btn-pro" id="proBtn">Pro</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-eyebrow">The <em>trusted</em> GUIDE for EXPAT EDUCATION</p>
+  <h1>The right school,<br>in the right country,</h1>
+  <p class="hero-sub"><em>for every expat family</em></p>
+  <div class="search-wrap">
+    <input type="text" placeholder="Search by school name, city, or curriculum…" />
+    <button>Search</button>
+  </div>
+  <p class="hero-hint">Popular: <a href="#">Dubai</a> &nbsp;·&nbsp; <a href="#">Singapore</a> &nbsp;·&nbsp; <a href="#">London</a> &nbsp;·&nbsp; <a href="#">Zurich</a></p>
+</section>
+
+<!-- MISSION -->
+<section class="mission">
+  <div class="mission-line">
+    <div class="mission-line-rule"></div>
+    <span class="mission-label">Our Mission</span>
+    <div class="mission-line-rule"></div>
+  </div>
+  <p>"Every child deserves the <span>right start</span>, wherever in the world they are."</p>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+  <div class="section-head">
+    <p class="section-eyebrow">Why Global Compass</p>
+    <h2>Everything an expat family needs</h2>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🗺️</div>
+      <h3>6,000+ Schools</h3>
+      <p>Verified listings across 90 countries with up-to-date fees, capacity, and entry requirements.</p>
     </div>
-
-    <div class="container">
-      <div class="hero__content">
-        <div class="hero__badge">
-          <div class="hero__badge-dot"></div>
-          <span>Now in Early Access — Join 4,200+ students</span>
-        </div>
-
-        <h1 class="hero__headline">
-          Navigate your path to <em>international</em> education
-        </h1>
-
-        <p class="hero__sub">
-          GlobalCompass connects students worldwide with the right schools, curricula, and universities. From IB to A-Levels, from Dubai to Toronto — your journey starts here.
-        </p>
-
-        <div class="hero__actions">
-          <a href="#waitlist" class="btn btn--primary btn--lg">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Start Exploring
-          </a>
-          <a href="#curricula" class="btn btn--outline btn--lg">View Curricula</a>
-        </div>
-
-        <div class="hero__stats" aria-label="Platform statistics">
-          <div>
-            <div class="hero__stat-val">120<span>+</span></div>
-            <div class="hero__stat-label">Countries covered</div>
-          </div>
-          <div>
-            <div class="hero__stat-val">18<span>k</span></div>
-            <div class="hero__stat-label">Schools listed</div>
-          </div>
-          <div>
-            <div class="hero__stat-val">94<span>%</span></div>
-            <div class="hero__stat-label">Placement rate</div>
-          </div>
-        </div>
-      </div>
+    <div class="feature-card">
+      <div class="feature-icon">📋</div>
+      <h3>Curriculum Guides</h3>
+      <p>Plain-language breakdowns of every major international curriculum — IB, IGCSE, AP, French Bac and more.</p>
     </div>
-
-    <!-- Compass card visual -->
-    <div class="hero__visual" aria-hidden="true">
-      <div class="hero__compass-card">
-        <div class="compass-card__header">
-          <span class="compass-card__label">Your Pathway</span>
-          <span class="compass-card__badge">✦ Best Match</span>
-        </div>
-        <div class="compass-card__title">Grade 11 — IB Diploma</div>
-        <div class="compass-card__sub">Dubai International Academy · 3 options found</div>
-        <div class="compass-card__track">
-          <div class="track-item">
-            <div class="track-item__icon">🎓</div>
-            <div>
-              <div class="track-item__name">IB Diploma Programme</div>
-              <div class="track-item__detail">International Baccalaureate · 2 years</div>
-            </div>
-            <div class="track-item__arrow">›</div>
-          </div>
-          <div class="track-item">
-            <div class="track-item__icon">📚</div>
-            <div>
-              <div class="track-item__name">A-Levels (Cambridge)</div>
-              <div class="track-item__detail">CAIE · Flexible subjects</div>
-            </div>
-            <div class="track-item__arrow">›</div>
-          </div>
-          <div class="track-item">
-            <div class="track-item__icon">🏫</div>
-            <div>
-              <div class="track-item__name">Advanced Placement</div>
-              <div class="track-item__detail">College Board · US-aligned</div>
-            </div>
-            <div class="track-item__arrow">›</div>
-          </div>
-        </div>
-        <div class="compass-card__divider"></div>
-        <div class="compass-card__match">
-          <span class="match-label">University fit</span>
-          <div class="match-bar"><div class="match-bar__fill" style="width:88%"></div></div>
-          <span class="match-pct">88%</span>
-        </div>
-      </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎓</div>
+      <h3>University Pathways</h3>
+      <p>See which qualifications open doors to top universities around the world, with real admissions data.</p>
     </div>
-  </section>
-
-  <!-- ─── Trusted by ────────────────────────────────────────── -->
-  <section class="trust" aria-label="Trusted by leading schools">
-    <div class="container">
-      <div class="trust__inner">
-        <span class="trust__label">Trusted by schools in</span>
-        <div class="trust__logos" aria-label="Countries where GlobalCompass is used">
-          <span class="trust__logo-item">🇦🇪 UAE</span>
-          <span class="trust__logo-item">🇬🇧 United Kingdom</span>
-          <span class="trust__logo-item">🇸🇬 Singapore</span>
-          <span class="trust__logo-item">🇨🇦 Canada</span>
-          <span class="trust__logo-item">🇦🇺 Australia</span>
-          <span class="trust__logo-item">🇩🇪 Germany</span>
-          <span class="trust__logo-item">🇳🇱 Netherlands</span>
-        </div>
-      </div>
+    <div class="feature-card">
+      <div class="feature-icon">💬</div>
+      <h3>Parent Forum</h3>
+      <p>A global community of expat families sharing first-hand experience — no question is too specific.</p>
     </div>
-  </section>
-
-  <!-- ─── Features ──────────────────────────────────────────── -->
-  <section class="section features" id="schools" aria-labelledby="features-heading">
-    <div class="container">
-      <div class="features__header">
-        <span class="eyebrow">Why GlobalCompass</span>
-        <h2 id="features-heading">Everything a global student needs</h2>
-        <p>We've built the most comprehensive platform for international students — from finding the right school to securing your dream university place.</p>
-      </div>
-
-      <div class="features__grid" role="list">
-        <article class="feature-card" role="listitem">
-          <div class="feature-card__icon" aria-hidden="true">🏫</div>
-          <h3>School Finder</h3>
-          <p>Search 18,000+ schools across 120 countries. Filter by curriculum, fees, facilities, rankings, and student outcomes to find your perfect fit.</p>
-        </article>
-
-        <article class="feature-card feature-card--highlight" role="listitem">
-          <div class="feature-card__icon" aria-hidden="true">🧭</div>
-          <h3>Curriculum Compass</h3>
-          <p>Understand how IB, A-Levels, AP, CBSE, and every other system compare — and which opens the most doors at your target universities worldwide.</p>
-        </article>
-
-        <article class="feature-card" role="listitem">
-          <div class="feature-card__icon" aria-hidden="true">🎯</div>
-          <h3>Final Year Planning</h3>
-          <p>Personalised timelines, subject selection tools, and predicted grade calculators to maximise your university application chances.</p>
-        </article>
-
-        <article class="feature-card" role="listitem">
-          <div class="feature-card__icon" aria-hidden="true">🌍</div>
-          <h3>Country Guides</h3>
-          <p>In-depth guides covering education systems, visa requirements, cost of living, and student life for every major study destination.</p>
-        </article>
-
-        <article class="feature-card" role="listitem">
-          <div class="feature-card__icon" aria-hidden="true">💬</div>
-          <h3>Peer Forum</h3>
-          <p>Connect with students who've navigated the same journey. Ask questions, share experiences, and find community across borders.</p>
-        </article>
-
-        <article class="feature-card" role="listitem">
-          <div class="feature-card__icon" aria-hidden="true">🏛️</div>
-          <h3>University Matching</h3>
-          <p>Our algorithm maps your curriculum, grades, and interests to universities that genuinely fit — not just the ones with the biggest marketing budgets.</p>
-        </article>
-      </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔔</div>
+      <h3>Place Alerts</h3>
+      <p>Get notified the moment a school opens up a spot in your child's year group, before it's advertised.</p>
     </div>
-  </section>
+    <div class="feature-card">
+      <div class="feature-icon">✈️</div>
+      <h3>Relocation Toolkit</h3>
+      <p>Checklists, timelines, and expert advice for every stage of an international school move.</p>
+    </div>
+  </div>
+</section>
 
-  <!-- ─── Curricula ─────────────────────────────────────────── -->
-  <section class="section curricula" id="curricula" aria-labelledby="curricula-heading">
-    <div class="container">
-      <div class="curricula__layout">
-        <div class="curricula__text">
-          <span class="eyebrow">Curricula &amp; Final Years</span>
-          <h2 id="curricula-heading">Every qualification, clearly explained</h2>
-          <p>Navigating international qualifications is genuinely complex. We break down every major curriculum so you can make informed decisions — not guesses — about where your education leads.</p>
+<!-- FINAL YEARS -->
+<section class="final-years">
+  <div class="section-head">
+    <p class="section-eyebrow">For Older Students</p>
+    <h2>Navigating the Final Years</h2>
+  </div>
+  <div class="fy-grid">
+    <div class="fy-card">
+      <span class="fy-tag">Ages 16–18</span>
+      <h3>IB Diploma</h3>
+      <p>The gold standard of international education. Compare IB schools by scores, specialist subjects, and EE support.</p>
+    </div>
+    <div class="fy-card">
+      <span class="fy-tag">UK System</span>
+      <h3>A-Levels</h3>
+      <p>Find schools offering the full A-Level range, with data on UCAS points and Oxbridge entry rates.</p>
+    </div>
+    <div class="fy-card">
+      <span class="fy-tag">US System</span>
+      <h3>AP & SAT</h3>
+      <p>Advanced Placement course availability, plus SAT/ACT prep resources and US university application guides.</p>
+    </div>
+    <div class="fy-card">
+      <span class="fy-tag">French System</span>
+      <h3>Baccalauréat</h3>
+      <p>AEFE-affiliated schools worldwide offering the French Bac, with results data and Grande École pathways.</p>
+    </div>
+    <div class="fy-card">
+      <span class="fy-tag">Swiss System</span>
+      <h3>Swiss Matura</h3>
+      <p>Cantonal and international schools offering the Swiss Matura with direct entry to Swiss federal universities.</p>
+    </div>
+  </div>
+</section>
 
-          <ul class="curricula__list" aria-label="Features of curriculum guides">
-            <li class="curricula__item">
-              <div class="curricula__check" aria-hidden="true">
-                <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6l3 3 5-5" stroke="#F5C842" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-              <div class="curricula__item-text">
-                <strong>Curriculum comparison tables</strong>
-                <span>See how IB, A-Levels, AP, CBSE, and more stack up for your target countries.</span>
-              </div>
-            </li>
-            <li class="curricula__item">
-              <div class="curricula__check" aria-hidden="true">
-                <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6l3 3 5-5" stroke="#F5C842" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-              <div class="curricula__item-text">
-                <strong>Subject selection guidance</strong>
-                <span>Know which combinations keep the most university doors open.</span>
-              </div>
-            </li>
-            <li class="curricula__item">
-              <div class="curricula__check" aria-hidden="true">
-                <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6l3 3 5-5" stroke="#F5C842" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-              <div class="curricula__item-text">
-                <strong>Grade conversion tools</strong>
-                <span>Translate your scores across grading systems with confidence.</span>
-              </div>
-            </li>
-            <li class="curricula__item">
-              <div class="curricula__check" aria-hidden="true">
-                <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 6l3 3 5-5" stroke="#F5C842" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </div>
-              <div class="curricula__item-text">
-                <strong>Final year checklists</strong>
-                <span>Personalised timelines so you never miss a deadline that matters.</span>
-              </div>
-            </li>
-          </ul>
+<!-- COUNTRIES -->
+<section class="countries">
+  <div class="section-head">
+    <p class="section-eyebrow">Explore by Destination</p>
+    <h2>Schools in every corner of the world</h2>
+  </div>
+  <div class="countries-grid">
+    <a class="country-card" href="#">
+      <span class="country-flag">🇦🇪</span>
+      <div class="country-name">UAE</div>
+      <div class="country-count">680 schools</div>
+    </a>
+    <a class="country-card" href="#">
+      <span class="country-flag">🇬🇧</span>
+      <div class="country-name">United Kingdom</div>
+      <div class="country-count">420 schools</div>
+    </a>
+    <a class="country-card" href="#">
+      <span class="country-flag">🇸🇬</span>
+      <div class="country-name">Singapore</div>
+      <div class="country-count">95 schools</div>
+    </a>
+    <a class="country-card" href="#">
+      <span class="country-flag">🇨🇭</span>
+      <div class="country-name">Switzerland</div>
+      <div class="country-count">112 schools</div>
+    </a>
+    <a class="country-card" href="#">
+      <span class="country-flag">🇳🇱</span>
+      <div class="country-name">Netherlands</div>
+      <div class="country-count">88 schools</div>
+    </a>
+    <a class="country-card" href="#">
+      <span class="country-flag">🇩🇪</span>
+      <div class="country-name">Germany</div>
+      <div class="country-count">145 schools</div>
+    </a>
+    <a class="country-card" href="#">
+      <span class="country-flag">🇰🇪</span>
+      <div class="country-name">Kenya</div>
+      <div class="country-count">64 schools</div>
+    </a>
+    <a class="country-card" href="#">
+      <span class="country-flag">🇿🇦</span>
+      <div class="country-name">South Africa</div>
+      <div class="country-count">78 schools</div>
+    </a>
+    <a class="country-card" href="#">
+      <span class="country-flag">🇳🇬</span>
+      <div class="country-name">Nigeria</div>
+      <div class="country-count">52 schools</div>
+    </a>
+    <a class="country-card" href="#">
+      <span class="country-flag">🇦🇺</span>
+      <div class="country-name">Australia</div>
+      <div class="country-count">190 schools</div>
+    </a>
+    <a class="country-card" href="#">
+      <span class="country-flag">🇳🇿</span>
+      <div class="country-name">New Zealand</div>
+      <div class="country-count">47 schools</div>
+    </a>
+    <a class="country-card" href="#">
+      <span class="country-flag">🌏</span>
+      <div class="country-name">More Countries</div>
+      <div class="country-count">View all 90+</div>
+    </a>
+  </div>
+</section>
 
-          <a href="#waitlist" class="btn btn--navy btn--lg">Explore Curricula</a>
+<!-- SPOTLIGHT -->
+<section class="spotlight">
+  <div class="spotlight-inner">
+    <div class="spotlight-content">
+      <p class="section-eyebrow">School Spotlight</p>
+      <h2>From Nairobi to Zürich — schools that deliver</h2>
+      <p>Each month our editorial team selects an exceptional school from our network and takes a close look at what makes it stand out for internationally mobile families — from pastoral care to university preparation.</p>
+      <blockquote class="spotlight-quote">
+        "Moving three children between four countries in six years taught us that the school community is everything. Global Compass helped us find ours."
+      </blockquote>
+      <p style="font-size:12px; color: var(--text-light);">— Miriam T., British expat family, currently Singapore</p>
+    </div>
+    <div class="spotlight-school">
+      <div class="school-badge">Featured School <span>✦</span></div>
+      <div class="school-name">The International School of Geneva</div>
+      <div class="school-location">📍 Geneva, Switzerland</div>
+      <p style="font-size:13px; color: var(--text-mid); line-height:1.6; margin-bottom:20px;">Founded in 1924, La Grande Boissière is the world's oldest international school — and remains one of its most respected, with exceptional IB results and a student body from 130 nationalities.</p>
+      <div class="school-stats">
+        <div class="school-stat">
+          <span class="num">98%</span>
+          <span class="lbl">IB Pass Rate</span>
         </div>
-
-        <div class="curricula__cards" aria-label="Supported curricula">
-          <article class="curric-card curric-card--active">
-            <div class="curric-card__abbr">IB</div>
-            <div class="curric-card__name">International Baccalaureate</div>
-            <div class="curric-card__badge">Most popular</div>
-          </article>
-          <article class="curric-card">
-            <div class="curric-card__abbr">A-Lvl</div>
-            <div class="curric-card__name">Cambridge A-Levels</div>
-            <div class="curric-card__badge">UK & Global</div>
-          </article>
-          <article class="curric-card">
-            <div class="curric-card__abbr">AP</div>
-            <div class="curric-card__name">Advanced Placement</div>
-            <div class="curric-card__badge">US-aligned</div>
-          </article>
-          <article class="curric-card">
-            <div class="curric-card__abbr">CBSE</div>
-            <div class="curric-card__name">Central Board India</div>
-            <div class="curric-card__badge">South Asia</div>
-          </article>
-          <article class="curric-card">
-            <div class="curric-card__abbr">MYP</div>
-            <div class="curric-card__name">Middle Years Programme</div>
-            <div class="curric-card__badge">IB pathway</div>
-          </article>
-          <article class="curric-card">
-            <div class="curric-card__abbr">IGCSE</div>
-            <div class="curric-card__name">Cambridge IGCSE</div>
-            <div class="curric-card__badge">Foundation</div>
-          </article>
+        <div class="school-stat">
+          <span class="num">130</span>
+          <span class="lbl">Nationalities</span>
+        </div>
+        <div class="school-stat">
+          <span class="num">4,500</span>
+          <span class="lbl">Students</span>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ─── Countries ─────────────────────────────────────────── -->
-  <section class="section countries" id="countries" aria-labelledby="countries-heading">
-    <div class="container">
-      <div class="countries__header">
-        <span class="eyebrow">Study Destinations</span>
-        <h2 id="countries-heading">Where will your education take you?</h2>
-        <p>Explore comprehensive guides for every major study destination — education systems, admission requirements, student visa details, and what life is actually like on the ground.</p>
-      </div>
+<!-- WAITLIST -->
+<section class="waitlist">
+  <h2>Be first to know</h2>
+  <p>Join the waitlist for Pro access — early members receive priority onboarding and a founding-member rate locked in for life.</p>
+  <div class="waitlist-form">
+    <input type="email" placeholder="Your email address" />
+    <button>Join Waitlist</button>
+  </div>
+  <p class="waitlist-note">No spam. No pricing visible until you're ready. Unsubscribe any time.</p>
+</section>
 
-      <div class="countries__grid" role="list" aria-label="Featured study destinations">
-        <article class="country-card" role="listitem" tabindex="0">
-          <div class="country-card__flag" aria-hidden="true">🇬🇧</div>
-          <div class="country-card__name">United Kingdom</div>
-          <div class="country-card__meta">A-Levels · UCAS · Russell Group</div>
-          <div class="country-card__tag">2,400+ schools</div>
-        </article>
-        <article class="country-card" role="listitem" tabindex="0">
-          <div class="country-card__flag" aria-hidden="true">🇺🇸</div>
-          <div class="country-card__name">United States</div>
-          <div class="country-card__meta">AP · SAT · Common App</div>
-          <div class="country-card__tag">3,100+ schools</div>
-        </article>
-        <article class="country-card" role="listitem" tabindex="0">
-          <div class="country-card__flag" aria-hidden="true">🇨🇦</div>
-          <div class="country-card__name">Canada</div>
-          <div class="country-card__meta">Provincial curricula · OUAC</div>
-          <div class="country-card__tag">800+ schools</div>
-        </article>
-        <article class="country-card" role="listitem" tabindex="0">
-          <div class="country-card__flag" aria-hidden="true">🇦🇺</div>
-          <div class="country-card__name">Australia</div>
-          <div class="country-card__meta">ATAR · IB · VCE</div>
-          <div class="country-card__tag">1,200+ schools</div>
-        </article>
-        <article class="country-card" role="listitem" tabindex="0">
-          <div class="country-card__flag" aria-hidden="true">🇦🇪</div>
-          <div class="country-card__name">UAE</div>
-          <div class="country-card__meta">IB · British · American curricula</div>
-          <div class="country-card__tag">600+ schools</div>
-        </article>
-        <article class="country-card" role="listitem" tabindex="0">
-          <div class="country-card__flag" aria-hidden="true">🇸🇬</div>
-          <div class="country-card__name">Singapore</div>
-          <div class="country-card__meta">IB · Cambridge · Local</div>
-          <div class="country-card__tag">380+ schools</div>
-        </article>
-        <article class="country-card" role="listitem" tabindex="0">
-          <div class="country-card__flag" aria-hidden="true">🇩🇪</div>
-          <div class="country-card__name">Germany</div>
-          <div class="country-card__meta">Abitur · IB · Free tuition</div>
-          <div class="country-card__tag">420+ schools</div>
-        </article>
-        <article class="country-card" role="listitem" tabindex="0">
-          <div class="country-card__flag" aria-hidden="true">🇳🇱</div>
-          <div class="country-card__name">Netherlands</div>
-          <div class="country-card__meta">VWO · IB · English-taught</div>
-          <div class="country-card__tag">290+ schools</div>
-        </article>
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="wordmark">
+        <div class="wordmark-top">
+          <div class="wordmark-rule wordmark-rule-left"></div>
+          <span class="wm-global">Global</span>
+          <div class="wordmark-rule wordmark-rule-right"></div>
+        </div>
+        <div class="wm-compass-row">
+          <span class="wm-compass">C<span class="gold-o">O</span>MPASS</span>
+        </div>
+        <span class="wm-tagline">Education Worldwide</span>
       </div>
-
-      <div class="countries__cta">
-        <a href="#waitlist" class="btn btn--navy btn--lg">Browse All 120+ Countries</a>
-        <p>New destination guides added every week</p>
-      </div>
+      <p class="footer-tagline">Helping families find their<br>footing — wherever they land.</p>
     </div>
-  </section>
-
-  <!-- ─── Spotlight / How it works ─────────────────────────── -->
-  <section class="section spotlight" id="final-years" aria-labelledby="spotlight-heading">
-    <div class="container">
-      <div class="spotlight__layout">
-        <div class="spotlight__text">
-          <span class="eyebrow eyebrow--light">Student Stories</span>
-          <h2 id="spotlight-heading">Real students. Real outcomes.</h2>
-          <p>GlobalCompass isn't built in a vacuum. It's shaped by thousands of students who've already made the journey — and come back to share what they wish they'd known.</p>
-
-          <div class="spotlight__steps" aria-label="How GlobalCompass works">
-            <div class="spotlight__step">
-              <div class="spotlight__step-num" aria-label="Step 1">1</div>
-              <div>
-                <div class="spotlight__step-title">Tell us where you are</div>
-                <div class="spotlight__step-desc">Your current school, curriculum, grade level, and where in the world you're studying right now.</div>
-              </div>
-            </div>
-            <div class="spotlight__step">
-              <div class="spotlight__step-num" aria-label="Step 2">2</div>
-              <div>
-                <div class="spotlight__step-title">Define where you want to go</div>
-                <div class="spotlight__step-desc">Dream universities, preferred study destinations, and the subjects or career paths that excite you most.</div>
-              </div>
-            </div>
-            <div class="spotlight__step">
-              <div class="spotlight__step-num" aria-label="Step 3">3</div>
-              <div>
-                <div class="spotlight__step-title">Get your personalised roadmap</div>
-                <div class="spotlight__step-desc">A clear pathway from your current position to your goals, with timelines, requirements, and real stories from students who've done it.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div class="spotlight__testimonial">
-            <div class="testimonial__stars" aria-label="5 out of 5 stars">
-              <span aria-hidden="true">★★★★★</span>
-            </div>
-            <div class="testimonial__quote">
-              Moving from CBSE in India to IB in Dubai felt overwhelming. GlobalCompass showed me exactly what credits would transfer, which subjects to take, and which universities would accept my profile. I got into Maastricht University.
-            </div>
-            <div class="testimonial__author">
-              <div class="testimonial__avatar" aria-hidden="true">A</div>
-              <div>
-                <div class="testimonial__name">Arjun Mehta</div>
-                <div class="testimonial__detail">Dubai → Maastricht University, Netherlands</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="spotlight__more-stories" aria-label="More testimonials navigation">
-            <div class="story-dot active" tabindex="0" role="button" aria-label="Story 1"></div>
-            <div class="story-dot" tabindex="0" role="button" aria-label="Story 2"></div>
-            <div class="story-dot" tabindex="0" role="button" aria-label="Story 3"></div>
-            <div class="story-dot" tabindex="0" role="button" aria-label="Story 4"></div>
-          </div>
-        </div>
-      </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <a href="#">Find Schools</a>
+      <a href="#">Curricula Guide</a>
+      <a href="#">Countries</a>
+      <a href="#">Universities</a>
     </div>
-  </section>
-
-  <!-- ─── Forum ────────────────────────────────────────────── -->
-  <section class="section forum" id="forum" aria-labelledby="forum-heading">
-    <div class="container">
-      <div class="forum__header">
-        <span class="eyebrow">Community Forum</span>
-        <h2 id="forum-heading">You're not navigating alone</h2>
-        <p>Thousands of students and parents share experiences, answer questions, and support each other through every step of the international education journey.</p>
-      </div>
-
-      <div class="forum__grid" role="list" aria-label="Recent forum discussions">
-        <article class="forum-card" role="listitem">
-          <div class="forum-card__tag">IB Diploma</div>
-          <h3>IB HL Maths vs SL — which opens more engineering doors in the UK?</h3>
-          <p>Planning to apply to Imperial and UCL for Mechanical Engineering. Wondering if HL Maths is really essential or if SL with high grades is enough.</p>
-          <div class="forum-card__meta">
-            <span class="forum-card__author">Priya K.</span>
-            <span>47 replies · 2h ago</span>
-          </div>
-        </article>
-
-        <article class="forum-card" role="listitem">
-          <div class="forum-card__tag">A-Levels</div>
-          <h3>Moving from Dubai British curriculum to Canada — what credit equivalencies should I expect?</h3>
-          <p>Family is relocating to Toronto mid-year. I'm in Year 12 doing Edexcel A-Levels. Hoping to hear from anyone who's made this transition.</p>
-          <div class="forum-card__meta">
-            <span class="forum-card__author">Lena M.</span>
-            <span>31 replies · 5h ago</span>
-          </div>
-        </article>
-
-        <article class="forum-card" role="listitem">
-          <div class="forum-card__tag">Universities</div>
-          <h3>Realistic IB score for NUS Medicine? Current predicted 38 — is it worth applying?</h3>
-          <p>My school counsellor says 40+ is needed but I've seen people online say it's more about the full profile. Looking for data points from actual applicants.</p>
-          <div class="forum-card__meta">
-            <span class="forum-card__author">Wei T.</span>
-            <span>62 replies · 1d ago</span>
-          </div>
-        </article>
-      </div>
-
-      <div class="forum__cta">
-        <a href="#waitlist" class="btn btn--navy btn--lg">Join the Forum</a>
-      </div>
+    <div class="footer-col">
+      <h4>Community</h4>
+      <a href="#">Parent Forum</a>
+      <a href="#">School Reviews</a>
+      <a href="#">Relocation Advice</a>
+      <a href="#">Newsletter</a>
     </div>
-  </section>
-
-  <!-- ─── Universities ──────────────────────────────────────── -->
-  <section class="section universities" id="universities" aria-labelledby="universities-heading">
-    <div class="container">
-      <div class="universities__header">
-        <span class="eyebrow">University Database</span>
-        <h2 id="universities-heading">Know before you apply</h2>
-        <p>Detailed profiles for every major university — entry requirements by curriculum, acceptance rates, scholarship opportunities, and first-hand student reviews.</p>
-      </div>
-
-      <div class="uni-grid" role="list" aria-label="Featured universities">
-        <article class="uni-card" role="listitem">
-          <div class="uni-card__rank">QS #1</div>
-          <div class="uni-card__initial" aria-hidden="true">MIT</div>
-          <div class="uni-card__name">MIT</div>
-          <div class="uni-card__location">Cambridge, USA</div>
-          <div class="uni-card__flags" aria-label="Accepts IB, AP, A-Levels">🎓 IB · AP · A-Lvl</div>
-        </article>
-        <article class="uni-card" role="listitem">
-          <div class="uni-card__rank">QS #2</div>
-          <div class="uni-card__initial" aria-hidden="true">IC</div>
-          <div class="uni-card__name">Imperial College</div>
-          <div class="uni-card__location">London, UK</div>
-          <div class="uni-card__flags" aria-label="Accepts IB, A-Levels">🎓 IB · A-Lvl</div>
-        </article>
-        <article class="uni-card" role="listitem">
-          <div class="uni-card__rank">QS #3</div>
-          <div class="uni-card__initial" aria-hidden="true">Ox</div>
-          <div class="uni-card__name">University of Oxford</div>
-          <div class="uni-card__location">Oxford, UK</div>
-          <div class="uni-card__flags" aria-label="Accepts IB, A-Levels">🎓 IB · A-Lvl</div>
-        </article>
-        <article class="uni-card" role="listitem">
-          <div class="uni-card__rank">QS #8</div>
-          <div class="uni-card__initial" aria-hidden="true">NUS</div>
-          <div class="uni-card__name">NUS Singapore</div>
-          <div class="uni-card__location">Singapore</div>
-          <div class="uni-card__flags" aria-label="Accepts IB, A-Levels, AP">🎓 IB · A-Lvl · AP</div>
-        </article>
-        <article class="uni-card" role="listitem">
-          <div class="uni-card__rank">QS #22</div>
-          <div class="uni-card__initial" aria-hidden="true">TU</div>
-          <div class="uni-card__name">TU Munich</div>
-          <div class="uni-card__location">Munich, Germany</div>
-          <div class="uni-card__flags" aria-label="Accepts IB, Abitur">🎓 IB · Abitur</div>
-        </article>
-        <article class="uni-card" role="listitem">
-          <div class="uni-card__rank">QS #40</div>
-          <div class="uni-card__initial" aria-hidden="true">UofT</div>
-          <div class="uni-card__name">University of Toronto</div>
-          <div class="uni-card__location">Toronto, Canada</div>
-          <div class="uni-card__flags" aria-label="Accepts IB, AP, A-Levels">🎓 IB · AP · A-Lvl</div>
-        </article>
-        <article class="uni-card" role="listitem">
-          <div class="uni-card__rank">QS #55</div>
-          <div class="uni-card__initial" aria-hidden="true">UM</div>
-          <div class="uni-card__name">Maastricht University</div>
-          <div class="uni-card__location">Maastricht, Netherlands</div>
-          <div class="uni-card__flags" aria-label="Accepts IB, A-Levels">🎓 IB · A-Lvl</div>
-        </article>
-        <article class="uni-card" role="listitem">
-          <div class="uni-card__rank">QS #70</div>
-          <div class="uni-card__initial" aria-hidden="true">UAEU</div>
-          <div class="uni-card__name">UAE University</div>
-          <div class="uni-card__location">Al Ain, UAE</div>
-          <div class="uni-card__flags" aria-label="Accepts IB, A-Levels, CBSE">🎓 IB · A-Lvl · CBSE</div>
-        </article>
-      </div>
-
-      <div class="universities__cta">
-        <a href="#waitlist" class="btn btn--navy btn--lg">Search 5,000+ Universities</a>
-      </div>
+    <div class="footer-col">
+      <h4>Company</h4>
+      <a href="#">About Us</a>
+      <a href="#">Editorial Standards</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Contact</a>
     </div>
-  </section>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Global Compass Education Ltd. All rights reserved.</span>
+    <span>Built for families on the move.</span>
+  </div>
+</footer>
 
-  <!-- ─── Waitlist ───────────────────────────────────────────── -->
-  <section class="section waitlist" id="waitlist" aria-labelledby="waitlist-heading">
-    <div class="container">
-      <div class="waitlist__inner">
-        <div class="waitlist__icon" aria-hidden="true">🧭</div>
-        <span class="eyebrow eyebrow--light">Early Access</span>
-        <h2 id="waitlist-heading">Your compass is ready when you are</h2>
-        <p>Join thousands of students already using GlobalCompass to chart smarter paths to better universities. Early access members get free premium features at launch.</p>
+<!-- PRO MODAL -->
+<div class="modal-backdrop" id="proModal">
+  <div class="modal">
+    <button class="modal-close" id="modalClose">✕</button>
+    <div class="modal-badge">Global Compass Pro</div>
+    <h2>The complete toolkit for expat education</h2>
+    <p class="modal-intro">Pro gives you full access to every tool we've built for internationally mobile families — from deep school comparisons to real-time admissions alerts.</p>
+    <ul class="modal-perks">
+      <li>Unlimited school comparisons with side-by-side fee breakdowns</li>
+      <li>Real-time availability alerts when a place opens at your target school</li>
+      <li>Direct access to our admissions specialists via private forum</li>
+      <li>Curated university pathways report for your child's curriculum</li>
+      <li>Full relocation checklists with country-by-country timelines</li>
+      <li>Early access to new destinations, tools, and annual rankings</li>
+    </ul>
+    <button class="modal-cta">Join the Waitlist for Pro</button>
+    <p class="modal-fine">No commitment required. We'll be in touch when early access opens.</p>
+  </div>
+</div>
 
-        <form class="waitlist__form" onsubmit="handleWaitlist(event)" novalidate aria-label="Early access sign-up form">
-          <input
-            type="email"
-            class="waitlist__input"
-            placeholder="your@email.com"
-            id="waitlistEmail"
-            required
-            autocomplete="email"
-            aria-label="Email address"
-          />
-          <button type="submit" class="btn btn--primary btn--lg">Get Early Access</button>
-        </form>
-        <p class="waitlist__note" id="waitlistMsg">Free forever for students · No credit card needed</p>
+<script>
+  const proBtn = document.getElementById('proBtn');
+  const proModal = document.getElementById('proModal');
+  const modalClose = document.getElementById('modalClose');
 
-        <div class="waitlist__social-proof" aria-label="Community social proof">
-          <div class="waitlist__avatars" aria-hidden="true">
-            <div class="waitlist__avatar">A</div>
-            <div class="waitlist__avatar">P</div>
-            <div class="waitlist__avatar">L</div>
-            <div class="waitlist__avatar">W</div>
-            <div class="waitlist__avatar">+</div>
-          </div>
-          <p class="waitlist__social-text"><strong>4,200+</strong> students already on the waitlist</p>
-        </div>
-      </div>
-    </div>
-  </section>
+  proBtn.addEventListener('click', () => proModal.classList.add('open'));
+  modalClose.addEventListener('click', () => proModal.classList.remove('open'));
+  proModal.addEventListener('click', (e) => {
+    if (e.target === proModal) proModal.classList.remove('open');
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') proModal.classList.remove('open');
+  });
+</script>
 
-  <!-- ─── Footer ────────────────────────────────────────────── -->
-  <footer class="footer" aria-label="Site footer">
-    <div class="container">
-      <div class="footer__grid">
-        <div class="footer__brand">
-          <div class="footer__logo">
-            <div class="footer__logo-mark" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="12" r="10" stroke="#1B3A7A" stroke-width="2"/>
-                <path d="M12 2C12 2 8 7 8 12C8 17 12 22 12 22" stroke="#1B3A7A" stroke-width="1.5"/>
-                <path d="M12 2C12 2 16 7 16 12C16 17 12 22 12 22" stroke="#1B3A7A" stroke-width="1.5"/>
-                <line x1="2" y1="12" x2="22" y2="12" stroke="#1B3A7A" stroke-width="1.5"/>
-                <line x1="3.5" y1="7" x2="20.5" y2="7" stroke="#1B3A7A" stroke-width="1.5"/>
-                <line x1="3.5" y1="17" x2="20.5" y2="17" stroke="#1B3A7A" stroke-width="1.5"/>
-              </svg>
-            </div>
-            Global<span>Compass</span>
-          </div>
-          <p class="footer__desc">The education portal for students navigating the world of international schooling and university admissions.</p>
-          <div class="footer__social" aria-label="Social media links">
-            <a href="#" aria-label="Twitter / X">𝕏</a>
-            <a href="#" aria-label="LinkedIn">in</a>
-            <a href="#" aria-label="Instagram">ig</a>
-            <a href="#" aria-label="YouTube">▶</a>
-          </div>
-        </div>
-
-        <div class="footer__col">
-          <div class="footer__col-title">Platform</div>
-          <ul>
-            <li><a href="#schools">School Finder</a></li>
-            <li><a href="#curricula">Curricula Guide</a></li>
-            <li><a href="#final-years">Final Year Planner</a></li>
-            <li><a href="#countries">Country Guides</a></li>
-            <li><a href="#universities">University Search</a></li>
-            <li><a href="#forum">Community Forum</a></li>
-          </ul>
-        </div>
-
-        <div class="footer__col">
-          <div class="footer__col-title">Curricula</div>
-          <ul>
-            <li><a href="#">IB Diploma</a></li>
-            <li><a href="#">Cambridge A-Levels</a></li>
-            <li><a href="#">Advanced Placement</a></li>
-            <li><a href="#">CBSE & ICSE</a></li>
-            <li><a href="#">IGCSE</a></li>
-            <li><a href="#">All Curricula</a></li>
-          </ul>
-        </div>
-
-        <div class="footer__col">
-          <div class="footer__col-title">Company</div>
-          <ul>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">For Schools</a></li>
-            <li><a href="#">For Counsellors</a></li>
-            <li><a href="#">Blog</a></li>
-            <li><a href="#">Careers</a></li>
-            <li><a href="#">Contact</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="footer__bottom">
-        <p class="footer__copy">© 2025 GlobalCompass. All rights reserved.</p>
-        <nav class="footer__legal" aria-label="Legal links">
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms of Service</a>
-          <a href="#">Cookie Settings</a>
-        </nav>
-      </div>
-    </div>
-  </footer>
-
-  <!-- ─── Scripts ───────────────────────────────────────────── -->
-  <script>
-    // Navigation scroll effect
-    const nav = document.getElementById('mainNav');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 20);
-    }, { passive: true });
-
-    // Mobile menu
-    function toggleMenu() {
-      const menu = document.getElementById('mobileMenu');
-      const isOpen = menu.classList.toggle('open');
-      document.body.style.overflow = isOpen ? 'hidden' : '';
-    }
-    function closeMenu() {
-      document.getElementById('mobileMenu').classList.remove('open');
-      document.body.style.overflow = '';
-    }
-
-    // Waitlist form
-    function handleWaitlist(e) {
-      e.preventDefault();
-      const input = document.getElementById('waitlistEmail');
-      const msg   = document.getElementById('waitlistMsg');
-      if (input.value && input.validity.valid) {
-        msg.textContent = "🎉 You're on the list! We'll be in touch soon.";
-        msg.style.color = '#FDE99A';
-        input.value = '';
-      } else {
-        msg.textContent = 'Please enter a valid email address.';
-        msg.style.color = '#FF8A8A';
-      }
-    }
-
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
-        const target = document.querySelector(a.getAttribute('href'));
-        if (target) {
-          e.preventDefault();
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          closeMenu();
-        }
-      });
-    });
-
-    // Scroll-reveal animation
-    const revealEls = document.querySelectorAll('.feature-card, .country-card, .forum-card, .uni-card, .curric-card');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = entry.target.style.transform.replace('translateY(20px)', 'translateY(0)');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.1 });
-
-    revealEls.forEach(el => {
-      el.style.opacity = '0';
-      el.style.transform += ' translateY(20px)';
-      el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-      observer.observe(el);
-    });
-  </script>
 </body>
 </html>
