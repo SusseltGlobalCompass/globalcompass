@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlobalCompass — Career Simulator</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
+.screen{display:none}.screen.active{display:block}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:#1B3A7A}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.wm-wrap{display:flex;flex-direction:column}
+.wm-global-row{display:flex;align-items:center;gap:5px;margin-bottom:2px}
+.wm-rule{height:0.7px;background:rgba(245,200,66,0.5);flex:1}
+.wm-global{font-family:'Montserrat',sans-serif;font-size:7px;font-weight:300;color:#fff;letter-spacing:0.3em;text-transform:uppercase}
+.wm-compass{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:800;color:#fff;letter-spacing:
+cat > career-simulator.html << 'EOF'
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlobalCompass — Career Simulator</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
+.screen{display:none}.screen.active{display:block}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:#1B3A7A}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.wm-wrap{display:flex;flex-direction:column}
+.wm-global-row{display:flex;align-items:center;gap:5px;margin-bottom:2px}
+.wm-rule{height:0.7px;background:rgba(245,200,66,0.5);flex:1}
+.wm-global{font-family:'Montserrat',sans-serif;font-size:7px;font-weight:300;color:#fff;letter-spacing:0.3em;text-transform:uppercase}
+.wm-compass{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:800;color:#fff;letter-spacing:0.07em;text-transform:uppercase;line-height:1}
+.wm-compass .o{color:#F5C842}
+.nav-tag{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;color:#F5C842;letter-spacing:0.12em;text-transform:uppercase;background:rgba(245,200,66,0.12);padding:4px 12px;border-radius:99px;border:0.5px solid rgba(245,200,66,0.3)}
+.hero-bar{background:linear-gradient(135deg,#1B3A7A,#2952A3);padding:32px 24px;text-align:center}
+.hero-eyebrow{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:#F5C842;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:10px}
+.hero-h{font-family:'Playfair Display',serif;font-size:26px;font-weight:500;color:#fff;line-height:1.3;margin-bottom:8px}
+.hero-h em{color:#F5C842;font-style:normal}
+.hero-p{font-size:13px;color:#A8C4F5;line-height:1.7;max-width:480px;margin:0 auto;font-weight:300}
+.main{max-width:680px;margin:0 auto;padding:28px 24px}
+.step-indicator{display:flex;align-items:center;gap:0;margin-bottom:28px}
+.step{display:flex;flex-direction:column;align-items:center;flex:1;position:relative}
+.step-circle{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:'Montserrat',sans-serif;transition:all 0.3s;z-index:1}
+.step-circle.done{background:#F5C842;color:#1B3A7A}
+.step-circle.active{background:#1B3A7A;color:#F5C842;border:2px solid #F5C842}
+.step-circle.pending{background:#E0E8F5;color:#9AB0D0}
+.step-label{font-size:9px;color:#9AB0D0;margin-top:4px;text-align:center;font-weight:500;letter-spacing:0.04em;font-family:'Montserrat',sans-serif;text-transform:uppercase}
+.step-label.active{color:#1B3A7A;font-weight:700}
+.step-line{height:1px;background:#E0E8F5;flex:1;margin-top:-14px;z-index:0}
+.step-line.done{background:#F5C842}
+.card{background:#fff;border:0.5px solid #E0E8F5;border-radius:16px;padding:24px;margin-bottom:16px}
+.card-title{font-family:'Playfair Display',serif;font-size:18px;color:#0D1F4A;margin-bottom:6px}
+.card-sub{font-size:13px;color:#4A6FA5;line-height:1.6;margin-bottom:20px;font-weight:300}
+.dream-input{width:100%;border:1.5px solid #E0E8F5;border-radius:12px;padding:14px 16px;font-size:14px;color:#0D1F4A;font-family:'Inter',sans-serif;outline:none;resize:none;min-height:100px;transition:border-color 0.15s;line-height:1.6}
+.dream-input:focus{border-color:#1B3A7A}
+.dream-input::placeholder{color:#9AB0D0}
+.example-prompts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.ep{font-size:11px;padding:5px 12px;border-radius:99px;border:0.5px solid #C0D0E8;color:#2952A3;cursor:pointer;background:#EEF3FF;font-family:'Inter',sans-serif;transition:all 0.15s;font-weight:500}
+.ep:hover{background:#1B3A7A;color:#F5C842;border-color:#1B3A7A}
+.options-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opt-card{border:1.5px solid #E0E8F5;border-radius:12px;padding:14px;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;gap:10px}
+.opt-card:hover{border-color:#2952A3;background:#EEF3FF}
+.opt-card.selected{border-color:#1B3A7A;background:#EEF3FF}
+.opt-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.opt-title{font-size:13px;font-weight:600;color:#0D1F4A;margin-bottom:2px;font-family:'Montserrat',sans-serif}
+.opt-sub{font-size:11px;color:#4A6FA5}
+.btn-row{display:flex;justify-content:space-between;align-items:center;margin-top:20px}
+.btn-back{font-size:13px;padding:9px 20px;border-radius:99px;border:1px solid #E0E8F5;background:transparent;color:#4A6FA5;cursor:pointer;font-family:'Inter',sans-serif}
+.btn-next{font-size:13px;padding:9px 24px;border-radius:99px;border:none;background:#1B3A7A;color:#F5C842;cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:700}
+.btn-next:disabled{opacity:0.4;cursor:not-allowed}
+.btn-next.gold{background:#F5C842;color:#1B3A7A}
+.loading-wrap{text-align:center;padding:40px 0}
+.loading-icon{font-size:36px;color:#F5C842;animation:spin 1s linear infinite;display:block;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-family:'Playfair Display',serif;font-size:16px;color:#0D1F4A;margin-bottom:6px}
+.loading-sub{font-size:12px;color:#4A6FA5;font-weight:300}
+.result-hero{text-align:center;padding:20px 0 24px;border-bottom:1px solid #E0E8F5;margin-bottom:24px}
+.result-tag{display:inline-flex;align-items:center;gap:6px;font-size:10px;padding:4px 12px;border-radius:99px;background:#EEF3FF;color:#2952A3;margin-bottom:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;font-family:'Montserrat',sans-serif}
+.result-career{font-family:'Playfair Display',serif;font-size:22px;color:#0D1F4A;margin-bottom:6px}
+.result-summary{font-size:13px;color:#4A6FA5;line-height:1.7;font-weight:300;max-width:500px;margin:0 auto}
+.subjects-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.subject-card{border-radius:12px;padding:14px;border:0.5px solid #E0E8F5}
+.subject-card.essential{background:#1B3A7A;border-color:#1B3A7A}
+.subject-card.recommended{background:#EEF3FF;border-color:#C0D0E8}
+.subject-card.optional{background:#F8F9FF;border-color:#E0E8F5}
+.s-badge{font-size:9px;padding:2px 8px;border-radius:99px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;font-family:'Montserrat',sans-serif;margin-bottom:8px;display:inline-block}
+.badge-essential{background:rgba(245,200,66,0.2);color:#F5C842}
+.badge-recommended{background:#C0D0E8;color:#2952A3}
+.badge-optional{background:#E0E8F5;color:#4A6FA5}
+.s-name{font-size:14px;font-weight:700;color:#fff;margin-bottom:3px;font-family:'Montserrat',sans-serif}
+.s-name-dk{font-size:14px;font-weight:700;color:#0D1F4A;margin-bottom:3px;font-family:'Montserrat',sans-serif}
+.s-why{font-size:11px;color:rgba(255,255,255,0.7);line-height:1.5}
+.s-why-dk{font-size:11px;color:#4A6FA5;line-height:1.5}
+.hidden-req{background:#FFF8E6;border:1px solid #F5C842;border-radius:12px;padding:16px;margin-bottom:16px}
+.hidden-req-title{font-size:12px;font-weight:700;color:#1B3A7A;margin-bottom:8px;font-family:'Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.06em}
+.hidden-req-list{display:flex;flex-direction:column;gap:6px}
+.hidden-req-item{font-size:12px;color:#2C1800;display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.workload-bar{margin-bottom:16px}
+.workload-label{display:flex;justify-content:space-between;margin-bottom:6px}
+.workload-name{font-size:12px;font-weight:600;color:#0D1F4A;font-family:'Montserrat',sans-serif}
+.workload-pct{font-size:12px;font-weight:700;color:#1B3A7A}
+.bar-track{background:#E0E8F5;border-radius:99px;height:6px}
+.bar-fill{height:6px;border-radius:99px;background:linear-gradient(90deg,#1B3A7A,#F5C842);transition:width 0.8s}
+.ucas-box{background:#1B3A7A;border-radius:12px;padding:16px;display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.ucas-text h4{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#F5C842;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px}
+.ucas-text p{font-size:11px;color:#A8C4F5;font-weight:300}
+.ucas-points{font-family:'Playfair Display',serif;font-size:28px;color:#F5C842;font-weight:500}
+.action-row{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+.action-btn{font-size:12px;padding:10px 20px;border-radius:99px;cursor:pointer;font-weight:700;font-family:'Montserrat',sans-serif;border:none;letter-spacing:0.02em}
+.ai-bubble{background:#EEF3FF;border-radius:0 12px 12px 12px;padding:14px 16px;margin-bottom:12px;border:0.5px solid #C0D0E8}
+.ai-bubble p{font-size:13px;color:#0D1F4A;line-height:1.7}
+.ai-label{font-size:10px;font-weight:700;color:#2952A3;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;font-family:'Montserrat',sans-serif}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo">
+    <svg width="28" height="28" viewBox="0 0 64 64" fill="none">
+      <circle cx="32" cy="32" r="29" stroke="#F5C842" stroke-width="1.4" fill="none"/>
+      <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <circle cx="32" cy="32" r="3" fill="#F5C842"/>
+      <polygon points="32,4 35,25 32,26.5 29,25" fill="#F5C842"/>
+    </svg>
+    <div class="wm-wrap">
+      <div class="wm-global-row"><div class="wm-rule"></div><div class="wm-global">GLOBAL</div><div class="wm-rule"></div></div>
+      <div class="wm-compass">C<span class="o">O</span>MPASS</div>
+    </div>
+  </div>
+  <div class="nav-tag">Final Years · Career Simulator</div>
+</nav>
+<div class="hero-bar">
+  <div class="hero-eyebrow">World first · Sixth Form Navigator</div>
+  <h1 class="hero-h">What problems do you want to<br><em>solve in 10 years?</em></h1>
+  <p class="hero-p">Tell us your dream — GlobalCompass maps it backwards to the exact A-Level subjects, hidden university requirements, and extracurriculars you need.</p>
+</div>
+<div class="main">
+  <div class="step-indicator">
+    <div class="step"><div class="step-circle active" id="sc1">1</div><div class="step-label active">Dream</div></div>
+    <div class="step-line" id="sl1"></div>
+    <div class="step"><div class="step-circle pending" id="sc2">2</div><div class="step-label">University</div></div>
+    <div class="step-line" id="sl2"></div>
+    <div class="step"><div class="step-circle pending" id="sc3">3</div><div class="step-label">Strengths</div></div>
+    <div class="step-line" id="sl3"></div>
+    <div class="step"><div class="step-circle pending" id="sc4">4</div><div class="step-label">Your Map</div></div>
+  </div>
+  <div id="s1" class="screen active">
+    <div class="card">
+      <div class="card-title">Describe your dream</div>
+      <div class="card-sub">Do not think about subjects yet. Tell us what you want to do, what problems you want to solve, or what kind of life you want in 10 years.</div>
+      <textarea class="dream-input" id="dreamInput" placeholder="e.g. I want to work on sustainable cities and help communities adapt to climate change…"></textarea>
+      <div class="example-prompts">
+        <span class="ep" onclick="setDream('I want to develop life-saving medicines and work in medical research')">💊 Medical research</span>
+        <span class="ep" onclick="setDream('I want to build technology that connects people and changes how we communicate')">💻 Tech & innovation</span>
+        <span class="ep" onclick="setDream('I want to defend people in court and fight for justice')">⚖️ Law & justice</span>
+        <span class="ep" onclick="setDream('I want to design sustainable buildings and reshape cities for the future')">🏙️ Architecture</span>
+        <span class="ep" onclick="setDream('I want to understand markets and help businesses grow globally')">📈 Business & finance</span>
+        <span class="ep" onclick="setDream('I want to create films and stories that move people emotionally')">🎬 Creative arts</span>
+      </div>
+    </div>
+    <div class="btn-row"><div></div><button class="btn-next" id="btn1" onclick="goStep2()" disabled>Next — Choose university destination →</button></div>
+  </div>
+  <div id="s2" class="screen">
+    <div class="card">
+      <div class="card-title">Where do you want to study?</div>
+      <div class="card-sub">This shapes which A-Level combinations and grade requirements GlobalCompass maps for you.</div>
+      <div class="options-grid">
+        <div class="opt-card" onclick="selectUni(this,'UK Russell Group — Oxford, Cambridge, LSE, Imperial')"><div class="opt-icon">🇬🇧</div><div><div class="opt-title">UK Russell Group</div><div class="opt-sub">Oxford, Cambridge, LSE, Imperial, UCL</div></div></div>
+        <div class="opt-card" onclick="selectUni(this,'USA Ivy League and top US universities')"><div class="opt-icon">🇺🇸</div><div><div class="opt-title">USA Top Universities</div><div class="opt-sub">Harvard, MIT, Stanford, Ivy League</div></div></div>
+        <div class="opt-card" onclick="selectUni(this,'Europe top universities — ETH Zurich, Sciences Po, TU Munich')"><div class="opt-icon">🇪🇺</div><div><div class="opt-title">Europe</div><div class="opt-sub">ETH Zurich, Sciences Po, TU Munich</div></div></div>
+        <div class="opt-card" onclick="selectUni(this,'UAE and Gulf — NYU Abu Dhabi, AUS, UAEU')"><div class="opt-icon">🇦🇪</div><div><div class="opt-title">UAE & Gulf</div><div class="opt-sub">NYU Abu Dhabi, AUS, UAEU, KU</div></div></div>
+        <div class="opt-card" onclick="selectUni(this,'Australia Group of Eight — Melbourne, Sydney, ANU, UNSW')"><div class="opt-icon">🇦🇺</div><div><div class="opt-title">Australia</div><div class="opt-sub">Melbourne, Sydney, ANU, UNSW</div></div></div>
+        <div class="opt-card" onclick="selectUni(this,'Worldwide open — keeping all global options')"><div class="opt-icon">🌍</div><div><div class="opt-title">Worldwide — open</div><div class="opt-sub">Keep all global options open</div></div></div>
+      </div>
+    </div>
+    <div class="btn-row"><button class="btn-back" onclick="goStep(1)">← Back</button><button class="btn-next" id="btn2" onclick="goStep3()" disabled>Next — Tell us your strengths →</button></div>
+  </div>
+  <div id="s3" class="screen">
+    <div class="card">
+      <div class="card-title">What are your academic strengths?</div>
+      <div class="card-sub">Select all that apply — this helps GlobalCompass balance your workload and avoid burnout risk.</div>
+      <div class="options-grid">
+        <div class="opt-card" onclick="toggleStrength(this,'Analytical thinking and problem solving')"><div class="opt-icon">🧩</div><div><div class="opt-title">Analytical thinking</div><div class="opt-sub">Problem solving, logic, reasoning</div></div></div>
+        <div class="opt-card" onclick="toggleStrength(this,'Writing and communication')"><div class="opt-icon">✍️</div><div><div class="opt-title">Writing & communication</div><div class="opt-sub">Essays, arguments, language</div></div></div>
+        <div class="opt-card" onclick="toggleStrength(this,'Mathematics and quantitative skills')"><div class="opt-icon">📐</div><div><div class="opt-title">Mathematics</div><div class="opt-sub">Numbers, formulas, calculations</div></div></div>
+        <div class="opt-card" onclick="toggleStrength(this,'Science and experimentation')"><div class="opt-icon">🔬</div><div><div class="opt-title">Science & experiments</div><div class="opt-sub">Labs, hypotheses, discovery</div></div></div>
+        <div class="opt-card" onclick="toggleStrength(this,'Creative and visual thinking')"><div class="opt-icon">🎨</div><div><div class="opt-title">Creative thinking</div><div class="opt-sub">Design, arts, imagination</div></div></div>
+        <div class="opt-card" onclick="toggleStrength(this,'People and social skills')"><div class="opt-icon">🤝</div><div><div class="opt-title">People & social skills</div><div class="opt-sub">Teamwork, empathy, leadership</div></div></div>
+      </div>
+    </div>
+    <div class="btn-row"><button class="btn-back" onclick="goStep(2)">← Back</button><button class="btn-next gold" id="btn3" onclick="generateMap()" disabled>Generate my career map ↗</button></div>
+  </div>
+  <div id="s4" class="screen">
+    <div class="card">
+      <div class="loading-wrap">
+        <i class="ti ti-loader-2 loading-icon"></i>
+        <div class="loading-text" id="loadingText">Mapping your dream to A-Level subjects…</div>
+        <div class="loading-sub">GlobalCompass AI is analysing career pathways, university requirements and subject combinations</div>
+      </div>
+    </div>
+  </div>
+  <div id="s5" class="screen">
+    <div class="result-hero">
+      <div class="result-tag">🧭 Your personalised career map</div>
+      <div class="result-career" id="resultCareer"></div>
+      <p class="result-summary" id="resultSummary"></p>
+    </div>
+    <div class="card"><div class="card-title" style="margin-bottom:16px">Your recommended A-Level subjects</div><div class="subjects-grid" id="subjectsGrid"></div></div>
+    <div class="card"><div class="card-title" style="margin-bottom:12px">Hidden university requirements</div><div class="hidden-req" id="hiddenReqs"></div></div>
+    <div class="card"><div class="card-title" style="margin-bottom:16px">Workload balance</div><div id="workloadBars"></div><div class="ucas-box"><div class="ucas-text"><h4>Estimated UCAS points</h4><p>Based on AAB — realistic target grades</p></div><div class="ucas-points" id="ucasPoints">128</div></div></div>
+    <div class="card"><div class="ai-label">🤖 GlobalCompass AI insight</div><div class="ai-bubble"><p id="aiInsight"></p></div></div>
+    <div class="action-row">
+      <button class="action-btn" style="background:#1B3A7A;color:#F5C842" onclick="window.location.href='index.html'">Find schools with these subjects ↗</button>
+      <button class="action-btn" style="background:#F5C842;color:#1B3A7A" onclick="window.location.href='index.html'">Match universities ↗</button>
+      <button class="action-btn" style="background:#EEF3FF;color:#2952A3" onclick="goStep(1)">Start again</button>
+    </div>
+  </div>
+</div>
+<script>
+let dream='',university='',strengths=[];
+document.getElementById('dreamInput').addEventListener('input',function(){dream=this.value.trim();document.getElementById('btn1').disabled=dream.length<10;});
+function setDream(text){document.getElementById('dreamInput').value=text;dream=text;document.getElementById('btn1').disabled=false;}
+function selectUni(el,uni){university=uni;document.querySelectorAll('.opt-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');document.getElementById('btn2').disabled=false;}
+function toggleStrength(el,strength){el.classList.toggle('selected');if(el.classList.contains('selected')){strengths.push(strength);}else{strengths=strengths.filter(s=>s!==strength);}document.getElementById('btn3').disabled=strengths.length===0;}
+function goStep(n){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('s'+n).classList.add('active');updateSteps(n);}
+function goStep2(){if(dream.length>=10)goStep(2);}
+function goStep3(){if(university)goStep(3);}
+function updateSteps(active){for(let i=1;i<=4;i++){const circle=document.getElementById('sc'+i);const label=circle?.nextElementSibling;if(!circle)continue;if(i<active){circle.className='step-circle done';circle.innerHTML='✓';}else if(i===active){circle.className='step-circle active';circle.innerHTML=i;if(label)label.className='step-label active';}else{circle.className='step-circle pending';circle.innerHTML=i;if(label)label.className='step-label';}const line=document.getElementById('sl'+i);if(line)line.className=i<active?'step-line done':'step-line';}}
+async function generateMap(){
+  goStep(4);
+  const msgs=['Mapping your dream to A-Level subjects…','Analysing university hidden requirements…','Calculating workload balance…','Building your personalised career map…'];
+  let mi=0;
+  const iv=setInterval(()=>{mi=(mi+1)%msgs.length;document.getElementById('loadingText').textContent=msgs[mi];},1800);
+  const prompt='You are GlobalCompass Career Simulator for sixth form students.\nDREAM: "'+dream+'"\nUNIVERSITY: "'+university+'"\nSTRENGTHS: '+strengths.join(', ')+'\n\nRespond ONLY with valid JSON:\n{"career":"specific career title","summary":"2 sentence summary","subjects":[{"name":"Subject","level":"essential","why":"one sentence"},{"name":"Subject","level":"essential","why":"one sentence"},{"name":"Subject","level":"recommended","why":"one sentence"},{"name":"Subject","level":"optional","why":"one sentence"}],"hiddenRequirements":["requirement 1","requirement 2","requirement 3"],"workload":[{"subject":"Subject 1","intensity":75},{"subject":"Subject 2","intensity":60},{"subject":"Subject 3","intensity":50}],"ucasPoints":128,"aiInsight":"2-3 sentence personalised insight"}';
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
+    const data=await res.json();
+    clearInterval(iv);
+    const text=data.content[0].text.replace(/```json|```/g,'').trim();
+    showResults(JSON.parse(text));
+  }catch(e){clearInterval(iv);showFallback();}
+}
+function showResults(r){
+  document.getElementById('resultCareer').textContent=r.career;
+  document.getElementById('resultSummary').textContent=r.summary;
+  document.getElementById('ucasPoints').textContent=r.ucasPoints;
+  document.getElementById('aiInsight').textContent=r.aiInsight;
+  const sg=document.getElementById('subjectsGrid');sg.innerHTML='';
+  r.subjects.forEach(s=>{const cls=s.level==='essential'?'essential':s.level==='recommended'?'recommended':'optional';const bc='badge-'+cls;const nc=s.level==='essential'?'s-name':'s-name-dk';const wc=s.level==='essential'?'s-why':'s-why-dk';sg.innerHTML+='<div class="subject-card '+cls+'"><span class="s-badge '+bc+'">'+s.level+'</span><div class="'+nc+'">'+s.name+'</div><div class="'+wc+'">'+s.why+'</div></div>';});
+  const hr=document.getElementById('hiddenReqs');hr.innerHTML='<div class="hidden-req-title">Hidden requirements discovered</div><div class="hidden-req-list">';
+  r.hiddenRequirements.forEach(req=>{hr.innerHTML+='<div class="hidden-req-item"><span>→</span><span>'+req+'</span></div>';});hr.innerHTML+='</div>';
+  const wb=document.getElementById('workloadBars');wb.innerHTML='';
+  r.workload.forEach(w=>{wb.innerHTML+='<div class="workload-bar"><div class="workload-label"><span class="workload-name">'+w.subject+'</span><span class="workload-pct">'+w.intensity+'% intensity</span></div><div class="bar-track"><div class="bar-fill" style="width:'+w.intensity+'%"></div></div></div>';});
+  goStep(5);updateSteps(4);
+}
+function showFallback(){showResults({career:"Your Career Path",summary:"Based on your dream and strengths, GlobalCompass has identified a powerful A-Level pathway that opens doors to your chosen universities and field.",subjects:[{name:"Mathematics",level:"essential",why:"Core analytical foundation required by most top universities for your field"},{name:"Core Science or Humanities",level:"essential",why:"Essential subject combination for your chosen career pathway"},{name:"Extended Project EPQ",level:"recommended",why:"Adds up to 28 UCAS points and strengthens your personal statement significantly"},{name:"Additional elective",level:"optional",why:"Broadens your profile and demonstrates intellectual curiosity to admissions teams"}],hiddenRequirements:["Top universities often require specific grade thresholds beyond published entry requirements","Work experience and extracurriculars are increasingly weighted alongside grades","Personal statement evidence of genuine passion for the subject is essential"],workload:[{subject:"Core subject 1",intensity:75},{subject:"Core subject 2",intensity:60},{subject:"Core subject 3",intensity:50}],ucasPoints:128,aiInsight:"Your combination of strengths and dream creates a compelling university application profile. Focus on building genuine experience in your chosen field alongside your A-Level studies."});}
+</script>
+</body>
+</html>
