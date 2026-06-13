@@ -1,833 +1,288 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Global Compass — Education Worldwide</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --royal: #1B3A7A;
-      --royal-dark: #112653;
-      --royal-mid: #1e4491;
-      --gold: #F5C842;
-      --gold-dim: #c9a22e;
-      --white: #ffffff;
-      --off-white: #F7F6F2;
-      --text-dark: #1a1a2e;
-      --text-mid: #4a4a6a;
-      --text-light: #8888aa;
-    }
-
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Montserrat', sans-serif; background: var(--off-white); color: var(--text-dark); overflow-x: hidden; }
-
-    /* ── NAV ── */
-    nav {
-      background: var(--royal);
-      position: sticky; top: 0; z-index: 900;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 40px;
-      height: 64px;
-      box-shadow: 0 2px 20px rgba(0,0,0,0.3);
-    }
-
-    .nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
-
-    /* Globe SVG */
-    .globe-wrap { width: 42px; height: 42px; flex-shrink: 0; }
-
-    .wordmark { display: flex; flex-direction: column; gap: 1px; }
-    .wordmark-top {
-      display: flex; align-items: center; gap: 6px;
-    }
-    .wordmark-rule { height: 1px; background: var(--gold); opacity: 0.6; }
-    .wordmark-rule-left { width: 18px; }
-    .wordmark-rule-right { width: 18px; }
-    .wm-global {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 300; font-size: 11px;
-      letter-spacing: 0.35em; color: rgba(255,255,255,0.75);
-      text-transform: uppercase;
-    }
-    .wm-compass-row { display: flex; align-items: baseline; gap: 0; }
-    .wm-compass {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 800; font-size: 22px;
-      letter-spacing: 0.04em; color: var(--white);
-      text-transform: uppercase; line-height: 1;
-    }
-    .wm-compass .gold-o { color: var(--gold); }
-    .wm-tagline {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 300; font-size: 8.5px;
-      letter-spacing: 0.25em; color: rgba(255,255,255,0.5);
-      text-transform: uppercase; margin-top: 1px;
-    }
-
-    .nav-links { display: flex; align-items: center; gap: 4px; }
-    .nav-item { position: relative; }
-    .nav-btn {
-      background: none; border: none; cursor: pointer;
-      font-family: 'Montserrat', sans-serif; font-weight: 500; font-size: 13px;
-      color: rgba(255,255,255,0.85); padding: 8px 14px; border-radius: 4px;
-      letter-spacing: 0.02em; transition: color .2s, background .2s;
-      display: flex; align-items: center; gap: 5px;
-    }
-    .nav-btn:hover { color: var(--gold); background: rgba(255,255,255,0.07); }
-    .nav-btn .caret { font-size: 9px; opacity: 0.6; transition: transform .2s; }
-    .nav-item:hover .caret { transform: rotate(180deg); }
-
-    .dropdown {
-      display: none; position: absolute; top: calc(100% + 4px); left: 0;
-      background: var(--white); border-radius: 8px; min-width: 200px;
-      box-shadow: 0 12px 40px rgba(0,0,0,0.18); overflow: hidden;
-      border-top: 3px solid var(--gold);
-    }
-    .nav-item:hover .dropdown { display: block; }
-    .dropdown a {
-      display: block; padding: 11px 18px; text-decoration: none;
-      font-size: 13px; font-weight: 500; color: var(--text-dark);
-      transition: background .15s, color .15s;
-      border-bottom: 1px solid rgba(0,0,0,0.04);
-    }
-    .dropdown a:hover { background: var(--off-white); color: var(--royal); }
-
-    .nav-right { display: flex; align-items: center; gap: 10px; }
-    .btn-pro {
-      background: var(--gold); color: var(--royal-dark);
-      border: none; cursor: pointer;
-      font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 12px;
-      letter-spacing: 0.08em; text-transform: uppercase;
-      padding: 8px 18px; border-radius: 4px;
-      transition: transform .15s, box-shadow .15s;
-    }
-    .btn-pro:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(245,200,66,0.4); }
-    .btn-sign {
-      background: none; border: 1px solid rgba(255,255,255,0.3); cursor: pointer;
-      font-family: 'Montserrat', sans-serif; font-weight: 500; font-size: 12px;
-      color: rgba(255,255,255,0.8); padding: 7px 16px; border-radius: 4px;
-      transition: border-color .2s, color .2s;
-    }
-    .btn-sign:hover { border-color: var(--gold); color: var(--gold); }
-
-    /* ── HERO ── */
-    .hero {
-      background: linear-gradient(145deg, var(--royal-dark) 0%, var(--royal) 45%, #1e4a9e 100%);
-      min-height: 580px; display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      padding: 80px 40px 60px; text-align: center;
-      position: relative; overflow: hidden;
-    }
-    .hero::before {
-      content: ''; position: absolute; inset: 0;
-      background: radial-gradient(ellipse 60% 50% at 50% 80%, rgba(245,200,66,0.07) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .hero-eyebrow {
-      font-family: 'Montserrat', sans-serif; font-weight: 600; font-size: 11px;
-      letter-spacing: 0.3em; text-transform: uppercase;
-      color: var(--gold); margin-bottom: 18px;
-    }
-    .hero-eyebrow em { font-style: normal; text-transform: lowercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.6); }
-    .hero h1 {
-      font-family: 'Playfair Display', serif; font-weight: 700;
-      font-size: clamp(36px, 5vw, 62px); line-height: 1.15;
-      color: var(--white); max-width: 760px; margin-bottom: 10px;
-    }
-    .hero h1 em { font-style: italic; color: var(--gold); }
-    .hero-sub {
-      font-family: 'Playfair Display', serif; font-style: italic;
-      font-size: clamp(18px, 2.5vw, 26px); color: rgba(255,255,255,0.7);
-      margin-bottom: 36px;
-    }
-
-    /* Search */
-    .search-wrap {
-      display: flex; gap: 0; max-width: 600px; width: 100%;
-      border: 2px solid var(--gold); border-radius: 6px;
-      overflow: hidden; background: var(--white);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.25);
-    }
-    .search-wrap input {
-      flex: 1; border: none; outline: none; padding: 14px 20px;
-      font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 500;
-      color: var(--text-dark); background: var(--white);
-    }
-    .search-wrap input::placeholder { color: var(--text-light); }
-    .search-wrap button {
-      background: var(--gold); border: none; cursor: pointer; padding: 14px 24px;
-      font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 13px;
-      letter-spacing: 0.06em; color: var(--royal-dark); text-transform: uppercase;
-      transition: background .2s;
-    }
-    .search-wrap button:hover { background: var(--gold-dim); }
-    .hero-hint {
-      margin-top: 14px; font-size: 11.5px; color: rgba(255,255,255,0.4);
-      letter-spacing: 0.05em;
-    }
-    .hero-hint a { color: var(--gold); text-decoration: none; }
-
-    /* ── MISSION ── */
-    .mission {
-      background: var(--white); padding: 56px 40px; text-align: center;
-      border-bottom: 1px solid rgba(0,0,0,0.06);
-    }
-    .mission p {
-      font-family: 'Playfair Display', serif; font-size: clamp(20px, 2.8vw, 30px);
-      font-weight: 400; line-height: 1.5; color: var(--royal);
-      max-width: 780px; margin: 0 auto;
-    }
-    .mission p span { color: var(--gold-dim); font-weight: 600; }
-    .mission-line {
-      display: flex; align-items: center; justify-content: center; gap: 16px;
-      margin-bottom: 20px;
-    }
-    .mission-line-rule { height: 2px; width: 48px; background: var(--gold); }
-    .mission-label {
-      font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
-      font-weight: 600; color: var(--text-light);
-    }
-
-    /* ── FEATURES ── */
-    .features { padding: 72px 40px; background: var(--off-white); }
-    .section-head { text-align: center; margin-bottom: 48px; }
-    .section-eyebrow {
-      font-size: 10.5px; letter-spacing: 0.3em; text-transform: uppercase;
-      font-weight: 700; color: var(--gold-dim); margin-bottom: 10px;
-    }
-    .section-head h2 {
-      font-family: 'Playfair Display', serif; font-size: clamp(26px, 3.5vw, 38px);
-      font-weight: 700; color: var(--royal); line-height: 1.2;
-    }
-    .features-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 24px; max-width: 1100px; margin: 0 auto;
-    }
-    .feature-card {
-      background: var(--white); border-radius: 10px; padding: 32px 28px;
-      border-left: 4px solid transparent;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-      transition: transform .2s, box-shadow .2s, border-color .2s;
-    }
-    .feature-card:hover {
-      transform: translateY(-4px); box-shadow: 0 8px 28px rgba(0,0,0,0.1);
-      border-left-color: var(--gold);
-    }
-    .feature-icon { font-size: 28px; margin-bottom: 14px; }
-    .feature-card h3 {
-      font-family: 'Playfair Display', serif; font-weight: 600; font-size: 18px;
-      color: var(--royal); margin-bottom: 8px;
-    }
-    .feature-card p { font-size: 13.5px; color: var(--text-mid); line-height: 1.65; }
-
-    /* ── FINAL YEARS ── */
-    .final-years {
-      background: var(--royal-dark); padding: 72px 40px; color: var(--white);
-    }
-    .final-years .section-head h2 { color: var(--white); }
-    .final-years .section-eyebrow { color: var(--gold); }
-    .fy-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px; max-width: 1100px; margin: 0 auto;
-    }
-    .fy-card {
-      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 10px; padding: 28px 24px;
-      transition: background .2s, border-color .2s;
-    }
-    .fy-card:hover { background: rgba(255,255,255,0.1); border-color: var(--gold); }
-    .fy-tag {
-      display: inline-block; background: var(--gold); color: var(--royal-dark);
-      font-size: 9.5px; font-weight: 700; letter-spacing: 0.15em;
-      text-transform: uppercase; padding: 3px 9px; border-radius: 3px;
-      margin-bottom: 12px;
-    }
-    .fy-card h3 {
-      font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700;
-      color: var(--white); margin-bottom: 7px;
-    }
-    .fy-card p { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.6; }
-
-    /* ── COUNTRIES ── */
-    .countries { padding: 72px 40px; background: var(--white); }
-    .countries-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-      gap: 16px; max-width: 1100px; margin: 0 auto;
-    }
-    .country-card {
-      border: 1px solid rgba(0,0,0,0.08); border-radius: 8px; padding: 20px 16px;
-      text-align: center; cursor: pointer; text-decoration: none; color: inherit;
-      transition: border-color .2s, box-shadow .2s, transform .2s;
-      display: block;
-    }
-    .country-card:hover {
-      border-color: var(--gold); box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-      transform: translateY(-2px);
-    }
-    .country-flag { font-size: 32px; display: block; margin-bottom: 8px; }
-    .country-name { font-size: 13px; font-weight: 600; color: var(--royal); }
-    .country-count { font-size: 11px; color: var(--text-light); margin-top: 2px; }
-
-    /* ── SPOTLIGHT ── */
-    .spotlight {
-      padding: 72px 40px; background: var(--off-white);
-    }
-    .spotlight-inner {
-      max-width: 1100px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
-    }
-    .spotlight-content {}
-    .spotlight-content h2 {
-      font-family: 'Playfair Display', serif; font-size: clamp(26px, 3vw, 36px);
-      font-weight: 700; color: var(--royal); margin-bottom: 14px; line-height: 1.2;
-    }
-    .spotlight-content p { font-size: 14.5px; color: var(--text-mid); line-height: 1.75; margin-bottom: 18px; }
-    .spotlight-quote {
-      border-left: 3px solid var(--gold); padding-left: 18px;
-      font-family: 'Playfair Display', serif; font-style: italic;
-      font-size: 17px; color: var(--royal); margin: 24px 0; line-height: 1.55;
-    }
-    .spotlight-school {
-      background: var(--white); border-radius: 10px; padding: 32px;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-      border-top: 4px solid var(--gold);
-    }
-    .school-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: var(--royal); color: var(--white);
-      font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
-      text-transform: uppercase; padding: 5px 12px; border-radius: 4px;
-      margin-bottom: 16px;
-    }
-    .school-badge span { color: var(--gold); }
-    .school-name {
-      font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700;
-      color: var(--royal); margin-bottom: 6px;
-    }
-    .school-location { font-size: 13px; color: var(--text-light); margin-bottom: 14px; }
-    .school-stats { display: flex; gap: 20px; }
-    .school-stat { text-align: center; }
-    .school-stat .num {
-      font-size: 22px; font-weight: 800; color: var(--royal); display: block;
-    }
-    .school-stat .lbl { font-size: 10.5px; color: var(--text-light); letter-spacing: 0.05em; }
-
-    /* ── WAITLIST ── */
-    .waitlist {
-      background: linear-gradient(135deg, var(--royal) 0%, var(--royal-mid) 100%);
-      padding: 72px 40px; text-align: center;
-    }
-    .waitlist h2 {
-      font-family: 'Playfair Display', serif; font-size: clamp(26px, 3.5vw, 40px);
-      font-weight: 700; color: var(--white); margin-bottom: 12px;
-    }
-    .waitlist p { font-size: 15px; color: rgba(255,255,255,0.7); margin-bottom: 32px; max-width: 520px; margin-left: auto; margin-right: auto; }
-    .waitlist-form { display: flex; gap: 0; max-width: 500px; margin: 0 auto; border-radius: 6px; overflow: hidden; border: 2px solid var(--gold); }
-    .waitlist-form input {
-      flex: 1; border: none; outline: none; padding: 14px 20px;
-      font-family: 'Montserrat', sans-serif; font-size: 14px; color: var(--text-dark);
-    }
-    .waitlist-form button {
-      background: var(--gold); border: none; cursor: pointer;
-      font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 12.5px;
-      letter-spacing: 0.07em; color: var(--royal-dark); text-transform: uppercase;
-      padding: 14px 22px; transition: background .2s;
-      white-space: nowrap;
-    }
-    .waitlist-form button:hover { background: var(--gold-dim); }
-    .waitlist-note { margin-top: 12px; font-size: 11px; color: rgba(255,255,255,0.4); }
-
-    /* ── FOOTER ── */
-    footer {
-      background: var(--text-dark); padding: 52px 40px 32px; color: rgba(255,255,255,0.6);
-    }
-    .footer-inner {
-      max-width: 1100px; margin: 0 auto;
-      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px;
-      margin-bottom: 40px;
-    }
-    .footer-brand .wm-compass { font-size: 20px; }
-    .footer-brand .wm-global { color: rgba(255,255,255,0.45); }
-    .footer-tagline {
-      margin-top: 10px; font-family: 'Playfair Display', serif; font-style: italic;
-      font-size: 14px; color: rgba(255,255,255,0.45); line-height: 1.6;
-    }
-    .footer-col h4 {
-      font-size: 11px; font-weight: 700; letter-spacing: 0.2em;
-      text-transform: uppercase; color: var(--gold); margin-bottom: 14px;
-    }
-    .footer-col a {
-      display: block; font-size: 13px; color: rgba(255,255,255,0.5);
-      text-decoration: none; margin-bottom: 8px; transition: color .15s;
-    }
-    .footer-col a:hover { color: var(--white); }
-    .footer-bottom {
-      max-width: 1100px; margin: 0 auto;
-      border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px;
-      display: flex; justify-content: space-between; align-items: center;
-      font-size: 12px; color: rgba(255,255,255,0.3);
-    }
-
-    /* ── PRO MODAL ── */
-    .modal-backdrop {
-      display: none; position: fixed; inset: 0; z-index: 9999;
-      background: rgba(10,20,50,0.75); backdrop-filter: blur(4px);
-      align-items: center; justify-content: center;
-    }
-    .modal-backdrop.open { display: flex; }
-    .modal {
-      background: var(--white); border-radius: 14px; padding: 48px 44px;
-      max-width: 520px; width: 90%; position: relative;
-      box-shadow: 0 24px 80px rgba(0,0,0,0.35);
-      animation: modalIn .25s ease;
-    }
-    @keyframes modalIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    .modal-close {
-      position: absolute; top: 16px; right: 18px;
-      background: none; border: none; cursor: pointer;
-      font-size: 22px; color: var(--text-light); transition: color .15s;
-    }
-    .modal-close:hover { color: var(--text-dark); }
-    .modal-badge {
-      display: inline-block; background: var(--gold); color: var(--royal-dark);
-      font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
-      text-transform: uppercase; padding: 4px 12px; border-radius: 3px;
-      margin-bottom: 16px;
-    }
-    .modal h2 {
-      font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700;
-      color: var(--royal); margin-bottom: 10px; line-height: 1.2;
-    }
-    .modal-intro { font-size: 14px; color: var(--text-mid); line-height: 1.65; margin-bottom: 28px; }
-    .modal-perks { list-style: none; margin-bottom: 28px; }
-    .modal-perks li {
-      display: flex; align-items: flex-start; gap: 10px;
-      font-size: 13.5px; color: var(--text-dark); margin-bottom: 12px;
-      line-height: 1.5;
-    }
-    .modal-perks li::before {
-      content: '✦'; color: var(--gold); font-size: 12px; margin-top: 2px; flex-shrink: 0;
-    }
-    .modal-cta {
-      width: 100%; background: var(--royal); color: var(--white);
-      border: none; cursor: pointer; border-radius: 6px;
-      font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 13.5px;
-      letter-spacing: 0.06em; text-transform: uppercase;
-      padding: 15px; transition: background .2s, transform .15s;
-      margin-bottom: 10px;
-    }
-    .modal-cta:hover { background: var(--royal-mid); transform: translateY(-1px); }
-    .modal-fine { text-align: center; font-size: 11px; color: var(--text-light); }
-
-    /* Responsive */
-    @media (max-width: 900px) {
-      nav { padding: 0 20px; }
-      .nav-links { display: none; }
-      .spotlight-inner { grid-template-columns: 1fr; }
-      .footer-inner { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 600px) {
-      .hero { padding: 60px 20px 48px; }
-      .mission, .features, .final-years, .countries, .spotlight, .waitlist { padding: 52px 20px; }
-      .footer-inner { grid-template-columns: 1fr; gap: 28px; }
-      .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlobalCompass — Education Worldwide</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
+.wm-wrap{display:flex;flex-direction:column;justify-content:center}
+.wm-global-row{display:flex;align-items:center;gap:7px;margin-bottom:3px}
+.wm-rule{height:0.7px;background:rgba(245,200,66,0.5);flex:1}
+.wm-global{font-family:'Montserrat',sans-serif;font-size:8px;font-weight:300;color:#FFFFFF;letter-spacing:0.32em;text-transform:uppercase}
+.wm-compass{font-family:'Montserrat',sans-serif;font-size:16px;font-weight:800;color:#FFFFFF;letter-spacing:0.07em;text-transform:uppercase;line-height:1}
+.wm-compass .o{color:#F5C842}
+.wm-sub{font-family:'Montserrat',sans-serif;font-size:6.5px;font-weight:500;color:rgba(245,200,66,0.7);letter-spacing:0.18em;text-transform:uppercase;margin-top:3px}
+nav{display:flex;align-items:center;justify-content:space-between;padding:13px 32px;background:#1B3A7A;border-bottom:0.5px solid #2952A3;position:sticky;top:0;z-index:100}
+.logo{display:flex;align-items:center;gap:12px;cursor:pointer;text-decoration:none}
+.nav-menu{display:flex;gap:2px}
+.ni{position:relative}
+.nb{font-size:13px;color:#FFFFFF;font-weight:500;background:transparent;border:none;cursor:pointer;padding:8px 12px;border-radius:8px;font-family:'Inter',sans-serif;display:flex;align-items:center;gap:4px;transition:all 0.15s}
+.nb:hover{background:rgba(255,255,255,0.1)}
+.dd{display:none;position:absolute;top:calc(100% + 4px);left:0;background:#1B3A7A;border:0.5px solid #2952A3;border-radius:12px;padding:8px;min-width:220px;z-index:200;box-shadow:0 16px 40px rgba(0,0,0,0.4)}
+.ni:hover .dd{display:block}
+.di{display:flex;align-items:center;gap:8px;padding:9px 12px;font-size:12px;color:#FFFFFF;cursor:pointer;border-radius:8px;font-family:'Inter',sans-serif;transition:all 0.15s;text-decoration:none}
+.di:hover{background:rgba(255,255,255,0.1);color:#F5C842}
+.dl{font-size:9px;color:#5B8DEF;letter-spacing:0.1em;text-transform:uppercase;padding:6px 12px 2px;font-weight:700}
+.dd-div{border:none;border-top:0.5px solid #2952A3;margin:5px 0}
+.soon{font-size:9px;padding:2px 7px;border-radius:99px;background:rgba(245,200,66,0.2);color:#F5C842;margin-left:4px;font-weight:700}
+.nav-r{display:flex;gap:8px;align-items:center}
+.btn-g{font-size:12px;padding:7px 16px;border-radius:99px;border:1px solid rgba(245,200,66,0.4);background:transparent;color:#F5C842;cursor:pointer;font-family:'Inter',sans-serif}
+.btn-p{font-size:12px;padding:7px 16px;border-radius:99px;border:none;background:#F5C842;color:#1B3A7A;cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:700}
+.hero{padding:80px 32px 64px;text-align:center;background:linear-gradient(160deg,#1B3A7A 0%,#2952A3 55%,#1B3A7A 100%);position:relative;overflow:hidden}
+.hero-bg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;opacity:0.04;pointer-events:none}
+.h-tag{display:inline-flex;align-items:center;gap:7px;font-size:11px;padding:6px 16px;border-radius:99px;background:rgba(245,200,66,0.12);color:#F5C842;margin-bottom:24px;border:0.5px solid rgba(245,200,66,0.25);letter-spacing:0.05em;font-weight:500;font-family:'Montserrat',sans-serif}
+.h-eyebrow{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#A8C4F5;letter-spacing:0.22em;text-transform:uppercase;margin-bottom:8px}
+.h1{font-family:'Playfair Display',Georgia,serif;font-size:42px;font-weight:400;font-style:italic;color:#FFFFFF;line-height:1.18;margin-bottom:10px;max-width:580px;margin-left:auto;margin-right:auto}
+.h1 em{color:#F5C842;font-style:normal;font-family:'Montserrat',sans-serif;font-weight:800;font-size:38px;letter-spacing:-0.5px}
+.h-rule{width:52px;height:1px;background:linear-gradient(90deg,transparent,#F5C842,transparent);margin:20px auto}
+.h-mission{font-family:'Playfair Display',Georgia,serif;font-size:15px;font-style:italic;color:#F5C842;margin:0 auto 12px;max-width:500px}
+.h-p{font-size:13px;color:#A8C4F5;line-height:1.9;max-width:460px;margin:0 auto 36px;font-weight:300}
+.search-card{max-width:620px;margin:0 auto 36px;background:#FFFFFF;border:2px solid #F5C842;border-radius:18px;padding:18px 22px}
+.s-row{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.s-row input{flex:1;border:none;background:transparent;font-size:14px;color:#0D1F4A;outline:none;font-family:'Inter',sans-serif}
+.s-row input::placeholder{color:#9AB0D0}
+.s-div{width:1px;height:20px;background:#C0D0E8}
+.s-sel{background:transparent;border:none;font-size:11px;color:#1B3A7A;outline:none;cursor:pointer;font-family:'Inter',sans-serif;padding:0 4px;font-weight:600}
+.s-sel option{background:#F8F9FF;color:#1B3A7A}
+.s-btn{background:#1B3A7A;color:#F5C842;border:none;padding:9px 22px;border-radius:99px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'Montserrat',sans-serif}
+.s-tags{display:flex;gap:6px;flex-wrap:wrap}
+.s-tag{font-size:11px;padding:5px 12px;border-radius:99px;border:0.5px solid #C0D0E8;color:#2952A3;cursor:pointer;background:#EEF3FF;font-family:'Inter',sans-serif;font-weight:500}
+.s-tag:hover{border-color:#1B3A7A;color:#1B3A7A;background:#D0DEFF}
+.stats{display:flex;justify-content:center;gap:0;max-width:540px;margin:0 auto}
+.stat{text-align:center;padding:0 28px;border-right:0.5px solid rgba(245,200,66,0.15)}
+.stat:last-child{border-right:none}
+.stat-n{font-family:'Montserrat',sans-serif;font-size:24px;font-weight:700;color:#F5C842}
+.stat-l{font-size:10px;color:#A8C4F5;margin-top:3px;letter-spacing:0.06em;font-weight:500;text-transform:uppercase}
+.sec{padding:60px 32px;border-bottom:0.5px solid #E0E8F5}
+.sec.dk{background:#1B3A7A;border-bottom:0.5px solid #2952A3}
+.sec.md{background:#EEF3FF}
+.ew{font-size:10px;font-weight:700;color:#2952A3;letter-spacing:0.18em;text-transform:uppercase;text-align:center;margin-bottom:10px;font-family:'Montserrat',sans-serif}
+.ew.lt{color:#A8C4F5}
+.sh2{font-family:'Playfair Display',Georgia,serif;font-size:28px;color:#0D1F4A;text-align:center;margin-bottom:0;line-height:1.3}
+.sh2.lt{color:#FFFFFF}
+.s-rule{width:40px;height:1px;background:#F5C842;margin:14px auto 32px;opacity:0.6}
+.s-p{font-size:13px;color:#4A6FA5;text-align:center;line-height:1.9;max-width:440px;margin:0 auto 36px;font-weight:300}
+.s-p.lt{color:#A8C4F5}
+.fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px}
+.fc{background:#fff;border:0.5px solid #E0E8F5;border-radius:16px;padding:22px;cursor:pointer;transition:all 0.2s}
+.fc:hover{border-color:#2952A3;transform:translateY(-3px);box-shadow:0 10px 28px rgba(41,82,163,0.1)}
+.f-icon{width:44px;height:44px;border-radius:12px;background:#EEF3FF;border:0.5px solid #C0D0F0;display:flex;align-items:center;justify-content:center;margin-bottom:14px;font-size:20px;color:#2952A3}
+.f-h{font-family:'Playfair Display',Georgia,serif;font-size:15px;color:#0D1F4A;margin-bottom:6px}
+.f-p{font-size:11px;color:#4A6FA5;line-height:1.7;font-weight:300}
+.f-t{font-size:9px;padding:2px 9px;border-radius:99px;background:#EEF3FF;color:#2952A3;margin-top:10px;display:inline-block;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;font-family:'Montserrat',sans-serif}
+.fl-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+.fl-card{border:0.5px solid rgba(245,200,66,0.22);border-radius:16px;padding:20px;cursor:pointer;transition:all 0.15s;background:rgba(245,200,66,0.05)}
+.fl-card:hover{border-color:#F5C842;background:rgba(245,200,66,0.1);transform:translateY(-2px)}
+.fl-badge{font-size:9px;padding:3px 9px;border-radius:99px;background:rgba(245,200,66,0.15);color:#F5C842;margin-bottom:10px;display:inline-block;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;font-family:'Montserrat',sans-serif}
+.fl-h{font-family:'Playfair Display',Georgia,serif;font-size:14px;color:#FFFFFF;margin-bottom:5px}
+.fl-p{font-size:11px;color:#A8C4F5;line-height:1.6;font-weight:300}
+.cg{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px}
+.cc{background:#fff;border:0.5px solid #E0E8F5;border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all 0.15s}
+.cc:hover{border-color:#2952A3;background:#EEF3FF}
+.c-flag{font-size:24px}
+.c-name{font-family:'Playfair Display',Georgia,serif;font-size:13px;color:#0D1F4A}
+.c-count{font-size:10px;color:#2952A3;margin-top:2px;font-weight:500}
+.sp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.sp-card{background:#fff;border:0.5px solid #E0E8F5;border-radius:16px;overflow:hidden;cursor:pointer;transition:all 0.2s}
+.sp-card:hover{border-color:#2952A3;transform:translateY(-3px);box-shadow:0 10px 28px rgba(41,82,163,0.1)}
+.sp-head{height:72px;display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-size:20px;font-weight:800}
+.sp-body{padding:14px 16px}
+.sp-name{font-family:'Playfair Display',Georgia,serif;font-size:14px;color:#0D1F4A;margin-bottom:3px}
+.sp-meta{font-size:10px;color:#4A6FA5;margin-bottom:8px}
+.sp-tag{font-size:9px;padding:2px 9px;border-radius:99px;background:#EEF3FF;color:#2952A3;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;font-family:'Montserrat',sans-serif}
+.sp-rat{font-family:'Montserrat',sans-serif;font-size:16px;font-weight:700;color:#F5C842;float:right;margin-top:-1px}
+.wl-inner{max-width:500px;margin:0 auto;text-align:center}
+.wl-h{font-family:'Playfair Display',Georgia,serif;font-size:28px;color:#F5C842;margin-bottom:10px;line-height:1.3}
+.wl-p{font-size:13px;color:#A8C4F5;line-height:1.8;margin-bottom:28px;font-weight:300;max-width:380px;margin-left:auto;margin-right:auto}
+.wl-form{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.wl-in{flex:1;min-width:200px;padding:12px 20px;border-radius:99px;border:1px solid rgba(245,200,66,0.3);background:rgba(255,255,255,0.05);color:#FFFFFF;font-size:13px;font-family:'Inter',sans-serif;outline:none}
+.wl-in::placeholder{color:#4A6FA5}
+.wl-btn{padding:12px 28px;border-radius:99px;background:#F5C842;color:#1B3A7A;border:none;font-size:13px;font-weight:700;cursor:pointer;font-family:'Montserrat',sans-serif}
+footer{padding:28px 32px;background:#0D1F4A;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
+.ft-left{display:flex;align-items:center;gap:12px}
+.ft-copy{font-size:9px;color:#2952A3;margin-top:3px}
+.ft-links{display:flex;gap:16px;flex-wrap:wrap;justify-content:center}
+.ft-link{font-size:11px;color:#4A6FA5;cursor:pointer;transition:color 0.15s;text-decoration:none}
+.ft-link:hover{color:#A8C4F5}
+.ft-right{font-size:10px;color:#2952A3;text-align:right}
+.modal-ov{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(13,31,74,0.92);z-index:1000;align-items:center;justify-content:center;padding:20px}
+.modal-ov.open{display:flex}
+.modal{background:#1B3A7A;border:0.5px solid rgba(245,200,66,0.35);border-radius:20px;padding:32px;max-width:480px;width:100%;position:relative}
+.modal-x{position:absolute;top:14px;right:16px;background:transparent;border:none;color:#5B8DEF;font-size:20px;cursor:pointer}
+.m-ew{font-size:9px;font-weight:700;color:#F5C842;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:10px;font-family:'Montserrat',sans-serif}
+.m-h{font-family:'Playfair Display',Georgia,serif;font-size:22px;color:#FFFFFF;margin-bottom:7px;line-height:1.3}
+.m-p{font-size:12px;color:#A8C4F5;line-height:1.7;margin-bottom:20px;font-weight:300}
+.m-rule{width:36px;height:1px;background:#F5C842;margin:14px 0;opacity:0.4}
+.plans{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:18px}
+.plan{border:0.5px solid #2952A3;border-radius:12px;padding:16px;text-align:center}
+.plan.hi{border-color:rgba(245,200,66,0.5)}
+.p-name{font-size:9px;font-weight:700;color:#A8C4F5;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:7px;font-family:'Montserrat',sans-serif}
+.p-price{font-family:'Montserrat',sans-serif;font-size:22px;font-weight:800;color:#F5C842;margin-bottom:1px}
+.p-per{font-size:9px;color:#4A6FA5;margin-bottom:12px}
+.p-feats{list-style:none;margin-bottom:14px;display:flex;flex-direction:column;gap:4px;text-align:left}
+.p-feats li{font-size:10px;color:#A8C4F5;display:flex;align-items:center;gap:4px}
+.p-feats li i{font-size:10px;color:#F5C842}
+.p-btn{width:100%;padding:8px;border-radius:99px;font-size:10px;font-weight:700;cursor:pointer;font-family:'Montserrat',sans-serif;border:none}
+.m-note{font-size:10px;color:#4A6FA5;text-align:center}
+</style>
 </head>
 <body>
-
-<!-- NAV -->
-<nav>
-  <a class="nav-logo" href="#">
-    <div class="globe-wrap">
-      <!-- Gold globe with needle SVG -->
-      <svg viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="21" cy="22" r="17" stroke="#F5C842" stroke-width="1.8"/>
-        <!-- Latitude lines -->
-        <ellipse cx="21" cy="22" rx="17" ry="6.5" stroke="#F5C842" stroke-width="1" stroke-dasharray="2.5 2"/>
-        <line x1="4" y1="22" x2="38" y2="22" stroke="#F5C842" stroke-width="1" stroke-dasharray="2.5 2"/>
-        <!-- Longitude lines -->
-        <ellipse cx="21" cy="22" rx="6.5" ry="17" stroke="#F5C842" stroke-width="1"/>
-        <!-- Needle / compass rose -->
-        <line x1="21" y1="4" x2="21" y2="22" stroke="#F5C842" stroke-width="2" stroke-linecap="round"/>
-        <polygon points="21,4 18.5,12 21,10 23.5,12" fill="#F5C842"/>
-        <circle cx="21" cy="22" r="2.5" fill="#F5C842"/>
-      </svg>
-    </div>
-    <div class="wordmark">
-      <div class="wordmark-top">
-        <div class="wordmark-rule wordmark-rule-left"></div>
-        <span class="wm-global">Global</span>
-        <div class="wordmark-rule wordmark-rule-right"></div>
-      </div>
-      <div class="wm-compass-row">
-        <span class="wm-compass">C<span class="gold-o">O</span>MPASS</span>
-      </div>
-      <span class="wm-tagline">Education Worldwide</span>
-    </div>
-  </a>
-
-  <div class="nav-links">
-    <div class="nav-item">
-      <button class="nav-btn">Schools <span class="caret">▾</span></button>
-      <div class="dropdown">
-        <a href="#">Find a School</a>
-        <a href="#">Compare Schools</a>
-        <a href="#">School Reviews</a>
-        <a href="#">New Openings</a>
-      </div>
-    </div>
-    <div class="nav-item">
-      <button class="nav-btn">Curricula <span class="caret">▾</span></button>
-      <div class="dropdown">
-        <a href="#">IB Programme</a>
-        <a href="#">British / IGCSE</a>
-        <a href="#">American / AP</a>
-        <a href="#">French / AEFE</a>
-        <a href="#">Montessori</a>
-      </div>
-    </div>
-    <div class="nav-item">
-      <button class="nav-btn">Final Years <span class="caret">▾</span></button>
-      <div class="dropdown">
-        <a href="#">IB Diploma</a>
-        <a href="#">A-Levels</a>
-        <a href="#">AP Courses</a>
-        <a href="#">Baccalauréat</a>
-      </div>
-    </div>
-    <div class="nav-item">
-      <button class="nav-btn">Countries <span class="caret">▾</span></button>
-      <div class="dropdown">
-        <a href="#">United Arab Emirates</a>
-        <a href="#">United Kingdom</a>
-        <a href="#">Singapore</a>
-        <a href="#">Switzerland</a>
-        <a href="#">Kenya</a>
-        <a href="#">Australia</a>
-      </div>
-    </div>
-    <div class="nav-item">
-      <button class="nav-btn">Forum <span class="caret">▾</span></button>
-      <div class="dropdown">
-        <a href="#">Expat Families</a>
-        <a href="#">School Advice</a>
-        <a href="#">Transitions</a>
-        <a href="#">University Prep</a>
-      </div>
-    </div>
-    <div class="nav-item">
-      <button class="nav-btn">Universities <span class="caret">▾</span></button>
-      <div class="dropdown">
-        <a href="#">UK Universities</a>
-        <a href="#">US Universities</a>
-        <a href="#">EU Universities</a>
-        <a href="#">Applications Hub</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="nav-right">
-    <button class="btn-sign">Sign In</button>
-    <button class="btn-pro" id="proBtn">Pro</button>
-  </div>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <p class="hero-eyebrow">The <em>trusted</em> GUIDE for EXPAT EDUCATION</p>
-  <h1>The right school,<br>in the right country,</h1>
-  <p class="hero-sub"><em>for every expat family</em></p>
-  <div class="search-wrap">
-    <input type="text" placeholder="Search by school name, city, or curriculum…" />
-    <button>Search</button>
-  </div>
-  <p class="hero-hint">Popular: <a href="#">Dubai</a> &nbsp;·&nbsp; <a href="#">Singapore</a> &nbsp;·&nbsp; <a href="#">London</a> &nbsp;·&nbsp; <a href="#">Zurich</a></p>
-</section>
-
-<!-- MISSION -->
-<section class="mission">
-  <div class="mission-line">
-    <div class="mission-line-rule"></div>
-    <span class="mission-label">Our Mission</span>
-    <div class="mission-line-rule"></div>
-  </div>
-  <p>"Every child deserves the <span>right start</span>, wherever in the world they are."</p>
-</section>
-
-<!-- FEATURES -->
-<section class="features">
-  <div class="section-head">
-    <p class="section-eyebrow">Why Global Compass</p>
-    <h2>Everything an expat family needs</h2>
-  </div>
-  <div class="features-grid">
-    <div class="feature-card">
-      <div class="feature-icon">🗺️</div>
-      <h3>6,000+ Schools</h3>
-      <p>Verified listings across 90 countries with up-to-date fees, capacity, and entry requirements.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">📋</div>
-      <h3>Curriculum Guides</h3>
-      <p>Plain-language breakdowns of every major international curriculum — IB, IGCSE, AP, French Bac and more.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🎓</div>
-      <h3>University Pathways</h3>
-      <p>See which qualifications open doors to top universities around the world, with real admissions data.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">💬</div>
-      <h3>Parent Forum</h3>
-      <p>A global community of expat families sharing first-hand experience — no question is too specific.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🔔</div>
-      <h3>Place Alerts</h3>
-      <p>Get notified the moment a school opens up a spot in your child's year group, before it's advertised.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">✈️</div>
-      <h3>Relocation Toolkit</h3>
-      <p>Checklists, timelines, and expert advice for every stage of an international school move.</p>
-    </div>
-  </div>
-</section>
-
-<!-- FINAL YEARS -->
-<section class="final-years">
-  <div class="section-head">
-    <p class="section-eyebrow">For Older Students</p>
-    <h2>Navigating the Final Years</h2>
-  </div>
-  <div class="fy-grid">
-    <div class="fy-card">
-      <span class="fy-tag">Ages 16–18</span>
-      <h3>IB Diploma</h3>
-      <p>The gold standard of international education. Compare IB schools by scores, specialist subjects, and EE support.</p>
-    </div>
-    <div class="fy-card">
-      <span class="fy-tag">UK System</span>
-      <h3>A-Levels</h3>
-      <p>Find schools offering the full A-Level range, with data on UCAS points and Oxbridge entry rates.</p>
-    </div>
-    <div class="fy-card">
-      <span class="fy-tag">US System</span>
-      <h3>AP & SAT</h3>
-      <p>Advanced Placement course availability, plus SAT/ACT prep resources and US university application guides.</p>
-    </div>
-    <div class="fy-card">
-      <span class="fy-tag">French System</span>
-      <h3>Baccalauréat</h3>
-      <p>AEFE-affiliated schools worldwide offering the French Bac, with results data and Grande École pathways.</p>
-    </div>
-    <div class="fy-card">
-      <span class="fy-tag">Swiss System</span>
-      <h3>Swiss Matura</h3>
-      <p>Cantonal and international schools offering the Swiss Matura with direct entry to Swiss federal universities.</p>
-    </div>
-  </div>
-</section>
-
-<!-- COUNTRIES -->
-<section class="countries">
-  <div class="section-head">
-    <p class="section-eyebrow">Explore by Destination</p>
-    <h2>Schools in every corner of the world</h2>
-  </div>
-  <div class="countries-grid">
-    <a class="country-card" href="#">
-      <span class="country-flag">🇦🇪</span>
-      <div class="country-name">UAE</div>
-      <div class="country-count">680 schools</div>
-    </a>
-    <a class="country-card" href="#">
-      <span class="country-flag">🇬🇧</span>
-      <div class="country-name">United Kingdom</div>
-      <div class="country-count">420 schools</div>
-    </a>
-    <a class="country-card" href="#">
-      <span class="country-flag">🇸🇬</span>
-      <div class="country-name">Singapore</div>
-      <div class="country-count">95 schools</div>
-    </a>
-    <a class="country-card" href="#">
-      <span class="country-flag">🇨🇭</span>
-      <div class="country-name">Switzerland</div>
-      <div class="country-count">112 schools</div>
-    </a>
-    <a class="country-card" href="#">
-      <span class="country-flag">🇳🇱</span>
-      <div class="country-name">Netherlands</div>
-      <div class="country-count">88 schools</div>
-    </a>
-    <a class="country-card" href="#">
-      <span class="country-flag">🇩🇪</span>
-      <div class="country-name">Germany</div>
-      <div class="country-count">145 schools</div>
-    </a>
-    <a class="country-card" href="#">
-      <span class="country-flag">🇰🇪</span>
-      <div class="country-name">Kenya</div>
-      <div class="country-count">64 schools</div>
-    </a>
-    <a class="country-card" href="#">
-      <span class="country-flag">🇿🇦</span>
-      <div class="country-name">South Africa</div>
-      <div class="country-count">78 schools</div>
-    </a>
-    <a class="country-card" href="#">
-      <span class="country-flag">🇳🇬</span>
-      <div class="country-name">Nigeria</div>
-      <div class="country-count">52 schools</div>
-    </a>
-    <a class="country-card" href="#">
-      <span class="country-flag">🇦🇺</span>
-      <div class="country-name">Australia</div>
-      <div class="country-count">190 schools</div>
-    </a>
-    <a class="country-card" href="#">
-      <span class="country-flag">🇳🇿</span>
-      <div class="country-name">New Zealand</div>
-      <div class="country-count">47 schools</div>
-    </a>
-    <a class="country-card" href="#">
-      <span class="country-flag">🌏</span>
-      <div class="country-name">More Countries</div>
-      <div class="country-count">View all 90+</div>
-    </a>
-  </div>
-</section>
-
-<!-- SPOTLIGHT -->
-<section class="spotlight">
-  <div class="spotlight-inner">
-    <div class="spotlight-content">
-      <p class="section-eyebrow">School Spotlight</p>
-      <h2>From Nairobi to Zürich — schools that deliver</h2>
-      <p>Each month our editorial team selects an exceptional school from our network and takes a close look at what makes it stand out for internationally mobile families — from pastoral care to university preparation.</p>
-      <blockquote class="spotlight-quote">
-        "Moving three children between four countries in six years taught us that the school community is everything. Global Compass helped us find ours."
-      </blockquote>
-      <p style="font-size:12px; color: var(--text-light);">— Miriam T., British expat family, currently Singapore</p>
-    </div>
-    <div class="spotlight-school">
-      <div class="school-badge">Featured School <span>✦</span></div>
-      <div class="school-name">The International School of Geneva</div>
-      <div class="school-location">📍 Geneva, Switzerland</div>
-      <p style="font-size:13px; color: var(--text-mid); line-height:1.6; margin-bottom:20px;">Founded in 1924, La Grande Boissière is the world's oldest international school — and remains one of its most respected, with exceptional IB results and a student body from 130 nationalities.</p>
-      <div class="school-stats">
-        <div class="school-stat">
-          <span class="num">98%</span>
-          <span class="lbl">IB Pass Rate</span>
-        </div>
-        <div class="school-stat">
-          <span class="num">130</span>
-          <span class="lbl">Nationalities</span>
-        </div>
-        <div class="school-stat">
-          <span class="num">4,500</span>
-          <span class="lbl">Students</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- WAITLIST -->
-<section class="waitlist">
-  <h2>Be first to know</h2>
-  <p>Join the waitlist for Pro access — early members receive priority onboarding and a founding-member rate locked in for life.</p>
-  <div class="waitlist-form">
-    <input type="email" placeholder="Your email address" />
-    <button>Join Waitlist</button>
-  </div>
-  <p class="waitlist-note">No spam. No pricing visible until you're ready. Unsubscribe any time.</p>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <div class="wordmark">
-        <div class="wordmark-top">
-          <div class="wordmark-rule wordmark-rule-left"></div>
-          <span class="wm-global">Global</span>
-          <div class="wordmark-rule wordmark-rule-right"></div>
-        </div>
-        <div class="wm-compass-row">
-          <span class="wm-compass">C<span class="gold-o">O</span>MPASS</span>
-        </div>
-        <span class="wm-tagline">Education Worldwide</span>
-      </div>
-      <p class="footer-tagline">Helping families find their<br>footing — wherever they land.</p>
-    </div>
-    <div class="footer-col">
-      <h4>Explore</h4>
-      <a href="#">Find Schools</a>
-      <a href="#">Curricula Guide</a>
-      <a href="#">Countries</a>
-      <a href="#">Universities</a>
-    </div>
-    <div class="footer-col">
-      <h4>Community</h4>
-      <a href="#">Parent Forum</a>
-      <a href="#">School Reviews</a>
-      <a href="#">Relocation Advice</a>
-      <a href="#">Newsletter</a>
-    </div>
-    <div class="footer-col">
-      <h4>Company</h4>
-      <a href="#">About Us</a>
-      <a href="#">Editorial Standards</a>
-      <a href="#">Privacy Policy</a>
-      <a href="#">Contact</a>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <span>© 2025 Global Compass Education Ltd. All rights reserved.</span>
-    <span>Built for families on the move.</span>
-  </div>
-</footer>
-
-<!-- PRO MODAL -->
-<div class="modal-backdrop" id="proModal">
+<div class="modal-ov" id="proModal">
   <div class="modal">
-    <button class="modal-close" id="modalClose">✕</button>
-    <div class="modal-badge">Global Compass Pro</div>
-    <h2>The complete toolkit for expat education</h2>
-    <p class="modal-intro">Pro gives you full access to every tool we've built for internationally mobile families — from deep school comparisons to real-time admissions alerts.</p>
-    <ul class="modal-perks">
-      <li>Unlimited school comparisons with side-by-side fee breakdowns</li>
-      <li>Real-time availability alerts when a place opens at your target school</li>
-      <li>Direct access to our admissions specialists via private forum</li>
-      <li>Curated university pathways report for your child's curriculum</li>
-      <li>Full relocation checklists with country-by-country timelines</li>
-      <li>Early access to new destinations, tools, and annual rankings</li>
-    </ul>
-    <button class="modal-cta">Join the Waitlist for Pro</button>
-    <p class="modal-fine">No commitment required. We'll be in touch when early access opens.</p>
+    <button class="modal-x" onclick="closeModal()">✕</button>
+    <div class="m-ew">Unlock GlobalCompass Pro</div>
+    <h2 class="m-h">Go further with your child's education journey</h2>
+    <p class="m-p">GlobalCompass is free for every family. Upgrade when you need deeper guidance, expert access, or corporate relocation support.</p>
+    <div class="m-rule"></div>
+    <div class="plans">
+      <div class="plan"><div class="p-name">Free</div><div class="p-price">$0</div><div class="p-per">forever</div><ul class="p-feats"><li><i class="ti ti-check"></i>School search</li><li><i class="ti ti-check"></i>Quick quiz</li><li><i class="ti ti-check"></i>Country guides</li><li><i class="ti ti-check"></i>Forum access</li></ul><button class="p-btn" style="background:#2952A3;color:#A8C4F5;border:0.5px solid #5B8DEF">Continue free</button></div>
+      <div class="plan hi"><div class="p-name">Pro</div><div class="p-price">$9.99</div><div class="p-per">per month</div><ul class="p-feats"><li><i class="ti ti-check"></i>Deep assessment</li><li><i class="ti ti-check"></i>Subject navigator</li><li><i class="ti ti-check"></i>Save & compare</li><li><i class="ti ti-check"></i>Expert sessions</li><li><i class="ti ti-check"></i>University planner</li></ul><button class="p-btn" style="background:#F5C842;color:#1B3A7A">Start Pro</button></div>
+      <div class="plan"><div class="p-name">Corporate</div><div class="p-price">Custom</div><div class="p-per">per year</div><ul class="p-feats"><li><i class="ti ti-check"></i>HR portal</li><li><i class="ti ti-check"></i>Relocation packs</li><li><i class="ti ti-check"></i>Account manager</li><li><i class="ti ti-check"></i>Priority support</li></ul><button class="p-btn" style="background:#2E5C3A;color:#9FE8C8">Contact us</button></div>
+    </div>
+    <div class="m-note">No commitment · Cancel anytime · Trusted by families worldwide</div>
   </div>
 </div>
-
+<nav>
+  <a class="logo" href="#">
+    <svg width="34" height="34" viewBox="0 0 64 64" fill="none">
+      <circle cx="32" cy="32" r="29" stroke="#F5C842" stroke-width="1.4" fill="none"/>
+      <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <ellipse cx="32" cy="32" rx="29" ry="21" stroke="#F5C842" stroke-width="0.5" fill="none" opacity="0.25"/>
+      <line x1="3" y1="32" x2="61" y2="32" stroke="#F5C842" stroke-width="0.5" opacity="0.2"/>
+      <line x1="32" y1="3" x2="32" y2="61" stroke="#F5C842" stroke-width="0.5" opacity="0.2"/>
+      <circle cx="32" cy="32" r="3" fill="#F5C842"/>
+      <polygon points="32,4 35,25 32,26.5 29,25" fill="#F5C842"/>
+      <polygon points="32,60 29,39 32,37.5 35,39" fill="#F5C842" opacity="0.25"/>
+    </svg>
+    <div class="wm-wrap">
+      <div class="wm-global-row"><div class="wm-rule"></div><div class="wm-global">GLOBAL</div><div class="wm-rule"></div></div>
+      <div class="wm-compass">C<span class="o">O</span>MPASS</div>
+      <div class="wm-sub">Education · Worldwide</div>
+    </div>
+  </a>
+  <div class="nav-menu">
+    <div class="ni"><button class="nb">Schools <i class="ti ti-chevron-down" style="font-size:10px;opacity:0.6"></i></button><div class="dd"><div class="dl">Find schools</div><a class="di" href="#"><i class="ti ti-search"></i> Search schools</a><a class="di" href="#"><i class="ti ti-git-compare"></i> Compare schools</a><a class="di" href="#"><i class="ti ti-map-pin"></i> Schools by country</a><div class="dd-div"></div><div class="dl">Featured</div><a class="di" href="#"><i class="ti ti-star"></i> Spotlight institutions</a></div></div>
+    <div class="ni"><button class="nb">Curricula <i class="ti ti-chevron-down" style="font-size:10px;opacity:0.6"></i></button><div class="dd"><div class="dl">Explore</div><a class="di" href="#"><i class="ti ti-brain"></i> Curriculum quiz</a><a class="di" href="#"><i class="ti ti-git-compare"></i> Compare curricula</a><a class="di" href="#"><i class="ti ti-book"></i> Curriculum guides</a><div class="dd-div"></div><div class="dl">By curriculum</div><a class="di" href="#"><i class="ti ti-world"></i> IB · British · American</a><a class="di" href="#"><i class="ti ti-flag"></i> French · German · Canadian</a><a class="di" href="#"><i class="ti ti-sun"></i> Australian · Local</a></div></div>
+    <div class="ni"><button class="nb">Final Years <i class="ti ti-chevron-down" style="font-size:10px;opacity:0.6"></i></button><div class="dd"><div class="dl">Senior programmes</div><a class="di" href="#"><i class="ti ti-diploma"></i> IB Diploma</a><a class="di" href="#"><i class="ti ti-crown"></i> A-Levels & Sixth Form</a><a class="di" href="#"><i class="ti ti-flag"></i> French Baccalauréat</a><a class="di" href="#"><i class="ti ti-building"></i> German Abitur</a><a class="di" href="#"><i class="ti ti-star"></i> American AP & SAT</a><a class="di" href="#"><i class="ti ti-sun"></i> Australian VCE</a><div class="dd-div"></div><div class="dl">Plan your path</div><a class="di" href="#"><i class="ti ti-route"></i> Subject navigator</a><a class="di" href="#"><i class="ti ti-users"></i> Student community</a></div></div>
+    <div class="ni"><button class="nb">Countries <i class="ti ti-chevron-down" style="font-size:10px;opacity:0.6"></i></button><div class="dd"><div class="dl">By region</div><a class="di" href="#"><i class="ti ti-moon"></i> Gulf & Middle East</a><a class="di" href="#"><i class="ti ti-world"></i> Asia Pacific</a><a class="di" href="#"><i class="ti ti-map"></i> Europe</a><a class="di" href="#"><i class="ti ti-map-2"></i> Americas</a><a class="di" href="#"><i class="ti ti-sun"></i> Africa</a><a class="di" href="#"><i class="ti ti-wave-sine"></i> Oceania</a><div class="dd-div"></div><a class="di" href="#"><i class="ti ti-globe"></i> All 190+ countries</a></div></div>
+    <div class="ni"><button class="nb">Forum <i class="ti ti-chevron-down" style="font-size:10px;opacity:0.6"></i></button><div class="dd"><div class="dl">Community</div><a class="di" href="#"><i class="ti ti-messages"></i> Parent forum</a><a class="di" href="#"><i class="ti ti-users"></i> Student community</a><a class="di" href="#"><i class="ti ti-map-pin"></i> Forum by country</a><div class="dd-div"></div><a class="di" href="#"><i class="ti ti-star"></i> School reviews</a></div></div>
+    <div class="ni"><button class="nb">Universities <span class="soon">Coming soon</span></button></div>
+  </div>
+  <div class="nav-r"><button class="btn-g">Sign in</button><button class="btn-p" onclick="openModal()">Pro ↗</button></div>
+</nav>
+<section class="hero">
+  <svg class="hero-bg" viewBox="0 0 600 600" fill="none"><circle cx="300" cy="300" r="270" stroke="#F5C842" stroke-width="1"/><ellipse cx="300" cy="300" rx="150" ry="270" stroke="#F5C842" stroke-width="0.7"/><ellipse cx="300" cy="300" rx="270" ry="105" stroke="#F5C842" stroke-width="0.7"/><ellipse cx="300" cy="300" rx="270" ry="195" stroke="#F5C842" stroke-width="0.5"/><line x1="30" y1="300" x2="570" y2="300" stroke="#F5C842" stroke-width="0.6"/><line x1="300" y1="30" x2="300" y2="570" stroke="#F5C842" stroke-width="0.6"/></svg>
+  <div class="h-tag"><i class="ti ti-world"></i> The world's education search engine for expat families</div>
+  <div class="h-eyebrow">The world's education search engine</div>
+  <h1 class="h1">for every <em>expat family</em></h1>
+  <div class="h-rule"></div>
+  <p class="h-mission">"Every child deserves the right start, wherever in the world they are."</p>
+  <p class="h-p">Search, compare and discover schools and curricula across 190+ countries — all budgets, all ages, all curricula. Free for every family.</p>
+  <div class="search-card">
+    <div class="s-row">
+      <i class="ti ti-search" style="color:#1B3A7A;font-size:16px;flex-shrink:0"></i>
+      <input placeholder="Search schools, curricula, or countries…">
+      <div class="s-div"></div>
+      <select class="s-sel"><option>All ages</option><option>3–5 Pre-school</option><option>6–11 Primary</option><option>12–15 Middle</option><option>16–18 Final years</option></select>
+      <div class="s-div"></div>
+      <select class="s-sel"><option>All curricula</option><option>IB</option><option>British</option><option>American</option><option>French</option><option>German</option><option>Australian</option></select>
+      <button class="s-btn">Search</button>
+    </div>
+    <div class="s-tags"><span class="s-tag">🇦🇪 UAE</span><span class="s-tag">🇸🇬 Singapore</span><span class="s-tag">🇬🇧 UK</span><span class="s-tag">🇩🇪 Germany</span><span class="s-tag">🇦🇺 Australia</span><span class="s-tag">🇶🇦 Qatar</span><span class="s-tag">+ 184 more</span></div>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="stat-n">12,400+</div><div class="stat-l">Schools</div></div>
+    <div class="stat"><div class="stat-n">190+</div><div class="stat-l">Countries</div></div>
+    <div class="stat"><div class="stat-n">280M+</div><div class="stat-l">Expat families</div></div>
+    <div class="stat"><div class="stat-n">8</div><div class="stat-l">Curricula</div></div>
+  </div>
+</section>
+<section class="sec">
+  <div class="ew">What GlobalCompass offers</div>
+  <h2 class="sh2">Your complete education guidance platform</h2>
+  <div class="s-rule"></div>
+  <div class="fg">
+    <div class="fc"><div class="f-icon"><i class="ti ti-school"></i></div><div class="f-h">School search</div><p class="f-p">Find public, private and international schools by country, city, budget and curriculum</p><span class="f-t">Free</span></div>
+    <div class="fc"><div class="f-icon"><i class="ti ti-brain"></i></div><div class="f-h">Curriculum finder</div><p class="f-p">Match your child to the right curriculum from 8 international options with our quiz</p><span class="f-t">Free</span></div>
+    <div class="fc"><div class="f-icon"><i class="ti ti-route"></i></div><div class="f-h">Subject navigator</div><p class="f-p">Final year students select subjects based on their university major and destination country</p><span class="f-t">Final Years</span></div>
+    <div class="fc"><div class="f-icon"><i class="ti ti-map"></i></div><div class="f-h">Country guides</div><p class="f-p">Plain-language education system guides for 190+ countries — written for expat parents</p><span class="f-t">Free</span></div>
+    <div class="fc"><div class="f-icon"><i class="ti ti-git-compare"></i></div><div class="f-h">Compare schools</div><p class="f-p">Side-by-side comparison of fees, ratings, facilities and university destinations</p><span class="f-t">Free</span></div>
+    <div class="fc"><div class="f-icon"><i class="ti ti-building-community"></i></div><div class="f-h">Universities</div><p class="f-p">Search universities worldwide — connected to your child's final year subject choices</p><span class="f-t">Coming soon</span></div>
+  </div>
+</section>
+<section class="sec dk">
+  <div class="ew lt">Final Years — the bridge to university</div>
+  <h2 class="sh2 lt">Senior programmes & subject guidance</h2>
+  <div class="s-rule"></div>
+  <p class="s-p lt">For sixth formers, IB Diploma students, and all final-year programmes. Select subjects based on the university major you want to pursue — wherever in the world you are headed.</p>
+  <div class="fl-grid">
+    <div class="fl-card"><div class="fl-badge">IB</div><div class="fl-h">IB Diploma</div><p class="fl-p">Higher & Standard Level subject selection for university pathways worldwide</p></div>
+    <div class="fl-card"><div class="fl-badge">British</div><div class="fl-h">A-Levels & Sixth Form</div><p class="fl-p">Subject combinations by career path — Medicine, Law, Engineering and more</p></div>
+    <div class="fl-card"><div class="fl-badge">French</div><div class="fl-h">Baccalauréat</div><p class="fl-p">Specialisation tracks and subject strategy for French and European universities</p></div>
+    <div class="fl-card"><div class="fl-badge">German</div><div class="fl-h">Abitur</div><p class="fl-p">Subject profiles and Numerus Clausus guidance for German universities</p></div>
+    <div class="fl-card"><div class="fl-badge">American</div><div class="fl-h">AP & SAT</div><p class="fl-p">Advanced Placement strategy and SAT subject planning for US university admissions</p></div>
+    <div class="fl-card"><div class="fl-badge">Australian</div><div class="fl-h">VCE & ATAR</div><p class="fl-p">Subject selection and ATAR optimisation for Australian university entry</p></div>
+  </div>
+</section>
+<section class="sec md">
+  <div class="ew">Explore by country</div>
+  <h2 class="sh2">Schools in 190+ countries</h2>
+  <div class="s-rule"></div>
+  <div class="cg">
+    <div class="cc"><span class="c-flag">🇦🇪</span><div><div class="c-name">UAE</div><div class="c-count">640 schools</div></div></div>
+    <div class="cc"><span class="c-flag">🇸🇬</span><div><div class="c-name">Singapore</div><div class="c-count">210 schools</div></div></div>
+    <div class="cc"><span class="c-flag">🇬🇧</span><div><div class="c-name">United Kingdom</div><div class="c-count">1,200 schools</div></div></div>
+    <div class="cc"><span class="c-flag">🇩🇪</span><div><div class="c-name">Germany</div><div class="c-count">390 schools</div></div></div>
+    <div class="cc"><span class="c-flag">🇦🇺</span><div><div class="c-name">Australia</div><div class="c-count">520 schools</div></div></div>
+    <div class="cc"><span class="c-flag">🇶🇦</span><div><div class="c-name">Qatar</div><div class="c-count">180 schools</div></div></div>
+    <div class="cc"><span class="c-flag">🇨🇦</span><div><div class="c-name">Canada</div><div class="c-count">480 schools</div></div></div>
+    <div class="cc"><span class="c-flag">🇫🇷</span><div><div class="c-name">France</div><div class="c-count">340 schools</div></div></div>
+    <div class="cc"><span class="c-flag">🇿🇦</span><div><div class="c-name">South Africa</div><div class="c-count">290 schools</div></div></div>
+    <div class="cc"><span class="c-flag">🇳🇬</span><div><div class="c-name">Nigeria</div><div class="c-count">180 schools</div></div></div>
+    <div class="cc"><span class="c-flag">🇰🇪</span><div><div class="c-name">Kenya</div><div class="c-count">140 schools</div></div></div>
+    <div class="cc"><span class="c-flag">🇳🇿</span><div><div class="c-name">New Zealand</div><div class="c-count">160 schools</div></div></div>
+  </div>
+</section>
+<section class="sec">
+  <div class="ew">Featured institutions</div>
+  <h2 class="sh2">GlobalCompass Spotlight</h2>
+  <div class="s-rule"></div>
+  <p class="s-p">Institutions that have chosen to share their full profile with GlobalCompass families.</p>
+  <div class="sp-grid">
+    <div class="sp-card"><div class="sp-head" style="background:#EEF3FF;color:#1B3A7A">DI</div><div class="sp-body"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div class="sp-name">Dubai International Academy</div><div class="sp-rat">9.4</div></div><div class="sp-meta">Dubai, UAE · IB · Ages 3–18</div><span class="sp-tag">Enhanced profile</span></div></div>
+    <div class="sp-card"><div class="sp-head" style="background:#FFF3E0;color:#E65100">GW</div><div class="sp-body"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div class="sp-name">GEMS Wellington International</div><div class="sp-rat">9.1</div></div><div class="sp-meta">Dubai, UAE · British · Ages 3–18</div><span class="sp-tag">Enhanced profile</span></div></div>
+    <div class="sp-card"><div class="sp-head" style="background:#EEF3FF;color:#1B3A7A">SI</div><div class="sp-body"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div class="sp-name">Singapore International School</div><div class="sp-rat">9.5</div></div><div class="sp-meta">Singapore · IB · Ages 3–18</div><span class="sp-tag">Enhanced profile</span></div></div>
+  </div>
+</section>
+<section class="sec dk">
+  <div class="wl-inner">
+    <svg width="44" height="44" viewBox="0 0 64 64" fill="none" style="margin:0 auto 20px;display:block"><circle cx="32" cy="32" r="29" stroke="#F5C842" stroke-width="1.4" fill="none"/><ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.4"/><ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.4"/><circle cx="32" cy="32" r="3" fill="#F5C842"/><polygon points="32,4 35,25 32,26.5 29,25" fill="#F5C842"/></svg>
+    <h2 class="wl-h">Be first when we launch</h2>
+    <p class="wl-p">GlobalCompass is coming to globalcompass.com very soon. Join the waitlist and get early access — free for the first 1,000 families worldwide.</p>
+    <div class="wl-form"><input class="wl-in" placeholder="Your email address…" type="email"><button class="wl-btn">Join the waitlist ↗</button></div>
+  </div>
+</section>
+<footer>
+  <div class="ft-left">
+    <svg width="28" height="28" viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="29" stroke="#F5C842" stroke-width="1.4" fill="none"/><ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.4"/><ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.4"/><circle cx="32" cy="32" r="2.5" fill="#F5C842"/><polygon points="32,4 34.5,25 32,26 29.5,25" fill="#F5C842"/></svg>
+    <div>
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px"><div style="flex:1;height:0.7px;background:rgba(245,200,66,0.3)"></div><div style="font-family:'Montserrat',sans-serif;font-size:7px;font-weight:300;color:#A8C4F5;letter-spacing:0.3em;text-transform:uppercase;padding:0 5px">GLOBAL</div><div style="flex:1;height:0.7px;background:rgba(245,200,66,0.3)"></div></div>
+      <div style="font-family:'Montserrat',sans-serif;font-size:13px;font-weight:800;color:#FFFFFF;letter-spacing:0.07em;text-transform:uppercase;line-height:1">C<span style="color:#F5C842">O</span>MPASS</div>
+      <div class="ft-copy">Education Worldwide · globalcompass.com · © 2025</div>
+    </div>
+  </div>
+  <div class="ft-links"><a class="ft-link" href="#">About</a><a class="ft-link" href="#">Schools</a><a class="ft-link" href="#">Curricula</a><a class="ft-link" href="#">Final Years</a><a class="ft-link" href="#">Forum</a><a class="ft-link" href="#">Reviews</a><a class="ft-link" href="#">Spotlight</a><a class="ft-link" href="#">Privacy</a><a class="ft-link" href="#">Terms</a><a class="ft-link" href="#">Contact</a></div>
+  <div class="ft-right"><div style="font-family:'Playfair Display',serif;font-size:11px;font-style:italic;color:#4A6FA5">"Every child deserves a compass."</div><div style="font-size:10px;color:#2952A3;margin-top:3px">All rights reserved.</div></div>
+</footer>
 <script>
-  const proBtn = document.getElementById('proBtn');
-  const proModal = document.getElementById('proModal');
-  const modalClose = document.getElementById('modalClose');
-
-  proBtn.addEventListener('click', () => proModal.classList.add('open'));
-  modalClose.addEventListener('click', () => proModal.classList.remove('open'));
-  proModal.addEventListener('click', (e) => {
-    if (e.target === proModal) proModal.classList.remove('open');
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') proModal.classList.remove('open');
-  });
+function openModal(){document.getElementById('proModal').classList.add('open')}
+function closeModal(){document.getElementById('proModal').classList.remove('open')}
+document.getElementById('proModal').addEventListener('click',function(e){if(e.target===this)closeModal()})
 </script>
-
 </body>
 </html>
