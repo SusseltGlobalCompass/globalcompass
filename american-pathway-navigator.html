@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlobalCompass — American Pathway Navigator · AP & SAT</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
+.screen{display:none}.screen.active{display:block}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:#1B3A7A}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.wm-wrap{display:flex;flex-direction:column}
+.wm-global-row{display:flex;align-items:center;gap:5px;margin-bottom:2px}
+.wm-rule{height:0.7px;background:rgba(245,200,66,0.5);flex:1}
+.wm-global{font-family:'Montserrat',sans-serif;font-size:7px;font-weight:300;color:#fff;letter-spacing:0.3em;text-transform:uppercase}
+.wm-compass{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:800;color:#fff;letter-spacing:0.07em;text-transform:uppercase;line-height:1}
+.wm-compass .o{color:#F5C842}
+.nav-tag{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;color:#F5C842;letter-spacing:0.12em;text-transform:uppercase;background:rgba(245,200,66,0.12);padding:4px 12px;border-radius:99px;border:0.5px solid rgba(245,200,66,0.3)}
+.hero-bar{background:linear-gradient(135deg,#0D1F4A,#1B3A7A);padding:28px 24px;text-align:center;border-bottom:2px solid #F5C842}
+.hero-eyebrow{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:#F5C842;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:8px}
+.hero-h{font-family:'Playfair Display',serif;font-size:24px;font-weight:500;color:#fff;line-height:1.3;margin-bottom:6px}
+.hero-h em{color:#F5C842;font-style:normal}
+.hero-p{font-size:12px;color:#A8C4F5;line-height:1.7;max-width:520px;margin:0 auto;font-weight:300}
+.us-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(245,200,66,0.15);border:1px solid rgba(245,200,66,0.4);border-radius:99px;padding:4px 14px;font-size:11px;font-weight:700;color:#F5C842;font-family:'Montserrat',sans-serif;letter-spacing:0.06em;margin-bottom:14px}
+.module-tabs{display:flex;gap:0;background:#EEF3FF;border-radius:12px;padding:4px;margin-bottom:20px}
+.tab{flex:1;padding:10px;text-align:center;border-radius:10px;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:600;color:#4A6FA5;transition:all 0.2s}
+.tab.active{background:#1B3A7A;color:#F5C842}
+.main{max-width:700px;margin:0 auto;padding:24px}
+.step-indicator{display:flex;align-items:center;margin-bottom:24px}
+.step{display:flex;flex-direction:column;align-items:center;flex:1}
+.step-circle{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:'Montserrat',sans-serif;transition:all 0.3s;z-index:1}
+.step-circle.done{background:#F5C842;color:#1B3A7A}
+.step-circle.active{background:#1B3A7A;color:#F5C842;border:2px solid #F5C842}
+.step-circle.pending{background:#E0E8F5;color:#9AB0D0}
+.step-label{font-size:9px;color:#9AB0D0;margin-top:4px;text-align:center;font-weight:500;letter-spacing:0.04em;font-family:'Montserrat',sans-serif;text-transform:uppercase;max-width:60px}
+.step-label.active{color:#1B3A7A;font-weight:700}
+.step-line{height:1px;background:#E0E8F5;flex:1;margin-top:-14px}
+.step-line.done{background:#F5C842}
+.card{background:#fff;border:0.5px solid #E0E8F5;border-radius:16px;padding:22px;margin-bottom:14px}
+.card-title{font-family:'Playfair Display',serif;font-size:18px;color:#0D1F4A;margin-bottom:5px}
+.card-sub{font-size:13px;color:#4A6FA5;line-height:1.6;margin-bottom:18px;font-weight:300}
+.options-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.options-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.opt-card{border:1.5px solid #E0E8F5;border-radius:12px;padding:14px;cursor:pointer;transition:all 0.15s}
+.opt-card:hover{border-color:#2952A3;background:#EEF3FF}
+.opt-card.selected{border-color:#1B3A7A;background:#EEF3FF}
+.opt-emoji{font-size:24px;margin-bottom:8px;display:block;text-align:center}
+.opt-title{font-size:13px;font-weight:600;color:#0D1F4A;margin-bottom:3px;font-family:'Montserrat',sans-serif}
+.opt-sub{font-size:11px;color:#4A6FA5;line-height:1.4}
+.dream-input{width:100%;border:1.5px solid #E0E8F5;border-radius:12px;padding:14px 16px;font-size:14px;color:#0D1F4A;font-family:'Inter',sans-serif;outline:none;resize:none;min-height:90px;transition:border-color 0.15s;line-height:1.6}
+.dream-input:focus{border-color:#1B3A7A}
+.dream-input::placeholder{color:#9AB0D0}
+.example-prompts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.ep{font-size:11px;padding:5px 12px;border-radius:99px;border:0.5px solid #C0D0E8;color:#2952A3;cursor:pointer;background:#EEF3FF;font-family:'Inter',sans-serif;transition:all 0.15s;font-weight:500}
+.ep:hover{background:#1B3A7A;color:#F5C842;border-color:#1B3A7A}
+.btn-row{display:flex;justify-content:space-between;align-items:center;margin-top:18px}
+.btn-back{font-size:13px;padding:9px 20px;border-radius:99px;border:1px solid #E0E8F5;background:transparent;color:#4A6FA5;cursor:pointer;font-family:'Inter',sans-serif}
+.btn-next{font-size:13px;padding:9px 24px;border-radius:99px;border:none;background:#1B3A7A;color:#F5C842;cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:700}
+.btn-next:disabled{opacity:0.4;cursor:not-allowed}
+.btn-next.gold{background:#F5C842;color:#1B3A7A}
+.loading-wrap{text-align:center;padding:40px 0}
+.loading-icon{font-size:36px;color:#F5C842;animation:spin 1s linear infinite;display:block;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-family:'Playfair Display',serif;font-size:16px;color:#0D1F4A;margin-bottom:5px}
+.loading-sub{font-size:12px;color:#4A6FA5;font-weight:300}
+.result-hero{text-align:center;padding:16px 0 20px;border-bottom:1px solid #E0E8F5;margin-bottom:20px}
+.result-tag{display:inline-flex;align-items:center;gap:6px;font-size:10px;padding:4px 12px;border-radius:99px;background:#EEF3FF;color:#2952A3;margin-bottom:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;font-family:'Montserrat',sans-serif}
+.result-career{font-family:'Playfair Display',serif;font-size:22px;color:#0D1F4A;margin-bottom:6px}
+.result-summary{font-size:13px;color:#4A6FA5;line-height:1.7;font-weight:300;max-width:520px;margin:0 auto}
+.ap-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.ap-card{border-radius:12px;padding:14px;border:0.5px solid #E0E8F5}
+.ap-card.essential{background:#1B3A7A}
+.ap-card.recommended{background:#EEF3FF;border-color:#C0D0E8}
+.ap-card.optional{background:#F8F9FF}
+.ap-badge{font-size:9px;padding:2px 8px;border-radius:99px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;font-family:'Montserrat',sans-serif;margin-bottom:6px;display:inline-block}
+.badge-essential{background:rgba(245,200,66,0.2);color:#F5C842}
+.badge-recommended{background:#C0D0E8;color:#2952A3}
+.badge-optional{background:#E0E8F5;color:#4A6FA5}
+.ap-name-light{font-size:13px;font-weight:700;color:#fff;margin-bottom:2px;font-family:'Montserrat',sans-serif}
+.ap-name-dark{font-size:13px;font-weight:700;color:#0D1F4A;margin-bottom:2px;font-family:'Montserrat',sans-serif}
+.ap-score-light{font-size:10px;color:#F5C842;margin-bottom:4px}
+.ap-score-dark{font-size:10px;color:#2952A3;margin-bottom:4px}
+.ap-why-light{font-size:11px;color:rgba(255,255,255,0.75);line-height:1.5}
+.ap-why-dark{font-size:11px;color:#4A6FA5;line-height:1.5}
+.savings-box{background:linear-gradient(135deg,#2E5C3A,#1B5E3A);border-radius:14px;padding:20px;margin-bottom:14px;text-align:center}
+.savings-title{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:#9FE8C8;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px}
+.savings-amount{font-family:'Playfair Display',serif;font-size:36px;color:#F5C842;margin-bottom:4px}
+.savings-sub{font-size:12px;color:rgba(255,255,255,0.7);margin-bottom:12px}
+.savings-breakdown{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.savings-item{background:rgba(255,255,255,0.08);border-radius:8px;padding:8px;text-align:center}
+.savings-label{font-size:9px;color:#9FE8C8;font-weight:700;font-family:'Montserrat',sans-serif;text-transform:uppercase;margin-bottom:3px}
+.savings-value{font-size:13px;color:#fff;font-weight:600}
+.sat-box{background:#1B3A7A;border-radius:14px;padding:18px;margin-bottom:14px}
+.sat-title{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:#F5C842;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:12px}
+.sat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sat-item{background:rgba(255,255,255,0.08);border-radius:10px;padding:12px}
+.sat-label{font-size:10px;color:#F5C842;font-weight:700;font-family:'Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px}
+.sat-score{font-family:'Playfair Display',serif;font-size:22px;color:#fff;margin-bottom:3px}
+.sat-sub{font-size:11px;color:rgba(255,255,255,0.7);line-height:1.5}
+.timeline-box{background:#EEF3FF;border-radius:12px;padding:16px;margin-bottom:14px}
+.timeline-title{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:#1B3A7A;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:12px}
+.timeline-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.timeline-item{background:#fff;border-radius:8px;padding:10px;border:0.5px solid #C0D0E8}
+.timeline-year{font-size:10px;font-weight:700;color:#1B3A7A;font-family:'Montserrat',sans-serif;margin-bottom:3px;text-transform:uppercase;letter-spacing:0.06em}
+.timeline-action{font-size:11px;color:#4A6FA5;line-height:1.4}
+.hidden-box{background:#FFF8E6;border:1.5px solid #F5C842;border-radius:12px;padding:16px;margin-bottom:14px}
+.hidden-title{font-size:12px;font-weight:700;color:#1B3A7A;margin-bottom:8px;font-family:'Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.06em}
+.hidden-item{font-size:12px;color:#2C1800;display:flex;align-items:flex-start;gap:8px;line-height:1.5;margin-bottom:5px}
+.ai-bubble{background:#EEF3FF;border-radius:0 12px 12px 12px;padding:14px 16px;border:0.5px solid #C0D0E8}
+.ai-bubble p{font-size:13px;color:#0D1F4A;line-height:1.7}
+.ai-label{font-size:10px;font-weight:700;color:#2952A3;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;font-family:'Montserrat',sans-serif}
+.action-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.action-btn{font-size:12px;padding:10px 20px;border-radius:99px;cursor:pointer;font-weight:700;font-family:'Montserrat',sans-serif;border:none}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo">
+    <svg width="28" height="28" viewBox="0 0 64 64" fill="none">
+      <circle cx="32" cy="32" r="29" stroke="#F5C842" stroke-width="1.4" fill="none"/>
+      <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <circle cx="32" cy="32" r="3" fill="#F5C842"/>
+      <polygon points="32,4 35,25 32,26.5 29,25" fill="#F5C842"/>
+    </svg>
+    <div class="wm-wrap">
+      <div class="wm-global-row"><div class="wm-rule"></div><div class="wm-global">GLOBAL</div><div class="wm-rule"></div></div>
+      <div class="wm-compass">C<span class="o">O</span>MPASS</div>
+    </div>
+  </div>
+  <div class="nav-tag">American Pathway · AP & SAT</div>
+</nav>
+<div class="hero-bar">
+  <div class="us-badge">🇺🇸 American Curriculum · AP Exams · SAT Strategy · All Curricula Welcome</div>
+  <h1 class="hero-h">Your personalised<br><em>AP & SAT pathway</em></h1>
+  <p class="hero-p">Whether you study American, IB, British or any curriculum — GlobalCompass maps your optimal AP subjects, target SAT score, university credit savings and complete US admissions strategy.</p>
+</div>
+<div class="main">
+  <div class="module-tabs">
+    <div class="tab active" id="tab-ap" onclick="switchModule('ap')">📚 AP Subject Planner</div>
+    <div class="tab" id="tab-sat" onclick="switchModule('sat')">📝 SAT Strategy Guide</div>
+  </div>
+  <div id="module-ap">
+    <div class="step-indicator">
+      <div class="step"><div class="step-circle active" id="ap-sc1">1</div><div class="step-label active">Dream</div></div>
+      <div class="step-line" id="ap-sl1"></div>
+      <div class="step"><div class="step-circle pending" id="ap-sc2">2</div><div class="step-label">Curriculum</div></div>
+      <div class="step-line" id="ap-sl2"></div>
+      <div class="step"><div class="step-circle pending" id="ap-sc3">3</div><div class="step-label">University</div></div>
+      <div class="step-line" id="ap-sl3"></div>
+      <div class="step"><div class="step-circle pending" id="ap-sc4">4</div><div class="step-label">Your Plan</div></div>
+    </div>
+    <div id="ap-s1" class="screen active">
+      <div class="card">
+        <div class="card-title">What is your career dream?</div>
+        <div class="card-sub">GlobalCompass maps backwards from your dream to the optimal AP subjects — and calculates how much university tuition you can save.</div>
+        <textarea class="dream-input" id="apDreamInput" placeholder="e.g. I want to study computer science and build AI products at a top US tech company…"></textarea>
+        <div class="example-prompts">
+          <span class="ep" onclick="setApDream('I want to study medicine and become a doctor at a top US hospital')">🩺 Medicine</span>
+          <span class="ep" onclick="setApDream('I want to study computer science and work in artificial intelligence')">💻 Computer Science</span>
+          <span class="ep" onclick="setApDream('I want to study business economics and work in investment banking')">📈 Business & Finance</span>
+          <span class="ep" onclick="setApDream('I want to study law and work in corporate or international law')">⚖️ Law</span>
+          <span class="ep" onclick="setApDream('I want to study engineering and build sustainable energy systems')">⚡ Engineering</span>
+          <span class="ep" onclick="setApDream('I want to study psychology and work in mental health research')">🧠 Psychology</span>
+        </div>
+      </div>
+      <div class="btn-row"><div></div><button class="btn-next" id="ap-btn1" onclick="apGoStep(2)" disabled>Next — Your current curriculum →</button></div>
+    </div>
+    <div id="ap-s2" class="screen">
+      <div class="card">
+        <div class="card-title">What curriculum are you currently studying?</div>
+        <div class="card-sub">AP exams are open to all students worldwide — not just American curriculum students. This shapes how many APs we recommend.</div>
+        <div class="options-grid">
+          <div class="opt-card" onclick="selectApCurr(this,'American curriculum student taking APs as part of regular programme')"><span class="opt-emoji">🇺🇸</span><div class="opt-title">American curriculum</div><div class="opt-sub">APs are part of my regular programme</div></div>
+          <div class="opt-card" onclick="selectApCurr(this,'IB Diploma student taking additional AP exams for US university applications')"><span class="opt-emoji">🎓</span><div class="opt-title">IB Diploma</div><div class="opt-sub">Taking APs alongside or after IB</div></div>
+          <div class="opt-card" onclick="selectApCurr(this,'British A-Level student taking SAT and some AP exams for US applications')"><span class="opt-emoji">🇬🇧</span><div class="opt-title">British A-Levels</div><div class="opt-sub">Adding APs for US university applications</div></div>
+          <div class="opt-card" onclick="selectApCurr(this,'Indian CBSE or ISC student applying to US universities with SAT and AP')"><span class="opt-emoji">🇮🇳</span><div class="opt-title">Indian CBSE / ISC</div><div class="opt-sub">SAT plus APs for US applications</div></div>
+          <div class="opt-card" onclick="selectApCurr(this,'Other international curriculum student applying to US universities')"><span class="opt-emoji">🌍</span><div class="opt-title">Other international</div><div class="opt-sub">Any other curriculum</div></div>
+          <div class="opt-card" onclick="selectApCurr(this,'Homeschooled or self-study student taking AP exams independently')"><span class="opt-emoji">📖</span><div class="opt-title">Self-study / homeschool</div><div class="opt-sub">Taking APs independently</div></div>
+        </div>
+      </div>
+      <div class="btn-row"><button class="btn-back" onclick="apGoStep(1)">← Back</button><button class="btn-next" id="ap-btn2" onclick="apGoStep(3)" disabled>Next — Target university →</button></div>
+    </div>
+    <div id="ap-s3" class="screen">
+      <div class="card">
+        <div class="card-title">Where do you want to study?</div>
+        <div class="card-sub">Different US universities have very different AP credit policies — some give full credit for a 3, others require a 5.</div>
+        <div class="options-grid">
+          <div class="opt-card" onclick="selectApUni(this,'Ivy League Harvard Yale Princeton Columbia Penn Cornell Dartmouth Brown')"><span class="opt-emoji">🏛️</span><div class="opt-title">Ivy League</div><div class="opt-sub">Harvard, Yale, Princeton, Columbia</div></div>
+          <div class="opt-card" onclick="selectApUni(this,'MIT Caltech Stanford top STEM universities')"><span class="opt-emoji">⚡</span><div class="opt-title">MIT / Caltech / Stanford</div><div class="opt-sub">Top STEM and research universities</div></div>
+          <div class="opt-card" onclick="selectApUni(this,'Top 20 US universities UCLA Berkeley Michigan NYU')"><span class="opt-emoji">🎓</span><div class="opt-title">Top 20 US universities</div><div class="opt-sub">UCLA, Berkeley, Michigan, NYU</div></div>
+          <div class="opt-card" onclick="selectApUni(this,'Liberal arts colleges Williams Amherst Middlebury')"><span class="opt-emoji">📚</span><div class="opt-title">Liberal arts colleges</div><div class="opt-sub">Williams, Amherst, Middlebury</div></div>
+          <div class="opt-card" onclick="selectApUni(this,'Canadian universities Toronto McGill UBC')"><span class="opt-emoji">🇨🇦</span><div class="opt-title">Canada</div><div class="opt-sub">Toronto, McGill, UBC</div></div>
+          <div class="opt-card" onclick="selectApUni(this,'Open to top US universities broadly')"><span class="opt-emoji">🌎</span><div class="opt-title">Top US broadly</div><div class="opt-sub">Best fit from top US universities</div></div>
+        </div>
+      </div>
+      <div class="btn-row"><button class="btn-back" onclick="apGoStep(2)">← Back</button><button class="btn-next gold" id="ap-btn3" onclick="generateApPlan()" disabled>Generate my AP plan ↗</button></div>
+    </div>
+    <div id="ap-s4" class="screen">
+      <div class="card">
+        <div class="loading-wrap">
+          <i class="ti ti-loader-2 loading-icon"></i>
+          <div class="loading-text" id="ap-loadingText">Mapping your dream to AP subjects…</div>
+          <div class="loading-sub">Calculating credit savings and building your complete AP strategy</div>
+        </div>
+      </div>
+    </div>
+    <div id="ap-s5" class="screen">
+      <div class="result-hero">
+        <div class="result-tag">🇺🇸 Your AP pathway plan</div>
+        <div class="result-career" id="ap-resultCareer"></div>
+        <p class="result-summary" id="ap-resultSummary"></p>
+      </div>
+      <div class="card"><div class="card-title" style="margin-bottom:14px">Your recommended AP subjects</div><div class="ap-grid" id="ap-subjectsOutput"></div></div>
+      <div id="ap-savingsOutput"></div>
+      <div id="ap-satOutput"></div>
+      <div id="ap-timelineOutput"></div>
+      <div id="ap-hiddenOutput"></div>
+      <div class="card"><div class="ai-label">GlobalCompass insight</div><div class="ai-bubble"><p id="ap-aiInsight"></p></div></div>
+      <div class="action-row">
+        <button class="action-btn" style="background:#1B3A7A;color:#F5C842" onclick="apGoStep(1)">Start again</button>
+        <button class="action-btn" style="background:#F5C842;color:#1B3A7A" onclick="switchModule('sat')">Plan my SAT strategy ↗</button>
+        <button class="action-btn" style="background:#EEF3FF;color:#2952A3" onclick="window.location.href='index.html'">Find AP schools ↗</button>
+      </div>
+    </div>
+  </div>
+  <div id="module-sat" style="display:none">
+    <div class="card">
+      <div class="card-title">SAT Strategy Guide</div>
+      <div class="card-sub">The SAT is used by students worldwide regardless of curriculum. Tell us about yourself and GlobalCompass builds your personalised SAT strategy.</div>
+      <div style="margin-bottom:16px">
+        <label style="font-size:12px;font-weight:600;color:#0D1F4A;font-family:Montserrat,sans-serif;display:block;margin-bottom:8px">Your dream major or field:</label>
+        <input id="satMajor" type="text" placeholder="e.g. Computer Science, Medicine, Business, Law…" style="width:100%;border:1.5px solid #E0E8F5;border-radius:10px;padding:10px 14px;font-size:13px;color:#0D1F4A;font-family:Inter,sans-serif;outline:none">
+      </div>
+      <div style="margin-bottom:16px">
+        <label style="font-size:12px;font-weight:600;color:#0D1F4A;font-family:Montserrat,sans-serif;display:block;margin-bottom:8px">Target university tier:</label>
+        <div class="options-grid-3" style="gap:8px">
+          <div class="opt-card" onclick="selectSatTier(this,'Ivy League and top 10 US universities')" style="padding:10px;text-align:center"><div class="opt-title" style="font-size:11px">Ivy League</div><div class="opt-sub" style="font-size:10px">Top 10</div></div>
+          <div class="opt-card" onclick="selectSatTier(this,'Top 20 to 50 US universities')" style="padding:10px;text-align:center"><div class="opt-title" style="font-size:11px">Top 20-50</div><div class="opt-sub" style="font-size:10px">Strong universities</div></div>
+          <div class="opt-card" onclick="selectSatTier(this,'Top 50 to 100 US universities')" style="padding:10px;text-align:center"><div class="opt-title" style="font-size:11px">Top 50-100</div><div class="opt-sub" style="font-size:10px">Good fit</div></div>
+        </div>
+      </div>
+      <div style="margin-bottom:16px">
+        <label style="font-size:12px;font-weight:600;color:#0D1F4A;font-family:Montserrat,sans-serif;display:block;margin-bottom:8px">Your current curriculum:</label>
+        <div class="options-grid" style="gap:8px">
+          <div class="opt-card" onclick="selectSatCurr(this,'American')" style="padding:10px"><div class="opt-title" style="font-size:11px">American / AP</div></div>
+          <div class="opt-card" onclick="selectSatCurr(this,'IB Diploma')" style="padding:10px"><div class="opt-title" style="font-size:11px">IB Diploma</div></div>
+          <div class="opt-card" onclick="selectSatCurr(this,'British A-Levels')" style="padding:10px"><div class="opt-title" style="font-size:11px">British A-Levels</div></div>
+          <div class="opt-card" onclick="selectSatCurr(this,'Other international')" style="padding:10px"><div class="opt-title" style="font-size:11px">Other international</div></div>
+        </div>
+      </div>
+      <button class="btn-next gold" id="sat-btn" onclick="generateSatPlan()" style="width:100%;padding:12px" disabled>Generate my SAT strategy ↗</button>
+    </div>
+    <div id="sat-results" style="display:none">
+      <div id="sat-scoreOutput"></div>
+      <div id="sat-strategyOutput"></div>
+      <div class="card"><div class="ai-label">GlobalCompass SAT insight</div><div class="ai-bubble"><p id="sat-aiInsight"></p></div></div>
+      <div class="action-row">
+        <button class="action-btn" style="background:#1B3A7A;color:#F5C842" onclick="resetSat()">Start again</button>
+        <button class="action-btn" style="background:#F5C842;color:#1B3A7A" onclick="switchModule('ap')">Plan my AP subjects ↗</button>
+        <button class="action-btn" style="background:#EEF3FF;color:#2952A3" onclick="window.location.href='index.html'">Back to GlobalCompass ↗</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+let apDream='',apCurr='',apUni='',satTier='',satCurr='';
+document.getElementById('apDreamInput').addEventListener('input',function(){apDream=this.value.trim();document.getElementById('ap-btn1').disabled=apDream.length<10;});
+function setApDream(t){document.getElementById('apDreamInput').value=t;apDream=t;document.getElementById('ap-btn1').disabled=false;}
+function selectApCurr(el,v){apCurr=v;document.querySelectorAll('#ap-s2 .opt-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');document.getElementById('ap-btn2').disabled=false;}
+function selectApUni(el,v){apUni=v;document.querySelectorAll('#ap-s3 .opt-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');document.getElementById('ap-btn3').disabled=false;}
+function switchModule(mod){document.getElementById('module-ap').style.display=mod==='ap'?'block':'none';document.getElementById('module-sat').style.display=mod==='sat'?'block':'none';document.getElementById('tab-ap').className='tab'+(mod==='ap'?' active':'');document.getElementById('tab-sat').className='tab'+(mod==='sat'?' active':'');}
+function apGoStep(n){for(let i=1;i<=5;i++){const s=document.getElementById('ap-s'+i);if(s)s.className='screen'+(i===n?' active':'');}for(let i=1;i<=4;i++){const c=document.getElementById('ap-sc'+i);const l=c?.nextElementSibling;if(!c)continue;if(i<n){c.className='step-circle done';c.innerHTML='✓';}else if(i===n){c.className='step-circle active';c.innerHTML=i;if(l)l.className='step-label active';}else{c.className='step-circle pending';c.innerHTML=i;if(l)l.className='step-label';}const line=document.getElementById('ap-sl'+i);if(line)line.className=i<n?'step-line done':'step-line';}}
+function selectSatTier(el,v){satTier=v;document.querySelectorAll('#module-sat .options-grid-3 .opt-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');checkSatReady();}
+function selectSatCurr(el,v){satCurr=v;document.querySelectorAll('#module-sat .options-grid .opt-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');checkSatReady();}
+function checkSatReady(){const m=document.getElementById('satMajor').value.trim();document.getElementById('sat-btn').disabled=!(m&&satTier&&satCurr);}
+document.getElementById('satMajor').addEventListener('input',checkSatReady);
+async function generateApPlan(){
+  apGoStep(4);
+  const msgs=['Mapping your dream to AP subjects…','Calculating university credit savings…','Checking AP credit policies…','Building your complete AP strategy…'];
+  let mi=0;const iv=setInterval(()=>{mi=(mi+1)%msgs.length;document.getElementById('ap-loadingText').textContent=msgs[mi];},1800);
+  const prompt='You are GlobalCompass American Pathway Navigator.\nDREAM: "'+apDream+'"\nCURRICULUM: "'+apCurr+'"\nUNIVERSITY: "'+apUni+'"\n\nRespond ONLY with valid JSON:\n{"career":"career title","summary":"2 sentence summary","apSubjects":[{"name":"AP Subject","level":"essential","targetScore":5,"credits":3,"why":"one sentence"},{"name":"AP Subject","level":"essential","targetScore":5,"credits":3,"why":"one sentence"},{"name":"AP Subject","level":"recommended","targetScore":4,"credits":3,"why":"one sentence"},{"name":"AP Subject","level":"optional","targetScore":4,"credits":3,"why":"one sentence"}],"totalCredits":12,"semestersSaved":1,"tuitionSaved":15000,"satTarget":1480,"actTarget":33,"satStrategy":"2 sentences on SAT strategy","timeline":[{"year":"Grade 10","action":"action"},{"year":"Grade 11","action":"action"},{"year":"Grade 12 Fall","action":"action"},{"year":"Grade 12 Spring","action":"action"}],"hiddenRequirements":["requirement 1","requirement 2","requirement 3"],"aiInsight":"2-3 sentence personalised insight"}';
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1400,messages:[{role:'user',content:prompt}]})});
+    const data=await res.json();clearInterval(iv);
+    const text=data.content[0].text.replace(/```json|```/g,'').trim();
+    showApResults(JSON.parse(text));
+  }catch(e){clearInterval(iv);showApFallback();}
+}
+function showApResults(r){
+  document.getElementById('ap-resultCareer').textContent=r.career;
+  document.getElementById('ap-resultSummary').textContent=r.summary;
+  document.getElementById('ap-aiInsight').textContent=r.aiInsight;
+  document.getElementById('ap-subjectsOutput').innerHTML=r.apSubjects.map(s=>{const cls=s.level==='essential'?'essential':s.level==='recommended'?'recommended':'optional';const bc='badge-'+cls;const nl=s.level==='essential'?'ap-name-light':'ap-name-dark';const wl=s.level==='essential'?'ap-why-light':'ap-why-dark';const sl=s.level==='essential'?'ap-score-light':'ap-score-dark';return'<div class="ap-card '+cls+'"><span class="ap-badge '+bc+'">'+s.level+'</span><div class="'+nl+'">'+s.name+'</div><div class="'+sl+'">Target: '+s.targetScore+'/5 · '+s.credits+' credits</div><div class="'+wl+'">'+s.why+'</div></div>';}).join('');
+  document.getElementById('ap-savingsOutput').innerHTML='<div class="savings-box"><div class="savings-title">University tuition you could save</div><div class="savings-amount">$'+r.tuitionSaved.toLocaleString()+'</div><div class="savings-sub">Based on '+r.totalCredits+' AP credits at target universities</div><div class="savings-breakdown"><div class="savings-item"><div class="savings-label">AP Credits</div><div class="savings-value">'+r.totalCredits+'</div></div><div class="savings-item"><div class="savings-label">Semesters saved</div><div class="savings-value">'+r.semestersSaved+'</div></div><div class="savings-item"><div class="savings-label">Est. saving</div><div class="savings-value">$'+(r.tuitionSaved/1000).toFixed(0)+'k</div></div></div></div>';
+  document.getElementById('ap-satOutput').innerHTML='<div class="sat-box"><div class="sat-title">SAT & ACT targets</div><div class="sat-grid"><div class="sat-item"><div class="sat-label">SAT target</div><div class="sat-score">'+r.satTarget+'</div><div class="sat-sub">'+r.satStrategy+'</div></div><div class="sat-item"><div class="sat-label">ACT equivalent</div><div class="sat-score">'+r.actTarget+'</div><div class="sat-sub">Both accepted equally. Choose the test that suits your strengths.</div></div></div></div>';
+  document.getElementById('ap-timelineOutput').innerHTML='<div class="timeline-box"><div class="timeline-title">Your AP & SAT timeline</div><div class="timeline-grid">'+r.timeline.map(t=>'<div class="timeline-item"><div class="timeline-year">'+t.year+'</div><div class="timeline-action">'+t.action+'</div></div>').join('')+'</div></div>';
+  document.getElementById('ap-hiddenOutput').innerHTML='<div class="hidden-box"><div class="hidden-title">Hidden AP & admissions requirements</div>'+r.hiddenRequirements.map(h=>'<div class="hidden-item"><span>→</span><span>'+h+'</span></div>').join('')+'</div>';
+  apGoStep(5);
+}
+function showApFallback(){showApResults({career:"Computer Scientist",summary:"Your pathway to computer science requires a strategic combination of Mathematics and Science APs that demonstrate rigour while AP Computer Science directly signals your interest to admissions committees.",apSubjects:[{name:"AP Calculus BC",level:"essential",targetScore:5,credits:6,why:"Mathematics foundation required by every top CS programme — BC gives double credits"},{name:"AP Computer Science A",level:"essential",targetScore:5,credits:3,why:"Directly demonstrates programming ability and CS readiness to admissions committees"},{name:"AP Physics C Mechanics",level:"recommended",targetScore:5,credits:3,why:"Physics C is the most rigorous science AP and strongly preferred for CS and engineering"},{name:"AP Statistics",level:"optional",targetScore:4,credits:3,why:"Statistics is increasingly core to AI and data science careers"}],totalCredits:15,semestersSaved:1,tuitionSaved:18000,satTarget:1520,actTarget:34,satStrategy:"Aim for 780+ in SAT Math. The Reading section matters more than most CS students expect — top programmes want well-rounded thinkers.",timeline:[{year:"Grade 10",action:"Take AP Computer Science Principles and begin SAT prep"},{year:"Grade 11",action:"Sit AP Calculus BC and AP Physics C — take first SAT attempt"},{year:"Grade 12 Fall",action:"Take AP Statistics — submit university applications"},{year:"Grade 12 Spring",action:"Final SAT attempt if needed — AP exams in May"}],hiddenRequirements:["MIT and Caltech do not grant AP credit for Calculus — they require their own placement tests","Harvard grants AP credit only for scores of 5 — a score of 4 earns no credit","Stanford does not grant credit for AP Computer Science A — it is for placement only"],aiInsight:"Many CS applicants take AP Computer Science A and skip Calculus BC — a strategic mistake. Top CS programmes care far more about mathematical depth than coding proficiency at age 17. A 5 in Calculus BC signals more to Harvard than a 5 in CS A."});}
+async function generateSatPlan(){
+  const major=document.getElementById('satMajor').value.trim();
+  document.getElementById('sat-btn').disabled=true;
+  document.getElementById('sat-btn').textContent='Generating…';
+  const prompt='You are GlobalCompass SAT Strategy Guide.\nMAJOR: "'+major+'"\nTARGET: "'+satTier+'"\nCURRICULUM: "'+satCurr+'"\n\nRespond ONLY with valid JSON:\n{"targetSAT":1480,"targetACT":33,"mathTarget":760,"readingTarget":720,"satVsAct":"2 sentences","prepTimeline":"3 sentences","keyStrategies":["strategy 1","strategy 2","strategy 3"],"curricularAdvantage":"2 sentences","aiInsight":"2-3 sentence insight"}';
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:800,messages:[{role:'user',content:prompt}]})});
+    const data=await res.json();
+    const text=data.content[0].text.replace(/```json|```/g,'').trim();
+    showSatResults(JSON.parse(text));
+  }catch(e){showSatFallback();}
+}
+function showSatResults(r){
+  document.getElementById('sat-scoreOutput').innerHTML='<div class="sat-box"><div class="sat-title">Your SAT targets</div><div class="sat-grid"><div class="sat-item"><div class="sat-label">Total SAT target</div><div class="sat-score">'+r.targetSAT+'</div><div class="sat-sub">Math: '+r.mathTarget+' · Reading: '+r.readingTarget+'</div></div><div class="sat-item"><div class="sat-label">ACT equivalent</div><div class="sat-score">'+r.targetACT+'</div><div class="sat-sub">'+r.satVsAct+'</div></div></div></div>';
+  document.getElementById('sat-strategyOutput').innerHTML='<div class="card"><div class="card-title" style="margin-bottom:12px">Your SAT strategy</div><div style="font-size:13px;color:#4A6FA5;line-height:1.7;margin-bottom:12px">'+r.prepTimeline+'</div><div style="font-size:13px;color:#4A6FA5;line-height:1.7;margin-bottom:12px">'+r.curricularAdvantage+'</div>'+r.keyStrategies.map(s=>'<div style="display:flex;gap:8px;margin-bottom:8px;font-size:12px;color:#0D1F4A"><span style="color:#F5C842;font-weight:700">→</span><span>'+s+'</span></div>').join('')+'</div>';
+  document.getElementById('sat-aiInsight').textContent=r.aiInsight;
+  document.getElementById('sat-results').style.display='block';
+  document.getElementById('sat-btn').style.display='none';
+}
+function showSatFallback(){showSatResults({targetSAT:1480,targetACT:33,mathTarget:760,readingTarget:720,satVsAct:"For STEM majors the SAT slightly favours students with strong mathematics foundations. The ACT Science section can give an advantage to students from IB or A-Level backgrounds.",prepTimeline:"Begin SAT preparation at least 6 months before your first attempt. Plan for two or three sittings to benefit from superscoring. Most students see their biggest improvements between their first and second attempts.",keyStrategies:["Take a full diagnostic test first to identify your baseline and target the sections with most improvement potential","Practice with official College Board materials only — the real SAT format is distinct from third-party tests","For Reading focus on evidence-based questions — these are the most coachable and highest-value questions"],curricularAdvantage:"Your international curriculum background is a genuine advantage for the SAT Reading section — extended essay writing in IB and A-Levels builds the analytical reading skills the SAT tests. Focus preparation time on Mathematics to close any gaps.",aiInsight:"International students from IB and A-Level backgrounds often outscore American students in SAT Reading due to their extensive analytical writing practice. Do not underestimate your Reading score potential — focus your preparation time on the Mathematics section where the most points are gained."});}
+function resetSat(){document.getElementById('sat-results').style.display='none';document.getElementById('sat-btn').style.display='block';document.getElementById('sat-btn').disabled=true;document.getElementById('sat-btn').textContent='Generate my SAT strategy ↗';document.getElementById('satMajor').value='';satTier='';satCurr='';document.querySelectorAll('#module-sat .opt-card').forEach(c=>c.classList.remove('selected'));}
+</script>
+</body>
+</html>
