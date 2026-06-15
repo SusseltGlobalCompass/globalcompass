@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlobalCompass — Nursery Compass · Early Years UAE</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
+.screen{display:none}.screen.active{display:block}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:#1B3A7A}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.wm-wrap{display:flex;flex-direction:column}
+.wm-global-row{display:flex;align-items:center;gap:5px;margin-bottom:2px}
+.wm-rule{height:0.7px;background:rgba(245,200,66,0.5);flex:1}
+.wm-global{font-family:'Montserrat',sans-serif;font-size:7px;font-weight:300;color:#fff;letter-spacing:0.3em;text-transform:uppercase}
+.wm-compass{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:800;color:#fff;letter-spacing:0.07em;text-transform:uppercase;line-height:1}
+.wm-compass .o{color:#F5C842}
+.nav-tag{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;color:#F5C842;letter-spacing:0.12em;text-transform:uppercase;background:rgba(245,200,66,0.12);padding:4px 12px;border-radius:99px;border:0.5px solid rgba(245,200,66,0.3)}
+.hero-bar{background:linear-gradient(135deg,#1B3A7A,#2952A3);padding:28px 24px;text-align:center}
+.hero-eyebrow{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:#F5C842;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:8px}
+.hero-h{font-family:'Playfair Display',serif;font-size:24px;font-weight:500;color:#fff;line-height:1.3;margin-bottom:6px}
+.hero-h em{color:#F5C842;font-style:normal}
+.hero-p{font-size:12px;color:#A8C4F5;line-height:1.7;max-width:480px;margin:0 auto;font-weight:300}
+.main{max-width:680px;margin:0 auto;padding:24px}
+.step-indicator{display:flex;align-items:center;gap:0;margin-bottom:24px}
+.step{display:flex;flex-direction:column;align-items:center;flex:1}
+.step-circle{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:'Montserrat',sans-serif;transition:all 0.3s;z-index:1}
+.step-circle.done{background:#F5C842;color:#1B3A7A}
+.step-circle.active{background:#1B3A7A;color:#F5C842;border:2px solid #F5C842}
+.step-circle.pending{background:#E0E8F5;color:#9AB0D0}
+.step-label{font-size:9px;color:#9AB0D0;margin-top:4px;text-align:center;font-weight:500;letter-spacing:0.04em;font-family:'Montserrat',sans-serif;text-transform:uppercase}
+.step-label.active{color:#1B3A7A;font-weight:700}
+.step-line{height:1px;background:#E0E8F5;flex:1;margin-top:-14px}
+.step-line.done{background:#F5C842}
+.card{background:#fff;border:0.5px solid #E0E8F5;border-radius:16px;padding:22px;margin-bottom:14px}
+.card-title{font-family:'Playfair Display',serif;font-size:18px;color:#0D1F4A;margin-bottom:5px}
+.card-sub{font-size:13px;color:#4A6FA5;line-height:1.6;margin-bottom:18px;font-weight:300}
+.options-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.options-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.opt-card{border:1.5px solid #E0E8F5;border-radius:12px;padding:14px;cursor:pointer;transition:all 0.15s;text-align:center}
+.opt-card:hover{border-color:#2952A3;background:#EEF3FF}
+.opt-card.selected{border-color:#1B3A7A;background:#EEF3FF}
+.opt-emoji{font-size:28px;margin-bottom:8px;display:block}
+.opt-title{font-size:13px;font-weight:600;color:#0D1F4A;margin-bottom:3px;font-family:'Montserrat',sans-serif}
+.opt-sub{font-size:11px;color:#4A6FA5;line-height:1.4}
+.btn-row{display:flex;justify-content:space-between;align-items:center;margin-top:18px}
+.btn-back{font-size:13px;padding:9px 20px;border-radius:99px;border:1px solid #E0E8F5;background:transparent;color:#4A6FA5;cursor:pointer;font-family:'Inter',sans-serif}
+.btn-next{font-size:13px;padding:9px 24px;border-radius:99px;border:none;background:#1B3A7A;color:#F5C842;cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:700}
+.btn-next:disabled{opacity:0.4;cursor:not-allowed}
+.btn-next.gold{background:#F5C842;color:#1B3A7A}
+.loading-wrap{text-align:center;padding:36px 0}
+.loading-icon{font-size:32px;color:#F5C842;animation:spin 1s linear infinite;display:block;margin:0 auto 14px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-family:'Playfair Display',serif;font-size:16px;color:#0D1F4A;margin-bottom:5px}
+.loading-sub{font-size:12px;color:#4A6FA5;font-weight:300}
+.result-hero{text-align:center;padding:16px 0 20px;border-bottom:1px solid #E0E8F5;margin-bottom:20px}
+.result-tag{display:inline-flex;align-items:center;gap:6px;font-size:10px;padding:4px 12px;border-radius:99px;background:#EEF3FF;color:#2952A3;margin-bottom:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;font-family:'Montserrat',sans-serif}
+.result-match{font-family:'Playfair Display',serif;font-size:24px;color:#0D1F4A;margin-bottom:5px}
+.result-sub{font-size:13px;color:#4A6FA5;line-height:1.7;font-weight:300;max-width:480px;margin:0 auto}
+.phil-card{border-radius:14px;padding:18px;margin-bottom:12px}
+.phil-card.primary{background:#1B3A7A}
+.phil-card.secondary{background:#EEF3FF;border:0.5px solid #C0D0E8}
+.phil-badge{font-size:9px;padding:2px 8px;border-radius:99px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;font-family:'Montserrat',sans-serif;margin-bottom:8px;display:inline-block}
+.badge-primary{background:rgba(245,200,66,0.2);color:#F5C842}
+.badge-secondary{background:#C0D0E8;color:#2952A3}
+.phil-name-light{font-family:'Montserrat',sans-serif;font-size:16px;font-weight:800;color:#FFFFFF;margin-bottom:4px}
+.phil-name-dark{font-family:'Montserrat',sans-serif;font-size:16px;font-weight:800;color:#0D1F4A;margin-bottom:4px}
+.phil-desc-light{font-size:12px;line-height:1.7;color:rgba(255,255,255,0.8);margin-bottom:10px}
+.phil-desc-dark{font-size:12px;line-height:1.7;color:#4A6FA5}
+.phil-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.phil-tag-light{font-size:10px;padding:3px 10px;border-radius:99px;background:rgba(245,200,66,0.15);color:#F5C842}
+.phil-tag-dark{font-size:10px;padding:3px 10px;border-radius:99px;background:#fff;color:#2952A3;border:0.5px solid #C0D0E8}
+.day-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:10px}
+.day-item{background:rgba(255,255,255,0.08);border-radius:8px;padding:8px;text-align:center}
+.day-time{font-size:9px;color:#F5C842;font-weight:700;font-family:'Montserrat',sans-serif;text-transform:uppercase;margin-bottom:3px}
+.day-act{font-size:11px;color:#fff}
+.nursery-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.nursery-card{background:#fff;border:0.5px solid #E0E8F5;border-radius:12px;padding:14px;cursor:pointer;transition:all 0.15s}
+.nursery-card:hover{border-color:#2952A3;background:#EEF3FF}
+.nursery-name{font-family:'Playfair Display',serif;font-size:13px;color:#0D1F4A;margin-bottom:3px}
+.nursery-meta{font-size:10px;color:#4A6FA5;margin-bottom:4px}
+.nursery-fee{font-size:11px;font-weight:700;color:#2952A3}
+.nursery-rat{font-size:13px;font-weight:700;color:#F5C842;float:right}
+.action-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.action-btn{font-size:12px;padding:10px 20px;border-radius:99px;cursor:pointer;font-weight:700;font-family:'Montserrat',sans-serif;border:none}
+.ai-bubble{background:#EEF3FF;border-radius:0 12px 12px 12px;padding:12px 14px;margin-top:12px;border:0.5px solid #C0D0E8}
+.ai-bubble p{font-size:12px;color:#0D1F4A;line-height:1.7}
+.ai-label{font-size:10px;font-weight:700;color:#2952A3;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:5px;font-family:'Montserrat',sans-serif}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo">
+    <svg width="28" height="28" viewBox="0 0 64 64" fill="none">
+      <circle cx="32" cy="32" r="29" stroke="#F5C842" stroke-width="1.4" fill="none"/>
+      <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <circle cx="32" cy="32" r="3" fill="#F5C842"/>
+      <polygon points="32,4 35,25 32,26.5 29,25" fill="#F5C842"/>
+    </svg>
+    <div class="wm-wrap">
+      <div class="wm-global-row"><div class="wm-rule"></div><div class="wm-global">GLOBAL</div><div class="wm-rule"></div></div>
+      <div class="wm-compass">C<span class="o">O</span>MPASS</div>
+    </div>
+  </div>
+  <div class="nav-tag">Early Years · Nursery Compass</div>
+</nav>
+<div class="hero-bar">
+  <div class="hero-eyebrow">UAE Early Years Guide</div>
+  <h1 class="hero-h">Find the perfect nursery for<br><em>your little one</em></h1>
+  <p class="hero-p">Every child learns differently. Tell us about your child and GlobalCompass matches them to the right nursery philosophy — then shows you the best nurseries in the UAE.</p>
+</div>
+<div class="main">
+  <div class="step-indicator">
+    <div class="step"><div class="step-circle active" id="sc1">1</div><div class="step-label active">Your child</div></div>
+    <div class="step-line" id="sl1"></div>
+    <div class="step"><div class="step-circle pending" id="sc2">2</div><div class="step-label">Priorities</div></div>
+    <div class="step-line" id="sl2"></div>
+    <div class="step"><div class="step-circle pending" id="sc3">3</div><div class="step-label">Language</div></div>
+    <div class="step-line" id="sl3"></div>
+    <div class="step"><div class="step-circle pending" id="sc4">4</div><div class="step-label">Your match</div></div>
+  </div>
+  <div id="s1" class="screen active">
+    <div class="card">
+      <div class="card-title">How old is your child?</div>
+      <div class="card-sub">Age shapes everything — the right nursery philosophy changes as your child develops.</div>
+      <div class="options-grid">
+        <div class="opt-card" onclick="selectAge(this,'0 to 1 year infant')"><span class="opt-emoji">👶</span><div class="opt-title">0 – 1 year</div><div class="opt-sub">Infant — settling in</div></div>
+        <div class="opt-card" onclick="selectAge(this,'1 to 2 years toddler')"><span class="opt-emoji">🚶</span><div class="opt-title">1 – 2 years</div><div class="opt-sub">Toddler — exploring</div></div>
+        <div class="opt-card" onclick="selectAge(this,'2 to 3 years nursery')"><span class="opt-emoji">🎨</span><div class="opt-title">2 – 3 years</div><div class="opt-sub">Nursery — discovering</div></div>
+        <div class="opt-card" onclick="selectAge(this,'3 to 4 years pre-KG')"><span class="opt-emoji">📚</span><div class="opt-title">3 – 4 years</div><div class="opt-sub">Pre-KG — preparing</div></div>
+      </div>
+    </div>
+    <div class="btn-row"><div></div><button class="btn-next" id="btn1" onclick="goStep(2)" disabled>Next — What matters most →</button></div>
+  </div>
+  <div id="s2" class="screen">
+    <div class="card">
+      <div class="card-title">What matters most to you?</div>
+      <div class="card-sub">Choose up to two priorities — this shapes which nursery philosophy GlobalCompass recommends.</div>
+      <div class="options-grid">
+        <div class="opt-card" onclick="togglePriority(this,'Child-led learning and independence')"><span class="opt-emoji">🌱</span><div class="opt-title">Child-led learning</div><div class="opt-sub">Freedom to explore naturally</div></div>
+        <div class="opt-card" onclick="togglePriority(this,'Academic foundation and school readiness')"><span class="opt-emoji">📖</span><div class="opt-title">Academic foundation</div><div class="opt-sub">Preparing for primary school</div></div>
+        <div class="opt-card" onclick="togglePriority(this,'Language immersion and bilingualism')"><span class="opt-emoji">🗣️</span><div class="opt-title">Language immersion</div><div class="opt-sub">Bilingual or target language</div></div>
+        <div class="opt-card" onclick="togglePriority(this,'Social development and emotional wellbeing')"><span class="opt-emoji">🤝</span><div class="opt-title">Social and emotional</div><div class="opt-sub">Confidence and friendships</div></div>
+        <div class="opt-card" onclick="togglePriority(this,'Creative arts and imagination')"><span class="opt-emoji">🎭</span><div class="opt-title">Creative arts</div><div class="opt-sub">Art, music and imagination</div></div>
+        <div class="opt-card" onclick="togglePriority(this,'Nature and outdoor learning')"><span class="opt-emoji">🌳</span><div class="opt-title">Nature and outdoors</div><div class="opt-sub">Outdoor play and environment</div></div>
+      </div>
+    </div>
+    <div class="btn-row"><button class="btn-back" onclick="goStep(1)">← Back</button><button class="btn-next" id="btn2" onclick="goStep(3)" disabled>Next — Language preference →</button></div>
+  </div>
+  <div id="s3" class="screen">
+    <div class="card">
+      <div class="card-title">What is your language preference?</div>
+      <div class="card-sub">The language of instruction shapes your child's early development and future curriculum path.</div>
+      <div class="options-grid-3">
+        <div class="opt-card" onclick="selectLang(this,'English primary language')"><span class="opt-emoji">🇬🇧</span><div class="opt-title">English</div><div class="opt-sub">Primary language</div></div>
+        <div class="opt-card" onclick="selectLang(this,'Arabic primary or bilingual')"><span class="opt-emoji">🇦🇪</span><div class="opt-title">Arabic</div><div class="opt-sub">Primary or bilingual</div></div>
+        <div class="opt-card" onclick="selectLang(this,'French primary or bilingual')"><span class="opt-emoji">🇫🇷</span><div class="opt-title">French</div><div class="opt-sub">Primary or bilingual</div></div>
+        <div class="opt-card" onclick="selectLang(this,'German primary or bilingual')"><span class="opt-emoji">🇩🇪</span><div class="opt-title">German</div><div class="opt-sub">Primary or bilingual</div></div>
+        <div class="opt-card" onclick="selectLang(this,'Bilingual English plus another language')"><span class="opt-emoji">🌍</span><div class="opt-title">Bilingual</div><div class="opt-sub">English plus another</div></div>
+        <div class="opt-card" onclick="selectLang(this,'Open to any language')"><span class="opt-emoji">✨</span><div class="opt-title">Open</div><div class="opt-sub">Any language welcome</div></div>
+      </div>
+    </div>
+    <div class="btn-row"><button class="btn-back" onclick="goStep(2)">← Back</button><button class="btn-next gold" id="btn3" onclick="generateMatch()" disabled>Find my nursery match ↗</button></div>
+  </div>
+  <div id="s4" class="screen">
+    <div class="card">
+      <div class="loading-wrap">
+        <i class="ti ti-loader-2 loading-icon"></i>
+        <div class="loading-text" id="loadingText">Matching your child to the right philosophy…</div>
+        <div class="loading-sub">GlobalCompass is analysing nursery approaches and UAE availability</div>
+      </div>
+    </div>
+  </div>
+  <div id="s5" class="screen">
+    <div class="result-hero">
+      <div class="result-tag">🌱 Your nursery compass result</div>
+      <div class="result-match" id="resultMatch"></div>
+      <p class="result-sub" id="resultSub"></p>
+    </div>
+    <div id="primaryPhil"></div>
+    <div id="secondaryPhils"></div>
+    <div class="card">
+      <div class="card-title" style="margin-bottom:4px">Top UAE nurseries for your match</div>
+      <div style="font-size:12px;color:#4A6FA5;margin-bottom:14px;font-weight:300">Based on your child's profile</div>
+      <div class="nursery-grid" id="nurseryGrid"></div>
+    </div>
+    <div class="card">
+      <div class="ai-label">GlobalCompass insight</div>
+      <div class="ai-bubble"><p id="aiInsight"></p></div>
+    </div>
+    <div class="action-row">
+      <button class="action-btn" style="background:#1B3A7A;color:#F5C842" onclick="goStep(1)">Start again</button>
+      <button class="action-btn" style="background:#F5C842;color:#1B3A7A" onclick="window.location.href='index.html'">Back to GlobalCompass ↗</button>
+    </div>
+  </div>
+</div>
+<script>
+let age='',priorities=[],language='';
+function selectAge(el,val){age=val;document.querySelectorAll('#s1 .opt-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');document.getElementById('btn1').disabled=false;}
+function togglePriority(el,val){if(el.classList.contains('selected')){el.classList.remove('selected');priorities=priorities.filter(p=>p!==val);}else{if(priorities.length>=2)return;el.classList.add('selected');priorities.push(val);}document.getElementById('btn2').disabled=priorities.length===0;}
+function selectLang(el,val){language=val;document.querySelectorAll('#s3 .opt-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');document.getElementById('btn3').disabled=false;}
+function goStep(n){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('s'+n).classList.add('active');updateSteps(n);}
+function updateSteps(active){for(let i=1;i<=4;i++){const circle=document.getElementById('sc'+i);const label=circle?.nextElementSibling;if(!circle)continue;if(i<active){circle.className='step-circle done';circle.innerHTML='✓';}else if(i===active){circle.className='step-circle active';circle.innerHTML=i;if(label)label.className='step-label active';}else{circle.className='step-circle pending';circle.innerHTML=i;if(label)label.className='step-label';}const line=document.getElementById('sl'+i);if(line)line.className=i<active?'step-line done':'step-line';}}
+async function generateMatch(){
+  goStep(4);
+  const msgs=['Matching your child to the right philosophy…','Analysing UAE nursery options…','Finding the perfect learning environment…','Building your nursery compass…'];
+  let mi=0;
+  const iv=setInterval(()=>{mi=(mi+1)%msgs.length;document.getElementById('loadingText').textContent=msgs[mi];},1800);
+  const prompt='You are GlobalCompass Nursery Compass for UAE expat parents.\nCHILD AGE: "'+age+'"\nPRIORITIES: '+priorities.join(', ')+'\nLANGUAGE: "'+language+'"\n\nRespond ONLY with valid JSON:\n{"topMatch":"Philosophy name","summary":"2 sentence personalised summary","primaryPhilosophy":{"name":"name","tagline":"one line","description":"3 sentences","bestFor":["trait 1","trait 2","trait 3"],"typicalDay":[{"time":"Morning","activity":"description"},{"time":"Midday","activity":"description"},{"time":"Afternoon","activity":"description"}]},"alsoConsider":[{"name":"Philosophy 2","reason":"one sentence"},{"name":"Philosophy 3","reason":"one sentence"}],"topNurseries":[{"name":"Real UAE nursery","location":"area","curriculum":"philosophy","ageRange":"range","feeRange":"AED X,XXX per month","rating":"9.2"},{"name":"Real UAE nursery","location":"area","curriculum":"philosophy","ageRange":"range","feeRange":"AED X,XXX per month","rating":"9.0"},{"name":"Real UAE nursery","location":"area","curriculum":"philosophy","ageRange":"range","feeRange":"AED X,XXX per month","rating":"8.8"},{"name":"Real UAE nursery","location":"area","curriculum":"philosophy","ageRange":"range","feeRange":"AED X,XXX per month","rating":"8.7"}],"aiInsight":"2-3 sentence insight about early years in UAE"}';
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1200,messages:[{role:'user',content:prompt}]})});
+    const data=await res.json();
+    clearInterval(iv);
+    const text=data.content[0].text.replace(/```json|```/g,'').trim();
+    showResults(JSON.parse(text));
+  }catch(e){clearInterval(iv);showFallback();}
+}
+function showResults(r){
+  document.getElementById('resultMatch').textContent=r.topMatch+' is your match';
+  document.getElementById('resultSub').textContent=r.summary;
+  document.getElementById('aiInsight').textContent=r.aiInsight;
+  const pp=document.getElementById('primaryPhil');
+  pp.innerHTML='<div class="phil-card primary"><span class="phil-badge badge-primary">Top match</span><div class="phil-name-light">'+r.primaryPhilosophy.name+'</div><div style="font-size:11px;color:#F5C842;margin-bottom:8px;font-style:italic">'+r.primaryPhilosophy.tagline+'</div><div class="phil-desc-light">'+r.primaryPhilosophy.description+'</div><div class="phil-tags">'+r.primaryPhilosophy.bestFor.map(t=>'<span class="phil-tag-light">'+t+'</span>').join('')+'</div><div class="day-grid">'+r.primaryPhilosophy.typicalDay.map(d=>'<div class="day-item"><div class="day-time">'+d.time+'</div><div class="day-act">'+d.activity+'</div></div>').join('')+'</div></div>';
+  const sp=document.getElementById('secondaryPhils');
+  sp.innerHTML=r.alsoConsider.map(p=>'<div class="phil-card secondary"><span class="phil-badge badge-secondary">Also consider</span><div class="phil-name-dark">'+p.name+'</div><div class="phil-desc-dark">'+p.reason+'</div></div>').join('');
+  const ng=document.getElementById('nurseryGrid');
+  ng.innerHTML=r.topNurseries.map(n=>'<div class="nursery-card"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div class="nursery-name">'+n.name+'</div><div class="nursery-rat">'+n.rating+'</div></div><div class="nursery-meta">'+n.location+' · '+n.ageRange+'</div><div class="nursery-meta">'+n.curriculum+'</div><div class="nursery-fee">'+n.feeRange+'</div></div>').join('');
+  goStep(5);updateSteps(4);
+}
+function showFallback(){showResults({topMatch:"Montessori",summary:"Based on your child's profile, Montessori is the ideal philosophy — it nurtures independence, curiosity and self-directed learning in a carefully prepared environment.",primaryPhilosophy:{name:"Montessori",tagline:"Follow the child — every child learns at their own pace",description:"The Montessori method places the child at the centre of their own learning journey. Children choose their activities from a range of purposeful materials designed to develop concentration, coordination and independence. In the UAE, Montessori nurseries are among the most sought-after and highly rated.",bestFor:["Independent learners","Curious explorers","Sensitive children"],typicalDay:[{time:"Morning",activity:"Free choice Montessori work"},{time:"Midday",activity:"Outdoor play and lunch"},{time:"Afternoon",activity:"Circle time and music"}]},alsoConsider:[{name:"British EYFS",reason:"Strong structured approach with excellent school readiness preparation"},{name:"Reggio Emilia",reason:"Project-based creative learning that nurtures imagination"}],topNurseries:[{name:"Blossom Nursery",location:"Dubai Marina",curriculum:"Montessori",ageRange:"0-4 years",feeRange:"AED 2,500-4,200 per month",rating:"9.4"},{name:"Jumeirah International Nursery",location:"Jumeirah",curriculum:"Montessori",ageRange:"0-4 years",feeRange:"AED 2,800-4,500 per month",rating:"9.2"},{name:"Raffles Nursery",location:"Downtown Dubai",curriculum:"British EYFS",ageRange:"3 months-4 years",feeRange:"AED 3,000-5,000 per month",rating:"9.1"},{name:"British Orchard Nursery",location:"Business Bay",curriculum:"British EYFS",ageRange:"0-4 years",feeRange:"AED 2,200-3,800 per month",rating:"8.9"}],aiInsight:"The UAE has one of the most diverse nursery landscapes in the world with over 400 licensed nurseries in Dubai alone. For expat families, choosing a nursery that aligns with your intended primary school curriculum makes the transition significantly smoother."});}
+</script>
+</body>
+</html>
