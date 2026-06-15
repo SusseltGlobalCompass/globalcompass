@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlobalCompass — CBSE Stream Navigator · Indian Curriculum</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
+.screen{display:none}.screen.active{display:block}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:#1B3A7A}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.wm-wrap{display:flex;flex-direction:column}
+.wm-global-row{display:flex;align-items:center;gap:5px;margin-bottom:2px}
+.wm-rule{height:0.7px;background:rgba(245,200,66,0.5);flex:1}
+.wm-global{font-family:'Montserrat',sans-serif;font-size:7px;font-weight:300;color:#fff;letter-spacing:0.3em;text-transform:uppercase}
+.wm-compass{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:800;color:#fff;letter-spacing:0.07em;text-transform:uppercase;line-height:1}
+.wm-compass .o{color:#F5C842}
+.nav-tag{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;color:#F5C842;letter-spacing:0.12em;text-transform:uppercase;background:rgba(245,200,66,0.12);padding:4px 12px;border-radius:99px;border:0.5px solid rgba(245,200,66,0.3)}
+.hero-bar{background:linear-gradient(135deg,#0D1F4A,#FF6B35,#1B3A7A);padding:28px 24px;text-align:center;border-bottom:2px solid #F5C842}
+.hero-eyebrow{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:#F5C842;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:8px}
+.hero-h{font-family:'Playfair Display',serif;font-size:24px;font-weight:500;color:#fff;line-height:1.3;margin-bottom:6px}
+.hero-h em{color:#F5C842;font-style:normal}
+.hero-p{font-size:12px;color:#A8C4F5;line-height:1.7;max-width:520px;margin:0 auto;font-weight:300}
+.in-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(245,200,66,0.15);border:1px solid rgba(245,200,66,0.4);border-radius:99px;padding:4px 14px;font-size:11px;font-weight:700;color:#F5C842;font-family:'Montserrat',sans-serif;letter-spacing:0.06em;margin-bottom:14px}
+.main{max-width:700px;margin:0 auto;padding:24px}
+.step-indicator{display:flex;align-items:center;margin-bottom:24px}
+.step{display:flex;flex-direction:column;align-items:center;flex:1}
+.step-circle{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:'Montserrat',sans-serif;transition:all 0.3s;z-index:1}
+.step-circle.done{background:#F5C842;color:#1B3A7A}
+.step-circle.active{background:#1B3A7A;color:#F5C842;border:2px solid #F5C842}
+.step-circle.pending{background:#E0E8F5;color:#9AB0D0}
+.step-label{font-size:9px;color:#9AB0D0;margin-top:4px;text-align:center;font-weight:500;letter-spacing:0.04em;font-family:'Montserrat',sans-serif;text-transform:uppercase;max-width:60px}
+.step-label.active{color:#1B3A7A;font-weight:700}
+.step-line{height:1px;background:#E0E8F5;flex:1;margin-top:-14px}
+.step-line.done{background:#F5C842}
+.card{background:#fff;border:0.5px solid #E0E8F5;border-radius:16px;padding:22px;margin-bottom:14px}
+.card-title{font-family:'Playfair Display',serif;font-size:18px;color:#0D1F4A;margin-bottom:5px}
+.card-sub{font-size:13px;color:#4A6FA5;line-height:1.6;margin-bottom:18px;font-weight:300}
+.options-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.options-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.opt-card{border:1.5px solid #E0E8F5;border-radius:12px;padding:14px;cursor:pointer;transition:all 0.15s}
+.opt-card:hover{border-color:#2952A3;background:#EEF3FF}
+.opt-card.selected{border-color:#1B3A7A;background:#EEF3FF}
+.opt-emoji{font-size:26px;margin-bottom:8px;display:block;text-align:center}
+.opt-title{font-size:13px;font-weight:600;color:#0D1F4A;margin-bottom:3px;font-family:'Montserrat',sans-serif}
+.opt-sub{font-size:11px;color:#4A6FA5;line-height:1.4}
+.dream-input{width:100%;border:1.5px solid #E0E8F5;border-radius:12px;padding:14px 16px;font-size:14px;color:#0D1F4A;font-family:'Inter',sans-serif;outline:none;resize:none;min-height:90px;transition:border-color 0.15s;line-height:1.6}
+.dream-input:focus{border-color:#1B3A7A}
+.dream-input::placeholder{color:#9AB0D0}
+.example-prompts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.ep{font-size:11px;padding:5px 12px;border-radius:99px;border:0.5px solid #C0D0E8;color:#2952A3;cursor:pointer;background:#EEF3FF;font-family:'Inter',sans-serif;transition:all 0.15s;font-weight:500}
+.ep:hover{background:#1B3A7A;color:#F5C842;border-color:#1B3A7A}
+.btn-row{display:flex;justify-content:space-between;align-items:center;margin-top:18px}
+.btn-back{font-size:13px;padding:9px 20px;border-radius:99px;border:1px solid #E0E8F5;background:transparent;color:#4A6FA5;cursor:pointer;font-family:'Inter',sans-serif}
+.btn-next{font-size:13px;padding:9px 24px;border-radius:99px;border:none;background:#1B3A7A;color:#F5C842;cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:700}
+.btn-next:disabled{opacity:0.4;cursor:not-allowed}
+.btn-next.gold{background:#F5C842;color:#1B3A7A}
+.loading-wrap{text-align:center;padding:40px 0}
+.loading-icon{font-size:36px;color:#F5C842;animation:spin 1s linear infinite;display:block;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-family:'Playfair Display',serif;font-size:16px;color:#0D1F4A;margin-bottom:5px}
+.loading-sub{font-size:12px;color:#4A6FA5;font-weight:300}
+.result-hero{text-align:center;padding:16px 0 20px;border-bottom:1px solid #E0E8F5;margin-bottom:20px}
+.result-tag{display:inline-flex;align-items:center;gap:6px;font-size:10px;padding:4px 12px;border-radius:99px;background:#EEF3FF;color:#2952A3;margin-bottom:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;font-family:'Montserrat',sans-serif}
+.result-career{font-family:'Playfair Display',serif;font-size:22px;color:#0D1F4A;margin-bottom:6px}
+.result-summary{font-size:13px;color:#4A6FA5;line-height:1.7;font-weight:300;max-width:520px;margin:0 auto}
+.stream-card{border-radius:14px;padding:20px;margin-bottom:14px}
+.stream-science{background:linear-gradient(135deg,#1B3A7A,#2952A3)}
+.stream-commerce{background:linear-gradient(135deg,#2E5C3A,#3D7A4E)}
+.stream-humanities{background:linear-gradient(135deg,#7C2D8E,#9C3DAE)}
+.stream-badge{font-size:10px;padding:3px 10px;border-radius:99px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;font-family:'Montserrat',sans-serif;margin-bottom:10px;display:inline-block;background:rgba(245,200,66,0.2);color:#F5C842}
+.stream-name{font-family:'Montserrat',sans-serif;font-size:18px;font-weight:800;color:#fff;margin-bottom:6px}
+.stream-desc{font-size:12px;color:rgba(255,255,255,0.8);line-height:1.7;margin-bottom:12px}
+.subjects-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.subj-pill{font-size:11px;padding:4px 12px;border-radius:99px;background:rgba(255,255,255,0.15);color:#fff;font-weight:500}
+.subj-pill.core{background:rgba(245,200,66,0.25);color:#F5C842}
+.subj-label{font-size:10px;color:#F5C842;font-weight:700;font-family:'Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;margin-top:8px}
+.subj-label-lt{font-size:10px;color:rgba(255,255,255,0.6);font-weight:700;font-family:'Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;margin-top:8px}
+.warning-box{background:#FFF3E0;border:1.5px solid #FFB74D;border-radius:12px;padding:16px;margin-bottom:14px}
+.warning-title{font-size:12px;font-weight:700;color:#7C3A00;margin-bottom:8px;font-family:'Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.06em}
+.warning-item{font-size:12px;color:#9C4A00;display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.hidden-box{background:#FFF8E6;border:1.5px solid #F5C842;border-radius:12px;padding:16px;margin-bottom:14px}
+.hidden-title{font-size:12px;font-weight:700;color:#1B3A7A;margin-bottom:8px;font-family:'Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.06em}
+.hidden-item{font-size:12px;color:#2C1800;display:flex;align-items:flex-start;gap:8px;line-height:1.5;margin-bottom:5px}
+.roadmap-box{background:#EEF3FF;border-radius:12px;padding:16px;margin-bottom:14px}
+.roadmap-title{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:#1B3A7A;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:12px}
+.roadmap-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.roadmap-item{background:#fff;border-radius:8px;padding:10px;border:0.5px solid #C0D0E8}
+.roadmap-class{font-size:10px;font-weight:700;color:#1B3A7A;font-family:'Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:3px}
+.roadmap-action{font-size:11px;color:#4A6FA5;line-height:1.4}
+.uae-box{background:#1B3A7A;border-radius:12px;padding:16px;margin-bottom:14px}
+.uae-title{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:#F5C842;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px}
+.uae-content{font-size:12px;color:rgba(255,255,255,0.85);line-height:1.7}
+.exam-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.exam-item{background:#EEF3FF;border-radius:8px;padding:12px}
+.exam-name{font-size:11px;font-weight:700;color:#1B3A7A;font-family:'Montserrat',sans-serif;margin-bottom:4px}
+.exam-desc{font-size:11px;color:#4A6FA5;line-height:1.5}
+.ai-bubble{background:#EEF3FF;border-radius:0 12px 12px 12px;padding:14px 16px;border:0.5px solid #C0D0E8}
+.ai-bubble p{font-size:13px;color:#0D1F4A;line-height:1.7}
+.ai-label{font-size:10px;font-weight:700;color:#2952A3;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;font-family:'Montserrat',sans-serif}
+.action-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.action-btn{font-size:12px;padding:10px 20px;border-radius:99px;cursor:pointer;font-weight:700;font-family:'Montserrat',sans-serif;border:none}
+.hindi-note{text-align:center;font-size:11px;color:#4A6FA5;margin-top:12px;font-style:italic}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo">
+    <svg width="28" height="28" viewBox="0 0 64 64" fill="none">
+      <circle cx="32" cy="32" r="29" stroke="#F5C842" stroke-width="1.4" fill="none"/>
+      <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <circle cx="32" cy="32" r="3" fill="#F5C842"/>
+      <polygon points="32,4 35,25 32,26.5 29,25" fill="#F5C842"/>
+    </svg>
+    <div class="wm-wrap">
+      <div class="wm-global-row"><div class="wm-rule"></div><div class="wm-global">GLOBAL</div><div class="wm-rule"></div></div>
+      <div class="wm-compass">C<span class="o">O</span>MPASS</div>
+    </div>
+  </div>
+  <div class="nav-tag">🇮🇳 CBSE Stream Navigator</div>
+</nav>
+<div class="hero-bar">
+  <div class="in-badge">🇮🇳 CBSE · Indian Curriculum · UAE & India · Hindi coming soon</div>
+  <h1 class="hero-h">Choose the right stream for<br><em>your career dream</em></h1>
+  <p class="hero-p">Science, Commerce or Humanities — the most important decision in a CBSE student's life. GlobalCompass maps your career dream backwards to the right stream, subjects and competitive exam pathway.</p>
+</div>
+<div class="main">
+  <div class="step-indicator">
+    <div class="step"><div class="step-circle active" id="sc1">1</div><div class="step-label active">Dream</div></div>
+    <div class="step-line" id="sl1"></div>
+    <div class="step"><div class="step-circle pending" id="sc2">2</div><div class="step-label">Class</div></div>
+    <div class="step-line" id="sl2"></div>
+    <div class="step"><div class="step-circle pending" id="sc3">3</div><div class="step-label">Destination</div></div>
+    <div class="step-line" id="sl3"></div>
+    <div class="step"><div class="step-circle pending" id="sc4">4</div><div class="step-label">Context</div></div>
+    <div class="step-line" id="sl4"></div>
+    <div class="step"><div class="step-circle pending" id="sc5">5</div><div class="step-label">Your Map</div></div>
+  </div>
+  <div id="s1" class="screen active">
+    <div class="card">
+      <div class="card-title">What is your career dream?</div>
+      <div class="card-sub">Do not think about streams yet. Tell us what you want to become — GlobalCompass maps your dream to the right CBSE stream and subjects.</div>
+      <textarea class="dream-input" id="dreamInput" placeholder="e.g. I want to become a software engineer and work at a top technology company…"></textarea>
+      <div class="example-prompts">
+        <span class="ep" onclick="setDream('I want to become a doctor and serve people through medicine')">🩺 Doctor</span>
+        <span class="ep" onclick="setDream('I want to become an engineer and build technology or infrastructure')">⚙️ Engineering</span>
+        <span class="ep" onclick="setDream('I want to work in business finance banking or become a CA')">💼 Business / CA</span>
+        <span class="ep" onclick="setDream('I want to become a lawyer and work in law or civil services IAS IPS')">⚖️ Law / IAS</span>
+        <span class="ep" onclick="setDream('I want to work in psychology social work or the humanities')">🧠 Psychology</span>
+        <span class="ep" onclick="setDream('I want to work in design architecture or the creative arts')">🎨 Design / Arts</span>
+        <span class="ep" onclick="setDream('I want to work in journalism media or communications')">📰 Journalism</span>
+        <span class="ep" onclick="setDream('I want to become a teacher professor or work in education research')">📚 Education</span>
+      </div>
+    </div>
+    <div class="btn-row"><div></div><button class="btn-next" id="btn1" onclick="goStep(2)" disabled>Next — Your current class →</button></div>
+  </div>
+  <div id="s2" class="screen">
+    <div class="card">
+      <div class="card-title">What class are you currently in?</div>
+      <div class="card-sub">Stream selection happens at Class 10. The earlier you plan the better — GlobalCompass guides both early planners and those choosing now.</div>
+      <div class="options-grid">
+        <div class="opt-card" onclick="selectClass(this,'Class 8 or 9 planning ahead early')"><span class="opt-emoji">📗</span><div class="opt-title">Class 8 or 9</div><div class="opt-sub">Planning ahead — plenty of time</div></div>
+        <div class="opt-card" onclick="selectClass(this,'Class 10 choosing stream now for Class 11')"><span class="opt-emoji">📘</span><div class="opt-title">Class 10</div><div class="opt-sub">Choosing stream for Class 11 now</div></div>
+        <div class="opt-card" onclick="selectClass(this,'Class 11 already in a stream reviewing choices')"><span class="opt-emoji">📙</span><div class="opt-title">Class 11</div><div class="opt-sub">Already in stream — reviewing pathway</div></div>
+        <div class="opt-card" onclick="selectClass(this,'Class 12 preparing for Board and competitive exams')"><span class="opt-emoji">📕</span><div class="opt-title">Class 12</div><div class="opt-sub">Board exams and competitive exam prep</div></div>
+      </div>
+    </div>
+    <div class="btn-row"><button class="btn-back" onclick="goStep(1)">← Back</button><button class="btn-next" id="btn2" onclick="goStep(3)" disabled>Next — University destination →</button></div>
+  </div>
+  <div id="s3" class="screen">
+    <div class="card">
+      <div class="card-title">Where do you want to study after Class 12?</div>
+      <div class="card-sub">Your destination shapes the competitive exams, required percentages and subject choices GlobalCompass recommends.</div>
+      <div class="options-grid">
+        <div class="opt-card" onclick="selectDest(this,'India top institutions IITs NITs AIIMS Delhi University top Indian colleges')"><span class="opt-emoji">🇮🇳</span><div class="opt-title">India — top institutions</div><div class="opt-sub">IITs, NITs, AIIMS, DU, Mumbai University</div></div>
+        <div class="opt-card" onclick="selectDest(this,'UAE universities NYU Abu Dhabi AUS UAEU Khalifa')"><span class="opt-emoji">🇦🇪</span><div class="opt-title">UAE universities</div><div class="opt-sub">NYU Abu Dhabi, AUS, UAEU, KU</div></div>
+        <div class="opt-card" onclick="selectDest(this,'UK Russell Group top British universities')"><span class="opt-emoji">🇬🇧</span><div class="opt-title">UK universities</div><div class="opt-sub">Russell Group, Imperial, UCL</div></div>
+        <div class="opt-card" onclick="selectDest(this,'USA Ivy League and top American universities')"><span class="opt-emoji">🇺🇸</span><div class="opt-title">USA universities</div><div class="opt-sub">Ivy League, MIT, Stanford</div></div>
+        <div class="opt-card" onclick="selectDest(this,'Canada or Australia top universities Toronto McGill Melbourne')"><span class="opt-emoji">🌏</span><div class="opt-title">Canada or Australia</div><div class="opt-sub">Toronto, McGill, Melbourne, Sydney</div></div>
+        <div class="opt-card" onclick="selectDest(this,'Open keeping all options India and international')"><span class="opt-emoji">🌍</span><div class="opt-title">Open — all options</div><div class="opt-sub">Keeping India and international open</div></div>
+      </div>
+    </div>
+    <div class="btn-row"><button class="btn-back" onclick="goStep(2)">← Back</button><button class="btn-next" id="btn3" onclick="goStep(4)" disabled>Next — Your context →</button></div>
+  </div>
+  <div id="s4" class="screen">
+    <div class="card">
+      <div class="card-title">What is your family context?</div>
+      <div class="card-sub">This helps GlobalCompass give you honest and realistic guidance — including addressing family pressure where relevant.</div>
+      <div class="options-grid">
+        <div class="opt-card" onclick="selectContext(this,'Based in UAE planning to stay in UAE after studies')"><span class="opt-emoji">🇦🇪</span><div class="opt-title">Based in UAE — staying</div><div class="opt-sub">Plan to remain in UAE after university</div></div>
+        <div class="opt-card" onclick="selectContext(this,'Based in UAE planning to return to India after studies')"><span class="opt-emoji">🏠</span><div class="opt-title">Based in UAE — returning to India</div><div class="opt-sub">Plan to return to India for university</div></div>
+        <div class="opt-card" onclick="selectContext(this,'Based in India applying to universities in India and abroad')"><span class="opt-emoji">🇮🇳</span><div class="opt-title">Based in India</div><div class="opt-sub">Studying CBSE in India</div></div>
+        <div class="opt-card" onclick="selectContext(this,'Family pressure towards Science stream but unsure if right choice')"><span class="opt-emoji">💭</span><div class="opt-title">Family pressure — Science stream</div><div class="opt-sub">Family wants Science but I am unsure</div></div>
+      </div>
+    </div>
+    <div class="btn-row"><button class="btn-back" onclick="goStep(3)">← Back</button><button class="btn-next gold" id="btn4" onclick="generatePathway()" disabled>Generate my CBSE pathway ↗</button></div>
+  </div>
+  <div id="s5" class="screen">
+    <div class="card">
+      <div class="loading-wrap">
+        <i class="ti ti-loader-2 loading-icon"></i>
+        <div class="loading-text" id="loadingText">Mapping your dream to the right CBSE stream…</div>
+        <div class="loading-sub">GlobalCompass AI is analysing career pathways, competitive exams and subject combinations</div>
+      </div>
+    </div>
+  </div>
+  <div id="s6" class="screen">
+    <div class="result-hero">
+      <div class="result-tag">🇮🇳 Your CBSE pathway map</div>
+      <div class="result-career" id="resultCareer"></div>
+      <p class="result-summary" id="resultSummary"></p>
+    </div>
+    <div id="streamOutput"></div>
+    <div id="warningOutput"></div>
+    <div class="card"><div class="card-title" style="margin-bottom:12px">Competitive exams for your pathway</div><div class="exam-grid" id="examOutput"></div></div>
+    <div class="roadmap-box"><div class="roadmap-title">Your CBSE roadmap</div><div class="roadmap-grid" id="roadmapOutput"></div></div>
+    <div class="uae-box"><div class="uae-title">🇦🇪 UAE-specific guidance</div><div class="uae-content" id="uaeOutput"></div></div>
+    <div class="hidden-box"><div class="hidden-title">Hidden requirements — what nobody tells you</div><div id="hiddenOutput"></div></div>
+    <div class="card"><div class="ai-label">GlobalCompass insight</div><div class="ai-bubble"><p id="aiInsight"></p></div></div>
+    <div class="hindi-note">🇮🇳 Hindi version coming soon — हिंदी संस्करण जल्द आ रहा है</div>
+    <div class="action-row">
+      <button class="action-btn" style="background:#1B3A7A;color:#F5C842" onclick="goStep(1)">Start again</button>
+      <button class="action-btn" style="background:#F5C842;color:#1B3A7A" onclick="window.location.href='index.html'">Find CBSE schools ↗</button>
+      <button class="action-btn" style="background:#EEF3FF;color:#2952A3" onclick="window.location.href='index.html'">Back to GlobalCompass ↗</button>
+    </div>
+  </div>
+</div>
+<script>
+let dream='',cls='',destination='',context='';
+document.getElementById('dreamInput').addEventListener('input',function(){dream=this.value.trim();document.getElementById('btn1').disabled=dream.length<10;});
+function setDream(t){document.getElementById('dreamInput').value=t;dream=t;document.getElementById('btn1').disabled=false;}
+function selectClass(el,v){cls=v;document.querySelectorAll('#s2 .opt-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');document.getElementById('btn2').disabled=false;}
+function selectDest(el,v){destination=v;document.querySelectorAll('#s3 .opt-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');document.getElementById('btn3').disabled=false;}
+function selectContext(el,v){context=v;document.querySelectorAll('#s4 .opt-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');document.getElementById('btn4').disabled=false;}
+function goStep(n){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('s'+n).classList.add('active');updateSteps(n);}
+function updateSteps(active){for(let i=1;i<=5;i++){const circle=document.getElementById('sc'+i);const label=circle?.nextElementSibling;if(!circle)continue;if(i<active){circle.className='step-circle done';circle.innerHTML='✓';}else if(i===active){circle.className='step-circle active';circle.innerHTML=i;if(label)label.className='step-label active';}else{circle.className='step-circle pending';circle.innerHTML=i;if(label)label.className='step-label';}const line=document.getElementById('sl'+i);if(line)line.className=i<active?'step-line done':'step-line';}}
+async function generatePathway(){
+  goStep(5);
+  const msgs=['Mapping your dream to the right CBSE stream…','Analysing competitive exam requirements…','Checking hidden requirements…','Building your complete CBSE pathway map…','Preparing personalised guidance…'];
+  let mi=0;const iv=setInterval(()=>{mi=(mi+1)%msgs.length;document.getElementById('loadingText').textContent=msgs[mi];},1800);
+  const prompt='You are GlobalCompass CBSE Stream Navigator.\nDREAM: "'+dream+'"\nCLASS: "'+cls+'"\nDESTINATION: "'+destination+'"\nCONTEXT: "'+context+'"\n\nBe honest. If family is pushing Science but dream does not require it flag this compassionately.\n\nRespond ONLY with valid JSON:\n{"career":"career title","summary":"2 sentence summary","stream":"Science|Commerce|Humanities","streamColor":"science|commerce|humanities","streamTagline":"one line","streamDescription":"3 sentences","coreSubjects":["s1","s2","s3","s4"],"optionalSubjects":["o1","o2"],"competitiveExams":[{"name":"exam","description":"one sentence"},{"name":"exam","description":"one sentence"},{"name":"exam","description":"one sentence"}],"familyPressureWarning":"honest compassionate message or null","hiddenRequirements":["r1","r2","r3"],"roadmap":[{"class":"Class 9-10","action":"action"},{"class":"Class 11","action":"action"},{"class":"Class 12","action":"action"},{"class":"After Class 12","action":"action"}],"uaeSpecific":"2 sentences UAE specific advice","aiInsight":"2-3 sentence personalised insight with surprising advice"}';
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1400,messages:[{role:'user',content:prompt}]})});
+    const data=await res.json();clearInterval(iv);
+    const text=data.content[0].text.replace(/```json|```/g,'').trim();
+    showResults(JSON.parse(text));
+  }catch(e){clearInterval(iv);showFallback();}
+}
+function showResults(r){
+  document.getElementById('resultCareer').textContent=r.career;
+  document.getElementById('resultSummary').textContent=r.summary;
+  document.getElementById('aiInsight').textContent=r.aiInsight;
+  const sc='stream-'+r.streamColor;
+  document.getElementById('streamOutput').innerHTML='<div class="stream-card '+sc+'"><span class="stream-badge">'+r.stream+' Stream — Your match</span><div class="stream-name">'+r.stream+' Stream</div><div style="font-size:12px;color:#F5C842;margin-bottom:8px;font-style:italic">'+r.streamTagline+'</div><div class="stream-desc">'+r.streamDescription+'</div><div class="subj-label">Core subjects</div><div class="subjects-row">'+r.coreSubjects.map(s=>'<span class="subj-pill core">'+s+'</span>').join('')+'</div><div class="subj-label-lt">Optional subjects</div><div class="subjects-row">'+r.optionalSubjects.map(s=>'<span class="subj-pill">'+s+'</span>').join('')+'</div></div>';
+  const wo=document.getElementById('warningOutput');
+  wo.innerHTML=r.familyPressureWarning?'<div class="warning-box"><div class="warning-title">A word about stream pressure</div><div class="warning-item"><span>→</span><span>'+r.familyPressureWarning+'</span></div></div>':'';
+  document.getElementById('examOutput').innerHTML=r.competitiveExams.map(e=>'<div class="exam-item"><div class="exam-name">'+e.name+'</div><div class="exam-desc">'+e.description+'</div></div>').join('');
+  document.getElementById('roadmapOutput').innerHTML=r.roadmap.map(rm=>'<div class="roadmap-item"><div class="roadmap-class">'+rm.class+'</div><div class="roadmap-action">'+rm.action+'</div></div>').join('');
+  document.getElementById('uaeOutput').textContent=r.uaeSpecific;
+  document.getElementById('hiddenOutput').innerHTML=r.hiddenRequirements.map(h=>'<div class="hidden-item"><span>→</span><span>'+h+'</span></div>').join('');
+  goStep(6);updateSteps(5);
+}
+function showFallback(){showResults({career:"Software Engineer",summary:"Your dream of becoming a software engineer maps clearly to the Science stream with Mathematics Physics and Computer Science as your core combination. This pathway opens both Indian top engineering institutions through JEE and international university options.",stream:"Science",streamColor:"science",streamTagline:"Mathematics and technology — the foundation of every engineering pathway",streamDescription:"The Science stream with PCM — Physics Chemistry and Mathematics — is the essential pathway for engineering and technology careers. Adding Computer Science as your optional fourth subject directly aligns with software development and AI careers. This stream keeps the maximum number of university options open both in India and internationally.",coreSubjects:["Physics","Chemistry","Mathematics","English"],optionalSubjects:["Computer Science","Physical Education"],competitiveExams:[{name:"JEE Main and Advanced",description:"Primary gateway to IITs NITs and top engineering colleges — requires exceptional Mathematics and Physics preparation from Class 11 onwards"},{name:"BITSAT",description:"BITS Pilani entrance exam — strong alternative to JEE with emphasis on speed and accuracy across PCM subjects"},{name:"SAT and AP Exams",description:"For international university applications — AP Computer Science A and AP Calculus BC are valuable for CS pathways abroad"}],familyPressureWarning:null,hiddenRequirements:["JEE requires minimum 75% aggregate in Class 12 CBSE Boards — many students focus on JEE and neglect Boards which disqualifies them","Top UAE universities like NYU Abu Dhabi require SAT scores in addition to CBSE results — CBSE alone is not sufficient","Computer Science optional in Class 11-12 is not available at all CBSE schools in UAE — check availability before choosing stream"],roadmap:[{class:"Class 9-10",action:"Build strong foundation in Mathematics and Science — aim for 90%+ in Class 10 Boards"},{class:"Class 11",action:"Begin JEE coaching alongside school — start with Mathematics and Physics foundations and begin SAT prep if targeting international universities"},{class:"Class 12",action:"Balance Board exam preparation with JEE Advanced prep — target 90%+ in Boards alongside JEE practice tests"},{class:"After Class 12",action:"JEE results in June — simultaneously apply to UAE and international universities using CBSE scores and SAT results"}],uaeSpecific:"CBSE schools in Dubai such as Delhi Private School Our Own English High School and GEMS Modern Academy all offer PCM with Computer Science. UAE-based students should note that JEE can be attempted from a UAE centre — check NTA overseas exam centre list annually as it changes.",aiInsight:"Many CS students choose Computer Science optional but neglect Mathematics at a deep level assuming coding skills are enough. In reality the highest-paying software engineering roles require strong discrete mathematics algorithms and statistics — subjects built in Class 11-12 Mathematics not in Computer Science class."});}
+</script>
+</body>
+</html>
