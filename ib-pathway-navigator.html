@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlobalCompass — IB Pathway Navigator</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
+.screen{display:none}.screen.active{display:block}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:#1B3A7A}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.wm-wrap{display:flex;flex-direction:column}
+.wm-global-row{display:flex;align-items:center;gap:5px;margin-bottom:2px}
+.wm-rule{height:0.7px;background:rgba(245,200,66,0.5);flex:1}
+.wm-global{font-family:'Montserrat',sans-serif;font-size:7px;font-weight:300;color:#fff;letter-spacing:0.3em;text-transform:uppercase}
+.wm-compass{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:800;color:#fff;letter-spacing:0.07em;text-transform:uppercase;line-height:1}
+.wm-compass .o{color:#F5C842}
+.nav-tag{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;color:#F5C842;letter-spacing:0.12em;text-transform:uppercase;background:rgba(245,200,66,0.12);padding:4px 12px;border-radius:99px;border:0.5px solid rgba(245,200,66,0.3)}
+.hero-bar{background:linear-gradient(135deg,#0D1F4A,#1B3A7A);padding:28px 24px;text-align:center;border-bottom:2px solid #F5C842}
+.hero-eyebrow{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:#F5C842;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:8px}
+.hero-h{font-family:'Playfair Display',serif;font-size:26px;font-weight:500;color:#fff;line-height:1.3;margin-bottom:6px}
+.hero-h em{color:#F5C842;font-style:normal}
+.hero-p{font-size:12px;color:#A8C4F5;line-height:1.7;max-width:520px;margin:0 auto;font-weight:300}
+.ib-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(245,200,66,0.15);border:1px solid rgba(245,200,66,0.4);border-radius:99px;padding:4px 14px;font-size:11px;font-weight:700;color:#F5C842;font-family:'Montserrat',sans-serif;letter-spacing:0.06em;margin-bottom:14px}
+.main{max-width:700px;margin:0 auto;padding:24px}
+.step-indicator{display:flex;align-items:center;margin-bottom:24px}
+.step{display:flex;flex-direction:column;align-items:center;flex:1}
+.step-circle{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:'Montserrat',sans-serif;transition:all 0.3s;z-index:1}
+.step-circle.done{background:#F5C842;color:#1B3A7A}
+.step-circle.active{background:#1B3A7A;color:#F5C842;border:2px solid #F5C842}
+.step-circle.pending{background:#E0E8F5;color:#9AB0D0}
+.step-label{font-size:9px;color:#9AB0D0;margin-top:4px;text-align:center;font-weight:500;letter-spacing:0.04em;font-family:'Montserrat',sans-serif;text-transform:uppercase;max-width:60px}
+.step-label.active{color:#1B3A7A;font-weight:700}
+.step-line{height:1px;background:#E0E8F5;flex:1;margin-top:-14px}
+.step-line.done{background:#F5C842}
+.card{background:#fff;border:0.5px solid #E0E8F5;border-radius:16px;padding:22px;margin-bottom:14px}
+.card-title{font-family:'Playfair Display',serif;font-size:18px;color:#0D1F4A;margin-bottom:5px}
+.card-sub{font-size:13px;color:#4A6FA5;line-height:1.6;margin-bottom:18px;font-weight:300}
+.options-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.options-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.opt-card{border:1.5px solid #E0E8F5;border-radius:12px;padding:14px;cursor:pointer;transition:all 0.15s}
+.opt-card:hover{border-color:#2952A3;background:#EEF3FF}
+.opt-card.selected{border-color:#1B3A7A;background:#EEF3FF}
+.opt-emoji{font-size:26px;margin-bottom:8px;display:block;text-align:center}
+.opt-title{font-size:13px;font-weight:600;color:#0D1F4A;margin-bottom:3px;font-family:'Montserrat',sans-serif}
+.opt-sub{font-size:11px;color:#4A6FA5;line-height:1.4}
+.dream-input{width:100%;border:1.5px solid #E0E8F5;border-radius:12px;padding:14px 16px;font-size:14px;color:#0D1F4A;font-family:'Inter',sans-serif;outline:none;resize:none;min-height:90px;transition:border-color 0.15s;line-height:1.6}
+.dream-input:focus{border-color:#1B3A7A}
+.dream-input::placeholder{color:#9AB0D0}
+.example-prompts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.ep{font-size:11px;padding:5px 12px;border-radius:99px;border:0.5px solid #C0D0E8;color:#2952A3;cursor:pointer;background:#EEF3FF;font-family:'Inter',sans-serif;transition:all 0.15s;font-weight:500}
+.ep:hover{background:#1B3A7A;color:#F5C842;border-color:#1B3A7A}
+.btn-row{display:flex;justify-content:space-between;align-items:center;margin-top:18px}
+.btn-back{font-size:13px;padding:9px 20px;border-radius:99px;border:1px solid #E0E8F5;background:transparent;color:#4A6FA5;cursor:pointer;font-family:'Inter',sans-serif}
+.btn-next{font-size:13px;padding:9px 24px;border-radius:99px;border:none;background:#1B3A7A;color:#F5C842;cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:700}
+.btn-next:disabled{opacity:0.4;cursor:not-allowed}
+.btn-next.gold{background:#F5C842;color:#1B3A7A}
+.loading-wrap{text-align:center;padding:40px 0}
+.loading-icon{font-size:36px;color:#F5C842;animation:spin 1s linear infinite;display:block;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-family:'Playfair Display',serif;font-size:16px;color:#0D1F4A;margin-bottom:5px}
+.loading-sub{font-size:12px;color:#4A6FA5;font-weight:300}
+.result-hero{text-align:center;padding:20px 0 24px;border-bottom:1px solid #E0E8F5;margin-bottom:20px}
+.result-tag{display:inline-flex;align-items:center;gap:6px;font-size:10px;padding:4px 12px;border-radius:99px;background:#EEF3FF;color:#2952A3;margin-bottom:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;font-family:'Montserrat',sans-serif}
+.result-career{font-family:'Playfair Display',serif;font-size:22px;color:#0D1F4A;margin-bottom:6px}
+.result-summary{font-size:13px;color:#4A6FA5;line-height:1.7;font-weight:300;max-width:520px;margin:0 auto}
+.subj-group{margin-bottom:16px}
+.subj-group-title{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:#2952A3;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #E0E8F5}
+.subj-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.subj-card{border-radius:10px;padding:12px;border:0.5px solid #E0E8F5}
+.subj-card.hl{background:#1B3A7A;border-color:#1B3A7A}
+.subj-card.sl{background:#EEF3FF;border-color:#C0D0E8}
+.subj-badge{font-size:9px;padding:2px 8px;border-radius:99px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;font-family:'Montserrat',sans-serif;margin-bottom:6px;display:inline-block}
+.badge-hl{background:rgba(245,200,66,0.2);color:#F5C842}
+.badge-sl{background:#C0D0E8;color:#2952A3}
+.subj-name-light{font-size:13px;font-weight:700;color:#FFFFFF;margin-bottom:3px;font-family:'Montserrat',sans-serif}
+.subj-name-dark{font-size:13px;font-weight:700;color:#0D1F4A;margin-bottom:3px;font-family:'Montserrat',sans-serif}
+.subj-group-label{font-size:10px;color:#F5C842;margin-bottom:4px}
+.subj-group-label-dk{font-size:10px;color:#2952A3;margin-bottom:4px}
+.subj-why-light{font-size:11px;color:rgba(255,255,255,0.75);line-height:1.5}
+.subj-why-dark{font-size:11px;color:#4A6FA5;line-height:1.5}
+.warning-box{background:#FFF3E0;border:1.5px solid #FFB74D;border-radius:12px;padding:16px;margin-bottom:14px}
+.warning-title{font-size:12px;font-weight:700;color:#7C3A00;margin-bottom:8px;font-family:'Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.06em}
+.warning-item{font-size:12px;color:#9C4A00;display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.hidden-box{background:#FFF8E6;border:1.5px solid #F5C842;border-radius:12px;padding:16px;margin-bottom:14px}
+.hidden-title{font-size:12px;font-weight:700;color:#1B3A7A;margin-bottom:8px;font-family:'Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.06em}
+.hidden-item{font-size:12px;color:#2C1800;display:flex;align-items:flex-start;gap:8px;line-height:1.5;margin-bottom:5px}
+.tok-ee{background:#1B3A7A;border-radius:12px;padding:16px;margin-bottom:14px}
+.tok-title{font-size:12px;font-weight:700;color:#F5C842;margin-bottom:10px;font-family:'Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.06em}
+.tok-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tok-item{background:rgba(255,255,255,0.08);border-radius:8px;padding:12px}
+.tok-label{font-size:10px;color:#F5C842;font-weight:700;font-family:'Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px}
+.tok-content{font-size:12px;color:rgba(255,255,255,0.85);line-height:1.6}
+.score-box{background:#EEF3FF;border-radius:12px;padding:16px;display:flex;align-items:center;justify-content:space-between}
+.score-text h4{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#1B3A7A;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px}
+.score-text p{font-size:11px;color:#4A6FA5;font-weight:300}
+.score-number{font-family:'Playfair Display',serif;font-size:32px;color:#1B3A7A;font-weight:500}
+.score-max{font-size:14px;color:#4A6FA5}
+.myp-bridge{background:linear-gradient(135deg,#0D1F4A,#1B3A7A);border-radius:12px;padding:18px;margin-bottom:14px}
+.myp-title{font-size:12px;font-weight:700;color:#F5C842;margin-bottom:12px;font-family:'Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.06em}
+.myp-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.myp-item{background:rgba(255,255,255,0.08);border-radius:8px;padding:10px}
+.myp-group{font-size:10px;color:#F5C842;font-weight:700;font-family:'Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:3px}
+.myp-advice{font-size:11px;color:rgba(255,255,255,0.85);line-height:1.5}
+.ai-bubble{background:#EEF3FF;border-radius:0 12px 12px 12px;padding:14px 16px;border:0.5px solid #C0D0E8}
+.ai-bubble p{font-size:13px;color:#0D1F4A;line-height:1.7}
+.ai-label{font-size:10px;font-weight:700;color:#2952A3;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;font-family:'Montserrat',sans-serif}
+.action-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.action-btn{font-size:12px;padding:10px 20px;border-radius:99px;cursor:pointer;font-weight:700;font-family:'Montserrat',sans-serif;border:none}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo">
+    <svg width="28" height="28" viewBox="0 0 64 64" fill="none">
+      <circle cx="32" cy="32" r="29" stroke="#F5C842" stroke-width="1.4" fill="none"/>
+      <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <circle cx="32" cy="32" r="3" fill="#F5C842"/>
+      <polygon points="32,4 35,25 32,26.5 29,25" fill="#F5C842"/>
+    </svg>
+    <div class="wm-wrap">
+      <div class="wm-global-row"><div class="wm-rule"></div><div class="wm-global">GLOBAL</div><div class="wm-rule"></div></div>
+      <div class="wm-compass">C<span class="o">O</span>MPASS</div>
+    </div>
+  </div>
+  <div class="nav-tag">IB · Pathway Navigator</div>
+</nav>
+<div class="hero-bar">
+  <div class="ib-badge">🎓 International Baccalaureate · Global Tool · 180+ Countries</div>
+  <h1 class="hero-h">From your dream to your<br><em>IB subject map</em></h1>
+  <p class="hero-p">The world's first tool that maps backwards from your career dream through IB Diploma subjects all the way to MYP preparation — connecting every stage of your IB journey to your university destination.</p>
+</div>
+<div class="main">
+  <div class="step-indicator">
+    <div class="step"><div class="step-circle active" id="sc1">1</div><div class="step-label active">Dream</div></div>
+    <div class="step-line" id="sl1"></div>
+    <div class="step"><div class="step-circle pending" id="sc2">2</div><div class="step-label">IB Stage</div></div>
+    <div class="step-line" id="sl2"></div>
+    <div class="step"><div class="step-circle pending" id="sc3">3</div><div class="step-label">Destination</div></div>
+    <div class="step-line" id="sl3"></div>
+    <div class="step"><div class="step-circle pending" id="sc4">4</div><div class="step-label">Region</div></div>
+    <div class="step-line" id="sl4"></div>
+    <div class="step"><div class="step-circle pending" id="sc5">5</div><div class="step-label">Your Map</div></div>
+  </div>
+  <div id="s1" class="screen active">
+    <div class="card">
+      <div class="card-title">What is your career dream?</div>
+      <div class="card-sub">Do not think about subjects yet. Describe what you want to do, what problems you want to solve, or what kind of professional you want to become.</div>
+      <textarea class="dream-input" id="dreamInput" placeholder="e.g. I want to become an international lawyer working on human rights cases across different countries…"></textarea>
+      <div class="example-prompts">
+        <span class="ep" onclick="setDream('I want to become a doctor and work in global health and medical research')">🩺 Medicine</span>
+        <span class="ep" onclick="setDream('I want to study law and work in international human rights or corporate law')">⚖️ Law</span>
+        <span class="ep" onclick="setDream('I want to build technology companies and work in artificial intelligence')">💻 Tech & AI</span>
+        <span class="ep" onclick="setDream('I want to work in international business finance and global markets')">📈 Business</span>
+        <span class="ep" onclick="setDream('I want to work in architecture and sustainable urban design')">🏛️ Architecture</span>
+        <span class="ep" onclick="setDream('I want to work in diplomacy international relations and global politics')">🌍 Diplomacy</span>
+        <span class="ep" onclick="setDream('I want to become a psychologist or work in mental health and neuroscience')">🧠 Psychology</span>
+        <span class="ep" onclick="setDream('I want to work in journalism media and investigative storytelling')">📰 Journalism</span>
+      </div>
+    </div>
+    <div class="btn-row"><div></div><button class="btn-next" id="btn1" onclick="goStep(2)" disabled>Next — Your IB stage →</button></div>
+  </div>
+  <div id="s2" class="screen">
+    <div class="card">
+      <div class="card-title">What is your current IB stage?</div>
+      <div class="card-sub">This determines whether GlobalCompass maps your MYP preparation, your DP subject selection, or both.</div>
+      <div class="options-grid">
+        <div class="opt-card" onclick="selectStage(this,'MYP Year 3 or 4 ages 13-15 planning ahead')"><span class="opt-emoji">📗</span><div class="opt-title">MYP Year 3 or 4</div><div class="opt-sub">Ages 13-15 — planning ahead for DP</div></div>
+        <div class="opt-card" onclick="selectStage(this,'MYP Year 5 age 15-16 choosing DP subjects now')"><span class="opt-emoji">📘</span><div class="opt-title">MYP Year 5</div><div class="opt-sub">Ages 15-16 — choosing DP subjects now</div></div>
+        <div class="opt-card" onclick="selectStage(this,'DP Year 1 age 16-17 just started Diploma')"><span class="opt-emoji">📙</span><div class="opt-title">DP Year 1</div><div class="opt-sub">Ages 16-17 — just started the Diploma</div></div>
+        <div class="opt-card" onclick="selectStage(this,'DP Year 2 age 17-18 applying to universities')"><span class="opt-emoji">📕</span><div class="opt-title">DP Year 2</div><div class="opt-sub">Ages 17-18 — applying to universities</div></div>
+      </div>
+    </div>
+    <div class="btn-row"><button class="btn-back" onclick="goStep(1)">← Back</button><button class="btn-next" id="btn2" onclick="goStep(3)" disabled>Next — University destination →</button></div>
+  </div>
+  <div id="s3" class="screen">
+    <div class="card">
+      <div class="card-title">Where do you want to study?</div>
+      <div class="card-sub">Different university systems have very different IB subject requirements. This shapes your entire subject map.</div>
+      <div class="options-grid-3">
+        <div class="opt-card" onclick="selectDest(this,'UK Russell Group Oxford Cambridge LSE Imperial UCL')"><span class="opt-emoji">🇬🇧</span><div class="opt-title">UK</div><div class="opt-sub">Oxford, Cambridge, LSE, Imperial</div></div>
+        <div class="opt-card" onclick="selectDest(this,'USA Ivy League MIT Stanford liberal arts')"><span class="opt-emoji">🇺🇸</span><div class="opt-title">USA</div><div class="opt-sub">Ivy League, MIT, Stanford</div></div>
+        <div class="opt-card" onclick="selectDest(this,'Canada University of Toronto McGill UBC')"><span class="opt-emoji">🇨🇦</span><div class="opt-title">Canada</div><div class="opt-sub">U of T, McGill, UBC</div></div>
+        <div class="opt-card" onclick="selectDest(this,'UAE NYU Abu Dhabi AUS UAEU Khalifa University')"><span class="opt-emoji">🇦🇪</span><div class="opt-title">UAE</div><div class="opt-sub">NYU Abu Dhabi, AUS, UAEU</div></div>
+        <div class="opt-card" onclick="selectDest(this,'Europe Netherlands Spain Germany France top universities')"><span class="opt-emoji">🇪🇺</span><div class="opt-title">Europe</div><div class="opt-sub">Netherlands, Spain, Germany</div></div>
+        <div class="opt-card" onclick="selectDest(this,'Asia Pacific Singapore NUS Australia Melbourne')"><span class="opt-emoji">🌏</span><div class="opt-title">Asia Pacific</div><div class="opt-sub">Singapore, Australia, Hong Kong</div></div>
+      </div>
+    </div>
+    <div class="btn-row"><button class="btn-back" onclick="goStep(2)">← Back</button><button class="btn-next" id="btn3" onclick="goStep(4)" disabled>Next — Your region →</button></div>
+  </div>
+  <div id="s4" class="screen">
+    <div class="card">
+      <div class="card-title">Where are you currently studying?</div>
+      <div class="card-sub">Your regional context shapes the specific IB guidance — subject availability, local patterns and common pitfalls vary by region.</div>
+      <div class="options-grid-3">
+        <div class="opt-card" onclick="selectRegion(this,'Middle East UAE Science Business over-concentration pattern')"><span class="opt-emoji">🌙</span><div class="opt-title">Middle East</div><div class="opt-sub">UAE, Saudi, Qatar, Kuwait</div></div>
+        <div class="opt-card" onclick="selectRegion(this,'Asia Pacific high Mathematics pressure creative balance needed')"><span class="opt-emoji">🌏</span><div class="opt-title">Asia Pacific</div><div class="opt-sub">Singapore, Hong Kong, Japan</div></div>
+        <div class="opt-card" onclick="selectRegion(this,'Africa balancing local and international university pathways')"><span class="opt-emoji">🌍</span><div class="opt-title">Africa</div><div class="opt-sub">South Africa, Kenya, Nigeria</div></div>
+        <div class="opt-card" onclick="selectRegion(this,'Europe strong humanities tradition multiple languages')"><span class="opt-emoji">🇪🇺</span><div class="opt-title">Europe</div><div class="opt-sub">UK, Netherlands, Germany, Spain</div></div>
+        <div class="opt-card" onclick="selectRegion(this,'Americas USA Canada Latin America diverse IB landscape')"><span class="opt-emoji">🌎</span><div class="opt-title">Americas</div><div class="opt-sub">USA, Canada, Brazil, Mexico</div></div>
+        <div class="opt-card" onclick="selectRegion(this,'Other or global unspecified')"><span class="opt-emoji">🌐</span><div class="opt-title">Other</div><div class="opt-sub">Global or unspecified</div></div>
+      </div>
+    </div>
+    <div class="btn-row"><button class="btn-back" onclick="goStep(3)">← Back</button><button class="btn-next gold" id="btn4" onclick="generatePathway()" disabled>Generate my IB pathway ↗</button></div>
+  </div>
+  <div id="s5" class="screen">
+    <div class="card">
+      <div class="loading-wrap">
+        <i class="ti ti-loader-2 loading-icon"></i>
+        <div class="loading-text" id="loadingText">Mapping your dream to IB subjects…</div>
+        <div class="loading-sub">GlobalCompass AI is analysing IB subject groups, university requirements and regional patterns</div>
+      </div>
+    </div>
+  </div>
+  <div id="s6" class="screen">
+    <div class="result-hero">
+      <div class="result-tag">🎓 Your IB pathway map</div>
+      <div class="result-career" id="resultCareer"></div>
+      <p class="result-summary" id="resultSummary"></p>
+    </div>
+    <div class="card"><div class="card-title" style="margin-bottom:14px">Your IB Diploma subject map</div><div id="subjectsOutput"></div></div>
+    <div id="warningOutput"></div>
+    <div id="hiddenOutput"></div>
+    <div id="tokOutput"></div>
+    <div class="card"><div class="card-title" style="margin-bottom:12px">Target IB score</div><div class="score-box"><div class="score-text"><h4>Minimum IB score needed</h4><p>For your target universities and major</p></div><div><span class="score-number" id="scoreOutput">36</span><span class="score-max">/45</span></div></div></div>
+    <div id="mypOutput"></div>
+    <div class="card"><div class="ai-label">GlobalCompass IB insight</div><div class="ai-bubble"><p id="aiInsight"></p></div></div>
+    <div class="action-row">
+      <button class="action-btn" style="background:#1B3A7A;color:#F5C842" onclick="goStep(1)">Start again</button>
+      <button class="action-btn" style="background:#F5C842;color:#1B3A7A" onclick="window.location.href='index.html'">Find IB schools ↗</button>
+      <button class="action-btn" style="background:#EEF3FF;color:#2952A3" onclick="window.location.href='index.html'">Match universities ↗</button>
+    </div>
+  </div>
+</div>
+<script>
+let dream='',stage='',destination='',region='';
+document.getElementById('dreamInput').addEventListener('input',function(){dream=this.value.trim();document.getElementById('btn1').disabled=dream.length<10;});
+function setDream(text){document.getElementById('dreamInput').value=text;dream=text;document.getElementById('btn1').disabled=false;}
+function selectStage(el,val){stage=val;document.querySelectorAll('#s2 .opt-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');document.getElementById('btn2').disabled=false;}
+function selectDest(el,val){destination=val;document.querySelectorAll('#s3 .opt-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');document.getElementById('btn3').disabled=false;}
+function selectRegion(el,val){region=val;document.querySelectorAll('#s4 .opt-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');document.getElementById('btn4').disabled=false;}
+function goStep(n){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('s'+n).classList.add('active');updateSteps(n);}
+function updateSteps(active){for(let i=1;i<=5;i++){const circle=document.getElementById('sc'+i);const label=circle?.nextElementSibling;if(!circle)continue;if(i<active){circle.className='step-circle done';circle.innerHTML='✓';}else if(i===active){circle.className='step-circle active';circle.innerHTML=i;if(label)label.className='step-label active';}else{circle.className='step-circle pending';circle.innerHTML=i;if(label)label.className='step-label';}const line=document.getElementById('sl'+i);if(line)line.className=i<active?'step-line done':'step-line';}}
+async function generatePathway(){
+  goStep(5);
+  const msgs=['Mapping your dream to IB subjects…','Analysing university hidden requirements…','Checking regional subject patterns…','Building your complete IB pathway map…','Preparing your personalised guidance…'];
+  let mi=0;
+  const iv=setInterval(()=>{mi=(mi+1)%msgs.length;document.getElementById('loadingText').textContent=msgs[mi];},1800);
+  const prompt='You are GlobalCompass IB Pathway Navigator built with input from experienced IB teachers.\nDREAM: "'+dream+'"\nIB STAGE: "'+stage+'"\nDESTINATION: "'+destination+'"\nREGION: "'+region+'"\n\nMiddle East students often over-concentrate in Sciences and Business while undervaluing Humanities causing problems for Law Psychology Politics Journalism pathways. Flag this if relevant.\n\nRespond ONLY with valid JSON:\n{"career":"career title 2-4 words","summary":"2 sentence personalised summary","subjects":[{"name":"Subject","group":"IB Group","level":"HL","why":"one sentence"},{"name":"Subject","group":"IB Group","level":"HL","why":"one sentence"},{"name":"Subject","group":"IB Group","level":"HL","why":"one sentence"},{"name":"Subject","group":"IB Group","level":"SL","why":"one sentence"},{"name":"Subject","group":"IB Group","level":"SL","why":"one sentence"},{"name":"Subject","group":"IB Group","level":"SL","why":"one sentence"}],"regionalWarning":"specific warning or null","hiddenRequirements":["requirement 1","requirement 2","requirement 3"],"tok":"2 sentence TOK suggestion","ee":"2 sentence EE suggestion","cas":"one sentence CAS suggestion","targetScore":36,"mypGuidance":[{"group":"MYP group","advice":"specific advice"},{"group":"MYP group","advice":"specific advice"},{"group":"MYP group","advice":"specific advice"},{"group":"MYP group","advice":"specific advice"}],"aiInsight":"2-3 sentence personalised insight with one surprising non-obvious advice"}';
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1500,messages:[{role:'user',content:prompt}]})});
+    const data=await res.json();
+    clearInterval(iv);
+    const text=data.content[0].text.replace(/```json|```/g,'').trim();
+    showResults(JSON.parse(text));
+  }catch(e){clearInterval(iv);showFallback();}
+}
+function showResults(r){
+  document.getElementById('resultCareer').textContent=r.career;
+  document.getElementById('resultSummary').textContent=r.summary;
+  document.getElementById('scoreOutput').textContent=r.targetScore;
+  document.getElementById('aiInsight').textContent=r.aiInsight;
+  const hlS=r.subjects.filter(s=>s.level==='HL');
+  const slS=r.subjects.filter(s=>s.level==='SL');
+  let sh='<div class="subj-group"><div class="subj-group-title">Higher Level (HL) — 3 subjects</div><div class="subj-grid">';
+  hlS.forEach(s=>{sh+='<div class="subj-card hl"><span class="subj-badge badge-hl">HL</span><div class="subj-name-light">'+s.name+'</div><div class="subj-group-label">'+s.group+'</div><div class="subj-why-light">'+s.why+'</div></div>';});
+  sh+='</div></div><div class="subj-group"><div class="subj-group-title">Standard Level (SL) — 3 subjects</div><div class="subj-grid">';
+  slS.forEach(s=>{sh+='<div class="subj-card sl"><span class="subj-badge badge-sl">SL</span><div class="subj-name-dark">'+s.name+'</div><div class="subj-group-label-dk">'+s.group+'</div><div class="subj-why-dark">'+s.why+'</div></div>';});
+  sh+='</div></div>';
+  document.getElementById('subjectsOutput').innerHTML=sh;
+  const wo=document.getElementById('warningOutput');
+  wo.innerHTML=r.regionalWarning?'<div class="warning-box"><div class="warning-title">Regional pattern alert</div><div class="warning-item"><span>→</span><span>'+r.regionalWarning+'</span></div></div>':'';
+  document.getElementById('hiddenOutput').innerHTML='<div class="hidden-box"><div class="hidden-title">Hidden university requirements</div>'+r.hiddenRequirements.map(req=>'<div class="hidden-item"><span>→</span><span>'+req+'</span></div>').join('')+'</div>';
+  document.getElementById('tokOutput').innerHTML='<div class="tok-ee"><div class="tok-title">Core components — TOK · EE · CAS</div><div class="tok-grid"><div class="tok-item"><div class="tok-label">Theory of Knowledge</div><div class="tok-content">'+r.tok+'</div></div><div class="tok-item"><div class="tok-label">Extended Essay</div><div class="tok-content">'+r.ee+'</div></div></div><div style="margin-top:10px;background:rgba(255,255,255,0.08);border-radius:8px;padding:10px"><div class="tok-label" style="margin-bottom:4px">CAS</div><div class="tok-content">'+r.cas+'</div></div></div>';
+  const mo=document.getElementById('mypOutput');
+  mo.innerHTML=r.mypGuidance&&r.mypGuidance.length?'<div class="myp-bridge"><div class="myp-title">MYP Bridge — prepare now for your DP pathway</div><div class="myp-grid">'+r.mypGuidance.map(m=>'<div class="myp-item"><div class="myp-group">'+m.group+'</div><div class="myp-advice">'+m.advice+'</div></div>').join('')+'</div></div>':'';
+  goStep(6);updateSteps(5);
+}
+function showFallback(){showResults({career:"International Lawyer",summary:"Your pathway to international law requires a carefully balanced IB subject combination that develops both analytical rigour and the humanities depth that top law schools demand.",subjects:[{name:"History",group:"Group 3 Individuals and Societies",level:"HL",why:"Essential for law — develops argumentation and understanding of how legal systems evolved"},{name:"English A Literature",group:"Group 1 Language and Literature",level:"HL",why:"Law schools require exceptional written communication — English HL is the strongest signal"},{name:"Economics",group:"Group 3 Individuals and Societies",level:"HL",why:"International law intersects constantly with trade and economic policy"},{name:"Mathematics AA",group:"Group 5 Mathematics",level:"SL",why:"Satisfies quantitative requirement without overloading your humanities combination"},{name:"French B",group:"Group 2 Language Acquisition",level:"SL",why:"French is the language of many international courts and tribunals"},{name:"Biology",group:"Group 4 Sciences",level:"SL",why:"Satisfies the science requirement while leaving space for your three HL humanities"}],regionalWarning:"Many Middle East IB students choose Science and Business heavy combinations under family pressure. For international law, Law schools at LSE Oxford and Harvard consistently prefer History HL and English A HL over Chemistry or Business Management.",hiddenRequirements:["Oxford Law requires minimum 38-40 IB points with HL grades 766 or higher","Harvard Law strongly prefers applicants who demonstrated sustained engagement with humanities","NYU Abu Dhabi requires Global Politics or History at HL for its Law and Society pathway"],tok:"Explore how legal systems across different cultures define justice differently and connect to the tension between universal rights and cultural relativism.",ee:"Write your Extended Essay in History or Global Politics researching a specific international legal case and analysing how political power shaped its outcome.",cas:"Volunteer with a legal aid organisation or refugee support service — this provides CAS hours while demonstrating the values commitment that international law schools look for.",targetScore:38,mypGuidance:[{group:"Humanities History or Global Politics",advice:"Take the most challenging humanities option available — this is the foundation of your law pathway"},{group:"Language and Literature",advice:"Prioritise English literary analysis and begin practising essay structure and argumentation now"},{group:"Mathematics",advice:"Aim for Extended Mathematics in MYP to keep AA SL accessible in DP"},{group:"Language Acquisition",advice:"Invest seriously in your second language now — French or Spanish B HL is far easier with a strong MYP foundation"}],aiInsight:"One non-obvious insight — many international law applicants overlook Global Politics HL choosing History instead. For international human rights law specifically Global Politics HL often provides more directly relevant content and signals clearer intent to admissions committees."});}
+</script>
+</body>
+</html>
