@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlobalCompass — Australian VCE Navigator · ATAR Strategy</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
+.screen{display:none}.screen.active{display:block}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:#1B3A7A}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.wm-wrap{display:flex;flex-direction:column}
+.wm-global-row{display:flex;align-items:center;gap:5px;margin-bottom:2px}
+.wm-rule{height:0.7px;background:rgba(245,200,66,0.5);flex:1}
+.wm-global{font-family:'Montserrat',sans-serif;font-size:7px;font-weight:300;color:#fff;letter-spacing:0.3em;text-transform:uppercase}
+.wm-compass{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:800;color:#fff;letter-spacing:0.07em;text-transform:uppercase;line-height:1}
+.wm-compass .o{color:#F5C842}
+.nav-tag{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;color:#F5C842;letter-spacing:0.12em;text-transform:uppercase;background:rgba(245,200,66,0.12);padding:4px 12px;border-radius:99px;border:0.5px solid rgba(245,200,66,0.3)}
+.hero-bar{background:linear-gradient(135deg,#00008B,#CC0000);padding:28px 24px;text-align:center;border-bottom:2px solid #F5C842}
+.hero-h{font-family:'Playfair Display',serif;font-size:24px;font-weight:500;color:#fff;line-height:1.3;margin-bottom:6px}
+.hero-h em{color:#F5C842;font-style:normal}
+.hero-p{font-size:12px;color:rgba(255,255,255,0.85);line-height:1.7;max-width:520px;margin:0 auto;font-weight:300}
+.au-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(245,200,66,0.15);border:1px solid rgba(245,200,66,0.4);border-radius:99px;padding:4px 14px;font-size:11px;font-weight:700;color:#F5C842;font-family:'Montserrat',sans-serif;letter-spacing:0.06em;margin-bottom:14px}
+.main{max-width:700px;margin:0 auto;padding:24px}
+.step-indicator{display:flex;align-items:center;margin-bottom:24px}
+.step{display:flex;flex-direction:column;align-items:center;flex:1}
+.step-circle{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:'Montserrat',sans-serif;transition:all 0.3s;z-index:1}
+.step-circle.done{background:#F5C842;color:#00008B}
+.step-circle.active{background:#CC0000;color:#fff;border:2px solid #F5C842}
+.step-circle.pending{background:#E0E8F5;color:#9AB0D0}
+.step-label{font-size:9px;color:#9AB0D0;margin-top:4px;text-align:center;font-weight:500;letter-spacing:0.04em;font-family:'Montserrat',sans-serif;text-transform:uppercase;max-width:60px}
+.step-label.active{color:#CC0000;font-weight:700}
+.step-line{height:1px;background:#E0E8F5;flex:1;margin-top:-14px}
+.step-line.done{background:#F5C842}
+.card{background:#fff;border:0.5px solid #E0E8F5;border-radius:16px;padding:22px;margin-bottom:14px}
+.card-title{font-family:'Playfair Display',serif;font-size:18px;color:#0D1F4A;margin-bottom:5px}
+.card-sub{font-size:13px;color:#4A6FA5;line-height:1.6;margin-bottom:18px;font-weight:300}
+.options-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opt-card{border:1.5px solid #E0E8F5;border-radius:12px;padding:14px;cursor:pointer;transition:all 0.15s}
+.opt-card:hover{border-color:#CC0000;background:#FFF0F0}
+.opt-card.selected{border-color:#CC0000;background:#FFF0F0}
+.opt-emoji{font-size:24px;margin-bottom:8px;display:block;text-align:center}
+.opt-title{font-size:13px;font-weight:600;color:#0D1F4A;margin-bottom:3px;font-family:'Montserrat',sans-serif}
+.opt-sub{font-size:11px;color:#4A6FA5;line-height:1.4}
+.dream-input{width:100%;border:1.5px solid #E0E8F5;border-radius:12px;padding:14px 16px;font-size:14px;color:#0D1F4A;font-family:'Inter',sans-serif;outline:none;resize:none;min-height:90px;transition:border-color 0.15s;line-height:1.6}
+.dream-input:focus{border-color:#CC0000}
+.dream-input::placeholder{color:#9AB0D0}
+.example-prompts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.ep{font-size:11px;padding:5px 12px;border-radius:99px;border:0.5px solid #C0D0E8;color:#2952A3;cursor:pointer;background:#EEF3FF;font-family:'Inter',sans-serif;transition:all 0.15s;font-weight:500}
+.ep:hover{background:#CC0000;color:#fff;border-color:#CC0000}
+.btn-row{display:flex;justify-content:space-between;align-items:center;margin-top:18px}
+.btn-back{font-size:13px;padding:9px 20px;border-radius:99px;border:1px solid #E0E8F5;background:transparent;color:#4A6FA5;cursor:pointer;font-family:'Inter',sans-serif}
+.btn-next{font-size:13px;padding:9px 24px;border-radius:99px;border:none;background:#CC0000;color:#fff;cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:700}
+.btn-next:disabled{opacity:0.4;cursor:not-allowed}
+.btn-next.gold{background:#F5C842;color:#00008B}
+.loading-wrap{text-align:center;padding:40px 0}
+.loading-icon{font-size:36px;color:#F5C842;animation:spin 1s linear infinite;display:block;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-family:'Playfair Display',serif;font-size:16px;color:#0D1F4A;margin-bottom:5px}
+.loading-sub{font-size:12px;color:#4A6FA5;font-weight:300}
+.result-hero{text-align:center;padding:16px 0 20px;border-bottom:1px solid #E0E8F5;margin-bottom:20px}
+.result-tag{display:inline-flex;align-items:center;gap:6px;font-size:10px;padding:4px 12px;border-radius:99px;background:#FFF0F0;color:#CC0000;margin-bottom:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;font-family:'Montserrat',sans-serif}
+.result-career{font-family:'Playfair Display',serif;font-size:22px;color:#0D1F4A;margin-bottom:6px}
+.result-summary{font-size:13px;color:#4A6FA5;line-height:1.7;font-weight:300;max-width:520px;margin:0 auto}
+.subj-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.subj-card{border-radius:12px;padding:14px}
+.subj-card.essential{background:#00008B}
+.subj-card.recommended{background:#EEF3FF;border:0.5px solid #C0D0E8}
+.subj-card.optional{background:#F8F9FF;border:0.5px solid #E0E8F5}
+.subj-badge{font-size:9px;padding:2px 8px;border-radius:99px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;font-family:'Montserrat',sans-serif;margin-bottom:6px;display:inline-block}
+.badge-essential{background:rgba(245,200,66,0.2);color:#F5C842}
+.badge-recommended{background:#C0D0E8;color:#2952A3}
+.badge-optional{background:#E0E8F5;color:#4A6FA5}
+.subj-name-light{font-size:13px;font-weight:700;color:#fff;margin-bottom:3px;font-family:'Montserrat',sans-serif}
+.subj-name-dark{font-size:13px;font-weight:700;color:#0D1F4A;margin-bottom:3px;font-family:'Montserrat',sans-serif}
+.subj-why-light{font-size:11px;color:rgba(255,255,255,0.75);line-height:1.5}
+.subj-why-dark{font-size:11px;color:#4A6FA5;line-height:1.5}
+.scaling-box{background:linear-gradient(135deg,#00008B,#CC0000);border-radius:12px;padding:16px;margin-bottom:14px}
+.scaling-title{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:#F5C842;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px}
+.scaling-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.scaling-item{background:rgba(255,255,255,0.1);border-radius:8px;padding:10px}
+.scaling-subject{font-size:11px;font-weight:700;color:#F5C842;font-family:'Montserrat',sans-serif;margin-bottom:3px}
+.scaling-detail{font-size:11px;color:rgba(255,255,255,0.85);line-height:1.5}
+.atar-box{background:#00008B;border-radius:12px;padding:16px;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.atar-text h4{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#F5C842;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px}
+.atar-text p{font-size:11px;color:rgba(255,255,255,0.7);font-weight:300}
+.atar-score{font-family:'Playfair Display',serif;font-size:32px;color:#F5C842;font-weight:500}
+.uni-box{background:#EEF3FF;border-radius:12px;padding:16px;margin-bottom:14px}
+.uni-title{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:#1B3A7A;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px}
+.uni-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.uni-item{background:#fff;border-radius:8px;padding:10px;border:0.5px solid #C0D0E8}
+.uni-name{font-size:11px;font-weight:700;color:#00008B;font-family:'Montserrat',sans-serif;margin-bottom:3px}
+.uni-detail{font-size:11px;color:#4A6FA5;line-height:1.4}
+.hidden-box{background:#FFF8E6;border:1.5px solid #F5C842;border-radius:12px;padding:16px;margin-bottom:14px}
+.hidden-title{font-size:12px;font-weight:700;color:#CC0000;margin-bottom:8px;font-family:'Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.06em}
+.hidden-item{font-size:12px;color:#2C1800;display:flex;align-items:flex-start;gap:8px;line-height:1.5;margin-bottom:5px}
+.intl-box{background:#1B3A7A;border-radius:12px;padding:16px;margin-bottom:14px}
+.intl-title{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:#F5C842;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px}
+.intl-content{font-size:12px;color:rgba(255,255,255,0.85);line-height:1.7}
+.ai-bubble{background:#FFF0F0;border-radius:0 12px 12px 12px;padding:14px 16px;border:0.5px solid #FFAAAA}
+.ai-bubble p{font-size:13px;color:#0D1F4A;line-height:1.7}
+.ai-label{font-size:10px;font-weight:700;color:#CC0000;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;font-family:'Montserrat',sans-serif}
+.action-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.action-btn{font-size:12px;padding:10px 20px;border-radius:99px;cursor:pointer;font-weight:700;font-family:'Montserrat',sans-serif;border:none}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo">
+    <svg width="28" height="28" viewBox="0 0 64 64" fill="none">
+      <circle cx="32" cy="32" r="29" stroke="#F5C842" stroke-width="1.4" fill="none"/>
+      <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <circle cx="32" cy="32" r="3" fill="#F5C842"/>
+      <polygon points="32,4 35,25 32,26.5 29,25" fill="#F5C842"/>
+    </svg>
+    <div class="wm-wrap">
+      <div class="wm-global-row"><div class="wm-rule"></div><div class="wm-global">GLOBAL</div><div class="wm-rule"></div></div>
+      <div class="wm-compass">C<span class="o">O</span>MPASS</div>
+    </div>
+  </div>
+  <div class="nav-tag">🇦🇺 VCE · ATAR Navigator</div>
+</nav>
+<div class="hero-bar">
+  <div class="au-badge">🇦🇺 Australian VCE · ATAR · UAE · Malaysia · Southeast Asia · Group of Eight</div>
+  <h1 class="hero-h">From your dream to your<br><em>VCE subject strategy</em></h1>
+  <p class="hero-p">GlobalCompass maps your career dream backwards to the optimal VCE subjects, ATAR target, scaling strategy and university pathway — for Australia and international destinations.</p>
+</div>
+<div class="main">
+  <div class="step-indicator">
+    <div class="step"><div class="step-circle active" id="sc1">1</div><div class="step-label active">Dream</div></div>
+    <div class="step-line" id="sl1"></div>
+    <div class="step"><div class="step-circle pending" id="sc2">2</div><div class="step-label">Year</div></div>
+    <div class="step-line" id="sl2"></div>
+    <div class="step"><div class="step-circle pending" id="sc3">3</div><div class="step-label">Destination</div></div>
+    <div class="step-line" id="sl3"></div>
+    <div class="step"><div class="step-circle pending" id="sc4">4</div><div class="step-label">Your Map</div></div>
+  </div>
+  <div id="s1" class="screen active">
+    <div class="card">
+      <div class="card-title">What is your career dream?</div>
+      <div class="card-sub">Do not think about subjects yet. Tell us your dream — GlobalCompass maps backwards to the optimal VCE subjects and ATAR strategy for you.</div>
+      <textarea class="dream-input" id="dreamInput" placeholder="e.g. I want to study medicine and become a doctor at a top Australian university…"></textarea>
+      <div class="example-prompts">
+        <span class="ep" onclick="setDream('I want to study medicine and become a doctor at a top Australian university')">🩺 Medicine</span>
+        <span class="ep" onclick="setDream('I want to study engineering and work in technology or resources in Australia')">⚙️ Engineering</span>
+        <span class="ep" onclick="setDream('I want to study law and work as a lawyer in Australia or internationally')">⚖️ Law</span>
+        <span class="ep" onclick="setDream('I want to study commerce economics or finance at a top Australian university')">📈 Commerce</span>
+        <span class="ep" onclick="setDream('I want to study computer science data science or artificial intelligence')">💻 Computer Science</span>
+        <span class="ep" onclick="setDream('I want to study architecture or environmental design')">🏛️ Architecture</span>
+        <span class="ep" onclick="setDream('I want to study psychology or social sciences')">🧠 Psychology</span>
+        <span class="ep" onclick="setDream('I want to study arts media communications or journalism')">🎨 Arts / Media</span>
+      </div>
+    </div>
+    <div class="btn-row"><div></div><button class="btn-next" id="btn1" onclick="goStep(2)" disabled>Next — Your current year →</button></div>
+  </div>
+  <div id="s2" class="screen">
+    <div class="card">
+      <div class="card-title">What year are you in?</div>
+      <div class="card-sub">The VCE is completed in Years 11 and 12 — Unit 1 and 2 in Year 11 and Unit 3 and 4 in Year 12 which contribute to your ATAR.</div>
+      <div class="options-grid">
+        <div class="opt-card" onclick="selectYear(this,'Year 10 planning VCE subject choices for Year 11')"><span class="opt-emoji">📗</span><div class="opt-title">Year 10</div><div class="opt-sub">Planning VCE subject choices ahead</div></div>
+        <div class="opt-card" onclick="selectYear(this,'Year 11 VCE Units 1 and 2 first year of VCE')"><span class="opt-emoji">📘</span><div class="opt-title">Year 11 — Units 1 and 2</div><div class="opt-sub">First year of VCE subjects</div></div>
+        <div class="opt-card" onclick="selectYear(this,'Year 12 VCE Units 3 and 4 ATAR year final exams')"><span class="opt-emoji">📙</span><div class="opt-title">Year 12 — Units 3 and 4</div><div class="opt-sub">ATAR year — final exams and applications</div></div>
+        <div class="opt-card" onclick="selectYear(this,'Parent or advisor researching VCE and ATAR system')"><span class="opt-emoji">👨‍👩‍👧</span><div class="opt-title">Parent / advisor</div><div class="opt-sub">Researching VCE for my child</div></div>
+      </div>
+    </div>
+    <div class="btn-row"><button class="btn-back" onclick="goStep(1)">← Back</button><button class="btn-next" id="btn2" onclick="goStep(3)" disabled>Next — University destination →</button></div>
+  </div>
+  <div id="s3" class="screen">
+    <div class="card">
+      <div class="card-title">Where do you want to study?</div>
+      <div class="card-sub">Your destination shapes which VCE subjects, ATAR score and prerequisite combination GlobalCompass recommends.</div>
+      <div class="options-grid">
+        <div class="opt-card" onclick="selectDest(this,'Australia Group of Eight Melbourne Sydney ANU UNSW Monash Queensland')"><span class="opt-emoji">🇦🇺</span><div class="opt-title">Australia — Group of Eight</div><div class="opt-sub">Melbourne, Sydney, ANU, UNSW, Monash</div></div>
+        <div class="opt-card" onclick="selectDest(this,'Australia other universities RMIT Deakin Macquarie QUT')"><span class="opt-emoji">🎓</span><div class="opt-title">Australia — other universities</div><div class="opt-sub">RMIT, Deakin, Macquarie, QUT</div></div>
+        <div class="opt-card" onclick="selectDest(this,'UK Russell Group Oxford Cambridge Imperial UCL using Australian VCE')"><span class="opt-emoji">🇬🇧</span><div class="opt-title">UK — Russell Group</div><div class="opt-sub">Oxford, Cambridge, Imperial, UCL</div></div>
+        <div class="opt-card" onclick="selectDest(this,'USA Ivy League MIT Stanford using Australian VCE and ATAR')"><span class="opt-emoji">🇺🇸</span><div class="opt-title">USA — Top universities</div><div class="opt-sub">Ivy League, MIT, Stanford</div></div>
+        <div class="opt-card" onclick="selectDest(this,'UAE or Malaysia universities using Australian VCE curriculum')"><span class="opt-emoji">🌏</span><div class="opt-title">UAE or Malaysia</div><div class="opt-sub">Local universities using Australian curriculum</div></div>
+        <div class="opt-card" onclick="selectDest(this,'Open keeping all options Australia and international')"><span class="opt-emoji">🌍</span><div class="opt-title">Open — all options</div><div class="opt-sub">Australia and international</div></div>
+      </div>
+    </div>
+    <div class="btn-row"><button class="btn-back" onclick="goStep(2)">← Back</button><button class="btn-next gold" id="btn3" onclick="generatePathway()" disabled>Generate my VCE pathway ↗</button></div>
+  </div>
+  <div id="s4" class="screen">
+    <div class="card">
+      <div class="loading-wrap">
+        <i class="ti ti-loader-2 loading-icon"></i>
+        <div class="loading-text" id="loadingText">Mapping your dream to VCE subjects…</div>
+        <div class="loading-sub">GlobalCompass is analysing ATAR scaling, prerequisites and university requirements</div>
+      </div>
+    </div>
+  </div>
+  <div id="s5" class="screen">
+    <div class="result-hero">
+      <div class="result-tag">🇦🇺 Your VCE pathway map</div>
+      <div class="result-career" id="resultCareer"></div>
+      <p class="result-summary" id="resultSummary"></p>
+    </div>
+    <div class="card"><div class="card-title" style="margin-bottom:14px">Your recommended VCE subjects</div><div class="subj-grid" id="subjOutput"></div></div>
+    <div id="atarOutput"></div>
+    <div id="scalingOutput"></div>
+    <div id="uniOutput"></div>
+    <div id="hiddenOutput"></div>
+    <div id="intlOutput"></div>
+    <div class="card"><div class="ai-label">GlobalCompass insight</div><div class="ai-bubble"><p id="aiInsight"></p></div></div>
+    <div class="action-row">
+      <button class="action-btn" style="background:#CC0000;color:#fff" onclick="goStep(1)">Start again</button>
+      <button class="action-btn" style="background:#F5C842;color:#00008B" onclick="window.location.href='index.html'">Find Australian schools ↗</button>
+      <button class="action-btn" style="background:#EEF3FF;color:#2952A3" onclick="window.location.href='index.html'">Back to GlobalCompass ↗</button>
+    </div>
+  </div>
+</div>
+<script>
+let dream='',year='',destination='';
+document.getElementById('dreamInput').addEventListener('input',function(){dream=this.value.trim();document.getElementById('btn1').disabled=dream.length<10;});
+function setDream(t){document.getElementById('dreamInput').value=t;dream=t;document.getElementById('btn1').disabled=false;}
+function selectYear(el,v){year=v;document.querySelectorAll('#s2 .opt-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');document.getElementById('btn2').disabled=false;}
+function selectDest(el,v){destination=v;document.querySelectorAll('#s3 .opt-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');document.getElementById('btn3').disabled=false;}
+function goStep(n){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('s'+n).classList.add('active');updateSteps(n);}
+function updateSteps(active){for(let i=1;i<=4;i++){const circle=document.getElementById('sc'+i);const label=circle?.nextElementSibling;if(!circle)continue;if(i<active){circle.className='step-circle done';circle.innerHTML='✓';}else if(i===active){circle.className='step-circle active';circle.innerHTML=i;if(label)label.className='step-label active';}else{circle.className='step-circle pending';circle.innerHTML=i;if(label)label.className='step-label';}const line=document.getElementById('sl'+i);if(line)line.className=i<active?'step-line done':'step-line';}}
+async function generatePathway(){
+  goStep(4);
+  const msgs=['Mapping your dream to VCE subjects…','Analysing ATAR scaling advantages…','Checking university prerequisites…','Building your complete VCE pathway…'];
+  let mi=0;const iv=setInterval(()=>{mi=(mi+1)%msgs.length;document.getElementById('loadingText').textContent=msgs[mi];},1800);
+  const prompt='You are GlobalCompass Australian VCE ATAR Navigator expert in the Victorian Certificate of Education.\nDREAM: "'+dream+'"\nYEAR: "'+year+'"\nDESTINATION: "'+destination+'"\n\nKey VCE facts: ATAR is percentile rank 0.00 to 99.95 not a percentage. Students need at least 4 Unit 3/4 subjects including one English group subject. Max 6 subjects contribute to ATAR top 4 study scores plus 10 percent of 5th and 6th. Study scores 0-50 per subject scaled by VTAC. Subjects that scale UP: Mathematical Methods, Specialist Mathematics, Chemistry, Physics, Languages. Prerequisites CANNOT be dropped for scaling reasons. Medicine needs Chemistry. Engineering needs Maths Methods. ATAR 99 plus required for Medicine at Melbourne Sydney Monash. VCE recognised internationally UK treats as A-Levels US treats as AP equivalent. Australian curriculum schools exist in UAE Malaysia Southeast Asia.\n\nRespond ONLY with valid JSON:\n{"career":"career title","summary":"2 sentence summary","subjects":[{"name":"VCE Subject","level":"essential","scaling":"scales up","why":"one sentence"},{"name":"VCE Subject","level":"essential","scaling":"scales up","why":"one sentence"},{"name":"VCE Subject","level":"essential","scaling":"neutral","why":"one sentence"},{"name":"VCE Subject","level":"recommended","scaling":"neutral","why":"one sentence"},{"name":"English or English Language","level":"compulsory","scaling":"required","why":"Compulsory English group subject required for all VCE ATAR students"}],"targetATAR":95.0,"scalingAdvice":[{"subject":"Subject","tip":"one sentence"},{"subject":"Subject","tip":"one sentence"},{"subject":"Subject","tip":"one sentence"}],"targetUniversities":[{"name":"Australian university","programme":"specific degree","atar":"required ATAR"},{"name":"Australian university","programme":"specific degree","atar":"required ATAR"},{"name":"International university","programme":"equivalent pathway","atar":"ATAR equivalent"}],"hiddenRequirements":["hidden requirement 1","hidden requirement 2","hidden requirement 3"],"internationalContext":"2-3 sentences for students studying Australian curriculum outside Australia mentioning UAE and Malaysia schools","aiInsight":"2-3 sentence personalised insight with surprising non-obvious VCE strategy advice"}';
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1400,messages:[{role:'user',content:prompt}]})});
+    const data=await res.json();clearInterval(iv);
+    const text=data.content[0].text.replace(/```json|```/g,'').trim();
+    showResults(JSON.parse(text));
+  }catch(e){clearInterval(iv);showFallback();}
+}
+function showResults(r){
+  document.getElementById('resultCareer').textContent=r.career;
+  document.getElementById('resultSummary').textContent=r.summary;
+  document.getElementById('aiInsight').textContent=r.aiInsight;
+  document.getElementById('subjOutput').innerHTML=r.subjects.map(s=>{const cls=s.level==='essential'||s.level==='compulsory'?'essential':s.level==='recommended'?'recommended':'optional';const nl=cls==='essential'?'subj-name-light':'subj-name-dark';const wl=cls==='essential'?'subj-why-light':'subj-why-dark';const sc=s.level==='essential'||s.level==='compulsory'?'rgba(245,200,66,1)':'#2952A3';return'<div class="subj-card '+cls+'"><span class="subj-badge badge-'+cls+'">'+s.level+'</span><div style="font-size:9px;color:'+sc+';margin-bottom:4px;font-family:Montserrat,sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:0.05em">'+s.scaling+'</div><div class="'+nl+'">'+s.name+'</div><div class="'+wl+'">'+s.why+'</div></div>';}).join('');
+  document.getElementById('atarOutput').innerHTML='<div class="atar-box"><div class="atar-text"><h4>Target ATAR</h4><p>Percentile rank needed for your target universities</p></div><div class="atar-score">'+r.targetATAR+'</div></div>';
+  document.getElementById('scalingOutput').innerHTML='<div class="scaling-box"><div class="scaling-title">ATAR Scaling strategy — maximise your rank</div><div class="scaling-grid">'+r.scalingAdvice.map(s=>'<div class="scaling-item"><div class="scaling-subject">'+s.subject+'</div><div class="scaling-detail">'+s.tip+'</div></div>').join('')+'</div></div>';
+  document.getElementById('uniOutput').innerHTML='<div class="uni-box"><div class="uni-title">Target universities for your pathway</div><div class="uni-grid">'+r.targetUniversities.map(u=>'<div class="uni-item"><div class="uni-name">'+u.name+'</div><div class="uni-detail">'+u.programme+'</div><div style="font-size:10px;color:#CC0000;font-weight:700;margin-top:3px">ATAR: '+u.atar+'</div></div>').join('')+'</div></div>';
+  document.getElementById('hiddenOutput').innerHTML='<div class="hidden-box"><div class="hidden-title">Hidden requirements — what nobody tells you</div>'+r.hiddenRequirements.map(h=>'<div class="hidden-item"><span>→</span><span>'+h+'</span></div>').join('')+'</div>';
+  document.getElementById('intlOutput').innerHTML='<div class="intl-box"><div class="intl-title">International and UAE / Malaysia context</div><div class="intl-content">'+r.internationalContext+'</div></div>';
+  goStep(5);updateSteps(4);
+}
+function showFallback(){showResults({career:"Medical Doctor",summary:"Your pathway to medicine through the VCE requires Chemistry as a non-negotiable prerequisite alongside Mathematical Methods and Biology — and a near-perfect ATAR of 99 or above for the Group of Eight medical schools.",subjects:[{name:"Chemistry",level:"essential",scaling:"scales up",why:"Non-negotiable prerequisite for medicine at every Australian university — cannot be substituted"},{name:"Mathematical Methods",level:"essential",scaling:"scales up",why:"Required for medicine and scales strongly — a high study score significantly boosts your ATAR"},{name:"Biology",level:"essential",scaling:"neutral",why:"Core science for medicine — demonstrates biological knowledge essential for medical programmes"},{name:"Physics",level:"recommended",scaling:"scales up",why:"Scales up strongly — as your 5th or 6th subject it adds valuable ATAR points through the 10 percent bonus"},{name:"English Language",level:"compulsory",scaling:"required",why:"Compulsory English group subject required for all VCE ATAR students"}],targetATAR:99.0,scalingAdvice:[{subject:"Mathematical Methods",tip:"Maths Methods consistently scales up — a raw study score of 40 can become 45 or higher making it one of the best ATAR boosters"},{subject:"Chemistry",tip:"Chemistry scales moderately upward and is a hard prerequisite for medicine — prioritise it over non-prerequisite subjects"},{subject:"Physics",tip:"Physics scales up significantly — if strong in Physics adding it as your 5th or 6th subject adds valuable ATAR points through the 10 percent bonus"}],targetUniversities:[{name:"University of Melbourne",programme:"Doctor of Medicine MD graduate entry",atar:"99.00 plus UCAT"},{name:"Monash University",programme:"Bachelor of Medical Science and MD",atar:"99.10 plus UCAT"},{name:"University of Auckland",programme:"MBChB Medicine New Zealand",atar:"Equivalent to 99.00 plus UCAT"}],hiddenRequirements:["The UCAT University Clinical Aptitude Test is required alongside ATAR for every Australian medical school and must be sat in July of Year 12 — preparation must begin in Year 11","Australian medical schools effective ATAR cutoff is typically 0.5 to 1.0 points higher than the published minimum each year due to oversubscription","Graduate entry medicine at Melbourne requires a completed bachelor degree first — many high ATAR students choose this pathway for better acceptance rates than undergraduate entry"],internationalContext:"Australian curriculum schools in Dubai including Greenfield Community School and the Australian International School offer full VCE programmes leading to an ATAR recognised globally. Students in Malaysia at Garden International School Kuala Lumpur also complete the VCE. The ATAR is accepted by UK universities as equivalent to A-Levels and by US universities as equivalent to AP courses.",aiInsight:"One non-obvious insight for VCE medicine — many students take Biology Chemistry and Maths Methods then choose a humanities subject as their fourth. This is a strategic mistake. Replacing the humanities with Physics as your fourth ATAR subject adds significant scaling advantage and strengthens your medical school science profile. The 10 percent bonus from a scaled Physics score can be the difference between 98.90 and 99.05 ATAR."});}
+</script>
+</body>
+</html>
