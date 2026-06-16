@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlobalCompass — French Baccalauréat Navigator · Spécialités</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
+.screen{display:none}.screen.active{display:block}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:#1B3A7A}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.wm-wrap{display:flex;flex-direction:column}
+.wm-global-row{display:flex;align-items:center;gap:5px;margin-bottom:2px}
+.wm-rule{height:0.7px;background:rgba(245,200,66,0.5);flex:1}
+.wm-global{font-family:'Montserrat',sans-serif;font-size:7px;font-weight:300;color:#fff;letter-spacing:0.3em;text-transform:uppercase}
+.wm-compass{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:800;color:#fff;letter-spacing:0.07em;text-transform:uppercase;line-height:1}
+.wm-compass .o{color:#F5C842}
+.nav-tag{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;color:#F5C842;letter-spacing:0.12em;text-transform:uppercase;background:rgba(245,200,66,0.12);padding:4px 12px;border-radius:99px;border:0.5px solid rgba(245,200,66,0.3)}
+.hero-bar{background:linear-gradient(135deg,#002395,#ED2939,#002395);padding:28px 24px;text-align:center;border-bottom:2px solid #F5C842}
+.hero-eyebrow{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:#F5C842;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:8px}
+.hero-h{font-family:'Playfair Display',serif;font-size:24px;font-weight:500;color:#fff;line-height:1.3;margin-bottom:6px}
+.hero-h em{color:#F5C842;font-style:normal}
+.hero-p{font-size:12px;color:rgba(255,255,255,0.8);line-height:1.7;max-width:520px;margin:0 auto;font-weight:300}
+.fr-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(245,200,66,0.15);border:1px solid rgba(245,200,66,0.4);border-radius:99px;padding:4px 14px;font-size:11px;font-weight:700;color:#F5C842;font-family:'Montserrat',sans-serif;letter-spacing:0.06em;margin-bottom:14px}
+.main{max-width:700px;margin:0 auto;padding:24px}
+.step-indicator{display:flex;align-items:center;margin-bottom:24px}
+.step{display:flex;flex-direction:column;align-items:center;flex:1}
+.step-circle{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:'Montserrat',sans-serif;transition:all 0.3s;z-index:1}
+.step-circle.done{background:#F5C842;color:#1B3A7A}
+.step-circle.active{background:#002395;color:#F5C842;border:2px solid #F5C842}
+.step-circle.pending{background:#E0E8F5;color:#9AB0D0}
+.step-label{font-size:9px;color:#9AB0D0;margin-top:4px;text-align:center;font-weight:500;letter-spacing:0.04em;font-family:'Montserrat',sans-serif;text-transform:uppercase;max-width:60px}
+.step-label.active{color:#002395;font-weight:700}
+.step-line{height:1px;background:#E0E8F5;flex:1;margin-top:-14px}
+.step-line.done{background:#F5C842}
+.card{background:#fff;border:0.5px solid #E0E8F5;border-radius:16px;padding:22px;margin-bottom:14px}
+.card-title{font-family:'Playfair Display',serif;font-size:18px;color:#0D1F4A;margin-bottom:5px}
+.card-sub{font-size:13px;color:#4A6FA5;line-height:1.6;margin-bottom:18px;font-weight:300}
+.options-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.options-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.opt-card{border:1.5px solid #E0E8F5;border-radius:12px;padding:14px;cursor:pointer;transition:all 0.15s}
+.opt-card:hover{border-color:#002395;background:#EEF3FF}
+.opt-card.selected{border-color:#002395;background:#EEF3FF}
+.opt-emoji{font-size:24px;margin-bottom:8px;display:block;text-align:center}
+.opt-title{font-size:13px;font-weight:600;color:#0D1F4A;margin-bottom:3px;font-family:'Montserrat',sans-serif}
+.opt-sub{font-size:11px;color:#4A6FA5;line-height:1.4}
+.dream-input{width:100%;border:1.5px solid #E0E8F5;border-radius:12px;padding:14px 16px;font-size:14px;color:#0D1F4A;font-family:'Inter',sans-serif;outline:none;resize:none;min-height:90px;transition:border-color 0.15s;line-height:1.6}
+.dream-input:focus{border-color:#002395}
+.dream-input::placeholder{color:#9AB0D0}
+.example-prompts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.ep{font-size:11px;padding:5px 12px;border-radius:99px;border:0.5px solid #C0D0E8;color:#2952A3;cursor:pointer;background:#EEF3FF;font-family:'Inter',sans-serif;transition:all 0.15s;font-weight:500}
+.ep:hover{background:#002395;color:#F5C842;border-color:#002395}
+.btn-row{display:flex;justify-content:space-between;align-items:center;margin-top:18px}
+.btn-back{font-size:13px;padding:9px 20px;border-radius:99px;border:1px solid #E0E8F5;background:transparent;color:#4A6FA5;cursor:pointer;font-family:'Inter',sans-serif}
+.btn-next{font-size:13px;padding:9px 24px;border-radius:99px;border:none;background:#002395;color:#F5C842;cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:700}
+.btn-next:disabled{opacity:0.4;cursor:not-allowed}
+.btn-next.gold{background:#F5C842;color:#002395}
+.loading-wrap{text-align:center;padding:40px 0}
+.loading-icon{font-size:36px;color:#F5C842;animation:spin 1s linear infinite;display:block;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-family:'Playfair Display',serif;font-size:16px;color:#0D1F4A;margin-bottom:5px}
+.loading-sub{font-size:12px;color:#4A6FA5;font-weight:300}
+.result-hero{text-align:center;padding:16px 0 20px;border-bottom:1px solid #E0E8F5;margin-bottom:20px}
+.result-tag{display:inline-flex;align-items:center;gap:6px;font-size:10px;padding:4px 12px;border-radius:99px;background:#EEF3FF;color:#2952A3;margin-bottom:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;font-family:'Montserrat',sans-serif}
+.result-career{font-family:'Playfair Display',serif;font-size:22px;color:#0D1F4A;margin-bottom:6px}
+.result-summary{font-size:13px;color:#4A6FA5;line-height:1.7;font-weight:300;max-width:520px;margin:0 auto}
+.spec-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px}
+.spec-card{border-radius:12px;padding:14px}
+.spec-card.premiere{background:#002395}
+.spec-card.drop{background:#F8F9FF;border:1.5px dashed #C0D0E8}
+.spec-badge{font-size:9px;padding:2px 8px;border-radius:99px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;font-family:'Montserrat',sans-serif;margin-bottom:6px;display:inline-block}
+.badge-premiere{background:rgba(245,200,66,0.2);color:#F5C842}
+.badge-drop{background:#E0E8F5;color:#9AB0D0}
+.spec-name-light{font-size:12px;font-weight:700;color:#fff;margin-bottom:3px;font-family:'Montserrat',sans-serif}
+.spec-name-dark{font-size:12px;font-weight:700;color:#0D1F4A;margin-bottom:3px;font-family:'Montserrat',sans-serif}
+.spec-why-light{font-size:11px;color:rgba(255,255,255,0.75);line-height:1.5}
+.spec-why-dark{font-size:11px;color:#4A6FA5;line-height:1.5}
+.core-box{background:#F8F9FF;border:0.5px solid #E0E8F5;border-radius:12px;padding:14px;margin-bottom:14px}
+.core-title{font-size:11px;font-weight:700;color:#002395;font-family:'Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:10px}
+.core-grid{display:flex;gap:8px;flex-wrap:wrap}
+.core-pill{font-size:11px;padding:4px 12px;border-radius:99px;background:#EEF3FF;color:#002395;font-weight:500;border:0.5px solid #C0D0E8}
+.core-pill.compulsory{background:#002395;color:#F5C842}
+.score-box{background:#002395;border-radius:12px;padding:16px;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.score-text h4{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#F5C842;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px}
+.score-text p{font-size:11px;color:rgba(255,255,255,0.7);font-weight:300}
+.score-number{font-family:'Playfair Display',serif;font-size:32px;color:#F5C842;font-weight:500}
+.score-max{font-size:14px;color:rgba(255,255,255,0.5)}
+.grand-oral{background:linear-gradient(135deg,#002395,#ED2939);border-radius:12px;padding:16px;margin-bottom:14px}
+.grand-oral-title{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:#F5C842;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px}
+.parcoursup-box{background:#EEF3FF;border-radius:12px;padding:16px;margin-bottom:14px}
+.parcoursup-title{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:#002395;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px}
+.parcoursup-grid{display:grid;grid-template-columns:1fr;gap:8px}
+.parcoursup-item{background:#fff;border-radius:8px;padding:10px;border:0.5px solid #C0D0E8}
+.parcoursup-label{font-size:11px;font-weight:700;color:#002395;font-family:'Montserrat',sans-serif;margin-bottom:3px}
+.parcoursup-content{font-size:11px;color:#4A6FA5;line-height:1.5}
+.hidden-box{background:#FFF8E6;border:1.5px solid #F5C842;border-radius:12px;padding:16px;margin-bottom:14px}
+.hidden-title{font-size:12px;font-weight:700;color:#002395;margin-bottom:8px;font-family:'Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.06em}
+.hidden-item{font-size:12px;color:#2C1800;display:flex;align-items:flex-start;gap:8px;line-height:1.5;margin-bottom:5px}
+.uae-box{background:#1B3A7A;border-radius:12px;padding:16px;margin-bottom:14px}
+.uae-title{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:#F5C842;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px}
+.uae-content{font-size:12px;color:rgba(255,255,255,0.85);line-height:1.7}
+.ai-bubble{background:#EEF3FF;border-radius:0 12px 12px 12px;padding:14px 16px;border:0.5px solid #C0D0E8}
+.ai-bubble p{font-size:13px;color:#0D1F4A;line-height:1.7}
+.ai-label{font-size:10px;font-weight:700;color:#2952A3;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;font-family:'Montserrat',sans-serif}
+.action-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.action-btn{font-size:12px;padding:10px 20px;border-radius:99px;cursor:pointer;font-weight:700;font-family:'Montserrat',sans-serif;border:none}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo">
+    <svg width="28" height="28" viewBox="0 0 64 64" fill="none">
+      <circle cx="32" cy="32" r="29" stroke="#F5C842" stroke-width="1.4" fill="none"/>
+      <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <circle cx="32" cy="32" r="3" fill="#F5C842"/>
+      <polygon points="32,4 35,25 32,26.5 29,25" fill="#F5C842"/>
+    </svg>
+    <div class="wm-wrap">
+      <div class="wm-global-row"><div class="wm-rule"></div><div class="wm-global">GLOBAL</div><div class="wm-rule"></div></div>
+      <div class="wm-compass">C<span class="o">O</span>MPASS</div>
+    </div>
+  </div>
+  <div class="nav-tag">🇫🇷 Bac · Spécialités Navigator</div>
+</nav>
+<div class="hero-bar">
+  <div class="fr-badge">🇫🇷 Baccalauréat Général · Réforme 2021 · UAE & France · Grand Oral</div>
+  <h1 class="hero-h">De ton rêve à tes<br><em>spécialités du Bac</em></h1>
+  <p class="hero-p">From your career dream to the perfect spécialités combination — GlobalCompass maps your pathway through the Nouveau Bac, Grand Oral and Parcoursup to your university destination.</p>
+</div>
+<div class="main">
+  <div class="step-indicator">
+    <div class="step"><div class="step-circle active" id="sc1">1</div><div class="step-label active">Dream</div></div>
+    <div class="step-line" id="sl1"></div>
+    <div class="step"><div class="step-circle pending" id="sc2">2</div><div class="step-label">Year</div></div>
+    <div class="step-line" id="sl2"></div>
+    <div class="step"><div class="step-circle pending" id="sc3">3</div><div class="step-label">Destination</div></div>
+    <div class="step-line" id="sl3"></div>
+    <div class="step"><div class="step-circle pending" id="sc4">4</div><div class="step-label">Your Map</div></div>
+  </div>
+  <div id="s1" class="screen active">
+    <div class="card">
+      <div class="card-title">Quel est ton rêve professionnel?</div>
+      <div class="card-sub">Do not think about spécialités yet. Describe your career dream — GlobalCompass maps backwards to the optimal Bac combination for you.</div>
+      <textarea class="dream-input" id="dreamInput" placeholder="e.g. Je veux devenir médecin et travailler dans la recherche médicale internationale…"></textarea>
+      <div class="example-prompts">
+        <span class="ep" onclick="setDream('I want to become a doctor and work in medicine or medical research')">🩺 Médecine</span>
+        <span class="ep" onclick="setDream('I want to study engineering mathematics or computer science')">⚙️ Ingénierie</span>
+        <span class="ep" onclick="setDream('I want to work in law politics or international relations')">⚖️ Droit / Sciences Po</span>
+        <span class="ep" onclick="setDream('I want to work in economics business or finance')">📈 Économie</span>
+        <span class="ep" onclick="setDream('I want to work in literature languages journalism or communication')">📚 Lettres / Journalisme</span>
+        <span class="ep" onclick="setDream('I want to work in psychology social sciences or education')">🧠 Psychologie</span>
+        <span class="ep" onclick="setDream('I want to work in architecture design or fine arts')">🎨 Architecture / Arts</span>
+        <span class="ep" onclick="setDream('I want to work in environmental science ecology or sustainable development')">🌿 Environnement</span>
+      </div>
+    </div>
+    <div class="btn-row"><div></div><button class="btn-next" id="btn1" onclick="goStep(2)" disabled>Next — Ton année →</button></div>
+  </div>
+  <div id="s2" class="screen">
+    <div class="card">
+      <div class="card-title">Tu es en quelle année?</div>
+      <div class="card-sub">The Nouveau Bac reform means spécialités are chosen in Seconde — the earlier you plan the better.</div>
+      <div class="options-grid">
+        <div class="opt-card" onclick="selectYear(this,'Seconde age 15-16 choosing specialities for Premiere')"><span class="opt-emoji">📗</span><div class="opt-title">Seconde</div><div class="opt-sub">Age 15-16 — choosing spécialités for Première</div></div>
+        <div class="opt-card" onclick="selectYear(this,'Premiere age 16-17 with 3 specialities choosing which to drop')"><span class="opt-emoji">📘</span><div class="opt-title">Première</div><div class="opt-sub">Age 16-17 — 3 spécialités, which to keep</div></div>
+        <div class="opt-card" onclick="selectYear(this,'Terminale age 17-18 preparing Grand Oral and Parcoursup')"><span class="opt-emoji">📙</span><div class="opt-title">Terminale</div><div class="opt-sub">Age 17-18 — Grand Oral and Parcoursup</div></div>
+        <div class="opt-card" onclick="selectYear(this,'Parent or advisor researching the French Bac system')"><span class="opt-emoji">👨‍👩‍👧</span><div class="opt-title">Parent / advisor</div><div class="opt-sub">Researching for my child</div></div>
+      </div>
+    </div>
+    <div class="btn-row"><button class="btn-back" onclick="goStep(1)">← Back</button><button class="btn-next" id="btn2" onclick="goStep(3)" disabled>Next — Destination universitaire →</button></div>
+  </div>
+  <div id="s3" class="screen">
+    <div class="card">
+      <div class="card-title">Where do you want to study after the Bac?</div>
+      <div class="card-sub">Your destination shapes the spécialités combination, Parcoursup strategy and additional qualifications needed.</div>
+      <div class="options-grid">
+        <div class="opt-card" onclick="selectDest(this,'France grandes écoles Sciences Po medical school engineering school')"><span class="opt-emoji">🇫🇷</span><div class="opt-title">France — Grandes Écoles</div><div class="opt-sub">Sciences Po, médecine, écoles d ingénieurs</div></div>
+        <div class="opt-card" onclick="selectDest(this,'France public university general degree licence master')"><span class="opt-emoji">🎓</span><div class="opt-title">France — Université publique</div><div class="opt-sub">Licence, master — public university</div></div>
+        <div class="opt-card" onclick="selectDest(this,'UAE universities NYU Abu Dhabi AUS using French Bac')"><span class="opt-emoji">🇦🇪</span><div class="opt-title">UAE universities</div><div class="opt-sub">NYU Abu Dhabi, AUS, UAEU</div></div>
+        <div class="opt-card" onclick="selectDest(this,'UK universities using French Bac as qualification')"><span class="opt-emoji">🇬🇧</span><div class="opt-title">UK universities</div><div class="opt-sub">Russell Group, Imperial, UCL</div></div>
+        <div class="opt-card" onclick="selectDest(this,'Canada francophone Quebec universities Montreal Laval')"><span class="opt-emoji">🇨🇦</span><div class="opt-title">Canada — Québec</div><div class="opt-sub">Montréal, Laval, McGill</div></div>
+        <div class="opt-card" onclick="selectDest(this,'Open international all options')"><span class="opt-emoji">🌍</span><div class="opt-title">Open — international</div><div class="opt-sub">Keeping all options open</div></div>
+      </div>
+    </div>
+    <div class="btn-row"><button class="btn-back" onclick="goStep(2)">← Back</button><button class="btn-next gold" id="btn3" onclick="generatePathway()" disabled>Générer mon parcours Bac ↗</button></div>
+  </div>
+  <div id="s4" class="screen">
+    <div class="card">
+      <div class="loading-wrap">
+        <i class="ti ti-loader-2 loading-icon"></i>
+        <div class="loading-text" id="loadingText">Mapping your dream to Bac spécialités…</div>
+        <div class="loading-sub">GlobalCompass analyse les combinaisons de spécialités et les exigences universitaires</div>
+      </div>
+    </div>
+  </div>
+  <div id="s5" class="screen">
+    <div class="result-hero">
+      <div class="result-tag">🇫🇷 Ton parcours Bac</div>
+      <div class="result-career" id="resultCareer"></div>
+      <p class="result-summary" id="resultSummary"></p>
+    </div>
+    <div class="card"><div class="card-title" style="margin-bottom:14px">Tes spécialités recommandées</div><div class="spec-grid" id="specOutput"></div></div>
+    <div class="core-box" id="coreOutput"></div>
+    <div id="scoreOutput"></div>
+    <div id="grandOralOutput"></div>
+    <div id="parcoursupOutput"></div>
+    <div id="hiddenOutput"></div>
+    <div id="uaeOutput"></div>
+    <div class="card"><div class="ai-label">GlobalCompass insight</div><div class="ai-bubble"><p id="aiInsight"></p></div></div>
+    <div class="action-row">
+      <button class="action-btn" style="background:#002395;color:#F5C842" onclick="goStep(1)">Recommencer</button>
+      <button class="action-btn" style="background:#F5C842;color:#002395" onclick="window.location.href='index.html'">Find French schools ↗</button>
+      <button class="action-btn" style="background:#EEF3FF;color:#2952A3" onclick="window.location.href='index.html'">Back to GlobalCompass ↗</button>
+    </div>
+  </div>
+</div>
+<script>
+let dream='',year='',destination='';
+document.getElementById('dreamInput').addEventListener('input',function(){dream=this.value.trim();document.getElementById('btn1').disabled=dream.length<10;});
+function setDream(t){document.getElementById('dreamInput').value=t;dream=t;document.getElementById('btn1').disabled=false;}
+function selectYear(el,v){year=v;document.querySelectorAll('#s2 .opt-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');document.getElementById('btn2').disabled=false;}
+function selectDest(el,v){destination=v;document.querySelectorAll('#s3 .opt-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');document.getElementById('btn3').disabled=false;}
+function goStep(n){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('s'+n).classList.add('active');updateSteps(n);}
+function updateSteps(active){for(let i=1;i<=4;i++){const circle=document.getElementById('sc'+i);const label=circle?.nextElementSibling;if(!circle)continue;if(i<active){circle.className='step-circle done';circle.innerHTML='✓';}else if(i===active){circle.className='step-circle active';circle.innerHTML=i;if(label)label.className='step-label active';}else{circle.className='step-circle pending';circle.innerHTML=i;if(label)label.className='step-label';}const line=document.getElementById('sl'+i);if(line)line.className=i<active?'step-line done':'step-line';}}
+async function generatePathway(){
+  goStep(4);
+  const msgs=['Mapping your dream to Bac specialites…','Analysing Parcoursup requirements…','Building your Grand Oral topic…','Finalising your complete Bac pathway…'];
+  let mi=0;const iv=setInterval(()=>{mi=(mi+1)%msgs.length;document.getElementById('loadingText').textContent=msgs[mi];},1800);
+  const prompt='You are GlobalCompass French Baccalaureat Navigator expert in the Nouveau Bac reforme 2021.\nDREAM: "'+dream+'"\nYEAR: "'+year+'"\nDESTINATION: "'+destination+'"\n\nNou veau Bac 2021: students choose 3 specialites in Premiere keep 2 in Terminale. Core includes French Philosophy compulsory History-Geography 2 languages Sciences PE. 40% continuous 60% final exams including Grand Oral 20 minutes linking 2 specialites.\n\nAvailable specialites: Mathematiques, Physique-Chimie, SVT, Sciences de lIngenieur, NSI, HGGSP, SES, HLP, LLCE, Arts, Biologie-Ecologie.\n\nRespond ONLY with valid JSON:\n{"career":"career title","summary":"2 sentence summary in English","specialitesPremiere":[{"name":"Specialite","status":"keep","why":"one sentence"},{"name":"Specialite","status":"keep","why":"one sentence"},{"name":"Specialite","status":"drop","why":"one sentence why drop in Terminale"}],"coreSubjectsNote":"one sentence about key core subjects","targetBacScore":16,"grandOralTopic":"specific Grand Oral question linking 2 kept specialites in French","grandOralAdvice":"2 sentences on Grand Oral approach","parcoursup":[{"formation":"Formation name","advice":"one sentence"},{"formation":"Formation name","advice":"one sentence"},{"formation":"Formation name","advice":"one sentence"}],"hiddenRequirements":["requirement 1","requirement 2","requirement 3"],"uaeSpecific":"2 sentences UAE specific advice mentioning Dubai French schools","aiInsight":"2-3 sentence personalised insight with surprising advice"}';
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1400,messages:[{role:'user',content:prompt}]})});
+    const data=await res.json();clearInterval(iv);
+    const text=data.content[0].text.replace(/```json|```/g,'').trim();
+    showResults(JSON.parse(text));
+  }catch(e){clearInterval(iv);showFallback();}
+}
+function showResults(r){
+  document.getElementById('resultCareer').textContent=r.career;
+  document.getElementById('resultSummary').textContent=r.summary;
+  document.getElementById('aiInsight').textContent=r.aiInsight;
+  const kept=r.specialitesPremiere.filter(s=>s.status==='keep');
+  const dropped=r.specialitesPremiere.filter(s=>s.status==='drop');
+  let sh='';
+  kept.forEach(s=>{sh+='<div class="spec-card premiere"><span class="spec-badge badge-premiere">Terminale ✓</span><div class="spec-name-light">'+s.name+'</div><div class="spec-why-light">'+s.why+'</div></div>';});
+  dropped.forEach(s=>{sh+='<div class="spec-card drop"><span class="spec-badge badge-drop">Drop in Terminale</span><div class="spec-name-dark">'+s.name+'</div><div class="spec-why-dark">'+s.why+'</div></div>';});
+  document.getElementById('specOutput').innerHTML=sh;
+  document.getElementById('coreOutput').innerHTML='<div class="core-title">Tronc commun — core subjects</div><div class="core-grid"><span class="core-pill compulsory">Philosophie ★</span><span class="core-pill compulsory">Francais</span><span class="core-pill">Histoire-Geographie</span><span class="core-pill">LV1 + LV2</span><span class="core-pill">Sciences</span><span class="core-pill">EPS</span></div><div style="font-size:11px;color:#4A6FA5;margin-top:10px;line-height:1.6">'+r.coreSubjectsNote+'</div>';
+  document.getElementById('scoreOutput').innerHTML='<div class="score-box"><div class="score-text"><h4>Target Bac score</h4><p>Pour tes universites et formations cibles</p></div><div><span class="score-number">'+r.targetBacScore+'</span><span class="score-max">/20</span></div></div>';
+  document.getElementById('grandOralOutput').innerHTML='<div class="grand-oral"><div class="grand-oral-title">Grand Oral — ton sujet recommande</div><div style="font-family:Playfair Display,serif;font-size:15px;font-style:italic;color:#F5C842;margin-bottom:10px">"'+r.grandOralTopic+'"</div><div style="font-size:12px;color:rgba(255,255,255,0.9);line-height:1.7">'+r.grandOralAdvice+'</div></div>';
+  document.getElementById('parcoursupOutput').innerHTML='<div class="parcoursup-box"><div class="parcoursup-title">Strategie Parcoursup</div><div class="parcoursup-grid">'+r.parcoursup.map(p=>'<div class="parcoursup-item"><div class="parcoursup-label">'+p.formation+'</div><div class="parcoursup-content">'+p.advice+'</div></div>').join('')+'</div></div>';
+  document.getElementById('hiddenOutput').innerHTML='<div class="hidden-box"><div class="hidden-title">Hidden requirements — ce que personne ne dit</div>'+r.hiddenRequirements.map(h=>'<div class="hidden-item"><span>→</span><span>'+h+'</span></div>').join('')+'</div>';
+  document.getElementById('uaeOutput').innerHTML='<div class="uae-box"><div class="uae-title">UAE-specific guidance</div><div class="uae-content">'+r.uaeSpecific+'</div></div>';
+  goStep(5);updateSteps(4);
+}
+function showFallback(){showResults({career:"Medecin / Doctor",summary:"Your pathway to medicine requires the most rigorous science combination the Nouveau Bac offers — Mathematiques SVT and Physique-Chimie in Premiere keeping Mathematiques and SVT in Terminale for the strongest PASS application.",specialitesPremiere:[{name:"Sciences de la Vie et de la Terre SVT",status:"keep",why:"Directly required for PASS and LAS medical pathways — biology is the foundation of medicine"},{name:"Mathematiques",status:"keep",why:"Required for PASS access and demonstrates scientific rigour to medical school admissions"},{name:"Physique-Chimie",status:"drop",why:"Valuable in Premiere for scientific breadth but SVT and Maths are more critical to keep in Terminale"}],coreSubjectsNote:"Philosophy is compulsory for all students — particularly valuable for medical ethics reasoning which features in French medical school interviews and the Grand Oral.",targetBacScore:17,grandOralTopic:"En quoi la biologie cellulaire et les mathematiques sont-elles complementaires pour comprendre les mecanismes du vivant?",grandOralAdvice:"Structure your Grand Oral around a real medical research question linking SVT and Mathematics. Practice the 4-minute presentation followed by 16-minute discussion format rigorously.",parcoursup:[{formation:"PASS Parcours Acces Sante Specifique",advice:"Most direct route to medicine — highly competitive requires exceptional Bac results"},{formation:"LAS Licence Acces Sante option Sciences",advice:"Less stressful alternative to PASS — complete a full Licence with health access option alongside"},{formation:"Classes Preparatoires BCPST",advice:"For research-oriented medicine — prepares for grandes ecoles of biology and agronomy"}],hiddenRequirements:["PASS acceptance rates in France are typically 15-20% — a Bac score of 17 or above is essential not just a target","Many UAE-based Bac students are unaware that Parcoursup applications require a French school code — verify your Lycee Francais Dubai is properly registered","The French medical numerus clausus was replaced by numerus apertus in 2021 — places are now determined by each university individually"],uaeSpecific:"Students at Lycee Francais International Georges Pompidou and Lycee Francais Jean Mermoz in Dubai follow the exact same PASS pathway as students in France. UAE-based students should begin Parcoursup research in Premiere as the platform opens for applications in Terminale.",aiInsight:"One non-obvious insight — many students choose PASS because it seems like the only route to medicine in France. The LAS pathway has a significantly higher wellbeing profile and comparable success rates at many universities. For students concerned about extreme PASS pressure LAS Sciences de la Vie deserves serious consideration."});}
+</script>
+</body>
+</html>
