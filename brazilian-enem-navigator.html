@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlobalCompass — Brazilian ENEM Navigator</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
+.screen{display:none}.screen.active{display:block}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:#1B3A7A}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.wm-wrap{display:flex;flex-direction:column}
+.wm-global-row{display:flex;align-items:center;gap:5px;margin-bottom:2px}
+.wm-rule{height:0.7px;background:rgba(245,200,66,0.5);flex:1}
+.wm-global{font-family:'Montserrat',sans-serif;font-size:7px;font-weight:300;color:#fff;letter-spacing:0.3em;text-transform:uppercase}
+.wm-compass{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:800;color:#fff;letter-spacing:0.07em;text-transform:uppercase;line-height:1}
+.wm-compass .o{color:#F5C842}
+.nav-tag{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;color:#F5C842;letter-spacing:0.12em;text-transform:uppercase;background:rgba(245,200,66,0.12);padding:4px 12px;border-radius:99px;border:0.5px solid rgba(245,200,66,0.3)}
+.hero-bar{background:linear-gradient(135deg,#009739,#FEDD00,#002776);padding:28px 24px;text-align:center;border-bottom:2px solid #FEDD00}
+.hero-h{font-family:'Playfair Display',serif;font-size:24px;font-weight:500;color:#fff;line-height:1.3;margin-bottom:6px;text-shadow:0 1px 8px rgba(0,0,0,0.25)}
+.hero-h em{color:#FEDD00;font-style:normal}
+.hero-p{font-size:12px;color:rgba(255,255,255,0.92);line-height:1.7;max-width:520px;margin:0 auto;font-weight:300;text-shadow:0 1px 6px rgba(0,0,0,0.2)}
+.br-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(0,0,0,0.25);border:1px solid rgba(254,221,0,0.5);border-radius:99px;padding:4px 14px;font-size:11px;font-weight:700;color:#FEDD00;font-family:'Montserrat',sans-serif;letter-spacing:0.06em;margin-bottom:14px}
+.main{max-width:700px;margin:0 auto;padding:24px}
+.step-indicator{display:flex;align-items:center;margin-bottom:24px}
+.step{display:flex;flex-direction:column;align-items:center;flex:1}
+.step-circle{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:'Montserrat',sans-serif;transition:all 0.3s;z-index:1}
+.step-circle.done{background:#FEDD00;color:#002776}
+.step-circle.active{background:#009739;color:#fff;border:2px solid #FEDD00}
+.step-circle.pending{background:#E0E8F5;color:#9AB0D0}
+.step-label{font-size:9px;color:#9AB0D0;margin-top:4px;text-align:center;font-weight:500;letter-spacing:0.04em;font-family:'Montserrat',sans-serif;text-transform:uppercase;max-width:60px}
+.step-label.active{color:#009739;font-weight:700}
+.step-line{height:1px;background:#E0E8F5;flex:1;margin-top:-14px}
+.step-line.done{background:#FEDD00}
+.card{background:#fff;border:0.5px solid #E0E8F5;border-radius:16px;padding:22px;margin-bottom:14px}
+.card-title{font-family:'Playfair Display',serif;font-size:18px;color:#0D1F4A;margin-bottom:5px}
+.card-sub{font-size:13px;color:#4A6FA5;line-height:1.6;margin-bottom:18px;font-weight:300}
+.options-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opt-card{border:1.5px solid #E0E8F5;border-radius:12px;padding:14px;cursor:pointer;transition:all 0.15s}
+.opt-card:hover{border-color:#009739;background:#EAFBF1}
+.opt-card.selected{border-color:#009739;background:#EAFBF1}
+.opt-emoji{font-size:24px;margin-bottom:8px;display:block;text-align:center}
+.opt-title{font-size:13px;font-weight:600;color:#0D1F4A;margin-bottom:3px;font-family:'Montserrat',sans-serif}
+.opt-sub{font-size:11px;color:#4A6FA5;line-height:1.4}
+.dream-input{width:100%;border:1.5px solid #E0E8F5;border-radius:12px;padding:14px 16px;font-size:14px;color:#0D1F4A;font-family:'Inter',sans-serif;outline:none;resize:none;min-height:90px;transition:border-color 0.15s;line-height:1.6}
+.dream-input:focus{border-color:#009739}
+.dream-input::placeholder{color:#9AB0D0}
+.example-prompts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.ep{font-size:11px;padding:5px 12px;border-radius:99px;border:0.5px solid #C0D0E8;color:#2952A3;cursor:pointer;background:#EEF3FF;font-family:'Inter',sans-serif;transition:all 0.15s;font-weight:500}
+.ep:hover{background:#009739;color:#fff;border-color:#009739}
+.btn-row{display:flex;justify-content:space-between;align-items:center;margin-top:18px}
+.btn-back{font-size:13px;padding:9px 20px;border-radius:99px;border:1px solid #E0E8F5;background:transparent;color:#4A6FA5;cursor:pointer;font-family:'Inter',sans-serif}
+.btn-next{font-size:13px;padding:9px 24px;border-radius:99px;border:none;background:#009739;color:#fff;cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:700}
+.btn-next:disabled{opacity:0.4;cursor:not-allowed}
+.btn-next.gold{background:#FEDD00;color:#002776}
+.loading-wrap{text-align:center;padding:40px 0}
+.loading-icon{font-size:36px;color:#FEDD00;animation:spin 1s linear infinite;display:block;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-family:'Playfair Display',serif;font-size:16px;color:#0D1F4A;margin-bottom:5px}
+.loading-sub{font-size:12px;color:#4A6FA5;font-weight:300}
+.result-hero{text-align:center;padding:16px 0 20px;border-bottom:1px solid #E0E8F5;margin-bottom:20px}
+.result-tag{display:inline-flex;align-items:center;gap:6px;font-size:10px;padding:4px 12px;border-radius:99px;background:#EAFBF1;color:#007A2E;margin-bottom:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;font-family:'Montserrat',sans-serif}
+.result-career{font-family:'Playfair Display',serif;font-size:22px;color:#0D1F4A;margin-bottom:6px}
+.result-summary{font-size:13px;color:#4A6FA5;line-height:1.7;font-weight:300;max-width:520px;margin:0 auto}
+.area-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.area-card{border-radius:12px;padding:14px}
+.area-card.priority{background:#002776}
+.area-card.normal{background:#EEF3FF;border:0.5px solid #C0D0E8}
+.area-badge{font-size:9px;padding:2px 8px;border-radius:99px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;font-family:'Montserrat',sans-serif;margin-bottom:6px;display:inline-block}
+.badge-priority{background:rgba(254,221,0,0.25);color:#FEDD00}
+.badge-normal{background:#C0D0E8;color:#2952A3}
+.area-name-light{font-size:13px;font-weight:700;color:#fff;margin-bottom:3px;font-family:'Montserrat',sans-serif}
+.area-name-dark{font-size:13px;font-weight:700;color:#0D1F4A;margin-bottom:3px;font-family:'Montserrat',sans-serif}
+.area-why-light{font-size:11px;color:rgba(255,255,255,0.78);line-height:1.5}
+.area-why-dark{font-size:11px;color:#4A6FA5;line-height:1.5}
+.tri-box{background:linear-gradient(135deg,#009739,#002776);border-radius:12px;padding:16px;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.tri-text h4{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#FEDD00;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px}
+.tri-text p{font-size:11px;color:rgba(255,255,255,0.75);font-weight:300}
+.tri-score{font-family:'Playfair Display',serif;font-size:30px;color:#FEDD00;font-weight:500}
+.path-box{background:#F8F9FF;border:0.5px solid #E0E8F5;border-radius:12px;padding:16px;margin-bottom:14px}
+.path-title{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:#002776;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px}
+.path-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.path-item{background:#fff;border-radius:8px;padding:10px;border:0.5px solid #E0E8F5}
+.path-label{font-size:10px;font-weight:700;color:#009739;font-family:'Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:3px}
+.path-content{font-size:11px;color:#4A6FA5;line-height:1.5}
+.uni-box{background:#EEF3FF;border-radius:12px;padding:16px;margin-bottom:14px}
+.uni-title{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:#002776;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px}
+.uni-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.uni-item{background:#fff;border-radius:8px;padding:10px;border:0.5px solid #C0D0E8}
+.uni-name{font-size:11px;font-weight:700;color:#002776;font-family:'Montserrat',sans-serif;margin-bottom:3px}
+.uni-detail{font-size:11px;color:#4A6FA5;line-height:1.4}
+.hidden-box{background:#FFF8E6;border:1.5px solid #FEDD00;border-radius:12px;padding:16px;margin-bottom:14px}
+.hidden-title{font-size:12px;font-weight:700;color:#007A2E;margin-bottom:8px;font-family:'Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.06em}
+.hidden-item{font-size:12px;color:#2C1800;display:flex;align-items:flex-start;gap:8px;line-height:1.5;margin-bottom:5px}
+.uae-box{background:#1B3A7A;border-radius:12px;padding:16px;margin-bottom:14px}
+.uae-title{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:#F5C842;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px}
+.uae-content{font-size:12px;color:rgba(255,255,255,0.85);line-height:1.7}
+.ai-bubble{background:#EAFBF1;border-radius:0 12px 12px 12px;padding:14px 16px;border:0.5px solid #B8E8CC}
+.ai-bubble p{font-size:13px;color:#0D1F4A;line-height:1.7}
+.ai-label{font-size:10px;font-weight:700;color:#007A2E;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;font-family:'Montserrat',sans-serif}
+.action-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.action-btn{font-size:12px;padding:10px 20px;border-radius:99px;cursor:pointer;font-weight:700;font-family:'Montserrat',sans-serif;border:none}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo">
+    <svg width="28" height="28" viewBox="0 0 64 64" fill="none">
+      <circle cx="32" cy="32" r="29" stroke="#F5C842" stroke-width="1.4" fill="none"/>
+      <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <circle cx="32" cy="32" r="3" fill="#F5C842"/>
+      <polygon points="32,4 35,25 32,26.5 29,25" fill="#F5C842"/>
+    </svg>
+    <div class="wm-wrap">
+      <div class="wm-global-row"><div class="wm-rule"></div><div class="wm-global">GLOBAL</div><div class="wm-rule"></div></div>
+      <div class="wm-compass">C<span class="o">O</span>MPASS</div>
+    </div>
+  </div>
+  <div class="nav-tag">🇧🇷 ENEM Navigator</div>
+</nav>
+<div class="hero-bar">
+  <div class="br-badge">🇧🇷 ENEM · SiSU · Vestibular · UAE & Brazil · No cursinho needed</div>
+  <h1 class="hero-h">Do seu sonho ao seu<br><em>caminho no ENEM</em></h1>
+  <p class="hero-p">From your career dream to your ENEM strategy — GlobalCompass maps the right area focus, your TRI score target, SiSU versus vestibular strategy, and replaces the expensive cursinho with free AI guidance.</p>
+</div>
+<div class="main">
+  <div class="step-indicator">
+    <div class="step"><div class="step-circle active" id="sc1">1</div><div class="step-label active">Dream</div></div>
+    <div class="step-line" id="sl1"></div>
+    <div class="step"><div class="step-circle pending" id="sc2">2</div><div class="step-label">Year</div></div>
+    <div class="step-line" id="sl2"></div>
+    <div class="step"><div class="step-circle pending" id="sc3">3</div><div class="step-label">Destination</div></div>
+    <div class="step-line" id="sl3"></div>
+    <div class="step"><div class="step-circle pending" id="sc4">4</div><div class="step-label">Your Map</div></div>
+  </div>
+  <div id="s1" class="screen active">
+    <div class="card">
+      <div class="card-title">Qual é o seu sonho de carreira? / What is your career dream?</div>
+      <div class="card-sub">Do not think about exam areas yet. Tell us your dream — GlobalCompass maps backwards to the right ENEM focus, essay strategy and university pathway.</div>
+      <textarea class="dream-input" id="dreamInput" placeholder="e.g. Quero ser médico e trabalhar em pesquisa médica / I want to become a doctor and work in medical research…"></textarea>
+      <div class="example-prompts">
+        <span class="ep" onclick="setDream('I want to become a doctor and work in medicine in Brazil')">🩺 Medicina</span>
+        <span class="ep" onclick="setDream('I want to study engineering and work in technology or infrastructure')">⚙️ Engenharia</span>
+        <span class="ep" onclick="setDream('I want to study law and work as a lawyer or in public service')">⚖️ Direito</span>
+        <span class="ep" onclick="setDream('I want to study business administration economics or finance')">📈 Administração</span>
+        <span class="ep" onclick="setDream('I want to study computer science or artificial intelligence')">💻 Computação</span>
+        <span class="ep" onclick="setDream('I want to study international relations or diplomacy')">🌍 Relações Internacionais</span>
+        <span class="ep" onclick="setDream('I want to study psychology or social sciences')">🧠 Psicologia</span>
+        <span class="ep" onclick="setDream('I want to study architecture journalism or communications')">🎨 Arquitetura</span>
+      </div>
+    </div>
+    <div class="btn-row"><div></div><button class="btn-next" id="btn1" onclick="goStep(2)" disabled>Next — Seu ano escolar →</button></div>
+  </div>
+  <div id="s2" class="screen">
+    <div class="card">
+      <div class="card-title">What year are you in?</div>
+      <div class="card-sub">The ENEM is taken at the end of Ensino Médio — but preparation strategy changes significantly depending on how much time you have left.</div>
+      <div class="options-grid">
+        <div class="opt-card" onclick="selectYear(this,'1 ano Ensino Medio early planning three years before ENEM')"><span class="opt-emoji">📗</span><div class="opt-title">1º Ano — Ensino Médio</div><div class="opt-sub">Early planning, 3 years before ENEM</div></div>
+        <div class="opt-card" onclick="selectYear(this,'2 ano Ensino Medio two years before ENEM building foundations')"><span class="opt-emoji">📘</span><div class="opt-title">2º Ano — Ensino Médio</div><div class="opt-sub">2 years before ENEM, building foundations</div></div>
+        <div class="opt-card" onclick="selectYear(this,'3 ano Ensino Medio final year taking ENEM this year')"><span class="opt-emoji">📙</span><div class="opt-title">3º Ano — Ensino Médio</div><div class="opt-sub">Final year — taking ENEM this year</div></div>
+        <div class="opt-card" onclick="selectYear(this,'Treineiro or retaking ENEM after graduating to improve score')"><span class="opt-emoji">🔁</span><div class="opt-title">Treineiro / Repetindo</div><div class="opt-sub">Retaking ENEM to improve score</div></div>
+      </div>
+    </div>
+    <div class="btn-row"><button class="btn-back" onclick="goStep(1)">← Back</button><button class="btn-next" id="btn2" onclick="goStep(3)" disabled>Next — Sua universidade alvo →</button></div>
+  </div>
+  <div id="s3" class="screen">
+    <div class="card">
+      <div class="card-title">Where do you want to study?</div>
+      <div class="card-sub">Your destination shapes whether you focus purely on ENEM/SiSU, add specific vestibulares, or prepare for international options.</div>
+      <div class="options-grid">
+        <div class="opt-card" onclick="selectDest(this,'Brazil top federal universities USP UNICAMP UFRJ via ENEM SiSU')"><span class="opt-emoji">🇧🇷</span><div class="opt-title">Brazil — Federal universities</div><div class="opt-sub">USP, UNICAMP, UFRJ via ENEM/SiSU</div></div>
+        <div class="opt-card" onclick="selectDest(this,'Brazil top private universities scholarship via ProUni and ENEM')"><span class="opt-emoji">🎓</span><div class="opt-title">Brazil — Private with ProUni</div><div class="opt-sub">Scholarship pathway via ProUni</div></div>
+        <div class="opt-card" onclick="selectDest(this,'Specific vestibular focused university requiring its own exam')"><span class="opt-emoji">📝</span><div class="opt-title">Specific Vestibular</div><div class="opt-sub">University with its own entrance exam</div></div>
+        <div class="opt-card" onclick="selectDest(this,'Portugal universities accepting ENEM scores via international agreements')"><span class="opt-emoji">🇵🇹</span><div class="opt-title">Portugal universities</div><div class="opt-sub">Via international agreements</div></div>
+        <div class="opt-card" onclick="selectDest(this,'UAE or international universities using ENEM as equivalent qualification')"><span class="opt-emoji">🇦🇪</span><div class="opt-title">UAE / International</div><div class="opt-sub">Using ENEM as equivalent qualification</div></div>
+        <div class="opt-card" onclick="selectDest(this,'Open keeping all options Brazil and international')"><span class="opt-emoji">🌍</span><div class="opt-title">Open — all options</div><div class="opt-sub">Brazil and international</div></div>
+      </div>
+    </div>
+    <div class="btn-row"><button class="btn-back" onclick="goStep(2)">← Back</button><button class="btn-next gold" id="btn3" onclick="generatePathway()" disabled>Gerar meu caminho ENEM ↗</button></div>
+  </div>
+  <div id="s4" class="screen">
+    <div class="card">
+      <div class="loading-wrap">
+        <i class="ti ti-loader-2 loading-icon"></i>
+        <div class="loading-text" id="loadingText">Mapping your dream to ENEM strategy…</div>
+        <div class="loading-sub">GlobalCompass está analisando áreas do ENEM, SiSU e vestibulares</div>
+      </div>
+    </div>
+  </div>
+  <div id="s5" class="screen">
+    <div class="result-hero">
+      <div class="result-tag">🇧🇷 Seu caminho ENEM</div>
+      <div class="result-career" id="resultCareer"></div>
+      <p class="result-summary" id="resultSummary"></p>
+    </div>
+    <div class="card"><div class="card-title" style="margin-bottom:14px">Suas áreas de foco no ENEM</div><div class="area-grid" id="areaOutput"></div></div>
+    <div id="triOutput"></div>
+    <div id="pathOutput"></div>
+    <div id="uniOutput"></div>
+    <div id="hiddenOutput"></div>
+    <div id="uaeOutput"></div>
+    <div class="card"><div class="ai-label">GlobalCompass insight</div><div class="ai-bubble"><p id="aiInsight"></p></div></div>
+    <div class="action-row">
+      <button class="action-btn" style="background:#009739;color:#fff" onclick="goStep(1)">Começar de novo</button>
+      <button class="action-btn" style="background:#FEDD00;color:#002776" onclick="window.location.href='index.html'">Find Brazilian schools ↗</button>
+      <button class="action-btn" style="background:#EEF3FF;color:#2952A3" onclick="window.location.href='index.html'">Back to GlobalCompass ↗</button>
+    </div>
+  </div>
+</div>
+<script>
+let dream='',year='',destination='';
+document.getElementById('dreamInput').addEventListener('input',function(){dream=this.value.trim();document.getElementById('btn1').disabled=dream.length<10;});
+function setDream(t){document.getElementById('dreamInput').value=t;dream=t;document.getElementById('btn1').disabled=false;}
+function selectYear(el,v){year=v;document.querySelectorAll('#s2 .opt-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');document.getElementById('btn2').disabled=false;}
+function selectDest(el,v){destination=v;document.querySelectorAll('#s3 .opt-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');document.getElementById('btn3').disabled=false;}
+function goStep(n){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('s'+n).classList.add('active');updateSteps(n);}
+function updateSteps(active){for(let i=1;i<=4;i++){const circle=document.getElementById('sc'+i);const label=circle?.nextElementSibling;if(!circle)continue;if(i<active){circle.className='step-circle done';circle.innerHTML='✓';}else if(i===active){circle.className='step-circle active';circle.innerHTML=i;if(label)label.className='step-label active';}else{circle.className='step-circle pending';circle.innerHTML=i;if(label)label.className='step-label';}const line=document.getElementById('sl'+i);if(line)line.className=i<active?'step-line done':'step-line';}}
+async function generatePathway(){
+  goStep(4);
+  const msgs=['Mapping your dream to ENEM areas…','Analysing SiSU and vestibular strategy…','Building your redação essay approach…','Finalising your complete ENEM pathway…'];
+  let mi=0;const iv=setInterval(()=>{mi=(mi+1)%msgs.length;document.getElementById('loadingText').textContent=msgs[mi];},1800);
+  const prompt='You are GlobalCompass Brazilian ENEM Navigator replacing expensive cursinho prep culture with free personalised AI guidance.\nDREAM: "'+dream+'"\nYEAR: "'+year+'"\nDESTINATION: "'+destination+'"\n\nKey ENEM facts: 4 areas - Linguagens e Codigos, Ciencias Humanas, Ciencias da Natureza, Matematica - plus compulsory Redacao essay scored 0-1000. TRI Teoria de Resposta ao Item is the scoring methodology, accounts for difficulty not just percentage correct. SiSU is unified system using ENEM scores for federal and state universities. ProUni offers scholarships at private universities based on ENEM score and income. Many students need vestibular university-specific exams like USP Fuvest. Top courses Medicine Law require TRI above 750-800.\n\nRespond ONLY with valid JSON:\n{"career":"career title in English","summary":"2 sentence summary","areas":[{"name":"Area name Portuguese and English","priority":"priority","why":"one sentence"},{"name":"Area name","priority":"priority","why":"one sentence"},{"name":"Area name","priority":"normal","why":"one sentence"},{"name":"Redação","priority":"priority","why":"Compulsory essay critical for top course admission scored separately 0-1000"}],"targetTRI":720,"targetRedacao":920,"pathwayAdvice":[{"label":"SiSU strategy","detail":"one sentence"},{"label":"ProUni eligibility","detail":"one sentence"},{"label":"Vestibular consideration","detail":"one sentence"},{"label":"Cursinho replacement","detail":"one sentence on free study strategy replacing paid cursinho"}],"targetUniversities":[{"name":"Brazilian university","programme":"specific course","score":"required TRI or cutoff"},{"name":"Brazilian university","programme":"specific course","score":"required TRI or cutoff"},{"name":"International or Portugal university","programme":"equivalent pathway","score":"ENEM equivalent"}],"hiddenRequirements":["requirement 1","requirement 2","requirement 3"],"uaeSpecific":"2-3 sentences for Brazilian students in UAE pursuing ENEM mentioning lack of cursinho access and registration logistics","aiInsight":"2-3 sentence personalised insight with surprising non-obvious ENEM strategy advice"}';
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1500,messages:[{role:'user',content:prompt}]})});
+    const data=await res.json();clearInterval(iv);
+    const text=data.content[0].text.replace(/```json|```/g,'').trim();
+    showResults(JSON.parse(text));
+  }catch(e){clearInterval(iv);showFallback();}
+}
+function showResults(r){
+  document.getElementById('resultCareer').textContent=r.career;
+  document.getElementById('resultSummary').textContent=r.summary;
+  document.getElementById('aiInsight').textContent=r.aiInsight;
+  document.getElementById('areaOutput').innerHTML=r.areas.map(a=>{const cls=a.priority==='priority'?'priority':'normal';const nl=cls==='priority'?'area-name-light':'area-name-dark';const wl=cls==='priority'?'area-why-light':'area-why-dark';return'<div class="area-card '+cls+'"><span class="area-badge badge-'+cls+'">'+a.priority+'</span><div class="'+nl+'">'+a.name+'</div><div class="'+wl+'">'+a.why+'</div></div>';}).join('');
+  document.getElementById('triOutput').innerHTML='<div class="tri-box"><div class="tri-text"><h4>Target TRI Score</h4><p>Redação target: '+r.targetRedacao+'/1000</p></div><div class="tri-score">'+r.targetTRI+'</div></div>';
+  document.getElementById('pathOutput').innerHTML='<div class="path-box"><div class="path-title">Sua estratégia — SiSU, ProUni e Vestibular</div><div class="path-grid">'+r.pathwayAdvice.map(p=>'<div class="path-item"><div class="path-label">'+p.label+'</div><div class="path-content">'+p.detail+'</div></div>').join('')+'</div></div>';
+  document.getElementById('uniOutput').innerHTML='<div class="uni-box"><div class="uni-title">Target universities for your pathway</div><div class="uni-grid">'+r.targetUniversities.map(u=>'<div class="uni-item"><div class="uni-name">'+u.name+'</div><div class="uni-detail">'+u.programme+'</div><div style="font-size:10px;color:#009739;font-weight:700;margin-top:3px">'+u.score+'</div></div>').join('')+'</div></div>';
+  document.getElementById('hiddenOutput').innerHTML='<div class="hidden-box"><div class="hidden-title">Hidden requirements — o que ninguém te diz</div>'+r.hiddenRequirements.map(h=>'<div class="hidden-item"><span>→</span><span>'+h+'</span></div>').join('')+'</div>';
+  document.getElementById('uaeOutput').innerHTML='<div class="uae-box"><div class="uae-title">UAE & International guidance</div><div class="uae-content">'+r.uaeSpecific+'</div></div>';
+  goStep(5);updateSteps(4);
+}
+function showFallback(){showResults({career:"Medical Doctor",summary:"Your pathway to medicine through the ENEM requires an exceptionally high TRI score across all four areas plus a near-perfect redação — Medicine is the most competitive course in Brazil with cutoffs above 800 at top federal universities.",areas:[{name:"Ciências da Natureza (Natural Sciences)",priority:"priority",why:"Biology Chemistry and Physics directly assess medical school readiness — heaviest weight for Medicine admission"},{name:"Matemática (Mathematics)",priority:"priority",why:"Strong quantitative reasoning required and heavily weighted by medical schools using ENEM formulas"},{name:"Ciências Humanas (Human Sciences)",priority:"normal",why:"History Geography Philosophy and Sociology broaden critical thinking valued in medical ethics"},{name:"Redação",priority:"priority",why:"Compulsory essay critical for top course admission scored separately 0-1000 — a low score eliminates many qualified candidates"}],targetTRI:780,targetRedacao:960,pathwayAdvice:[{label:"SiSU strategy",detail:"Apply to USP UNICAMP and UFRJ Medicine through SiSU but treat as reach options — have a realistic backup ready"},{label:"ProUni eligibility",detail:"ProUni scholarships for Medicine at private universities are extremely rare and income-capped — verify eligibility early"},{label:"Vestibular consideration",detail:"USP does not use SiSU — it requires the Fuvest vestibular separately so candidates must prepare for both simultaneously"},{label:"Cursinho replacement",detail:"Replace expensive cursinho fees with structured weekly self-study using official INEP past papers — consistency over 18 months matters more than cramming"}],targetUniversities:[{name:"USP",programme:"Medicina",score:"Fuvest required — ENEM alone insufficient"},{name:"UNICAMP",programme:"Medicina",score:"TRI 800+ via SiSU or own vestibular"},{name:"UFRJ",programme:"Medicina",score:"TRI 780+ via SiSU"},{name:"Universidade do Porto Portugal",programme:"Medicina via international agreements",score:"High ENEM score plus separate application"}],hiddenRequirements:["USP Medicine does not accept ENEM SiSU alone — Fuvest vestibular is mandatory regardless of ENEM score","A redação score of zero is awarded for off-topic essays or text violating human rights — eliminates thousands of qualified candidates yearly","Federal university Medicine quotas include reserved seats under the Lei de Cotas for low-income Black Indigenous and public-school students — verify which category applies as it changes the effective cutoff"],uaeSpecific:"Brazilian families in the UAE face a real disadvantage — cursinho prep culture is deeply embedded in Brazil but unavailable in Dubai or Abu Dhabi. Students must register for ENEM as administered internationally at limited consulate-affiliated centres — confirm your nearest test centre and registration window with INEP well in advance.",aiInsight:"One non-obvious insight — most Medicine-bound students pour all their energy into Ciências da Natureza and neglect Redação assuming science knowledge alone secures their spot. A redação score of zero — even from exceeding the line limit or going off-topic — can disqualify a candidate with an otherwise excellent TRI. Treat the essay with the same seriousness as Biology and Chemistry."});}
+</script>
+</body>
+</html>
