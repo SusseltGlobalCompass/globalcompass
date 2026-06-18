@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlobalCompass — Academic Passport · IB</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
+.screen{display:none}.screen.active{display:block}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:#1B3A7A}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.wm-wrap{display:flex;flex-direction:column}
+.wm-global-row{display:flex;align-items:center;gap:5px;margin-bottom:2px}
+.wm-rule{height:0.7px;background:rgba(245,200,66,0.5);flex:1}
+.wm-global{font-family:'Montserrat',sans-serif;font-size:7px;font-weight:300;color:#fff;letter-spacing:0.3em;text-transform:uppercase}
+.wm-compass{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:800;color:#fff;letter-spacing:0.07em;text-transform:uppercase;line-height:1}
+.wm-compass .o{color:#F5C842}
+.nav-tag{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;color:#F5C842;letter-spacing:0.12em;text-transform:uppercase;background:rgba(245,200,66,0.12);padding:4px 12px;border-radius:99px;border:0.5px solid rgba(245,200,66,0.3)}
+.hero-bar{background:linear-gradient(135deg,#0D1F4A,#1B3A7A);padding:28px 24px;text-align:center;border-bottom:2px solid #F5C842}
+.hero-h{font-family:'Playfair Display',serif;font-size:24px;font-weight:500;color:#fff;line-height:1.3;margin-bottom:6px}
+.hero-h em{color:#F5C842;font-style:normal}
+.hero-p{font-size:12px;color:#A8C4F5;line-height:1.7;max-width:520px;margin:0 auto;font-weight:300}
+.priv-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(245,200,66,0.15);border:1px solid rgba(245,200,66,0.4);border-radius:99px;padding:4px 14px;font-size:11px;font-weight:700;color:#F5C842;font-family:'Montserrat',sans-serif;letter-spacing:0.06em;margin-bottom:14px}
+.main{max-width:640px;margin:0 auto;padding:24px}
+.card{background:#fff;border:0.5px solid #E0E8F5;border-radius:16px;padding:26px;margin-bottom:14px}
+.card-title{font-family:'Playfair Display',serif;font-size:19px;color:#0D1F4A;margin-bottom:6px}
+.card-sub{font-size:13px;color:#4A6FA5;line-height:1.6;margin-bottom:18px;font-weight:300}
+.field-label{font-size:12px;font-weight:600;color:#0D1F4A;font-family:'Montserrat',sans-serif;display:block;margin-bottom:8px}
+.text-input{width:100%;border:1.5px solid #E0E8F5;border-radius:10px;padding:12px 14px;font-size:14px;color:#0D1F4A;font-family:'Inter',sans-serif;outline:none;margin-bottom:16px;transition:border-color 0.15s}
+.text-input:focus{border-color:#1B3A7A}
+.btn-primary{width:100%;padding:13px;border-radius:99px;border:none;background:#1B3A7A;color:#F5C842;font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;cursor:pointer;transition:opacity 0.15s}
+.btn-primary:hover{opacity:0.9}
+.btn-primary:disabled{opacity:0.5;cursor:not-allowed}
+.btn-secondary{width:100%;padding:11px;border-radius:99px;border:1px solid #E0E8F5;background:transparent;color:#4A6FA5;font-family:'Inter',sans-serif;font-size:13px;cursor:pointer;margin-top:8px}
+.status-msg{font-size:12px;text-align:center;margin-top:14px;padding:10px;border-radius:8px}
+.status-success{background:#EAFBF1;color:#007A2E}
+.status-error{background:#FFF0F0;color:#CC0000}
+.status-info{background:#EEF3FF;color:#2952A3}
+.privacy-note{display:flex;gap:8px;align-items:flex-start;background:#F8F9FF;border:0.5px solid #E0E8F5;border-radius:10px;padding:12px;margin-top:16px;font-size:11px;color:#4A6FA5;line-height:1.5}
+.passport-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.passport-email{font-size:12px;color:#4A6FA5}
+.logout-link{font-size:12px;color:#CC0000;cursor:pointer;font-weight:600}
+.target-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.subj-row{display:grid;grid-template-columns:2fr 1fr 1fr 1fr auto;gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid #F0F3FA}
+.subj-row.header{font-size:10px;font-weight:700;color:#4A6FA5;font-family:'Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.05em;border-bottom:2px solid #E0E8F5}
+.subj-input{border:1.5px solid #E0E8F5;border-radius:8px;padding:8px;font-size:13px;text-align:center;width:100%}
+.subj-select{border:1.5px solid #E0E8F5;border-radius:8px;padding:8px;font-size:13px;width:100%;background:#fff}
+.remove-btn{color:#CC0000;cursor:pointer;font-size:16px;text-align:center}
+.add-subject-btn{font-size:12px;padding:10px;border-radius:8px;border:1.5px dashed #C0D0E8;background:#F8F9FF;color:#2952A3;cursor:pointer;width:100%;margin-top:12px;font-weight:600}
+.gap-box{background:#1B3A7A;border-radius:14px;padding:20px;margin-bottom:14px;text-align:center}
+.gap-label{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:#F5C842;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px}
+.gap-number{font-family:'Playfair Display',serif;font-size:40px;color:#fff;margin-bottom:4px}
+.gap-sub{font-size:12px;color:rgba(255,255,255,0.7)}
+.traffic-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.traffic-item{border-radius:10px;padding:12px;display:flex;align-items:center;justify-content:space-between}
+.traffic-green{background:#EAFBF1;border:1px solid #B8E8CC}
+.traffic-amber{background:#FFF8E6;border:1px solid #FFE6A0}
+.traffic-red{background:#FFF0F0;border:1px solid #FFC0C0}
+.traffic-subj{font-size:12px;font-weight:600;color:#0D1F4A}
+.traffic-dot{width:10px;height:10px;border-radius:50%}
+.dot-green{background:#2E5C3A}
+.dot-amber{background:#D4A000}
+.dot-red{background:#CC0000}
+.save-btn{background:#F5C842;color:#1B3A7A;font-weight:700;padding:12px 24px;border-radius:99px;border:none;cursor:pointer;font-family:'Montserrat',sans-serif;font-size:13px}
+.action-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.graduation-box{background:#FFF8E6;border:1.5px solid #F5C842;border-radius:12px;padding:16px;margin-top:16px}
+.graduation-title{font-size:12px;font-weight:700;color:#7C3A00;margin-bottom:8px;font-family:'Montserrat',sans-serif}
+.graduation-text{font-size:12px;color:#7C3A00;line-height:1.6;margin-bottom:12px}
+.btn-graduate{background:#CC0000;color:#fff;font-size:12px;padding:10px 18px;border-radius:99px;border:none;cursor:pointer;font-weight:700;font-family:'Montserrat',sans-serif}
+.loading-spin{font-size:24px;color:#1B3A7A;animation:spin 1s linear infinite;text-align:center;display:block;margin:30px auto}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo">
+    <svg width="28" height="28" viewBox="0 0 64 64" fill="none">
+      <circle cx="32" cy="32" r="29" stroke="#F5C842" stroke-width="1.4" fill="none"/>
+      <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <circle cx="32" cy="32" r="3" fill="#F5C842"/>
+      <polygon points="32,4 35,25 32,26.5 29,25" fill="#F5C842"/>
+    </svg>
+    <div class="wm-wrap">
+      <div class="wm-global-row"><div class="wm-rule"></div><div class="wm-global">GLOBAL</div><div class="wm-rule"></div></div>
+      <div class="wm-compass">C<span class="o">O</span>MPASS</div>
+    </div>
+  </div>
+  <div class="nav-tag">🔒 Academic Passport · IB</div>
+</nav>
+
+<div class="hero-bar">
+  <div class="priv-badge">🔒 Private · Only you can see your data · Auto-deleted after graduation</div>
+  <h1 class="hero-h">Your private<br><em>Academic Passport</em></h1>
+  <p class="hero-p">Track your IB grades, see exactly what you need for your target university, and get AI guidance on which subjects need attention — completely private to you.</p>
+</div>
+
+<div class="main">
+
+  <div id="s-login" class="screen active">
+    <div class="card">
+      <div class="card-title">Sign in to your Passport</div>
+      <div class="card-sub">No password needed. Enter your email and we'll send you a secure one-time link.</div>
+      <label class="field-label">Your email address</label>
+      <input type="email" class="text-input" id="loginEmail" placeholder="you@example.com">
+      <button class="btn-primary" id="btnSendLink" onclick="sendMagicLink()">Send me a secure login link</button>
+      <div id="loginStatus"></div>
+      <div class="privacy-note">
+        <span>🔒</span>
+        <span>Your grades are visible only to you. Not even GlobalCompass staff can view your individual records. All data is automatically deleted 90 days after you confirm university acceptance.</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="s-checkemail" class="screen">
+    <div class="card" style="text-align:center">
+      <div style="font-size:40px;margin-bottom:12px">📧</div>
+      <div class="card-title">Check your email</div>
+      <div class="card-sub">We've sent a secure login link to <strong id="sentToEmail"></strong>. Click the link in your email to access your Passport.</div>
+      <button class="btn-secondary" onclick="goScreen('s-login')">← Use a different email</button>
+    </div>
+  </div>
+
+  <div id="s-loading" class="screen">
+    <i class="ti ti-loader-2 loading-spin"></i>
+  </div>
+
+  <div id="s-passport" class="screen">
+    <div class="passport-header">
+      <div class="passport-email" id="userEmailDisplay"></div>
+      <div class="logout-link" onclick="logout()">Sign out</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Your target</div>
+      <div class="card-sub">Tell us your target university and total IB score so we can calculate your gap.</div>
+      <label class="field-label">Target university (optional)</label>
+      <input type="text" class="text-input" id="targetUni" placeholder="e.g. University College London">
+      <label class="field-label">Target total IB score (out of 45)</label>
+      <input type="number" class="text-input" id="targetTotal" placeholder="e.g. 38" min="1" max="45">
+      <button class="save-btn" onclick="saveTarget()">Save target</button>
+      <div id="targetStatus"></div>
+    </div>
+
+    <div id="gapOutput"></div>
+
+    <div class="card">
+      <div class="card-title">Your subjects</div>
+      <div class="card-sub">Enter your 6 IB subjects with current and target grades (1-7 scale).</div>
+      <div class="subj-row header">
+        <div>Subject</div><div>Level</div><div>Current</div><div>Target</div><div></div>
+      </div>
+      <div id="subjectsContainer"></div>
+      <button class="add-subject-btn" onclick="addSubjectRow()">+ Add subject</button>
+      <div class="action-row">
+        <button class="save-btn" onclick="saveAllGrades()">Save all grades</button>
+      </div>
+      <div id="gradesStatus"></div>
+    </div>
+
+    <div id="trafficOutput"></div>
+
+    <div class="graduation-box">
+      <div class="graduation-title">🎓 Confirmed your university place?</div>
+      <div class="graduation-text">Once you confirm, all your data will be automatically and permanently deleted in 90 days. This cannot be undone.</div>
+      <button class="btn-graduate" onclick="confirmGraduation()">I've confirmed my university place</button>
+    </div>
+  </div>
+
+</div>
+<script>
+const SUPABASE_URL = 'https://qginevdbqaodimcllevb.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_q3hvHIL8bl4oH49Qkyqkgg_w1G2Ud5w';
+
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let currentUser = null;
+let subjectRowCount = 0;
+
+function goScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+async function sendMagicLink(){
+  const email = document.getElementById('loginEmail').value.trim();
+  if(!email || !email.includes('@')){
+    document.getElementById('loginStatus').innerHTML = '<div class="status-msg status-error">Please enter a valid email address</div>';
+    return;
+  }
+  document.getElementById('btnSendLink').disabled = true;
+  document.getElementById('btnSendLink').textContent = 'Sending...';
+  const { error } = await sb.auth.signInWithOtp({
+    email: email,
+    options: { emailRedirectTo: window.location.href }
+  });
+  document.getElementById('btnSendLink').disabled = false;
+  document.getElementById('btnSendLink').textContent = 'Send me a secure login link';
+  if(error){
+    document.getElementById('loginStatus').innerHTML = '<div class="status-msg status-error">'+error.message+'</div>';
+    return;
+  }
+  document.getElementById('sentToEmail').textContent = email;
+  goScreen('s-checkemail');
+}
+
+async function logout(){
+  await sb.auth.signOut();
+  currentUser = null;
+  goScreen('s-login');
+}
+
+async function checkSession(){
+  goScreen('s-loading');
+  const { data: { session } } = await sb.auth.getSession();
+  if(session && session.user){
+    currentUser = session.user;
+    document.getElementById('userEmailDisplay').textContent = currentUser.email;
+    await loadPassportData();
+    goScreen('s-passport');
+  } else {
+    goScreen('s-login');
+  }
+}
+
+sb.auth.onAuthStateChange((event, session) => {
+  if(event === 'SIGNED_IN' && session){
+    currentUser = session.user;
+    document.getElementById('userEmailDisplay').textContent = currentUser.email;
+    loadPassportData().then(()=> goScreen('s-passport'));
+  }
+});
+
+async function loadPassportData(){
+  const { data: target } = await sb.from('ib_targets').select('*').eq('user_id', currentUser.id).maybeSingle();
+  if(target){
+    document.getElementById('targetUni').value = target.target_university || '';
+    document.getElementById('targetTotal').value = target.target_total_points || '';
+  }
+  const { data: grades } = await sb.from('ib_grades').select('*').eq('user_id', currentUser.id).order('updated_at');
+  document.getElementById('subjectsContainer').innerHTML = '';
+  subjectRowCount = 0;
+  if(grades && grades.length > 0){
+    grades.forEach(g => addSubjectRow(g));
+  } else {
+    for(let i=0;i<6;i++) addSubjectRow();
+  }
+  renderGapAndTraffic(target, grades || []);
+}
+
+function addSubjectRow(existing){
+  subjectRowCount++;
+  const id = 'row_' + subjectRowCount;
+  const row = document.createElement('div');
+  row.className = 'subj-row';
+  row.id = id;
+  row.innerHTML = `
+    <input type="text" class="subj-input" style="text-align:left" placeholder="e.g. Mathematics" value="${existing ? existing.subject : ''}" data-field="subject">
+    <select class="subj-select" data-field="level">
+      <option value="HL" ${existing && existing.level==='HL' ? 'selected':''}>HL</option>
+      <option value="SL" ${existing && existing.level==='SL' ? 'selected':''}>SL</option>
+    </select>
+    <input type="number" class="subj-input" min="1" max="7" placeholder="1-7" value="${existing ? existing.current_grade||'' : ''}" data-field="current_grade">
+    <input type="number" class="subj-input" min="1" max="7" placeholder="1-7" value="${existing ? existing.target_grade||'' : ''}" data-field="target_grade">
+    <span class="remove-btn" onclick="document.getElementById('${id}').remove()">✕</span>
+  `;
+  if(existing) row.dataset.rowId = existing.id;
+  document.getElementById('subjectsContainer').appendChild(row);
+}
+
+async function saveTarget(){
+  const uni = document.getElementById('targetUni').value.trim();
+  const total = parseInt(document.getElementById('targetTotal').value);
+  const { error } = await sb.from('ib_targets').upsert({
+    user_id: currentUser.id,
+    target_university: uni,
+    target_total_points: total || null
+  }, { onConflict: 'user_id' });
+  const statusEl = document.getElementById('targetStatus');
+  if(error){
+    statusEl.innerHTML = '<div class="status-msg status-error">Could not save: '+error.message+'</div>';
+  } else {
+    statusEl.innerHTML = '<div class="status-msg status-success">Target saved!</div>';
+    await loadPassportData();
+  }
+}
+
+async function saveAllGrades(){
+  const rows = document.querySelectorAll('#subjectsContainer .subj-row');
+  const statusEl = document.getElementById('gradesStatus');
+  let savedCount = 0;
+  for(const row of rows){
+    const subject = row.querySelector('[data-field="subject"]').value.trim();
+    if(!subject) continue;
+    const level = row.querySelector('[data-field="level"]').value;
+    const current_grade = parseInt(row.querySelector('[data-field="current_grade"]').value) || null;
+    const target_grade = parseInt(row.querySelector('[data-field="target_grade"]').value) || null;
+    const payload = { user_id: currentUser.id, subject, level, current_grade, target_grade, updated_at: new Date().toISOString() };
+    if(row.dataset.rowId){
+      await sb.from('ib_grades').update(payload).eq('id', row.dataset.rowId);
+    } else {
+      const { data } = await sb.from('ib_grades').insert(payload).select().single();
+      if(data) row.dataset.rowId = data.id;
+    }
+    savedCount++;
+  }
+  statusEl.innerHTML = '<div class="status-msg status-success">Saved '+savedCount+' subjects!</div>';
+  const { data: target } = await sb.from('ib_targets').select('*').eq('user_id', currentUser.id).maybeSingle();
+  const { data: grades } = await sb.from('ib_grades').select('*').eq('user_id', currentUser.id);
+  renderGapAndTraffic(target, grades || []);
+}
+
+function renderGapAndTraffic(target, grades){
+  const currentTotal = grades.reduce((sum,g) => sum + (g.current_grade || 0), 0);
+  const targetTotal = target && target.target_total_points ? target.target_total_points : null;
+
+  if(targetTotal){
+    const gap = targetTotal - currentTotal;
+    document.getElementById('gapOutput').innerHTML = `
+      <div class="gap-box">
+        <div class="gap-label">Your gap to target</div>
+        <div class="gap-number">${gap > 0 ? '+'+gap : gap}</div>
+        <div class="gap-sub">Current total: ${currentTotal}/45 &nbsp;·&nbsp; Target: ${targetTotal}/45 ${target.target_university ? '· '+target.target_university : ''}</div>
+      </div>`;
+  } else {
+    document.getElementById('gapOutput').innerHTML = '';
+  }
+
+  if(grades.length > 0){
+    const trafficHTML = grades.map(g => {
+      if(!g.current_grade || !g.target_grade) return '';
+      const diff = g.current_grade - g.target_grade;
+      let cls = 'traffic-green', dot = 'dot-green';
+      if(diff < 0 && diff >= -1){ cls='traffic-amber'; dot='dot-amber'; }
+      else if(diff < -1){ cls='traffic-red'; dot='dot-red'; }
+      return `<div class="traffic-item ${cls}"><span class="traffic-subj">${g.subject} (${g.level})</span><span class="traffic-dot ${dot}"></span></div>`;
+    }).join('');
+    document.getElementById('trafficOutput').innerHTML = `
+      <div class="card">
+        <div class="card-title" style="margin-bottom:14px">Subject status</div>
+        <div class="traffic-grid">${trafficHTML}</div>
+      </div>`;
+  } else {
+    document.getElementById('trafficOutput').innerHTML = '';
+  }
+}
+
+async function confirmGraduation(){
+  if(!confirm('Are you sure? Your data will be permanently deleted in 90 days and this cannot be undone.')) return;
+  await sb.from('ib_targets').upsert({
+    user_id: currentUser.id,
+    graduation_confirmed: true,
+    graduation_confirmed_at: new Date().toISOString()
+  }, { onConflict: 'user_id' });
+  alert('Congratulations on your university place! Your data is now scheduled for permanent deletion in 90 days.');
+}
+
+checkSession();
+</script>
+</body>
+</html>
