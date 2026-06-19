@@ -295,7 +295,7 @@ async function generateApPlan(){
     const data=await res.json();clearInterval(iv);
     const text=data.content[0].text.replace(/```json|```/g,'').trim();
     showApResults(JSON.parse(text));
-  }catch(e){clearInterval(iv);showApFallback();}
+  }catch(e){console.error('AP Navigator error:',e);clearInterval(iv);showApFallback();}
 }
 function showApResults(r){
   document.getElementById('ap-resultCareer').textContent=r.career;
@@ -319,7 +319,7 @@ async function generateSatPlan(){
     const data=await res.json();
     const text=data.content[0].text.replace(/```json|```/g,'').trim();
     showSatResults(JSON.parse(text));
-  }catch(e){showSatFallback();}
+  }catch(e){console.error('SAT Navigator error:',e);showSatFallback();}
 }
 function showSatResults(r){
   document.getElementById('sat-scoreOutput').innerHTML='<div class="sat-box"><div class="sat-title">Your SAT targets</div><div class="sat-grid"><div class="sat-item"><div class="sat-label">Total SAT target</div><div class="sat-score">'+r.targetSAT+'</div><div class="sat-sub">Math: '+r.mathTarget+' · Reading: '+r.readingTarget+'</div></div><div class="sat-item"><div class="sat-label">ACT equivalent</div><div class="sat-score">'+r.targetACT+'</div><div class="sat-sub">'+r.satVsAct+'</div></div></div></div>';
