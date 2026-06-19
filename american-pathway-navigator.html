@@ -284,7 +284,7 @@ async function generateApPlan(){
   let mi=0;const iv=setInterval(()=>{mi=(mi+1)%msgs.length;document.getElementById('ap-loadingText').textContent=msgs[mi];},1800);
   const prompt='You are GlobalCompass American Pathway Navigator.\nDREAM: "'+apDream+'"\nCURRICULUM: "'+apCurr+'"\nUNIVERSITY: "'+apUni+'"\n\nRespond ONLY with valid JSON:\n{"career":"career title","summary":"2 sentence summary","apSubjects":[{"name":"AP Subject","level":"essential","targetScore":5,"credits":3,"why":"one sentence"},{"name":"AP Subject","level":"essential","targetScore":5,"credits":3,"why":"one sentence"},{"name":"AP Subject","level":"recommended","targetScore":4,"credits":3,"why":"one sentence"},{"name":"AP Subject","level":"optional","targetScore":4,"credits":3,"why":"one sentence"}],"totalCredits":12,"semestersSaved":1,"tuitionSaved":15000,"satTarget":1480,"actTarget":33,"satStrategy":"2 sentences on SAT strategy","timeline":[{"year":"Grade 10","action":"action"},{"year":"Grade 11","action":"action"},{"year":"Grade 12 Fall","action":"action"},{"year":"Grade 12 Spring","action":"action"}],"hiddenRequirements":["requirement 1","requirement 2","requirement 3"],"aiInsight":"2-3 sentence personalised insight"}';
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1400,messages:[{role:'user',content:prompt}]})});
+    const res=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:prompt,max_tokens:1400})});
     const data=await res.json();clearInterval(iv);
     const text=data.content[0].text.replace(/```json|```/g,'').trim();
     showApResults(JSON.parse(text));
@@ -308,7 +308,7 @@ async function generateSatPlan(){
   document.getElementById('sat-btn').textContent='Generating…';
   const prompt='You are GlobalCompass SAT Strategy Guide.\nMAJOR: "'+major+'"\nTARGET: "'+satTier+'"\nCURRICULUM: "'+satCurr+'"\n\nRespond ONLY with valid JSON:\n{"targetSAT":1480,"targetACT":33,"mathTarget":760,"readingTarget":720,"satVsAct":"2 sentences","prepTimeline":"3 sentences","keyStrategies":["strategy 1","strategy 2","strategy 3"],"curricularAdvantage":"2 sentences","aiInsight":"2-3 sentence insight"}';
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:800,messages:[{role:'user',content:prompt}]})});
+    const res=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:prompt,max_tokens:800})});
     const data=await res.json();
     const text=data.content[0].text.replace(/```json|```/g,'').trim();
     showSatResults(JSON.parse(text));
