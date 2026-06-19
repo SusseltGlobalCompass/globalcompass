@@ -240,12 +240,12 @@ async function generateMap(){
   const iv=setInterval(()=>{mi=(mi+1)%msgs.length;document.getElementById('loadingText').textContent=msgs[mi];},1800);
   const prompt='You are GlobalCompass Career Simulator for sixth form students.\nDREAM: "'+dream+'"\nUNIVERSITY: "'+university+'"\nSTRENGTHS: '+strengths.join(', ')+'\n\nRespond ONLY with valid JSON:\n{"career":"specific career title","summary":"2 sentence summary","subjects":[{"name":"Subject","level":"essential","why":"one sentence"},{"name":"Subject","level":"essential","why":"one sentence"},{"name":"Subject","level":"recommended","why":"one sentence"},{"name":"Subject","level":"optional","why":"one sentence"}],"hiddenRequirements":["requirement 1","requirement 2","requirement 3"],"workload":[{"subject":"Subject 1","intensity":75},{"subject":"Subject 2","intensity":60},{"subject":"Subject 3","intensity":50}],"ucasPoints":128,"aiInsight":"2-3 sentence personalised insight"}';
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,messages:[{role:'user',content:prompt}]})});
+    const res=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:prompt,max_tokens:2000})});
     const data=await res.json();
     clearInterval(iv);
     const text=data.content[0].text.replace(/```json|```/g,'').trim();
     showResults(JSON.parse(text));
-  }catch(e){clearInterval(iv);showFallback();}
+  }catch(e){console.error('Sixth Form Navigator error:',e);clearInterval(iv);showFallback();}
 }
 function showResults(r){
   document.getElementById('resultCareer').textContent=r.career;
