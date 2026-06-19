@@ -242,9 +242,12 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
       <div style="margin-bottom:16px">
         <label style="font-size:12px;font-weight:600;color:#0D1F4A;font-family:Montserrat,sans-serif;display:block;margin-bottom:8px">Target university tier:</label>
         <div class="options-grid-3" style="gap:8px">
-          <div class="opt-card" onclick="selectSatTier(this,'Ivy League and top 10 US universities')" style="padding:10px;text-align:center"><div class="opt-title" style="font-size:11px">Ivy League</div><div class="opt-sub" style="font-size:10px">Top 10</div></div>
-          <div class="opt-card" onclick="selectSatTier(this,'Top 20 to 50 US universities')" style="padding:10px;text-align:center"><div class="opt-title" style="font-size:11px">Top 20-50</div><div class="opt-sub" style="font-size:10px">Strong universities</div></div>
-          <div class="opt-card" onclick="selectSatTier(this,'Top 50 to 100 US universities')" style="padding:10px;text-align:center"><div class="opt-title" style="font-size:11px">Top 50-100</div><div class="opt-sub" style="font-size:10px">Good fit</div></div>
+          <div class="opt-card" onclick="selectSatTier(this,'Ivy League and top 10 US universities')" style="padding:10px;text-align:center"><div class="opt-title" style="font-size:11px">Ivy League</div><div class="opt-sub" style="font-size:10px">Top 10 US</div></div>
+          <div class="opt-card" onclick="selectSatTier(this,'Top 20 to 50 US universities')" style="padding:10px;text-align:center"><div class="opt-title" style="font-size:11px">Top 20-50</div><div class="opt-sub" style="font-size:10px">Strong US universities</div></div>
+          <div class="opt-card" onclick="selectSatTier(this,'Top 50 to 100 US universities')" style="padding:10px;text-align:center"><div class="opt-title" style="font-size:11px">Top 50-100</div><div class="opt-sub" style="font-size:10px">Good fit US</div></div>
+          <div class="opt-card" onclick="selectSatTier(this,'UK universities Oxford Cambridge LSE UCL Imperial Russell Group')" style="padding:10px;text-align:center"><div class="opt-title" style="font-size:11px">UK universities</div><div class="opt-sub" style="font-size:10px">Oxford, Cambridge, LSE</div></div>
+          <div class="opt-card" onclick="selectSatTier(this,'European and Singapore universities accepting SAT')" style="padding:10px;text-align:center"><div class="opt-title" style="font-size:11px">Europe / Singapore</div><div class="opt-sub" style="font-size:10px">NUS, NTU and Europe</div></div>
+          <div class="opt-card" onclick="selectSatTier(this,'Canadian universities Toronto McGill UBC')" style="padding:10px;text-align:center"><div class="opt-title" style="font-size:11px">Canada</div><div class="opt-sub" style="font-size:10px">Toronto, McGill, UBC</div></div>
         </div>
       </div>
       <div style="margin-bottom:16px">
@@ -310,7 +313,7 @@ async function generateSatPlan(){
   const major=document.getElementById('satMajor').value.trim();
   document.getElementById('sat-btn').disabled=true;
   document.getElementById('sat-btn').textContent='Generating…';
-  const prompt='You are GlobalCompass SAT Strategy Guide.\nMAJOR: "'+major+'"\nTARGET: "'+satTier+'"\nCURRICULUM: "'+satCurr+'"\n\nRespond ONLY with valid JSON:\n{"targetSAT":1480,"targetACT":33,"mathTarget":760,"readingTarget":720,"satVsAct":"2 sentences","prepTimeline":"3 sentences","keyStrategies":["strategy 1","strategy 2","strategy 3"],"curricularAdvantage":"2 sentences","aiInsight":"2-3 sentence insight"}';
+  const prompt='You are GlobalCompass SAT Strategy Guide, an expert on how the SAT is used internationally.\nMAJOR: "'+major+'"\nTARGET: "'+satTier+'"\nCURRICULUM: "'+satCurr+'"\n\nIMPORTANT CONTEXT: If TARGET is UK universities, be honest that most UK universities including Oxford and Cambridge do NOT require the SAT at all and instead focus on A-Level or AP grades plus admissions tests like LNAT for Law or UCAT for Medicine - in this case explain the SAT is optional and only worth taking if applying to US universities as well. If TARGET is Europe or Singapore, note the SAT is one of several accepted options alongside other qualifications. If TARGET is Canada, note the SAT is one factor among several and less central than in the US. Only give the standard high-pressure full SAT prep strategy if TARGET is a US tier.\n\nRespond ONLY with valid JSON:\n{"targetSAT":1480,"targetACT":33,"mathTarget":760,"readingTarget":720,"satVsAct":"2 sentences","prepTimeline":"3 sentences","keyStrategies":["strategy 1","strategy 2","strategy 3"],"curricularAdvantage":"2 sentences","aiInsight":"2-3 sentence insight"}';
   try{
     const res=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:prompt,max_tokens:800})});
     const data=await res.json();
