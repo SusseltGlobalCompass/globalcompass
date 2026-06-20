@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GlobalCompass — German Abitur Navigator · Leistungskurse</title>
+<title>GlobalCompass — German Abitur Navigator</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -18,23 +18,27 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
 .wm-global{font-family:'Montserrat',sans-serif;font-size:7px;font-weight:300;color:#fff;letter-spacing:0.3em;text-transform:uppercase}
 .wm-compass{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:800;color:#fff;letter-spacing:0.07em;text-transform:uppercase;line-height:1}
 .wm-compass .o{color:#F5C842}
+.nav-right{display:flex;align-items:center;gap:10px}
+.lang-toggle{display:flex;background:rgba(255,255,255,0.1);border-radius:99px;padding:3px;gap:2px}
+.lang-btn{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;padding:5px 12px;border-radius:99px;border:none;background:transparent;color:rgba(255,255,255,0.6);cursor:pointer;transition:all 0.15s}
+.lang-btn.active{background:#F5C842;color:#1B3A7A}
 .nav-tag{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;color:#F5C842;letter-spacing:0.12em;text-transform:uppercase;background:rgba(245,200,66,0.12);padding:4px 12px;border-radius:99px;border:0.5px solid rgba(245,200,66,0.3)}
-.hero-bar{background:linear-gradient(135deg,#000000,#DD0000,#FFCE00);padding:28px 24px;text-align:center;border-bottom:2px solid #FFCE00}
-.hero-h{font-family:'Playfair Display',serif;font-size:24px;font-weight:500;color:#fff;line-height:1.3;margin-bottom:6px}
-.hero-h em{color:#FFCE00;font-style:normal}
-.hero-p{font-size:12px;color:rgba(255,255,255,0.85);line-height:1.7;max-width:520px;margin:0 auto;font-weight:300}
-.de-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,206,0,0.15);border:1px solid rgba(255,206,0,0.4);border-radius:99px;padding:4px 14px;font-size:11px;font-weight:700;color:#FFCE00;font-family:'Montserrat',sans-serif;letter-spacing:0.06em;margin-bottom:14px}
+.hero-bar{background:linear-gradient(135deg,#000000,#DD0000,#FFCC00);padding:28px 24px;text-align:center;border-bottom:2px solid #F5C842}
+.hero-h{font-family:'Playfair Display',serif;font-size:24px;font-weight:500;color:#fff;line-height:1.3;margin-bottom:6px;text-shadow:0 1px 6px rgba(0,0,0,0.4)}
+.hero-h em{color:#FFCC00;font-style:normal}
+.hero-p{font-size:12px;color:rgba(255,255,255,0.9);line-height:1.7;max-width:520px;margin:0 auto;font-weight:300}
+.de-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(0,0,0,0.3);border:1px solid #FFCC00;border-radius:99px;padding:4px 14px;font-size:11px;font-weight:700;color:#FFCC00;font-family:'Montserrat',sans-serif;letter-spacing:0.06em;margin-bottom:14px}
 .main{max-width:700px;margin:0 auto;padding:24px}
 .step-indicator{display:flex;align-items:center;margin-bottom:24px}
 .step{display:flex;flex-direction:column;align-items:center;flex:1}
 .step-circle{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:'Montserrat',sans-serif;transition:all 0.3s;z-index:1}
-.step-circle.done{background:#FFCE00;color:#000}
-.step-circle.active{background:#DD0000;color:#fff;border:2px solid #FFCE00}
+.step-circle.done{background:#F5C842;color:#000}
+.step-circle.active{background:#DD0000;color:#fff;border:2px solid #FFCC00}
 .step-circle.pending{background:#E0E8F5;color:#9AB0D0}
 .step-label{font-size:9px;color:#9AB0D0;margin-top:4px;text-align:center;font-weight:500;letter-spacing:0.04em;font-family:'Montserrat',sans-serif;text-transform:uppercase;max-width:60px}
 .step-label.active{color:#DD0000;font-weight:700}
 .step-line{height:1px;background:#E0E8F5;flex:1;margin-top:-14px}
-.step-line.done{background:#FFCE00}
+.step-line.done{background:#F5C842}
 .card{background:#fff;border:0.5px solid #E0E8F5;border-radius:16px;padding:22px;margin-bottom:14px}
 .card-title{font-family:'Playfair Display',serif;font-size:18px;color:#0D1F4A;margin-bottom:5px}
 .card-sub{font-size:13px;color:#4A6FA5;line-height:1.6;margin-bottom:18px;font-weight:300}
@@ -55,9 +59,9 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
 .btn-back{font-size:13px;padding:9px 20px;border-radius:99px;border:1px solid #E0E8F5;background:transparent;color:#4A6FA5;cursor:pointer;font-family:'Inter',sans-serif}
 .btn-next{font-size:13px;padding:9px 24px;border-radius:99px;border:none;background:#DD0000;color:#fff;cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:700}
 .btn-next:disabled{opacity:0.4;cursor:not-allowed}
-.btn-next.gold{background:#FFCE00;color:#000}
+.btn-next.gold{background:#FFCC00;color:#000}
 .loading-wrap{text-align:center;padding:40px 0}
-.loading-icon{font-size:36px;color:#FFCE00;animation:spin 1s linear infinite;display:block;margin:0 auto 16px}
+.loading-icon{font-size:36px;color:#FFCC00;animation:spin 1s linear infinite;display:block;margin:0 auto 16px}
 @keyframes spin{to{transform:rotate(360deg)}}
 .loading-text{font-family:'Playfair Display',serif;font-size:16px;color:#0D1F4A;margin-bottom:5px}
 .loading-sub{font-size:12px;color:#4A6FA5;font-weight:300}
@@ -65,44 +69,6 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
 .result-tag{display:inline-flex;align-items:center;gap:6px;font-size:10px;padding:4px 12px;border-radius:99px;background:#FFF0F0;color:#DD0000;margin-bottom:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;font-family:'Montserrat',sans-serif}
 .result-career{font-family:'Playfair Display',serif;font-size:22px;color:#0D1F4A;margin-bottom:6px}
 .result-summary{font-size:13px;color:#4A6FA5;line-height:1.7;font-weight:300;max-width:520px;margin:0 auto}
-.lk-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
-.lk-card{border-radius:12px;padding:14px}
-.lk-card.lk{background:#000}
-.lk-card.gk{background:#EEF3FF;border:0.5px solid #C0D0E8}
-.lk-badge{font-size:9px;padding:2px 8px;border-radius:99px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;font-family:'Montserrat',sans-serif;margin-bottom:6px;display:inline-block}
-.badge-lk{background:rgba(255,206,0,0.2);color:#FFCE00}
-.badge-gk{background:#C0D0E8;color:#2952A3}
-.lk-name-light{font-size:13px;font-weight:700;color:#fff;margin-bottom:3px;font-family:'Montserrat',sans-serif}
-.lk-name-dark{font-size:13px;font-weight:700;color:#0D1F4A;margin-bottom:3px;font-family:'Montserrat',sans-serif}
-.lk-why-light{font-size:11px;color:rgba(255,255,255,0.75);line-height:1.5}
-.lk-why-dark{font-size:11px;color:#4A6FA5;line-height:1.5}
-.nc-box{background:linear-gradient(135deg,#000,#DD0000);border-radius:12px;padding:16px;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.nc-text h4{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#FFCE00;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px}
-.nc-text p{font-size:11px;color:rgba(255,255,255,0.7);font-weight:300}
-.nc-score{font-family:'Playfair Display',serif;font-size:32px;color:#FFCE00;font-weight:500}
-.exam-box{background:#F8F9FF;border:0.5px solid #E0E8F5;border-radius:12px;padding:16px;margin-bottom:14px}
-.exam-title{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:#000;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px}
-.exam-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.exam-item{background:#fff;border-radius:8px;padding:10px;border:0.5px solid #E0E8F5}
-.exam-label{font-size:10px;font-weight:700;color:#DD0000;font-family:'Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:3px}
-.exam-content{font-size:11px;color:#4A6FA5;line-height:1.5}
-.uni-box{background:#EEF3FF;border-radius:12px;padding:16px;margin-bottom:14px}
-.uni-title{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:#1B3A7A;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px}
-.uni-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.uni-item{background:#fff;border-radius:8px;padding:10px;border:0.5px solid #C0D0E8}
-.uni-name{font-size:11px;font-weight:700;color:#000;font-family:'Montserrat',sans-serif;margin-bottom:3px}
-.uni-detail{font-size:11px;color:#4A6FA5;line-height:1.4}
-.hidden-box{background:#FFF8E6;border:1.5px solid #FFCE00;border-radius:12px;padding:16px;margin-bottom:14px}
-.hidden-title{font-size:12px;font-weight:700;color:#DD0000;margin-bottom:8px;font-family:'Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.06em}
-.hidden-item{font-size:12px;color:#2C1800;display:flex;align-items:flex-start;gap:8px;line-height:1.5;margin-bottom:5px}
-.uae-box{background:#1B3A7A;border-radius:12px;padding:16px;margin-bottom:14px}
-.uae-title{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:#F5C842;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px}
-.uae-content{font-size:12px;color:rgba(255,255,255,0.85);line-height:1.7}
-.ai-bubble{background:#FFF0F0;border-radius:0 12px 12px 12px;padding:14px 16px;border:0.5px solid #FFAAAA}
-.ai-bubble p{font-size:13px;color:#0D1F4A;line-height:1.7}
-.ai-label{font-size:10px;font-weight:700;color:#DD0000;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;font-family:'Montserrat',sans-serif}
-.action-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
-.action-btn{font-size:12px;padding:10px 20px;border-radius:99px;cursor:pointer;font-weight:700;font-family:'Montserrat',sans-serif;border:none}
 </style>
 </head>
 <body>
@@ -120,111 +86,217 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
       <div class="wm-compass">C<span class="o">O</span>MPASS</div>
     </div>
   </div>
-  <div class="nav-tag">🇩🇪 Abitur Navigator</div>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" id="btnEN" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" id="btnDE" onclick="setLang('de')">DE</button>
+    </div>
+    <div class="nav-tag" id="navTag">🇩🇪 German Abitur Navigator</div>
+  </div>
 </nav>
 <div class="hero-bar">
-  <div class="de-badge">🇩🇪 Deutsches Abitur · Leistungskurse · Numerus Clausus · UAE & Germany</div>
-  <h1 class="hero-h">Von deinem Traum zu deinen<br><em>Abitur-Leistungskursen</em></h1>
-  <p class="hero-p">From your career dream to the right Leistungskurse — GlobalCompass maps your Abitur subject combination, Numerus Clausus target and university pathway for Germany and beyond.</p>
+  <div class="de-badge" id="badgeText">🇩🇪 Leistungskurse · Grundkurse · Numerus Clausus · UAE schools</div>
+  <h1 class="hero-h" id="heroTitle">From your dream to your<br><em>Abitur strategy</em></h1>
+  <p class="hero-p" id="heroSub">GlobalCompass maps your career dream backwards to the optimal Leistungskurse, target Abiturnote, and university Numerus Clausus strategy.</p>
 </div>
 <div class="main">
   <div class="step-indicator">
-    <div class="step"><div class="step-circle active" id="sc1">1</div><div class="step-label active">Dream</div></div>
+    <div class="step"><div class="step-circle active" id="sc1">1</div><div class="step-label active" id="sl1t">Dream</div></div>
     <div class="step-line" id="sl1"></div>
-    <div class="step"><div class="step-circle pending" id="sc2">2</div><div class="step-label">Year</div></div>
+    <div class="step"><div class="step-circle pending" id="sc2">2</div><div class="step-label" id="sl2t">Year</div></div>
     <div class="step-line" id="sl2"></div>
-    <div class="step"><div class="step-circle pending" id="sc3">3</div><div class="step-label">Destination</div></div>
+    <div class="step"><div class="step-circle pending" id="sc3">3</div><div class="step-label" id="sl3t">Destination</div></div>
     <div class="step-line" id="sl3"></div>
-    <div class="step"><div class="step-circle pending" id="sc4">4</div><div class="step-label">Your Map</div></div>
+    <div class="step"><div class="step-circle pending" id="sc4">4</div><div class="step-label" id="sl4t">Your Map</div></div>
   </div>
   <div id="s1" class="screen active">
     <div class="card">
-      <div class="card-title">Was ist dein Berufstraum? / What is your career dream?</div>
-      <div class="card-sub">Do not think about subjects yet. Tell us your dream — GlobalCompass maps backwards to the right Leistungskurse and Grundkurse combination.</div>
-      <textarea class="dream-input" id="dreamInput" placeholder="e.g. Ich möchte Medizin studieren und als Arzt arbeiten / I want to study medicine and become a doctor…"></textarea>
-      <div class="example-prompts">
-        <span class="ep" onclick="setDream('I want to study medicine and become a doctor in Germany')">🩺 Medizin</span>
-        <span class="ep" onclick="setDream('I want to study engineering and work in German automotive or technology industry')">⚙️ Ingenieurwesen</span>
-        <span class="ep" onclick="setDream('I want to study law and work as a lawyer or in public service in Germany')">⚖️ Jura / Law</span>
-        <span class="ep" onclick="setDream('I want to study business economics or management at a German university')">📈 Wirtschaft</span>
-        <span class="ep" onclick="setDream('I want to study computer science or artificial intelligence')">💻 Informatik</span>
-        <span class="ep" onclick="setDream('I want to study psychology social sciences or education')">🧠 Psychologie</span>
-        <span class="ep" onclick="setDream('I want to study architecture or civil engineering')">🏛️ Architektur</span>
-        <span class="ep" onclick="setDream('I want to study languages literature or cultural studies')">📚 Sprachen</span>
+      <div class="card-title" id="t1">What is your career dream?</div>
+      <div class="card-sub" id="t2">Do not think about Leistungskurse yet. Tell us your dream — GlobalCompass maps backwards to the optimal subjects for you.</div>
+      <textarea class="dream-input" id="dreamInput" placeholder="e.g. I want to study medicine and become a doctor…"></textarea>
+      <div class="example-prompts" id="examplesRow">
+        <span class="ep" onclick="setDream('medicine')">🩺 <span class="ep-label">Medizin</span></span>
+        <span class="ep" onclick="setDream('engineering')">⚙️ <span class="ep-label">Ingenieurwesen</span></span>
+        <span class="ep" onclick="setDream('law')">⚖️ <span class="ep-label">Jura</span></span>
+        <span class="ep" onclick="setDream('business')">📈 <span class="ep-label">BWL / Wirtschaft</span></span>
+        <span class="ep" onclick="setDream('cs')">💻 <span class="ep-label">Informatik</span></span>
+        <span class="ep" onclick="setDream('arts')">🎨 <span class="ep-label">Architektur / Kunst</span></span>
       </div>
     </div>
-    <div class="btn-row"><div></div><button class="btn-next" id="btn1" onclick="goStep(2)" disabled>Next — Dein Schuljahr →</button></div>
+    <div class="btn-row"><div></div><button class="btn-next" id="btn1" onclick="goStep(2)" disabled><span id="btn1Text">Next — Your year →</span></button></div>
   </div>
   <div id="s2" class="screen">
     <div class="card">
-      <div class="card-title">In which year are you?</div>
-      <div class="card-sub">The Abitur is completed in the Gymnasium over the Qualifikationsphase — usually years 11 to 13 depending on whether your state follows G8 or G9.</div>
+      <div class="card-title" id="t3">What year are you in?</div>
+      <div class="card-sub" id="t4">Leistungskurse are chosen in the Einführungsphase and locked in for the Qualifikationsphase.</div>
       <div class="options-grid">
-        <div class="opt-card" onclick="selectYear(this,'Year 10 or 11 Einfuehrungsphase planning Leistungskurse choices')"><span class="opt-emoji">📗</span><div class="opt-title">Jahr 10 / 11 — Einführungsphase</div><div class="opt-sub">Planning Leistungskurse choices ahead</div></div>
-        <div class="opt-card" onclick="selectYear(this,'Year 12 Qualifikationsphase 1 first year of Abitur subjects')"><span class="opt-emoji">📘</span><div class="opt-title">Jahr 12 — Qualifikationsphase 1</div><div class="opt-sub">First year of Abitur subject combination</div></div>
-        <div class="opt-card" onclick="selectYear(this,'Year 13 Qualifikationsphase 2 preparing for Abitur exams')"><span class="opt-emoji">📙</span><div class="opt-title">Jahr 13 — Qualifikationsphase 2</div><div class="opt-sub">Preparing for final Abitur examinations</div></div>
-        
+        <div class="opt-card" onclick="selectYear(this,'einfuehrungsphase')"><span class="opt-emoji">📗</span><div class="opt-title" id="y1t">Jahr 10/11 — Einführungsphase</div><div class="opt-sub" id="y1s">Planning Leistungskurse choices ahead</div></div>
+        <div class="opt-card" onclick="selectYear(this,'qphase1')"><span class="opt-emoji">📘</span><div class="opt-title" id="y2t">Jahr 12 — Qualifikationsphase 1</div><div class="opt-sub" id="y2s">First year of Abitur subject combination</div></div>
+        <div class="opt-card" onclick="selectYear(this,'qphase2')"><span class="opt-emoji">📙</span><div class="opt-title" id="y3t">Jahr 13 — Qualifikationsphase 2</div><div class="opt-sub" id="y3s">Preparing for final Abitur examinations</div></div>
       </div>
     </div>
-    <div class="btn-row"><button class="btn-back" onclick="goStep(1)">← Back</button><button class="btn-next" id="btn2" onclick="goStep(3)" disabled>Next — University destination →</button></div>
+    <div class="btn-row"><button class="btn-back" id="back2" onclick="goStep(1)">← Back</button><button class="btn-next" id="btn2" onclick="goStep(3)" disabled><span id="btn2Text">Next — Destination →</span></button></div>
   </div>
   <div id="s3" class="screen">
     <div class="card">
-      <div class="card-title">Where do you want to study?</div>
-      <div class="card-sub">The Abitur is recognised globally — your destination shapes which Leistungskurse and Numerus Clausus score GlobalCompass recommends.</div>
+      <div class="card-title" id="t5">Where do you want to study?</div>
+      <div class="card-sub" id="t6">Your destination shapes your target Abiturnote and Numerus Clausus strategy.</div>
       <div class="options-grid">
-        <div class="opt-card" onclick="selectDest(this,'Germany top universities LMU TU Munich Heidelberg Berlin Humboldt')"><span class="opt-emoji">🇩🇪</span><div class="opt-title">Germany — top universities</div><div class="opt-sub">LMU Munich, TU Munich, Heidelberg, Humboldt</div></div>
-        <div class="opt-card" onclick="selectDest(this,'Germany technical universities TU Munich TU Berlin RWTH Aachen')"><span class="opt-emoji">⚙️</span><div class="opt-title">Germany — TU universities</div><div class="opt-sub">TU Munich, TU Berlin, RWTH Aachen</div></div>
-        <div class="opt-card" onclick="selectDest(this,'UK Russell Group Oxford Cambridge Imperial using Abitur')"><span class="opt-emoji">🇬🇧</span><div class="opt-title">UK — Russell Group</div><div class="opt-sub">Oxford, Cambridge, Imperial, UCL</div></div>
-        <div class="opt-card" onclick="selectDest(this,'USA Ivy League MIT Stanford using Abitur as qualification')"><span class="opt-emoji">🇺🇸</span><div class="opt-title">USA — Top universities</div><div class="opt-sub">Ivy League, MIT, Stanford</div></div>
-        <div class="opt-card" onclick="selectDest(this,'UAE universities NYU Abu Dhabi AUS using German Abitur')"><span class="opt-emoji">🇦🇪</span><div class="opt-title">UAE universities</div><div class="opt-sub">NYU Abu Dhabi, AUS, UAEU</div></div>
-        <div class="opt-card" onclick="selectDest(this,'Open international keeping all options')"><span class="opt-emoji">🌍</span><div class="opt-title">Open — all options</div><div class="opt-sub">Germany and international</div></div>
+        <div class="opt-card" onclick="selectDest(this,'germany-top')"><span class="opt-emoji">🇩🇪</span><div class="opt-title" id="d1t">Germany — top universities</div><div class="opt-sub" id="d1s">LMU Munich, Heidelberg, Humboldt</div></div>
+        <div class="opt-card" onclick="selectDest(this,'germany-tu')"><span class="opt-emoji">⚙️</span><div class="opt-title" id="d2t">Germany — TU universities</div><div class="opt-sub" id="d2s">TU Munich, TU Berlin, RWTH Aachen</div></div>
+        <div class="opt-card" onclick="selectDest(this,'uk')"><span class="opt-emoji">🇬🇧</span><div class="opt-title" id="d3t">UK — Russell Group</div><div class="opt-sub" id="d3s">Oxford, Cambridge, Imperial, UCL</div></div>
+        <div class="opt-card" onclick="selectDest(this,'usa')"><span class="opt-emoji">🇺🇸</span><div class="opt-title" id="d4t">USA — Top universities</div><div class="opt-sub" id="d4s">Ivy League, MIT, Stanford</div></div>
+        <div class="opt-card" onclick="selectDest(this,'uae')"><span class="opt-emoji">🇦🇪</span><div class="opt-title" id="d5t">UAE universities</div><div class="opt-sub" id="d5s">NYU Abu Dhabi, AUS, UAEU</div></div>
+        <div class="opt-card" onclick="selectDest(this,'open')"><span class="opt-emoji">🌍</span><div class="opt-title" id="d6t">Open — all options</div><div class="opt-sub" id="d6s">Germany and international</div></div>
       </div>
     </div>
-    <div class="btn-row"><button class="btn-back" onclick="goStep(2)">← Back</button><button class="btn-next gold" id="btn3" onclick="generatePathway()" disabled>Meinen Abitur-Weg generieren ↗</button></div>
+    <div class="btn-row"><button class="btn-back" id="back3" onclick="goStep(2)">← Back</button><button class="btn-next gold" id="btn3" onclick="generatePathway()" disabled><span id="btn3Text">Generate my Abitur map ↗</span></button></div>
   </div>
   <div id="s4" class="screen">
     <div class="card">
       <div class="loading-wrap">
         <i class="ti ti-loader-2 loading-icon"></i>
-        <div class="loading-text" id="loadingText">Mapping your dream to Abitur subjects…</div>
-        <div class="loading-sub">GlobalCompass analysiert Leistungskurse, Numerus Clausus und Universitätszulassung</div>
+        <div class="loading-text" id="loadingText">Mapping your dream to Leistungskurse…</div>
+        <div class="loading-sub" id="loadingSub">GlobalCompass is analysing Numerus Clausus requirements</div>
       </div>
     </div>
   </div>
   <div id="s5" class="screen">
     <div class="result-hero">
-      <div class="result-tag">🇩🇪 Dein Abitur-Weg</div>
+      <div class="result-tag" id="resultTag">🇩🇪 Your Abitur map</div>
       <div class="result-career" id="resultCareer"></div>
       <p class="result-summary" id="resultSummary"></p>
     </div>
-    <div class="card"><div class="card-title" style="margin-bottom:14px">Deine Leistungskurse und Grundkurse</div><div class="lk-grid" id="lkOutput"></div></div>
+    <div class="card"><div class="card-title" style="margin-bottom:14px" id="lkTitle">Leistungskurse and Grundkurse</div><div id="subjOutput"></div></div>
     <div id="ncOutput"></div>
     <div id="examOutput"></div>
     <div id="uniOutput"></div>
     <div id="hiddenOutput"></div>
-    <div id="uaeOutput"></div>
-    <div class="card"><div class="ai-label">GlobalCompass Insight</div><div class="ai-bubble"><p id="aiInsight"></p></div></div>
-    <div class="action-row">
-      <button class="action-btn" style="background:#DD0000;color:#fff" onclick="goStep(1)">Neu starten</button>
-      <button class="action-btn" style="background:#FFCE00;color:#000" onclick="window.location.href='index.html'">Find German schools ↗</button>
-      <button class="action-btn" style="background:#EEF3FF;color:#2952A3" onclick="window.location.href='index.html'">Back to GlobalCompass ↗</button>
+    <div id="locOutput"></div>
+    <div class="card"><div style="font-size:10px;font-weight:700;color:#DD0000;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;font-family:'Montserrat',sans-serif" id="insightLabel">GlobalCompass insight</div><div style="background:#FFF0F0;border-radius:0 12px 12px 12px;padding:14px 16px;border:0.5px solid #FFD0D0"><p style="font-size:13px;color:#0D1F4A;line-height:1.7" id="aiInsight"></p></div></div>
+    <div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap">
+      <button style="font-size:12px;padding:10px 20px;border-radius:99px;cursor:pointer;font-weight:700;font-family:'Montserrat',sans-serif;border:none;background:#DD0000;color:#fff" onclick="goStep(1)" id="restartBtn">Start again</button>
+      <button style="font-size:12px;padding:10px 20px;border-radius:99px;cursor:pointer;font-weight:700;font-family:'Montserrat',sans-serif;border:none;background:#FFCC00;color:#000" onclick="window.location.href='index.html'" id="findBtn">Find German schools ↗</button>
+      <button style="font-size:12px;padding:10px 20px;border-radius:99px;cursor:pointer;font-weight:700;font-family:'Montserrat',sans-serif;border:none;background:#EEF3FF;color:#2952A3" onclick="window.location.href='index.html'" id="backBtn">Back to GlobalCompass ↗</button>
     </div>
   </div>
 </div>
 <script>
-let dream='',year='',destination='';
-document.getElementById('dreamInput').addEventListener('input',function(){dream=this.value.trim();document.getElementById('btn1').disabled=dream.length<10;});
-function setDream(t){document.getElementById('dreamInput').value=t;dream=t;document.getElementById('btn1').disabled=false;}
-function selectYear(el,v){year=v;document.querySelectorAll('#s2 .opt-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');document.getElementById('btn2').disabled=false;}
-function selectDest(el,v){destination=v;document.querySelectorAll('#s3 .opt-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');document.getElementById('btn3').disabled=false;}
+let currentLang = 'en';
+let dream='',dreamCategory='',studentYear='',studentDestination='';
+
+const translations = {
+  en: {
+    navTag: '🇩🇪 German Abitur Navigator',
+    badgeText: '🇩🇪 Leistungskurse · Grundkurse · Numerus Clausus · UAE schools',
+    heroTitle: 'From your dream to your<br><em>Abitur strategy</em>',
+    heroSub: 'GlobalCompass maps your career dream backwards to the optimal Leistungskurse, target Abiturnote, and university Numerus Clausus strategy.',
+    sl1t:'Dream', sl2t:'Year', sl3t:'Destination', sl4t:'Your Map',
+    t1:'What is your career dream?',
+    t2:'Do not think about Leistungskurse yet. Tell us your dream — GlobalCompass maps backwards to the optimal subjects for you.',
+    btn1Text:'Next — Your year →',
+    t3:'What year are you in?',
+    t4:'Leistungskurse are chosen in the Einführungsphase and locked in for the Qualifikationsphase.',
+    y1t:'Jahr 10/11 — Einführungsphase', y1s:'Planning Leistungskurse choices ahead',
+    y2t:'Jahr 12 — Qualifikationsphase 1', y2s:'First year of Abitur subject combination',
+    y3t:'Jahr 13 — Qualifikationsphase 2', y3s:'Preparing for final Abitur examinations',
+    btn2Text:'Next — Destination →',
+    t5:'Where do you want to study?',
+    t6:'Your destination shapes your target Abiturnote and Numerus Clausus strategy.',
+    d1t:'Germany — top universities', d1s:'LMU Munich, Heidelberg, Humboldt',
+    d2t:'Germany — TU universities', d2s:'TU Munich, TU Berlin, RWTH Aachen',
+    d3t:'UK — Russell Group', d3s:'Oxford, Cambridge, Imperial, UCL',
+    d4t:'USA — Top universities', d4s:'Ivy League, MIT, Stanford',
+    d5t:'UAE universities', d5s:'NYU Abu Dhabi, AUS, UAEU',
+    d6t:'Open — all options', d6s:'Germany and international',
+    btn3Text:'Generate my Abitur map ↗',
+    loadingText:'Mapping your dream to Leistungskurse…',
+    loadingSub:'GlobalCompass is analysing Numerus Clausus requirements',
+    resultTag:'🇩🇪 Your Abitur map',
+    lkTitle:'Leistungskurse and Grundkurse',
+    insightLabel:'GlobalCompass insight',
+    restartBtn:'Start again',
+    findBtn:'Find German schools ↗',
+    backBtn:'Back to GlobalCompass ↗',
+    examples:{medicine:'I want to study medicine and become a doctor',engineering:'I want to study engineering',law:'I want to study law',business:'I want to study business administration or economics',cs:'I want to study computer science',arts:'I want to study architecture or art'},
+    exampleLabels:{medicine:'Medizin',engineering:'Ingenieurwesen',law:'Jura',business:'BWL / Wirtschaft',cs:'Informatik',arts:'Architektur / Kunst'},
+    dreamPlaceholder:'e.g. I want to study medicine and become a doctor…'
+  },
+  de: {
+    navTag: '🇩🇪 Abitur-Navigator',
+    badgeText: '🇩🇪 Leistungskurse · Grundkurse · Numerus Clausus · Schulen in den VAE',
+    heroTitle: 'Von deinem Traum zu deiner<br><em>Abitur-Strategie</em>',
+    heroSub: 'GlobalCompass leitet von deinem Berufstraum die optimalen Leistungskurse, eine Zielabiturnote und eine Numerus-Clausus-Strategie ab.',
+    sl1t:'Traum', sl2t:'Jahr', sl3t:'Ziel', sl4t:'Deine Karte',
+    t1:'Was ist dein Berufstraum?',
+    t2:'Denke noch nicht an Leistungskurse. Erzähl uns deinen Traum — GlobalCompass leitet daraus die optimalen Fächer ab.',
+    btn1Text:'Weiter — Dein Jahr →',
+    t3:'In welchem Jahr bist du?',
+    t4:'Leistungskurse werden in der Einführungsphase gewählt und für die Qualifikationsphase festgelegt.',
+    y1t:'Jahr 10/11 — Einführungsphase', y1s:'Planung der Leistungskurse im Voraus',
+    y2t:'Jahr 12 — Qualifikationsphase 1', y2s:'Erstes Jahr der Abitur-Fächerkombination',
+    y3t:'Jahr 13 — Qualifikationsphase 2', y3s:'Vorbereitung auf die Abiturprüfungen',
+    btn2Text:'Weiter — Ziel →',
+    t5:'Wo möchtest du studieren?',
+    t6:'Dein Ziel bestimmt deine Zielabiturnote und Numerus-Clausus-Strategie.',
+    d1t:'Deutschland — Top-Universitäten', d1s:'LMU München, Heidelberg, Humboldt',
+    d2t:'Deutschland — TU-Universitäten', d2s:'TU München, TU Berlin, RWTH Aachen',
+    d3t:'Großbritannien — Russell Group', d3s:'Oxford, Cambridge, Imperial, UCL',
+    d4t:'USA — Top-Universitäten', d4s:'Ivy League, MIT, Stanford',
+    d5t:'Universitäten in den VAE', d5s:'NYU Abu Dhabi, AUS, UAEU',
+    d6t:'Offen — alle Optionen', d6s:'Deutschland und international',
+    btn3Text:'Meine Abitur-Karte erstellen ↗',
+    loadingText:'Analyse deines Traums für Leistungskurse…',
+    loadingSub:'GlobalCompass analysiert Numerus-Clausus-Anforderungen',
+    resultTag:'🇩🇪 Deine Abitur-Karte',
+    lkTitle:'Leistungskurse und Grundkurse',
+    insightLabel:'GlobalCompass-Tipp',
+    restartBtn:'Neu beginnen',
+    findBtn:'Deutsche Schulen finden ↗',
+    backBtn:'Zurück zu GlobalCompass ↗',
+    examples:{medicine:'Ich möchte Medizin studieren und Arzt werden',engineering:'Ich möchte Ingenieurwesen studieren',law:'Ich möchte Jura studieren',business:'Ich möchte BWL oder Wirtschaft studieren',cs:'Ich möchte Informatik studieren',arts:'Ich möchte Architektur oder Kunst studieren'},
+    exampleLabels:{medicine:'Medizin',engineering:'Ingenieurwesen',law:'Jura',business:'BWL / Wirtschaft',cs:'Informatik',arts:'Architektur / Kunst'},
+    dreamPlaceholder:'z.B. Ich möchte Medizin studieren und Arzt werden…'
+  }
+};
+
+function setLang(lang){
+  currentLang = lang;
+  document.getElementById('btnEN').classList.toggle('active', lang==='en');
+  document.getElementById('btnDE').classList.toggle('active', lang==='de');
+  const t = translations[lang];
+  for(const key in t){
+    if(key==='examples' || key==='exampleLabels' || key==='dreamPlaceholder') continue;
+    const el = document.getElementById(key);
+    if(el) el.innerHTML = t[key];
+  }
+  document.getElementById('dreamInput').placeholder = t.dreamPlaceholder;
+  document.querySelectorAll('.ep-label').forEach((el,i)=>{
+    const keys = Object.keys(t.exampleLabels);
+    if(keys[i]) el.textContent = t.exampleLabels[keys[i]];
+  });
+}
+
 function goStep(n){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById('s'+n).classList.add('active');updateSteps(n);}
-function updateSteps(active){for(let i=1;i<=4;i++){const circle=document.getElementById('sc'+i);const label=circle?.nextElementSibling;if(!circle)continue;if(i<active){circle.className='step-circle done';circle.innerHTML='✓';}else if(i===active){circle.className='step-circle active';circle.innerHTML=i;if(label)label.className='step-label active';}else{circle.className='step-circle pending';circle.innerHTML=i;if(label)label.className='step-label';}const line=document.getElementById('sl'+i);if(line)line.className=i<active?'step-line done':'step-line';}}
+function updateSteps(active){for(let i=1;i<=4;i++){const circle=document.getElementById('sc'+i);if(!circle)continue;if(i<active){circle.className='step-circle done';circle.innerHTML='✓';}else if(i===active){circle.className='step-circle active';circle.innerHTML=i;}else{circle.className='step-circle pending';circle.innerHTML=i;}const line=document.getElementById('sl'+i);if(line)line.className=i<active?'step-line done':'step-line';}}
+
+document.getElementById('dreamInput').addEventListener('input',function(){dream=this.value.trim();document.getElementById('btn1').disabled=dream.length<10;});
+function setDream(key){const text=translations[currentLang].examples[key];document.getElementById('dreamInput').value=text;dream=text;dreamCategory=key;document.getElementById('btn1').disabled=false;}
+function selectYear(el,val){studentYear=val;document.querySelectorAll('#s2 .opt-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');document.getElementById('btn2').disabled=false;}
+function selectDest(el,val){studentDestination=val;document.querySelectorAll('#s3 .opt-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');document.getElementById('btn3').disabled=false;}
 async function generatePathway(){
   goStep(4);
-  const msgs=['Mapping your dream to Abitur subjects…','Analysing Numerus Clausus requirements…','Checking university admission requirements…','Building your complete Abitur pathway…'];
+  const msgs = currentLang==='de'
+    ? ['Analyse deines Traums…','Berechnung der Numerus-Clausus-Strategie…','Vorbereitung der Prüfungsstruktur…','Fertigstellung deiner Karte…']
+    : ['Mapping your dream to Leistungskurse…','Calculating Numerus Clausus strategy…','Preparing exam structure guidance…','Finalising your complete map…'];
   let mi=0;const iv=setInterval(()=>{mi=(mi+1)%msgs.length;document.getElementById('loadingText').textContent=msgs[mi];},1800);
-  const prompt='You are GlobalCompass German Abitur Navigator expert in the German Abitur system.\nDREAM: "'+dream+'"\nYEAR: "'+year+'"\nDESTINATION: "'+destination+'"\n\nKey facts: Students choose 2 Leistungskurse LK advanced 5 hours per week at least one must be German a foreign language Mathematics or a natural science. All other subjects are Grundkurse GK standard 3 hours per week. Graded 0-15 points per subject. Overall Abiturnote scale 1.0 to 4.0 where 1.0 is best. Numerus Clausus NC is minimum Abitur grade required for specific programmes. Medicine NC typically 1.0 to 1.3. Abitur entitles holders to study any subject at German universities.\n\nRespond ONLY with valid JSON:\n{"career":"career title in English","summary":"2 sentence summary","leistungskurse":[{"name":"Subject German and English","type":"LK","why":"one sentence"},{"name":"Subject German and English","type":"LK","why":"one sentence"}],"grundkurse":[{"name":"Subject name","type":"GK","why":"one sentence"},{"name":"Subject name","type":"GK","why":"one sentence"},{"name":"Subject name","type":"GK","why":"one sentence"}],"targetNC":"1.2","targetPoints":560,"examStructure":[{"exam":"1. Schriftliche Prüfung","detail":"Written exam in first Leistungskurs 4 hours"},{"exam":"2. Schriftliche Prüfung","detail":"Written exam in second Leistungskurs 4 hours"},{"exam":"3. Schriftliche Prüfung","detail":"Written exam in one Grundkurs 3 hours"},{"exam":"Mündliche Prüfung","detail":"Oral exam in one Grundkurs 20 minutes"}],"targetUniversities":[{"name":"German university","programme":"specific programme","nc":"required NC"},{"name":"German university","programme":"specific programme","nc":"required NC"},{"name":"International university","programme":"specific programme","nc":"Abitur equivalent"}],"hiddenRequirements":["hidden requirement 1","hidden requirement 2","hidden requirement 3"],"uaeSpecific":"2 sentences for German students in UAE mentioning Deutsche Schule Dubai if relevant","aiInsight":"2-3 sentence personalised insight with surprising non-obvious advice"}';
+
+  const langInstruction = currentLang==='de'
+    ? 'IMPORTANT: Respond ENTIRELY in German (Deutsch), in every single field, from start to finish. Do not mix in English anywhere.'
+    : 'IMPORTANT: Respond ENTIRELY in English, in every single field. You may use German terms like Leistungskurse, Grundkurse, Abitur, and Numerus Clausus as they are standard terms, but all explanatory sentences must be in English.';
+
+  const prompt = 'You are GlobalCompass German Abitur Navigator expert in the German Abitur system.\nDREAM: "'+dream+'"\nYEAR: "'+studentYear+'"\nDESTINATION: "'+studentDestination+'"\n\n'+langInstruction+'\n\nKey facts: Students choose 2 Leistungskurse LK advanced 5 hours per week at least one must be German a foreign language Mathematics or a natural science. All other subjects are Grundkurse GK standard 3 hours per week. Graded 0-15 points per subject. Overall Abiturnote scale 1.0 to 4.0 where 1.0 is best. Numerus Clausus NC is minimum Abitur grade required for specific programmes. Medicine NC typically 1.0 to 1.3. Abitur entitles holders to study any subject at German universities.\n\nDestination context: germany-top means highly selective universities like LMU or Heidelberg. germany-tu means technical universities, often slightly less NC pressure for engineering but very rigorous. uk, usa, uae, open should each give realistic Abitur-equivalent guidance. Scale NC and advice honestly to match destination.\n\nRespond ONLY with valid JSON:\n{"career":"career title","summary":"2 sentence summary","leistungskurse":[{"name":"Subject name","type":"LK","why":"one sentence"},{"name":"Subject name","type":"LK","why":"one sentence"}],"grundkurse":[{"name":"Subject name","type":"GK","why":"one sentence"},{"name":"Subject name","type":"GK","why":"one sentence"},{"name":"Subject name","type":"GK","why":"one sentence"}],"targetNC":"1.2","targetPoints":560,"examStructure":[{"exam":"1. Schriftliche Prüfung","detail":"detail"},{"exam":"2. Schriftliche Prüfung","detail":"detail"},{"exam":"3. Schriftliche Prüfung","detail":"detail"},{"exam":"Mündliche Prüfung","detail":"detail"}],"targetUniversities":[{"name":"German university","programme":"specific programme","nc":"required NC"},{"name":"German university","programme":"specific programme","nc":"required NC"},{"name":"International university","programme":"specific programme","nc":"Abitur equivalent"}],"hiddenRequirements":["requirement 1","requirement 2","requirement 3"],"locationSpecific":"2-3 sentences relevant to studying the Abitur internationally, mentioning German international schools where relevant","aiInsight":"2-3 sentence personalised insight with surprising non-obvious advice"}';
+
   try{
     const res=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:prompt,max_tokens:2000})});
     const data=await res.json();clearInterval(iv);
@@ -232,22 +304,34 @@ async function generatePathway(){
     showResults(JSON.parse(text));
   }catch(e){console.error('German Abitur Navigator error:',e);clearInterval(iv);showFallback();}
 }
+
 function showResults(r){
   document.getElementById('resultCareer').textContent=r.career;
   document.getElementById('resultSummary').textContent=r.summary;
   document.getElementById('aiInsight').textContent=r.aiInsight;
-  let lkHTML='';
-  r.leistungskurse.forEach(s=>{lkHTML+='<div class="lk-card lk"><span class="lk-badge badge-lk">Leistungskurs LK</span><div class="lk-name-light">'+s.name+'</div><div class="lk-why-light">'+s.why+'</div></div>';});
-  r.grundkurse.forEach(s=>{lkHTML+='<div class="lk-card gk"><span class="lk-badge badge-gk">Grundkurs GK</span><div class="lk-name-dark">'+s.name+'</div><div class="lk-why-dark">'+s.why+'</div></div>';});
-  document.getElementById('lkOutput').innerHTML=lkHTML;
-  document.getElementById('ncOutput').innerHTML='<div class="nc-box"><div class="nc-text"><h4>Numerus Clausus NC target</h4><p>Target '+r.targetPoints+' points — Abiturnote required for your programme</p></div><div class="nc-score">'+r.targetNC+'</div></div>';
-  document.getElementById('examOutput').innerHTML='<div class="exam-box"><div class="exam-title">Abitur Prüfungsstruktur — Exam structure</div><div class="exam-grid">'+r.examStructure.map(e=>'<div class="exam-item"><div class="exam-label">'+e.exam+'</div><div class="exam-content">'+e.detail+'</div></div>').join('')+'</div></div>';
-  document.getElementById('uniOutput').innerHTML='<div class="uni-box"><div class="uni-title">Target universities for your pathway</div><div class="uni-grid">'+r.targetUniversities.map(u=>'<div class="uni-item"><div class="uni-name">'+u.name+'</div><div class="uni-detail">'+u.programme+'</div><div style="font-size:10px;color:#DD0000;font-weight:700;margin-top:3px">NC: '+u.nc+'</div></div>').join('')+'</div></div>';
-  document.getElementById('hiddenOutput').innerHTML='<div class="hidden-box"><div class="hidden-title">Hidden requirements — was niemand dir sagt</div>'+r.hiddenRequirements.map(h=>'<div class="hidden-item"><span>→</span><span>'+h+'</span></div>').join('')+'</div>';
-  document.getElementById('uaeOutput').innerHTML='<div class="uae-box"><div class="uae-title">UAE-specific guidance</div><div class="uae-content">'+r.uaeSpecific+'</div></div>';
+
+  const lkHtml = r.leistungskurse.map(s=>'<div style="background:#DD0000;border-radius:12px;padding:14px;margin-bottom:8px"><div style="font-size:9px;padding:2px 8px;border-radius:99px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;font-family:Montserrat,sans-serif;margin-bottom:6px;display:inline-block;background:rgba(255,204,0,0.25);color:#FFCC00">LK</div><div style="font-size:13px;font-weight:700;margin-bottom:3px;color:#fff;font-family:Montserrat,sans-serif">'+s.name+'</div><div style="font-size:11px;line-height:1.5;color:rgba(255,255,255,0.78)">'+s.why+'</div></div>').join('');
+  const gkHtml = r.grundkurse.map(s=>'<div style="background:#F8F9FF;border:0.5px solid #E0E8F5;border-radius:12px;padding:14px;margin-bottom:8px"><div style="font-size:9px;padding:2px 8px;border-radius:99px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;font-family:Montserrat,sans-serif;margin-bottom:6px;display:inline-block;background:#E0E8F5;color:#4A6FA5">GK</div><div style="font-size:13px;font-weight:700;margin-bottom:3px;color:#0D1F4A;font-family:Montserrat,sans-serif">'+s.name+'</div><div style="font-size:11px;line-height:1.5;color:#4A6FA5">'+s.why+'</div></div>').join('');
+  document.getElementById('subjOutput').innerHTML = lkHtml + gkHtml;
+
+  document.getElementById('ncOutput').innerHTML = '<div style="background:#1B3A7A;border-radius:14px;padding:20px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between"><div><div style="font-family:Montserrat,sans-serif;font-size:11px;font-weight:700;color:#F5C842;text-transform:uppercase;margin-bottom:3px">Target Numerus Clausus</div><div style="font-size:12px;color:rgba(255,255,255,0.7)">Target points: '+r.targetPoints+'/900</div></div><div style="font-family:\'Playfair Display\',serif;font-size:32px;color:#F5C842">'+r.targetNC+'</div></div>';
+
+  document.getElementById('examOutput').innerHTML = '<div class="card"><div style="font-family:Montserrat,sans-serif;font-size:11px;font-weight:700;color:#DD0000;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px">Exam structure</div>'+r.examStructure.map(e=>'<div style="margin-bottom:8px"><div style="font-size:13px;font-weight:700;color:#0D1F4A">'+e.exam+'</div><div style="font-size:12px;color:#4A6FA5">'+e.detail+'</div></div>').join('')+'</div>';
+
+  document.getElementById('uniOutput').innerHTML = '<div style="background:#EEF3FF;border-radius:12px;padding:16px;margin-bottom:14px"><div style="font-family:Montserrat,sans-serif;font-size:11px;font-weight:700;color:#1B3A7A;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px">Target universities</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">'+r.targetUniversities.map(u=>'<div style="background:#fff;border-radius:8px;padding:10px;border:0.5px solid #C0D0E8"><div style="font-size:11px;font-weight:700;color:#1B3A7A;font-family:Montserrat,sans-serif">'+u.name+'</div><div style="font-size:11px;color:#4A6FA5">'+u.programme+'</div><div style="font-size:10px;color:#DD0000;font-weight:700;margin-top:3px">NC: '+u.nc+'</div></div>').join('')+'</div></div>';
+
+  document.getElementById('hiddenOutput').innerHTML = '<div style="background:#FFF8E6;border:1.5px solid #FFCC00;border-radius:12px;padding:16px;margin-bottom:14px"><div style="font-size:12px;font-weight:700;color:#7C3A00;margin-bottom:8px;font-family:Montserrat,sans-serif;text-transform:uppercase">Hidden requirements</div>'+r.hiddenRequirements.map(h=>'<div style="font-size:12px;color:#2C1800;display:flex;gap:8px;margin-bottom:5px"><span>→</span><span>'+h+'</span></div>').join('')+'</div>';
+
+  document.getElementById('locOutput').innerHTML = '<div style="background:#000;border-radius:12px;padding:16px;margin-bottom:14px"><div style="font-family:Montserrat,sans-serif;font-size:11px;font-weight:700;color:#FFCC00;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px">Guidance for your location</div><div style="font-size:12px;color:rgba(255,255,255,0.85);line-height:1.7">'+r.locationSpecific+'</div></div>';
+
   goStep(5);updateSteps(4);
 }
-function showFallback(){showResults({career:"Medical Doctor",summary:"Your pathway to medicine through the German Abitur requires the strongest possible science Leistungskurse — Biologie and Chemie at LK level — alongside the highest possible Abiturnote since Medicine has the most competitive NC in Germany.",leistungskurse:[{name:"Biologie / Biology",type:"LK",why:"Directly required for medicine — biology at Leistungskurs level is the strongest signal to medical school admissions"},{name:"Chemie / Chemistry",type:"LK",why:"Essential alongside Biology for medicine — demonstrates the scientific depth German medical schools demand"}],grundkurse:[{name:"Mathematik / Mathematics",type:"GK",why:"Required core subject — strong performance supports scientific credibility"},{name:"Deutsch / German",type:"GK",why:"Compulsory core subject — essential for studying medicine at German universities"},{name:"Englisch / English",type:"GK",why:"Foreign language requirement — increasingly important for international medical research"}],targetNC:"1.0",targetPoints:600,examStructure:[{exam:"1. Schriftliche Prüfung",detail:"Written exam in Biologie LK — 4 hours covering entire Leistungskurs content"},{exam:"2. Schriftliche Prüfung",detail:"Written exam in Chemie LK — 4 hours laboratory theory and advanced chemistry"},{exam:"3. Schriftliche Prüfung",detail:"Written exam in one Grundkurs typically Mathematik or Deutsch — 3 hours"},{exam:"Mündliche Prüfung",detail:"Oral exam in one Grundkurs — 30 minutes preparation plus 20 minutes presentation"}],targetUniversities:[{name:"LMU München",programme:"Medizin Staatsexamen",nc:"1.0 extremely competitive"},{name:"Charité Berlin",programme:"Medizin Staatsexamen",nc:"1.0 to 1.1"},{name:"Universität Heidelberg",programme:"Medizin Staatsexamen",nc:"1.0 to 1.2"},{name:"NYU Abu Dhabi",programme:"Biology pre-med pathway",nc:"Abitur 1.0 to 1.5 plus SAT"}],hiddenRequirements:["German medicine NC of 1.0 means near-perfect grades across ALL Abitur subjects not just Biology and Chemistry since every point in every subject counts toward the Abiturnote","The Medizinertest TMS is a separate medical aptitude test increasingly required alongside NC at major German medical schools — begin preparation early","Wartesemester system means students who do not achieve required NC can wait semesters to accumulate priority points but this can take 8 to 14 semesters for Medicine"],uaeSpecific:"German students in Dubai typically attend the Deutsche Schule Dubai which offers the full German Gymnasium curriculum leading to the Abitur. Students from other curricula seeking German university admission should note that the Feststellungsprüfung at a Studienkolleg may be required before university entry.",aiInsight:"One non-obvious insight — many students assume Medicine NC of 1.0 means they need perfect Biologie and Chemie grades and can relax in other subjects. In reality the Abiturnote is a composite of all subjects — a 15-point grade in Sport or Art contributes equally to your final score. Strategic attention to all subjects not just sciences can be the difference between 1.0 and 1.1."});}
+
+function showFallback(){
+  showResults({career:"Arzt / Doctor",summary:"Ihr Weg zur Medizin erfordert exzellente Leistungen in den naturwissenschaftlichen Leistungskursen und eine sehr niedrige Numerus-Clausus-Zahl.",leistungskurse:[{name:"Biologie",why:"Direkte Grundlage für das Medizinstudium, von allen Universitäten erwartet"},{name:"Chemie",why:"Essentiell für Biochemie und Pharmakologie im Studium"}],grundkurse:[{name:"Mathematik",why:"Wichtig für statistisches Denken in der Medizin"},{name:"Englisch",why:"Internationale Fachliteratur ist meist auf Englisch"},{name:"Deutsch",why:"Pflichtfach, wichtig für die mündliche Kommunikation als Arzt"}],targetNC:"1.1",targetPoints:780,examStructure:[{exam:"1. Schriftliche Prüfung",detail:"Schriftliche Prüfung im ersten Leistungskurs, 4 Stunden"},{exam:"2. Schriftliche Prüfung",detail:"Schriftliche Prüfung im zweiten Leistungskurs, 4 Stunden"},{exam:"3. Schriftliche Prüfung",detail:"Schriftliche Prüfung in einem Grundkurs, 3 Stunden"},{exam:"Mündliche Prüfung",detail:"Mündliche Prüfung in einem Grundkurs, 20 Minuten"}],targetUniversities:[{name:"LMU München",programme:"Humanmedizin",nc:"1.0"},{name:"Universität Heidelberg",programme:"Humanmedizin",nc:"1.1"},{name:"NYU Abu Dhabi",programme:"Pre-Medical Track",nc:"Abitur-Äquivalent erforderlich"}],hiddenRequirements:["Der Medizinertest TMS verbessert die Zulassungschancen erheblich, unabhängig von der Abiturnote","Ein Großteil der Medizinplätze wird über die Wartezeitquote vergeben, nicht nur über die Abiturnote","Manche Bundesländer gewichten Naturwissenschafts-Leistungskurse zusätzlich bei der Bewerbung"],locationSpecific:"Schüler an der Deutsche Schule Dubai oder anderen deutschen Auslandsschulen legen das reguläre deutsche Abitur ab und können sich genauso wie Schüler in Deutschland über hochschulstart.de bewerben. Die Entfernung von Deutschland erfordert nur eine frühzeitige Planung der Bewerbungsfristen.",aiInsight:"Ein nicht offensichtlicher Tipp: Viele Medizin-Interessierte unterschätzen den TMS-Test und konzentrieren sich nur auf die Abiturnote. Ein sehr gutes TMS-Ergebnis kann selbst bei einer Abiturnote von 1.3 statt 1.0 den Zugang zur Medizin eröffnen — die Vorbereitung sollte bereits in der Qualifikationsphase 1 beginnen."});
+}
+
+setLang('en');
 </script>
 </body>
 </html>
