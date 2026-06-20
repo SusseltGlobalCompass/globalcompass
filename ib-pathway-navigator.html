@@ -252,12 +252,12 @@ async function generatePathway(){
   const iv=setInterval(()=>{mi=(mi+1)%msgs.length;document.getElementById('loadingText').textContent=msgs[mi];},1800);
   const prompt='You are GlobalCompass IB Pathway Navigator built with input from experienced IB teachers.\nDREAM: "'+dream+'"\nIB STAGE: "'+stage+'"\nDESTINATION: "'+destination+'"\nREGION: "'+region+'"\n\nMiddle East students often over-concentrate in Sciences and Business while undervaluing Humanities causing problems for Law Psychology Politics Journalism pathways. Flag this if relevant.\n\nRespond ONLY with valid JSON:\n{"career":"career title 2-4 words","summary":"2 sentence personalised summary","subjects":[{"name":"Subject","group":"IB Group","level":"HL","why":"one sentence"},{"name":"Subject","group":"IB Group","level":"HL","why":"one sentence"},{"name":"Subject","group":"IB Group","level":"HL","why":"one sentence"},{"name":"Subject","group":"IB Group","level":"SL","why":"one sentence"},{"name":"Subject","group":"IB Group","level":"SL","why":"one sentence"},{"name":"Subject","group":"IB Group","level":"SL","why":"one sentence"}],"regionalWarning":"specific warning or null","hiddenRequirements":["requirement 1","requirement 2","requirement 3"],"tok":"2 sentence TOK suggestion","ee":"2 sentence EE suggestion","cas":"one sentence CAS suggestion","targetScore":36,"mypGuidance":[{"group":"MYP group","advice":"specific advice"},{"group":"MYP group","advice":"specific advice"},{"group":"MYP group","advice":"specific advice"},{"group":"MYP group","advice":"specific advice"}],"aiInsight":"2-3 sentence personalised insight with one surprising non-obvious advice"}';
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1500,messages:[{role:'user',content:prompt}]})});
+    const res=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:prompt,max_tokens:2000})});
     const data=await res.json();
     clearInterval(iv);
     const text=data.content[0].text.replace(/```json|```/g,'').trim();
     showResults(JSON.parse(text));
-  }catch(e){clearInterval(iv);showFallback();}
+  }catch(e){console.error('IB Navigator error:',e);clearInterval(iv);showFallback();}
 }
 function showResults(r){
   document.getElementById('resultCareer').textContent=r.career;
