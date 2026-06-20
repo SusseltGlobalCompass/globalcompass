@@ -91,28 +91,28 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
       <div class="wm-compass">C<span class="o">O</span>MPASS</div>
     </div>
   </div>
-  <div class="nav-tag">🔒 Academic Passport · IB</div>
+  <div class="nav-tag">Track my scores · IB</div>
 </nav>
 
 <div class="hero-bar">
-  <div class="priv-badge">🔒 Private · Only you can see your data · Auto-deleted after graduation</div>
-  <h1 class="hero-h">Your private<br><em>Academic Passport</em></h1>
-  <p class="hero-p">Track your IB grades, see exactly what you need for your target university, and get AI guidance on which subjects need attention — completely private to you.</p>
+  <div class="priv-badge">Private and yours alone · Auto-deleted after graduation</div>
+  <h1 class="hero-h">Track my<br><em>scores</em></h1>
+  <p class="hero-p">Your private academic record. See exactly what you need for your target university, get AI guidance on which subjects need attention, and know your data disappears the moment you no longer need it.</p>
 </div>
 
 <div class="main">
 
   <div id="s-login" class="screen active">
     <div class="card">
-      <div class="card-title">Sign in to your Passport</div>
+      <div class="card-title">Sign in to track your scores</div>
       <div class="card-sub">No password needed. Enter your email and we'll send you a secure one-time link.</div>
       <label class="field-label">Your email address</label>
       <input type="email" class="text-input" id="loginEmail" placeholder="you@example.com">
       <button class="btn-primary" id="btnSendLink" onclick="sendMagicLink()">Send me a secure login link</button>
       <div id="loginStatus"></div>
-      <div class="privacy-note">
-        <span>🔒</span>
-        <span>Your grades are visible only to you. Not even GlobalCompass staff can view your individual records. All data is automatically deleted 90 days after you confirm university acceptance.</span>
+      <div class="privacy-note" style="flex-direction:column;gap:10px">
+        <div style="display:flex;gap:10px;align-items:flex-start"><i class="ti ti-lock" style="font-size:16px;color:#2952A3;margin-top:1px"></i><span>Only you can see this. Not your school, not your parents, not GlobalCompass staff.</span></div>
+        <div style="display:flex;gap:10px;align-items:flex-start"><i class="ti ti-clock" style="font-size:16px;color:#2952A3;margin-top:1px"></i><span>Permanently deleted 90 days after you confirm your university place — automatically, no action needed.</span></div>
       </div>
     </div>
   </div>
