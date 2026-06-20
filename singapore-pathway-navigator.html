@@ -247,11 +247,11 @@ async function generatePathway(){
   let mi=0;const iv=setInterval(()=>{mi=(mi+1)%msgs.length;document.getElementById('loadingText').textContent=msgs[mi];},1800);
   const prompt='You are GlobalCompass Singapore Pathway Navigator combining academic excellence with genuine compassion for student wellbeing.\nDREAM: "'+dream+'"\nLEVEL: "'+level+'"\nDESTINATION: "'+destination+'"\nPROFILE: "'+profile+'"\n\nSingapore A-Levels use H1 H2 H3 system. Standard combination 3 H2 plus 1 H1 plus General Paper compulsory plus Project Work. If profile mentions stress or switching address with compassion and honesty.\n\nRespond ONLY with valid JSON:\n{"career":"career title","summary":"2 sentence summary","subjects":[{"name":"Subject","level":"H2","why":"one sentence"},{"name":"Subject","level":"H2","why":"one sentence"},{"name":"Subject","level":"H2","why":"one sentence"},{"name":"Subject","level":"H1","why":"one sentence"},{"name":"General Paper","level":"compulsory","why":"Compulsory for all Singapore A-Level students"}],"targetScore":"AAA/B","targetRank":85,"stressAcknowledgement":"2 honest compassionate sentences about Singapore education pressure","workloadStrategies":[{"strategy":"Strategy name","advice":"one sentence"},{"strategy":"Strategy name","advice":"one sentence"},{"strategy":"Strategy name","advice":"one sentence"},{"strategy":"Strategy name","advice":"one sentence"}],"ccaRecommendations":[{"name":"CCA name","why":"one sentence"},{"name":"CCA name","why":"one sentence"},{"name":"CCA name","why":"one sentence"}],"hiddenRequirements":["requirement 1","requirement 2","requirement 3"],"uaeSpecific":"2-3 sentences for Singapore students in UAE mentioning holiday tuition and Dubai schools","switchingAdvice":"2 honest sentences about whether switching to IB makes sense","aiInsight":"2-3 sentence personalised insight with surprising non-obvious advice"}';
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1500,messages:[{role:'user',content:prompt}]})});
+    const res=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:prompt,max_tokens:2000})});
     const data=await res.json();clearInterval(iv);
     const text=data.content[0].text.replace(/```json|```/g,'').trim();
     showResults(JSON.parse(text));
-  }catch(e){clearInterval(iv);showFallback();}
+  }catch(e){console.error('Singapore Navigator error:',e);clearInterval(iv);showFallback();}
 }
 function showResults(r){
   document.getElementById('resultCareer').textContent=r.career;
