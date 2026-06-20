@@ -231,11 +231,11 @@ async function generatePathway(){
   let mi=0;const iv=setInterval(()=>{mi=(mi+1)%msgs.length;document.getElementById('loadingText').textContent=msgs[mi];},1800);
   const prompt='You are GlobalCompass French Baccalaureat Navigator expert in the Nouveau Bac reforme 2021.\nDREAM: "'+dream+'"\nYEAR: "'+year+'"\nDESTINATION: "'+destination+'"\n\nNou veau Bac 2021: students choose 3 specialites in Premiere keep 2 in Terminale. Core includes French Philosophy compulsory History-Geography 2 languages Sciences PE. 40% continuous 60% final exams including Grand Oral 20 minutes linking 2 specialites.\n\nAvailable specialites: Mathematiques, Physique-Chimie, SVT, Sciences de lIngenieur, NSI, HGGSP, SES, HLP, LLCE, Arts, Biologie-Ecologie.\n\nRespond ONLY with valid JSON:\n{"career":"career title","summary":"2 sentence summary in English","specialitesPremiere":[{"name":"Specialite","status":"keep","why":"one sentence"},{"name":"Specialite","status":"keep","why":"one sentence"},{"name":"Specialite","status":"drop","why":"one sentence why drop in Terminale"}],"coreSubjectsNote":"one sentence about key core subjects","targetBacScore":16,"grandOralTopic":"specific Grand Oral question linking 2 kept specialites in French","grandOralAdvice":"2 sentences on Grand Oral approach","parcoursup":[{"formation":"Formation name","advice":"one sentence"},{"formation":"Formation name","advice":"one sentence"},{"formation":"Formation name","advice":"one sentence"}],"hiddenRequirements":["requirement 1","requirement 2","requirement 3"],"uaeSpecific":"2 sentences UAE specific advice mentioning Dubai French schools","aiInsight":"2-3 sentence personalised insight with surprising advice"}';
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1400,messages:[{role:'user',content:prompt}]})});
+    const res=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:prompt,max_tokens:2000})});
     const data=await res.json();clearInterval(iv);
     const text=data.content[0].text.replace(/```json|```/g,'').trim();
     showResults(JSON.parse(text));
-  }catch(e){clearInterval(iv);showFallback();}
+  }catch(e){console.error('French Bac Navigator error:',e);clearInterval(iv);showFallback();}
 }
 function showResults(r){
   document.getElementById('resultCareer').textContent=r.career;
