@@ -244,11 +244,11 @@ async function generatePathway(){
   let mi=0;const iv=setInterval(()=>{mi=(mi+1)%msgs.length;document.getElementById('loadingText').textContent=msgs[mi];},1800);
   const prompt='You are GlobalCompass CBSE Stream Navigator.\nDREAM: "'+dream+'"\nCLASS: "'+cls+'"\nDESTINATION: "'+destination+'"\nCONTEXT: "'+context+'"\n\nBe honest. If family is pushing Science but dream does not require it flag this compassionately.\n\nRespond ONLY with valid JSON:\n{"career":"career title","summary":"2 sentence summary","stream":"Science|Commerce|Humanities","streamColor":"science|commerce|humanities","streamTagline":"one line","streamDescription":"3 sentences","coreSubjects":["s1","s2","s3","s4"],"optionalSubjects":["o1","o2"],"competitiveExams":[{"name":"exam","description":"one sentence"},{"name":"exam","description":"one sentence"},{"name":"exam","description":"one sentence"}],"familyPressureWarning":"honest compassionate message or null","hiddenRequirements":["r1","r2","r3"],"roadmap":[{"class":"Class 9-10","action":"action"},{"class":"Class 11","action":"action"},{"class":"Class 12","action":"action"},{"class":"After Class 12","action":"action"}],"uaeSpecific":"2 sentences UAE specific advice","aiInsight":"2-3 sentence personalised insight with surprising advice"}';
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1400,messages:[{role:'user',content:prompt}]})});
+    const res=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:prompt,max_tokens:2000})});
     const data=await res.json();clearInterval(iv);
     const text=data.content[0].text.replace(/```json|```/g,'').trim();
     showResults(JSON.parse(text));
-  }catch(e){clearInterval(iv);showFallback();}
+  }catch(e){console.error('CBSE Navigator error:',e);clearInterval(iv);showFallback();}
 }
 function showResults(r){
   document.getElementById('resultCareer').textContent=r.career;
