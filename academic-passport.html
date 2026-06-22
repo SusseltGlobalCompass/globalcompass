@@ -74,6 +74,10 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
 .loading-spin{font-size:24px;color:#1B3A7A;animation:spin 1s linear infinite;text-align:center;display:block;margin:30px auto}
 @keyframes spin{to{transform:rotate(360deg)}}
 </style>
+<script type="module">
+import { polyfillCountryFlagEmojis } from "https://cdn.jsdelivr.net/npm/country-flag-emoji-polyfill@0.1/dist/index.mjs";
+polyfillCountryFlagEmojis();
+</script>
 </head>
 <body>
 

@@ -70,6 +70,10 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#1
 .loading i{font-size:32px;color:#1D9E75;animation:spin 1s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 </style>
+<script type="module">
+import { polyfillCountryFlagEmojis } from "https://cdn.jsdelivr.net/npm/country-flag-emoji-polyfill@0.1/dist/index.mjs";
+polyfillCountryFlagEmojis();
+</script>
 </head>
 <body>
 <div class="container">
