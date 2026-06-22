@@ -8,36 +8,36 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
+body{font-family:'Twemoji Country Flags','Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
 .screen{display:none}.screen.active{display:block}
 .nav{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:#1B3A7A}
 .nav-logo{display:flex;align-items:center;gap:10px}
 .wm-wrap{display:flex;flex-direction:column}
 .wm-global-row{display:flex;align-items:center;gap:5px;margin-bottom:2px}
 .wm-rule{height:0.7px;background:rgba(245,200,66,0.5);flex:1}
-.wm-global{font-family:'Montserrat',sans-serif;font-size:7px;font-weight:300;color:#fff;letter-spacing:0.3em;text-transform:uppercase}
-.wm-compass{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:800;color:#fff;letter-spacing:0.07em;text-transform:uppercase;line-height:1}
+.wm-global{font-family:'Twemoji Country Flags','Montserrat',sans-serif;font-size:7px;font-weight:300;color:#fff;letter-spacing:0.3em;text-transform:uppercase}
+.wm-compass{font-family:'Twemoji Country Flags','Montserrat',sans-serif;font-size:14px;font-weight:800;color:#fff;letter-spacing:0.07em;text-transform:uppercase;line-height:1}
 .wm-compass .o{color:#F5C842}
-.nav-tag{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;color:#F5C842;letter-spacing:0.12em;text-transform:uppercase;background:rgba(245,200,66,0.12);padding:4px 12px;border-radius:99px;border:0.5px solid rgba(245,200,66,0.3)}
+.nav-tag{font-family:'Twemoji Country Flags','Montserrat',sans-serif;font-size:10px;font-weight:600;color:#F5C842;letter-spacing:0.12em;text-transform:uppercase;background:rgba(245,200,66,0.12);padding:4px 12px;border-radius:99px;border:0.5px solid rgba(245,200,66,0.3)}
 .hero-bar{background:linear-gradient(135deg,#0D1F4A,#1B3A7A);padding:28px 24px;text-align:center;border-bottom:2px solid #F5C842}
-.hero-eyebrow{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:#F5C842;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:8px}
-.hero-h{font-family:'Playfair Display',serif;font-size:26px;font-weight:500;color:#fff;line-height:1.3;margin-bottom:6px}
+.hero-eyebrow{font-family:'Twemoji Country Flags','Montserrat',sans-serif;font-size:10px;font-weight:700;color:#F5C842;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:8px}
+.hero-h{font-family:'Twemoji Country Flags','Playfair Display',serif;font-size:26px;font-weight:500;color:#fff;line-height:1.3;margin-bottom:6px}
 .hero-h em{color:#F5C842;font-style:normal}
 .hero-p{font-size:12px;color:#A8C4F5;line-height:1.7;max-width:520px;margin:0 auto;font-weight:300}
-.ib-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(245,200,66,0.15);border:1px solid rgba(245,200,66,0.4);border-radius:99px;padding:4px 14px;font-size:11px;font-weight:700;color:#F5C842;font-family:'Montserrat',sans-serif;letter-spacing:0.06em;margin-bottom:14px}
+.ib-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(245,200,66,0.15);border:1px solid rgba(245,200,66,0.4);border-radius:99px;padding:4px 14px;font-size:11px;font-weight:700;color:#F5C842;font-family:'Twemoji Country Flags','Montserrat',sans-serif;letter-spacing:0.06em;margin-bottom:14px}
 .main{max-width:700px;margin:0 auto;padding:24px}
 .step-indicator{display:flex;align-items:center;margin-bottom:24px}
 .step{display:flex;flex-direction:column;align-items:center;flex:1}
-.step-circle{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:'Montserrat',sans-serif;transition:all 0.3s;z-index:1}
+.step-circle{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:'Twemoji Country Flags','Montserrat',sans-serif;transition:all 0.3s;z-index:1}
 .step-circle.done{background:#F5C842;color:#1B3A7A}
 .step-circle.active{background:#1B3A7A;color:#F5C842;border:2px solid #F5C842}
 .step-circle.pending{background:#E0E8F5;color:#9AB0D0}
-.step-label{font-size:9px;color:#9AB0D0;margin-top:4px;text-align:center;font-weight:500;letter-spacing:0.04em;font-family:'Montserrat',sans-serif;text-transform:uppercase;max-width:60px}
+.step-label{font-size:9px;color:#9AB0D0;margin-top:4px;text-align:center;font-weight:500;letter-spacing:0.04em;font-family:'Twemoji Country Flags','Montserrat',sans-serif;text-transform:uppercase;max-width:60px}
 .step-label.active{color:#1B3A7A;font-weight:700}
 .step-line{height:1px;background:#E0E8F5;flex:1;margin-top:-14px}
 .step-line.done{background:#F5C842}
 .card{background:#fff;border:0.5px solid #E0E8F5;border-radius:16px;padding:22px;margin-bottom:14px}
-.card-title{font-family:'Playfair Display',serif;font-size:18px;color:#0D1F4A;margin-bottom:5px}
+.card-title{font-family:'Twemoji Country Flags','Playfair Display',serif;font-size:18px;color:#0D1F4A;margin-bottom:5px}
 .card-sub{font-size:13px;color:#4A6FA5;line-height:1.6;margin-bottom:18px;font-weight:300}
 .options-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .options-grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
@@ -45,71 +45,71 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
 .opt-card:hover{border-color:#2952A3;background:#EEF3FF}
 .opt-card.selected{border-color:#1B3A7A;background:#EEF3FF}
 .opt-emoji{font-size:26px;margin-bottom:8px;display:block;text-align:center}
-.opt-title{font-size:13px;font-weight:600;color:#0D1F4A;margin-bottom:3px;font-family:'Montserrat',sans-serif}
+.opt-title{font-size:13px;font-weight:600;color:#0D1F4A;margin-bottom:3px;font-family:'Twemoji Country Flags','Montserrat',sans-serif}
 .opt-sub{font-size:11px;color:#4A6FA5;line-height:1.4}
-.dream-input{width:100%;border:1.5px solid #E0E8F5;border-radius:12px;padding:14px 16px;font-size:14px;color:#0D1F4A;font-family:'Inter',sans-serif;outline:none;resize:none;min-height:90px;transition:border-color 0.15s;line-height:1.6}
+.dream-input{width:100%;border:1.5px solid #E0E8F5;border-radius:12px;padding:14px 16px;font-size:14px;color:#0D1F4A;font-family:'Twemoji Country Flags','Inter',sans-serif;outline:none;resize:none;min-height:90px;transition:border-color 0.15s;line-height:1.6}
 .dream-input:focus{border-color:#1B3A7A}
 .dream-input::placeholder{color:#9AB0D0}
 .example-prompts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.ep{font-size:11px;padding:5px 12px;border-radius:99px;border:0.5px solid #C0D0E8;color:#2952A3;cursor:pointer;background:#EEF3FF;font-family:'Inter',sans-serif;transition:all 0.15s;font-weight:500}
+.ep{font-size:11px;padding:5px 12px;border-radius:99px;border:0.5px solid #C0D0E8;color:#2952A3;cursor:pointer;background:#EEF3FF;font-family:'Twemoji Country Flags','Inter',sans-serif;transition:all 0.15s;font-weight:500}
 .ep:hover{background:#1B3A7A;color:#F5C842;border-color:#1B3A7A}
 .btn-row{display:flex;justify-content:space-between;align-items:center;margin-top:18px}
-.btn-back{font-size:13px;padding:9px 20px;border-radius:99px;border:1px solid #E0E8F5;background:transparent;color:#4A6FA5;cursor:pointer;font-family:'Inter',sans-serif}
-.btn-next{font-size:13px;padding:9px 24px;border-radius:99px;border:none;background:#1B3A7A;color:#F5C842;cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:700}
+.btn-back{font-size:13px;padding:9px 20px;border-radius:99px;border:1px solid #E0E8F5;background:transparent;color:#4A6FA5;cursor:pointer;font-family:'Twemoji Country Flags','Inter',sans-serif}
+.btn-next{font-size:13px;padding:9px 24px;border-radius:99px;border:none;background:#1B3A7A;color:#F5C842;cursor:pointer;font-family:'Twemoji Country Flags','Montserrat',sans-serif;font-weight:700}
 .btn-next:disabled{opacity:0.4;cursor:not-allowed}
 .btn-next.gold{background:#F5C842;color:#1B3A7A}
 .loading-wrap{text-align:center;padding:40px 0}
 .loading-icon{font-size:36px;color:#F5C842;animation:spin 1s linear infinite;display:block;margin:0 auto 16px}
 @keyframes spin{to{transform:rotate(360deg)}}
-.loading-text{font-family:'Playfair Display',serif;font-size:16px;color:#0D1F4A;margin-bottom:5px}
+.loading-text{font-family:'Twemoji Country Flags','Playfair Display',serif;font-size:16px;color:#0D1F4A;margin-bottom:5px}
 .loading-sub{font-size:12px;color:#4A6FA5;font-weight:300}
 .result-hero{text-align:center;padding:20px 0 24px;border-bottom:1px solid #E0E8F5;margin-bottom:20px}
-.result-tag{display:inline-flex;align-items:center;gap:6px;font-size:10px;padding:4px 12px;border-radius:99px;background:#EEF3FF;color:#2952A3;margin-bottom:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;font-family:'Montserrat',sans-serif}
-.result-career{font-family:'Playfair Display',serif;font-size:22px;color:#0D1F4A;margin-bottom:6px}
+.result-tag{display:inline-flex;align-items:center;gap:6px;font-size:10px;padding:4px 12px;border-radius:99px;background:#EEF3FF;color:#2952A3;margin-bottom:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;font-family:'Twemoji Country Flags','Montserrat',sans-serif}
+.result-career{font-family:'Twemoji Country Flags','Playfair Display',serif;font-size:22px;color:#0D1F4A;margin-bottom:6px}
 .result-summary{font-size:13px;color:#4A6FA5;line-height:1.7;font-weight:300;max-width:520px;margin:0 auto}
 .subj-group{margin-bottom:16px}
-.subj-group-title{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:#2952A3;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #E0E8F5}
+.subj-group-title{font-family:'Twemoji Country Flags','Montserrat',sans-serif;font-size:10px;font-weight:700;color:#2952A3;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid #E0E8F5}
 .subj-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .subj-card{border-radius:10px;padding:12px;border:0.5px solid #E0E8F5}
 .subj-card.hl{background:#1B3A7A;border-color:#1B3A7A}
 .subj-card.sl{background:#EEF3FF;border-color:#C0D0E8}
-.subj-badge{font-size:9px;padding:2px 8px;border-radius:99px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;font-family:'Montserrat',sans-serif;margin-bottom:6px;display:inline-block}
+.subj-badge{font-size:9px;padding:2px 8px;border-radius:99px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;font-family:'Twemoji Country Flags','Montserrat',sans-serif;margin-bottom:6px;display:inline-block}
 .badge-hl{background:rgba(245,200,66,0.2);color:#F5C842}
 .badge-sl{background:#C0D0E8;color:#2952A3}
-.subj-name-light{font-size:13px;font-weight:700;color:#FFFFFF;margin-bottom:3px;font-family:'Montserrat',sans-serif}
-.subj-name-dark{font-size:13px;font-weight:700;color:#0D1F4A;margin-bottom:3px;font-family:'Montserrat',sans-serif}
+.subj-name-light{font-size:13px;font-weight:700;color:#FFFFFF;margin-bottom:3px;font-family:'Twemoji Country Flags','Montserrat',sans-serif}
+.subj-name-dark{font-size:13px;font-weight:700;color:#0D1F4A;margin-bottom:3px;font-family:'Twemoji Country Flags','Montserrat',sans-serif}
 .subj-group-label{font-size:10px;color:#F5C842;margin-bottom:4px}
 .subj-group-label-dk{font-size:10px;color:#2952A3;margin-bottom:4px}
 .subj-why-light{font-size:11px;color:rgba(255,255,255,0.75);line-height:1.5}
 .subj-why-dark{font-size:11px;color:#4A6FA5;line-height:1.5}
 .warning-box{background:#FFF3E0;border:1.5px solid #FFB74D;border-radius:12px;padding:16px;margin-bottom:14px}
-.warning-title{font-size:12px;font-weight:700;color:#7C3A00;margin-bottom:8px;font-family:'Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.06em}
+.warning-title{font-size:12px;font-weight:700;color:#7C3A00;margin-bottom:8px;font-family:'Twemoji Country Flags','Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.06em}
 .warning-item{font-size:12px;color:#9C4A00;display:flex;align-items:flex-start;gap:8px;line-height:1.5}
 .hidden-box{background:#FFF8E6;border:1.5px solid #F5C842;border-radius:12px;padding:16px;margin-bottom:14px}
-.hidden-title{font-size:12px;font-weight:700;color:#1B3A7A;margin-bottom:8px;font-family:'Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.06em}
+.hidden-title{font-size:12px;font-weight:700;color:#1B3A7A;margin-bottom:8px;font-family:'Twemoji Country Flags','Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.06em}
 .hidden-item{font-size:12px;color:#2C1800;display:flex;align-items:flex-start;gap:8px;line-height:1.5;margin-bottom:5px}
 .tok-ee{background:#1B3A7A;border-radius:12px;padding:16px;margin-bottom:14px}
-.tok-title{font-size:12px;font-weight:700;color:#F5C842;margin-bottom:10px;font-family:'Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.06em}
+.tok-title{font-size:12px;font-weight:700;color:#F5C842;margin-bottom:10px;font-family:'Twemoji Country Flags','Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.06em}
 .tok-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .tok-item{background:rgba(255,255,255,0.08);border-radius:8px;padding:12px}
-.tok-label{font-size:10px;color:#F5C842;font-weight:700;font-family:'Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px}
+.tok-label{font-size:10px;color:#F5C842;font-weight:700;font-family:'Twemoji Country Flags','Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px}
 .tok-content{font-size:12px;color:rgba(255,255,255,0.85);line-height:1.6}
 .score-box{background:#EEF3FF;border-radius:12px;padding:16px;display:flex;align-items:center;justify-content:space-between}
-.score-text h4{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#1B3A7A;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px}
+.score-text h4{font-family:'Twemoji Country Flags','Montserrat',sans-serif;font-size:12px;font-weight:700;color:#1B3A7A;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px}
 .score-text p{font-size:11px;color:#4A6FA5;font-weight:300}
-.score-number{font-family:'Playfair Display',serif;font-size:32px;color:#1B3A7A;font-weight:500}
+.score-number{font-family:'Twemoji Country Flags','Playfair Display',serif;font-size:32px;color:#1B3A7A;font-weight:500}
 .score-max{font-size:14px;color:#4A6FA5}
 .myp-bridge{background:linear-gradient(135deg,#0D1F4A,#1B3A7A);border-radius:12px;padding:18px;margin-bottom:14px}
-.myp-title{font-size:12px;font-weight:700;color:#F5C842;margin-bottom:12px;font-family:'Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.06em}
+.myp-title{font-size:12px;font-weight:700;color:#F5C842;margin-bottom:12px;font-family:'Twemoji Country Flags','Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.06em}
 .myp-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .myp-item{background:rgba(255,255,255,0.08);border-radius:8px;padding:10px}
-.myp-group{font-size:10px;color:#F5C842;font-weight:700;font-family:'Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:3px}
+.myp-group{font-size:10px;color:#F5C842;font-weight:700;font-family:'Twemoji Country Flags','Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:3px}
 .myp-advice{font-size:11px;color:rgba(255,255,255,0.85);line-height:1.5}
 .ai-bubble{background:#EEF3FF;border-radius:0 12px 12px 12px;padding:14px 16px;border:0.5px solid #C0D0E8}
 .ai-bubble p{font-size:13px;color:#0D1F4A;line-height:1.7}
-.ai-label{font-size:10px;font-weight:700;color:#2952A3;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;font-family:'Montserrat',sans-serif}
+.ai-label{font-size:10px;font-weight:700;color:#2952A3;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;font-family:'Twemoji Country Flags','Montserrat',sans-serif}
 .action-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
-.action-btn{font-size:12px;padding:10px 20px;border-radius:99px;cursor:pointer;font-weight:700;font-family:'Montserrat',sans-serif;border:none}
+.action-btn{font-size:12px;padding:10px 20px;border-radius:99px;cursor:pointer;font-weight:700;font-family:'Twemoji Country Flags','Montserrat',sans-serif;border:none}
 </style>
 <script type="module">
 import { polyfillCountryFlagEmojis } from "https://cdn.jsdelivr.net/npm/country-flag-emoji-polyfill@0.1/dist/index.mjs";
