@@ -200,6 +200,11 @@ polyfillCountryFlagEmojis();
       <div class="logout-link" onclick="logout()">Sign out</div>
     </div>
 
+    <div id="overviewContainer"></div>
+
+    <button class="add-curriculum-btn" onclick="goScreen('s-curriculum-select')">+ Add another curriculum</button>
+
+    <div id="ib-panel" class="curr-detail-panel" style="margin-top:14px">
     <div class="card">
       <div class="card-title">Your target</div>
       <div class="card-sub">Tell us your target university and total IB score so we can calculate your gap.</div>
@@ -228,6 +233,7 @@ polyfillCountryFlagEmojis();
     </div>
 
     <div id="trafficOutput"></div>
+    </div>
 
     <div class="graduation-box">
       <div class="graduation-title">🎓 Confirmed your university place?</div>
@@ -327,6 +333,67 @@ sb.auth.onAuthStateChange((event, session) => {
     routeAfterLogin();
   }
 });
+
+const curriculumMeta = {
+  'IB': { label: 'IB', name: 'IB Diploma', color: '#1B5E3A', textColor: '#fff' },
+  'A-Levels': { label: 'AL', name: 'A-Levels', color: '#8B1A3D', textColor: '#fff' },
+  'AP': { label: 'AP', name: 'American Pathway', color: '#1B3A7A', textColor: '#F5C842' },
+  'General': { label: '%', name: 'General / Percentage', color: '#9A7020', textColor: '#fff' }
+};
+
+async function loadDashboard(){
+  let overviewHTML = '';
+  for(const curr of selectedCurricula){
+    const meta = curriculumMeta[curr];
+    let status = 'Tap to add your scores';
+
+    if(curr === 'IB'){
+      const { data: grades } = await sb.from('ib_grades').select('*').eq('user_id', currentUser.id);
+      if(grades && grades.length > 0){
+        const total = grades.reduce((s,g) => s + (g.current_grade || 0), 0);
+        status = `${grades.length} subjects · Total: ${total}/45`;
+      }
+      await loadPassportData();
+    } else if(curr === 'A-Levels'){
+      const { data: grades } = await sb.from('alevel_grades').select('*').eq('user_id', currentUser.id);
+      if(grades && grades.length > 0){
+        status = `${grades.length} subjects entered`;
+      }
+      await loadALevelData();
+    } else if(curr === 'AP'){
+      const { data: subs } = await sb.from('american_subjects').select('*').eq('user_id', currentUser.id);
+      if(subs && subs.length > 0){
+        status = `${subs.length} subjects · GPA calculated`;
+      }
+      await loadAmericanData();
+    } else if(curr === 'General'){
+      const { data: grades } = await sb.from('general_grades').select('*').eq('user_id', currentUser.id);
+      if(grades && grades.length > 0){
+        const avg = (grades.reduce((s,g) => s + (g.current_percentage || 0), 0) / grades.length).toFixed(1);
+        status = `${grades.length} subjects · Average: ${avg}%`;
+      }
+      await loadGeneralData();
+    }
+
+    overviewHTML += `
+      <div class="curr-overview-card" onclick="togglePanel('${curr === 'IB' ? 'ib' : curr === 'A-Levels' ? 'alevel' : curr === 'AP' ? 'american' : 'general'}-panel', this)">
+        <div class="curr-overview-left">
+          <div class="curr-badge-sm" style="background:${meta.color};color:${meta.textColor}">${meta.label}</div>
+          <div><div class="curr-overview-name">${meta.name}</div><div class="curr-overview-status">${status}</div></div>
+        </div>
+        <span class="curr-expand-icon">⌄</span>
+      </div>`;
+  }
+  document.getElementById('overviewContainer').innerHTML = overviewHTML;
+}
+
+function togglePanel(panelId, cardEl){
+  const panel = document.getElementById(panelId);
+  if(!panel) return;
+  const icon = cardEl.querySelector('.curr-expand-icon');
+  panel.classList.toggle('open');
+  icon.classList.toggle('open');
+}
 
 async function loadPassportData(){
   const { data: target } = await sb.from('ib_targets').select('*').eq('user_id', currentUser.id).maybeSingle();
