@@ -235,6 +235,21 @@ polyfillCountryFlagEmojis();
     <div id="trafficOutput"></div>
     </div>
 
+    <div id="alevel-panel" class="curr-detail-panel" style="margin-top:14px">
+    <div class="card">
+      <div class="card-title">A-Level subjects</div>
+      <div class="card-sub">Enter your subjects with current and target letter grades.</div>
+      <div id="alevelSubjectsContainer"></div>
+      <button class="add-row-btn" onclick="addAlevelRow()">+ Add subject</button>
+      <button class="save-row-btn" onclick="saveAlevelGrades()">Save all grades</button>
+      <div id="alevelStatus"></div>
+      <div class="calc-result-box">
+        <div><div class="calc-result-label">UCAS Tariff Points</div></div>
+        <div class="calc-result-num" id="ucasPointsDisplay">0</div>
+      </div>
+    </div>
+    </div>
+
     <div class="graduation-box">
       <div class="graduation-title">🎓 Confirmed your university place?</div>
       <div class="graduation-text">Once you confirm, all your data will be automatically and permanently deleted in 90 days. This cannot be undone.</div>
@@ -393,6 +408,79 @@ function togglePanel(panelId, cardEl){
   const icon = cardEl.querySelector('.curr-expand-icon');
   panel.classList.toggle('open');
   icon.classList.toggle('open');
+}
+
+const ucasPoints = {'A*':56,'A':48,'B':40,'C':32,'D':24,'E':16,'U':0};
+let alevelRowCount = 0;
+
+async function loadALevelData(){
+  const { data: grades } = await sb.from('alevel_grades').select('*').eq('user_id', currentUser.id);
+  document.getElementById('alevelSubjectsContainer').innerHTML = '';
+  alevelRowCount = 0;
+  if(grades && grades.length > 0){
+    grades.forEach(g => addAlevelRow(g));
+  } else {
+    for(let i=0;i<3;i++) addAlevelRow();
+  }
+  calculateUcas(grades || []);
+}
+
+function addAlevelRow(existing){
+  alevelRowCount++;
+  const id = 'alevel_row_' + alevelRowCount;
+  const row = document.createElement('div');
+  row.className = 'subj-row-multi';
+  row.id = id;
+  const grades = ['A*','A','B','C','D','E','U'];
+  const gradeOptions = (selected) => grades.map(g => `<option value="${g}" ${g===selected?'selected':''}>${g}</option>`).join('');
+  row.innerHTML = `
+    <input type="text" placeholder="e.g. Mathematics" value="${existing ? existing.subject : ''}" data-field="subject">
+    <select data-field="current_grade" onchange="recalcUcasFromInputs()"><option value="">Current</option>${gradeOptions(existing ? existing.current_grade : '')}</select>
+    <select data-field="target_grade"><option value="">Target</option>${gradeOptions(existing ? existing.target_grade : '')}</select>
+    <div></div>
+    <span class="remove-row-btn" onclick="document.getElementById('${id}').remove();recalcUcasFromInputs()">✕</span>
+  `;
+  if(existing) row.dataset.rowId = existing.id;
+  document.getElementById('alevelSubjectsContainer').appendChild(row);
+}
+
+function recalcUcasFromInputs(){
+  const rows = document.querySelectorAll('#alevelSubjectsContainer .subj-row-multi');
+  let total = 0;
+  rows.forEach(row => {
+    const grade = row.querySelector('[data-field="current_grade"]').value;
+    total += ucasPoints[grade] || 0;
+  });
+  document.getElementById('ucasPointsDisplay').textContent = total;
+}
+
+function calculateUcas(grades){
+  let total = 0;
+  grades.forEach(g => { total += ucasPoints[g.current_grade] || 0; });
+  document.getElementById('ucasPointsDisplay').textContent = total;
+}
+
+async function saveAlevelGrades(){
+  const rows = document.querySelectorAll('#alevelSubjectsContainer .subj-row-multi');
+  const statusEl = document.getElementById('alevelStatus');
+  let savedCount = 0;
+  for(const row of rows){
+    const subject = row.querySelector('[data-field="subject"]').value.trim();
+    if(!subject) continue;
+    const current_grade = row.querySelector('[data-field="current_grade"]').value || null;
+    const target_grade = row.querySelector('[data-field="target_grade"]').value || null;
+    const payload = { user_id: currentUser.id, subject, current_grade, target_grade, updated_at: new Date().toISOString() };
+    if(row.dataset.rowId){
+      await sb.from('alevel_grades').update(payload).eq('id', row.dataset.rowId);
+    } else {
+      const { data } = await sb.from('alevel_grades').insert(payload).select().single();
+      if(data) row.dataset.rowId = data.id;
+    }
+    savedCount++;
+  }
+  statusEl.innerHTML = '<div class="status-msg status-success">Saved '+savedCount+' subjects!</div>';
+  recalcUcasFromInputs();
+  await loadDashboard();
 }
 
 async function loadPassportData(){
