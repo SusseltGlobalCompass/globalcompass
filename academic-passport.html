@@ -232,6 +232,30 @@ polyfillCountryFlagEmojis();
       <div id="gradesStatus"></div>
     </div>
 
+    <div class="card">
+      <div class="card-title">IB Core — TOK, Extended Essay &amp; CAS</div>
+      <div class="card-sub">Your subjects contribute up to 42 points. TOK and EE together add up to 3 more bonus points — and a grade of E in either can mean no diploma, regardless of your subject scores. CAS is mandatory but does not add points.</div>
+      <label class="field-label">Theory of Knowledge (TOK) grade</label>
+      <select class="text-input" id="tokGradeInput">
+        <option value="">Select grade…</option>
+        <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option>
+      </select>
+      <label class="field-label">Extended Essay (EE) grade</label>
+      <select class="text-input" id="eeGradeInput">
+        <option value="">Select grade…</option>
+        <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option>
+      </select>
+      <label style="display:flex;align-items:center;gap:8px;margin:14px 0;font-size:13px;color:#0D1F4A">
+        <input type="checkbox" id="casCompletedInput" style="width:18px;height:18px"> CAS requirements completed
+      </label>
+      <button class="save-btn" onclick="saveIbCore()">Save core</button>
+      <div id="ibCoreStatus"></div>
+      <div class="calc-result-box" style="margin-top:12px">
+        <div><div class="calc-result-label">Core bonus points</div></div>
+        <div class="calc-result-num" id="corePointsDisplay">0</div>
+      </div>
+    </div>
+
     <div id="trafficOutput"></div>
     </div>
 
@@ -782,7 +806,29 @@ async function loadPassportData(){
   } else {
     for(let i=0;i<6;i++) addSubjectRow();
   }
+  await loadIbCore();
   renderGapAndTraffic(target, grades || []);
+}
+
+const ibSubjectGroups = {
+  'Group 1 — Studies in Language and Literature': ['English A: Literature','English A: Language and Literature','Spanish A: Literature','French A: Literature','Other Language A'],
+  'Group 2 — Language Acquisition': ['English B','Spanish B','French B','German B','Mandarin B','Spanish Ab Initio','French Ab Initio','Mandarin Ab Initio'],
+  'Group 3 — Individuals and Societies': ['Business Management','Economics','Geography','History','Psychology','Global Politics','Philosophy','Environmental Systems and Societies'],
+  'Group 4 — Sciences': ['Biology','Chemistry','Physics','Computer Science','Sports, Exercise and Health Science','Design Technology'],
+  'Group 5 — Mathematics': ['Mathematics: Analysis and Approaches','Mathematics: Applications and Interpretation'],
+  'Group 6 — The Arts': ['Visual Arts','Music','Theatre','Film','Dance']
+};
+
+function buildIbSubjectOptions(selected){
+  let html = '<option value="">Select subject…</option>';
+  for(const group in ibSubjectGroups){
+    html += `<optgroup label="${group}">`;
+    ibSubjectGroups[group].forEach(subj => {
+      html += `<option value="${subj}" ${subj===selected?'selected':''}>${subj}</option>`;
+    });
+    html += '</optgroup>';
+  }
+  return html;
 }
 
 function addSubjectRow(existing){
@@ -792,7 +838,7 @@ function addSubjectRow(existing){
   row.className = 'subj-row';
   row.id = id;
   row.innerHTML = `
-    <input type="text" class="subj-input" style="text-align:left" placeholder="e.g. Mathematics" value="${existing ? existing.subject : ''}" data-field="subject">
+    <select class="subj-select" style="text-align:left" data-field="subject">${buildIbSubjectOptions(existing ? existing.subject : '')}</select>
     <select class="subj-select" data-field="level">
       <option value="HL" ${existing && existing.level==='HL' ? 'selected':''}>HL</option>
       <option value="SL" ${existing && existing.level==='SL' ? 'selected':''}>SL</option>
@@ -847,8 +893,63 @@ async function saveAllGrades(){
   renderGapAndTraffic(target, grades || []);
 }
 
+const tokEeMatrix = {
+  'A':{'A':3,'B':3,'C':2,'D':1,'E':0},
+  'B':{'A':3,'B':2,'C':1,'D':0,'E':0},
+  'C':{'A':2,'B':1,'C':1,'D':0,'E':0},
+  'D':{'A':1,'B':0,'C':0,'D':0,'E':0},
+  'E':{'A':0,'B':0,'C':0,'D':0,'E':0}
+};
+
+let currentCorePoints = 0;
+let noDiplomaWarning = false;
+
+function calculateCorePoints(tokGrade, eeGrade){
+  if(!tokGrade || !eeGrade) return 0;
+  if(tokGrade === 'E' || eeGrade === 'E'){
+    noDiplomaWarning = true;
+    return 0;
+  }
+  noDiplomaWarning = false;
+  return tokEeMatrix[tokGrade][eeGrade];
+}
+
+async function saveIbCore(){
+  const tok_grade = document.getElementById('tokGradeInput').value || null;
+  const ee_grade = document.getElementById('eeGradeInput').value || null;
+  const cas_completed = document.getElementById('casCompletedInput').checked;
+  await sb.from('ib_core').upsert({
+    user_id: currentUser.id, tok_grade, ee_grade, cas_completed
+  }, { onConflict: 'user_id' });
+
+  currentCorePoints = calculateCorePoints(tok_grade, ee_grade);
+  document.getElementById('corePointsDisplay').textContent = currentCorePoints;
+
+  let statusMsg = '<div class="status-msg status-success">Saved!</div>';
+  if(noDiplomaWarning){
+    statusMsg = '<div class="status-msg status-error">A grade of E in TOK or EE may mean no diploma is awarded, regardless of subject scores. Please confirm this with your IB coordinator.</div>';
+  }
+  document.getElementById('ibCoreStatus').innerHTML = statusMsg;
+
+  const { data: target } = await sb.from('ib_targets').select('*').eq('user_id', currentUser.id).maybeSingle();
+  const { data: grades } = await sb.from('ib_grades').select('*').eq('user_id', currentUser.id);
+  renderGapAndTraffic(target, grades || []);
+}
+
+async function loadIbCore(){
+  const { data: core } = await sb.from('ib_core').select('*').eq('user_id', currentUser.id).maybeSingle();
+  if(core){
+    document.getElementById('tokGradeInput').value = core.tok_grade || '';
+    document.getElementById('eeGradeInput').value = core.ee_grade || '';
+    document.getElementById('casCompletedInput').checked = core.cas_completed || false;
+    currentCorePoints = calculateCorePoints(core.tok_grade, core.ee_grade);
+    document.getElementById('corePointsDisplay').textContent = currentCorePoints;
+  }
+}
+
 function renderGapAndTraffic(target, grades){
-  const currentTotal = grades.reduce((sum,g) => sum + (g.current_grade || 0), 0);
+  const subjectTotal = grades.reduce((sum,g) => sum + (g.current_grade || 0), 0);
+  const currentTotal = subjectTotal + (currentCorePoints || 0);
   const targetTotal = target && target.target_total_points ? target.target_total_points : null;
 
   if(targetTotal){
