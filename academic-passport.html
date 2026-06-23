@@ -265,6 +265,50 @@ polyfillCountryFlagEmojis();
     </div>
     </div>
 
+    <div id="american-panel" class="curr-detail-panel" style="margin-top:14px">
+    <div class="card">
+      <div class="card-title">School subjects</div>
+      <div class="card-sub">Enter your subjects, letter grade, and course level — we calculate weighted and unweighted GPA automatically.</div>
+      <div id="americanSubjectsContainer"></div>
+      <button class="add-row-btn" onclick="addAmericanSubjectRow()">+ Add subject</button>
+      <button class="save-row-btn" onclick="saveAmericanSubjects()">Save subjects</button>
+      <div id="americanSubjectStatus"></div>
+      <div class="calc-result-box">
+        <div><div class="calc-result-label">Unweighted GPA</div></div>
+        <div class="calc-result-num" id="unweightedGpaDisplay">0.0</div>
+      </div>
+      <div class="calc-result-box" style="background:#0D1F4A">
+        <div><div class="calc-result-label">Weighted GPA</div></div>
+        <div class="calc-result-num" id="weightedGpaDisplay">0.0</div>
+      </div>
+      <div class="gpa-disclaimer">This is a GlobalCompass estimate based on a standard 4.0 scale with +0.5 for Honors and +1.0 for AP/IB courses. Your official GPA may differ depending on your school's exact weighting policy — always check your transcript for official records.</div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">AP Exams</div>
+      <div class="card-sub">Track your AP exam scores (1-5 scale).</div>
+      <div id="apExamsContainer"></div>
+      <button class="add-row-btn" onclick="addApExamRow()">+ Add AP exam</button>
+      <button class="save-row-btn" onclick="saveApExams()">Save AP exams</button>
+      <div id="apExamStatus"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">SAT &amp; ACT</div>
+      <div class="card-sub">Both are equally accepted by US universities — track whichever you're taking.</div>
+      <label class="field-label">SAT — Current score (400-1600)</label>
+      <input type="number" class="text-input" id="satCurrentInput" min="400" max="1600" placeholder="e.g. 1450">
+      <label class="field-label">SAT — Target score</label>
+      <input type="number" class="text-input" id="satTargetInput" min="400" max="1600" placeholder="e.g. 1500">
+      <label class="field-label">ACT — Current score (1-36)</label>
+      <input type="number" class="text-input" id="actCurrentInput" min="1" max="36" placeholder="e.g. 32">
+      <label class="field-label">ACT — Target score</label>
+      <input type="number" class="text-input" id="actTargetInput" min="1" max="36" placeholder="e.g. 34">
+      <button class="save-btn" onclick="saveSatAct()">Save SAT &amp; ACT</button>
+      <div id="satActStatus"></div>
+    </div>
+    </div>
+
     <div class="graduation-box">
       <div class="graduation-title">🎓 Confirmed your university place?</div>
       <div class="graduation-text">Once you confirm, all your data will be automatically and permanently deleted in 90 days. This cannot be undone.</div>
@@ -566,6 +610,161 @@ async function saveGeneralGrades(){
   }
   statusEl.innerHTML = '<div class="status-msg status-success">Saved '+savedCount+' subjects!</div>';
   recalcGeneralFromInputs();
+  await loadDashboard();
+}
+
+const gpaPoints = {'A+':4.0,'A':4.0,'A-':3.7,'B+':3.3,'B':3.0,'B-':2.7,'C+':2.3,'C':2.0,'C-':1.7,'D+':1.3,'D':1.0,'D-':0.7,'F':0.0};
+const weightBonus = {'Regular':0,'Honors':0.5,'AP-IB':1.0};
+let americanSubjectRowCount = 0, apExamRowCount = 0;
+
+async function loadAmericanData(){
+  const { data: subjects } = await sb.from('american_subjects').select('*').eq('user_id', currentUser.id);
+  document.getElementById('americanSubjectsContainer').innerHTML = '';
+  americanSubjectRowCount = 0;
+  if(subjects && subjects.length > 0){
+    subjects.forEach(s => addAmericanSubjectRow(s));
+  } else {
+    for(let i=0;i<5;i++) addAmericanSubjectRow();
+  }
+  calculateGpa(subjects || []);
+
+  const { data: apExams } = await sb.from('ap_grades').select('*').eq('user_id', currentUser.id);
+  document.getElementById('apExamsContainer').innerHTML = '';
+  apExamRowCount = 0;
+  if(apExams && apExams.length > 0){
+    apExams.forEach(e => addApExamRow(e));
+  } else {
+    addApExamRow();
+  }
+
+  const { data: satAct } = await sb.from('gpa_grades').select('*').eq('user_id', currentUser.id).maybeSingle();
+  if(satAct){
+    document.getElementById('satCurrentInput').value = satAct.sat_current || '';
+    document.getElementById('satTargetInput').value = satAct.sat_target || '';
+    document.getElementById('actCurrentInput').value = satAct.act_current || '';
+    document.getElementById('actTargetInput').value = satAct.act_target || '';
+  }
+}
+
+function addAmericanSubjectRow(existing){
+  americanSubjectRowCount++;
+  const id = 'american_row_' + americanSubjectRowCount;
+  const row = document.createElement('div');
+  row.className = 'subj-row-multi';
+  row.id = id;
+  const grades = Object.keys(gpaPoints);
+  const gradeOpts = grades.map(g => `<option value="${g}" ${existing && existing.letter_grade===g?'selected':''}>${g}</option>`).join('');
+  const levels = ['Regular','Honors','AP-IB'];
+  const levelOpts = levels.map(l => `<option value="${l}" ${existing && existing.course_level===l?'selected':''}>${l}</option>`).join('');
+  row.innerHTML = `
+    <input type="text" placeholder="e.g. Chemistry" value="${existing ? existing.subject : ''}" data-field="subject">
+    <select data-field="letter_grade" onchange="recalcGpaFromInputs()">${gradeOpts}</select>
+    <select data-field="course_level" onchange="recalcGpaFromInputs()">${levelOpts}</select>
+    <div></div>
+    <span class="remove-row-btn" onclick="document.getElementById('${id}').remove();recalcGpaFromInputs()">✕</span>
+  `;
+  if(existing) row.dataset.rowId = existing.id;
+  document.getElementById('americanSubjectsContainer').appendChild(row);
+}
+
+function recalcGpaFromInputs(){
+  const rows = document.querySelectorAll('#americanSubjectsContainer .subj-row-multi');
+  let unweightedTotal = 0, weightedTotal = 0, count = 0;
+  rows.forEach(row => {
+    const grade = row.querySelector('[data-field="letter_grade"]').value;
+    const level = row.querySelector('[data-field="course_level"]').value;
+    const basePoints = gpaPoints[grade] ?? 0;
+    unweightedTotal += basePoints;
+    weightedTotal += basePoints + (weightBonus[level] || 0);
+    count++;
+  });
+  document.getElementById('unweightedGpaDisplay').textContent = count > 0 ? (unweightedTotal/count).toFixed(2) : '0.0';
+  document.getElementById('weightedGpaDisplay').textContent = count > 0 ? (weightedTotal/count).toFixed(2) : '0.0';
+}
+
+function calculateGpa(subjects){
+  if(subjects.length === 0) return;
+  let unweightedTotal = 0, weightedTotal = 0;
+  subjects.forEach(s => {
+    const basePoints = gpaPoints[s.letter_grade] ?? 0;
+    unweightedTotal += basePoints;
+    weightedTotal += basePoints + (weightBonus[s.course_level] || 0);
+  });
+  document.getElementById('unweightedGpaDisplay').textContent = (unweightedTotal/subjects.length).toFixed(2);
+  document.getElementById('weightedGpaDisplay').textContent = (weightedTotal/subjects.length).toFixed(2);
+}
+
+async function saveAmericanSubjects(){
+  const rows = document.querySelectorAll('#americanSubjectsContainer .subj-row-multi');
+  const statusEl = document.getElementById('americanSubjectStatus');
+  let savedCount = 0;
+  for(const row of rows){
+    const subject = row.querySelector('[data-field="subject"]').value.trim();
+    if(!subject) continue;
+    const letter_grade = row.querySelector('[data-field="letter_grade"]').value;
+    const course_level = row.querySelector('[data-field="course_level"]').value;
+    const payload = { user_id: currentUser.id, subject, letter_grade, course_level, updated_at: new Date().toISOString() };
+    if(row.dataset.rowId){
+      await sb.from('american_subjects').update(payload).eq('id', row.dataset.rowId);
+    } else {
+      const { data } = await sb.from('american_subjects').insert(payload).select().single();
+      if(data) row.dataset.rowId = data.id;
+    }
+    savedCount++;
+  }
+  statusEl.innerHTML = '<div class="status-msg status-success">Saved '+savedCount+' subjects!</div>';
+  recalcGpaFromInputs();
+  await loadDashboard();
+}
+
+function addApExamRow(existing){
+  apExamRowCount++;
+  const id = 'ap_exam_row_' + apExamRowCount;
+  const row = document.createElement('div');
+  row.className = 'subj-row-multi';
+  row.id = id;
+  row.innerHTML = `
+    <input type="text" placeholder="e.g. AP Calculus BC" value="${existing ? existing.exam_name : ''}" data-field="exam_name">
+    <input type="number" min="1" max="5" placeholder="Current" value="${existing ? existing.current_score||'' : ''}" data-field="current_score">
+    <input type="number" min="1" max="5" placeholder="Target" value="${existing ? existing.target_score||'' : ''}" data-field="target_score">
+    <div></div>
+    <span class="remove-row-btn" onclick="document.getElementById('${id}').remove()">✕</span>
+  `;
+  if(existing) row.dataset.rowId = existing.id;
+  document.getElementById('apExamsContainer').appendChild(row);
+}
+
+async function saveApExams(){
+  const rows = document.querySelectorAll('#apExamsContainer .subj-row-multi');
+  const statusEl = document.getElementById('apExamStatus');
+  let savedCount = 0;
+  for(const row of rows){
+    const exam_name = row.querySelector('[data-field="exam_name"]').value.trim();
+    if(!exam_name) continue;
+    const current_score = parseInt(row.querySelector('[data-field="current_score"]').value) || null;
+    const target_score = parseInt(row.querySelector('[data-field="target_score"]').value) || null;
+    const payload = { user_id: currentUser.id, exam_name, current_score, target_score, updated_at: new Date().toISOString() };
+    if(row.dataset.rowId){
+      await sb.from('ap_grades').update(payload).eq('id', row.dataset.rowId);
+    } else {
+      const { data } = await sb.from('ap_grades').insert(payload).select().single();
+      if(data) row.dataset.rowId = data.id;
+    }
+    savedCount++;
+  }
+  statusEl.innerHTML = '<div class="status-msg status-success">Saved '+savedCount+' exams!</div>';
+  await loadDashboard();
+}
+
+async function saveSatAct(){
+  const sat_current = parseInt(document.getElementById('satCurrentInput').value) || null;
+  const sat_target = parseInt(document.getElementById('satTargetInput').value) || null;
+  const act_current = parseInt(document.getElementById('actCurrentInput').value) || null;
+  const act_target = parseInt(document.getElementById('actTargetInput').value) || null;
+  await sb.from('gpa_grades').upsert({
+    user_id: currentUser.id, sat_current, sat_target, act_current, act_target
+  }, { onConflict: 'user_id' });
+  document.getElementById('satActStatus').innerHTML = '<div class="status-msg status-success">Saved!</div>';
   await loadDashboard();
 }
 
