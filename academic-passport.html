@@ -250,6 +250,21 @@ polyfillCountryFlagEmojis();
     </div>
     </div>
 
+    <div id="general-panel" class="curr-detail-panel" style="margin-top:14px">
+    <div class="card">
+      <div class="card-title">General subjects</div>
+      <div class="card-sub">Enter your subjects with current and target percentage scores.</div>
+      <div id="generalSubjectsContainer"></div>
+      <button class="add-row-btn" onclick="addGeneralRow()">+ Add subject</button>
+      <button class="save-row-btn" onclick="saveGeneralGrades()">Save all grades</button>
+      <div id="generalStatus"></div>
+      <div class="calc-result-box">
+        <div><div class="calc-result-label">Average Score</div></div>
+        <div class="calc-result-num" id="generalAvgDisplay">0%</div>
+      </div>
+    </div>
+    </div>
+
     <div class="graduation-box">
       <div class="graduation-title">🎓 Confirmed your university place?</div>
       <div class="graduation-text">Once you confirm, all your data will be automatically and permanently deleted in 90 days. This cannot be undone.</div>
@@ -480,6 +495,77 @@ async function saveAlevelGrades(){
   }
   statusEl.innerHTML = '<div class="status-msg status-success">Saved '+savedCount+' subjects!</div>';
   recalcUcasFromInputs();
+  await loadDashboard();
+}
+
+let generalRowCount = 0;
+
+async function loadGeneralData(){
+  const { data: grades } = await sb.from('general_grades').select('*').eq('user_id', currentUser.id);
+  document.getElementById('generalSubjectsContainer').innerHTML = '';
+  generalRowCount = 0;
+  if(grades && grades.length > 0){
+    grades.forEach(g => addGeneralRow(g));
+  } else {
+    for(let i=0;i<4;i++) addGeneralRow();
+  }
+  calculateGeneralAvg(grades || []);
+}
+
+function addGeneralRow(existing){
+  generalRowCount++;
+  const id = 'general_row_' + generalRowCount;
+  const row = document.createElement('div');
+  row.className = 'subj-row-multi';
+  row.id = id;
+  row.innerHTML = `
+    <input type="text" placeholder="e.g. Mathematics" value="${existing ? existing.subject : ''}" data-field="subject">
+    <input type="number" min="0" max="100" placeholder="Current %" value="${existing ? existing.current_percentage||'' : ''}" data-field="current_percentage" oninput="recalcGeneralFromInputs()">
+    <input type="number" min="0" max="100" placeholder="Target %" value="${existing ? existing.target_percentage||'' : ''}" data-field="target_percentage">
+    <div></div>
+    <span class="remove-row-btn" onclick="document.getElementById('${id}').remove();recalcGeneralFromInputs()">✕</span>
+  `;
+  if(existing) row.dataset.rowId = existing.id;
+  document.getElementById('generalSubjectsContainer').appendChild(row);
+}
+
+function recalcGeneralFromInputs(){
+  const rows = document.querySelectorAll('#generalSubjectsContainer .subj-row-multi');
+  let total = 0, count = 0;
+  rows.forEach(row => {
+    const val = parseFloat(row.querySelector('[data-field="current_percentage"]').value);
+    if(!isNaN(val)){ total += val; count++; }
+  });
+  const avg = count > 0 ? (total/count).toFixed(1) : 0;
+  document.getElementById('generalAvgDisplay').textContent = avg + '%';
+}
+
+function calculateGeneralAvg(grades){
+  if(grades.length === 0){ document.getElementById('generalAvgDisplay').textContent = '0%'; return; }
+  const total = grades.reduce((s,g) => s + (g.current_percentage || 0), 0);
+  document.getElementById('generalAvgDisplay').textContent = (total/grades.length).toFixed(1) + '%';
+}
+
+async function saveGeneralGrades(){
+  const rows = document.querySelectorAll('#generalSubjectsContainer .subj-row-multi');
+  const statusEl = document.getElementById('generalStatus');
+  let savedCount = 0;
+  for(const row of rows){
+    const subject = row.querySelector('[data-field="subject"]').value.trim();
+    if(!subject) continue;
+    const current_percentage = parseFloat(row.querySelector('[data-field="current_percentage"]').value) || null;
+    const target_percentage = parseFloat(row.querySelector('[data-field="target_percentage"]').value) || null;
+    const payload = { user_id: currentUser.id, subject, current_percentage, target_percentage, updated_at: new Date().toISOString() };
+    if(row.dataset.rowId){
+      await sb.from('general_grades').update(payload).eq('id', row.dataset.rowId);
+    } else {
+      const { data } = await sb.from('general_grades').insert(payload).select().single();
+      if(data) row.dataset.rowId = data.id;
+    }
+    savedCount++;
+  }
+  statusEl.innerHTML = '<div class="status-msg status-success">Saved '+savedCount+' subjects!</div>';
+  recalcGeneralFromInputs();
   await loadDashboard();
 }
 
