@@ -266,6 +266,19 @@ polyfillCountryFlagEmojis();
     </div>
 
     <div id="trafficOutput"></div>
+
+    <div class="card" style="border:1.5px dashed #C0D0E8;background:#F8F9FF">
+      <div class="card-title" style="font-size:15px">+ Extra exams (optional)</div>
+      <div class="card-sub">Also sitting a few AP exams, A-Levels, or the SAT alongside IB? Add them here without switching curricula.</div>
+      <div id="ibExtrasContainer"></div>
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button class="add-row-btn" style="flex:1" onclick="addExtraExamRow('ib', 'AP')">+ AP exam</button>
+        <button class="add-row-btn" style="flex:1" onclick="addExtraExamRow('ib', 'A-Level')">+ A-Level</button>
+        <button class="add-row-btn" style="flex:1" onclick="addExtraExamRow('ib', 'SAT')">+ SAT</button>
+      </div>
+      <button class="save-row-btn" onclick="saveExtraExams('ib')">Save extra exams</button>
+      <div id="ibExtrasStatus"></div>
+    </div>
     </div>
 
     <div id="alevel-panel" class="curr-detail-panel" style="margin-top:14px">
@@ -519,6 +532,63 @@ async function loadDashboard(){
       </div>`;
   }
   document.getElementById('overviewContainer').innerHTML = overviewHTML;
+}
+
+let extraExamRowCount = 0;
+
+async function loadExtraExams(curriculumKey){
+  const { data: extras } = await sb.from('extra_exams').select('*').eq('user_id', currentUser.id).eq('added_from_curriculum', curriculumKey);
+  const container = document.getElementById(curriculumKey + 'ExtrasContainer');
+  if(!container) return;
+  container.innerHTML = '';
+  if(extras && extras.length > 0){
+    extras.forEach(e => addExtraExamRow(curriculumKey, e.exam_type, e));
+  }
+}
+
+function addExtraExamRow(curriculumKey, examType, existing){
+  extraExamRowCount++;
+  const id = 'extra_row_' + extraExamRowCount;
+  const row = document.createElement('div');
+  row.className = 'subj-row-multi';
+  row.id = id;
+  row.dataset.examType = examType;
+  const namePlaceholder = examType === 'AP' ? 'e.g. AP Calculus BC' : examType === 'A-Level' ? 'e.g. Mathematics' : 'SAT';
+  const nameField = examType === 'SAT'
+    ? `<div style="font-size:12px;font-weight:700;color:#0D1F4A;display:flex;align-items:center">SAT</div>`
+    : `<input type="text" placeholder="${namePlaceholder}" value="${existing ? existing.exam_name||'' : ''}" data-field="exam_name">`;
+  row.innerHTML = `
+    <div style="font-size:9px;padding:2px 8px;border-radius:99px;font-weight:700;background:#EEF3FF;color:#1B3A7A;text-align:center;align-self:center">${examType}</div>
+    ${nameField}
+    <input type="text" placeholder="Current" value="${existing ? existing.current_score||'' : ''}" data-field="current_score">
+    <input type="text" placeholder="Target" value="${existing ? existing.target_score||'' : ''}" data-field="target_score">
+    <span class="remove-row-btn" onclick="document.getElementById('${id}').remove()">✕</span>
+  `;
+  if(existing) row.dataset.rowId = existing.id;
+  document.getElementById(curriculumKey + 'ExtrasContainer').appendChild(row);
+}
+
+async function saveExtraExams(curriculumKey){
+  const rows = document.querySelectorAll('#' + curriculumKey + 'ExtrasContainer .subj-row-multi');
+  const statusEl = document.getElementById(curriculumKey + 'ExtrasStatus');
+  let savedCount = 0;
+  for(const row of rows){
+    const examType = row.dataset.examType;
+    const nameField = row.querySelector('[data-field="exam_name"]');
+    const exam_name = examType === 'SAT' ? 'SAT' : (nameField ? nameField.value.trim() : '');
+    if(examType !== 'SAT' && !exam_name) continue;
+    const current_score = row.querySelector('[data-field="current_score"]').value.trim() || null;
+    const target_score = row.querySelector('[data-field="target_score"]').value.trim() || null;
+    const payload = { user_id: currentUser.id, exam_type: examType, exam_name, current_score, target_score, added_from_curriculum: curriculumKey, updated_at: new Date().toISOString() };
+    if(row.dataset.rowId){
+      await sb.from('extra_exams').update(payload).eq('id', row.dataset.rowId);
+    } else {
+      const { data } = await sb.from('extra_exams').insert(payload).select().single();
+      if(data) row.dataset.rowId = data.id;
+    }
+    savedCount++;
+  }
+  statusEl.innerHTML = '<div class="status-msg status-success">Saved '+savedCount+' extra exams!</div>';
 }
 
 function togglePanel(panelId, cardEl){
@@ -1009,6 +1079,7 @@ async function loadPassportData(){
     for(let i=0;i<6;i++) addSubjectRow();
   }
   await loadIbCore();
+  await loadExtraExams('ib');
   renderGapAndTraffic(target, grades || []);
 }
 
