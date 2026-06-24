@@ -544,6 +544,27 @@ async function loadALevelData(){
   calculateUcas(grades || []);
 }
 
+const alevelSubjectGroups = {
+  'Mathematics': ['Mathematics','Further Mathematics'],
+  'Sciences': ['Biology','Chemistry','Physics','Computer Science'],
+  'Humanities': ['History','Geography','Religious Studies','Philosophy','Politics'],
+  'Social Sciences': ['Economics','Psychology','Sociology','Law'],
+  'Languages': ['English Literature','English Language','French','Spanish','German','Mandarin'],
+  'Business and Creative': ['Business Studies','Media Studies','Film Studies','Art and Design','Music','Drama and Theatre','Design Technology','PE','Travel and Tourism','Health and Social Care']
+};
+
+function buildAlevelSubjectOptions(selected){
+  let html = '<option value="">Select subject…</option>';
+  for(const group in alevelSubjectGroups){
+    html += `<optgroup label="${group}">`;
+    alevelSubjectGroups[group].forEach(subj => {
+      html += `<option value="${subj}" ${subj===selected?'selected':''}>${subj}</option>`;
+    });
+    html += '</optgroup>';
+  }
+  return html;
+}
+
 function addAlevelRow(existing){
   alevelRowCount++;
   const id = 'alevel_row_' + alevelRowCount;
@@ -553,7 +574,7 @@ function addAlevelRow(existing){
   const grades = ['A*','A','B','C','D','E','U'];
   const gradeOptions = (selected) => grades.map(g => `<option value="${g}" ${g===selected?'selected':''}>${g}</option>`).join('');
   row.innerHTML = `
-    <input type="text" placeholder="e.g. Mathematics" value="${existing ? existing.subject : ''}" data-field="subject">
+    <select data-field="subject">${buildAlevelSubjectOptions(existing ? existing.subject : '')}</select>
     <select data-field="current_grade" onchange="recalcUcasFromInputs()"><option value="">Current</option>${gradeOptions(existing ? existing.current_grade : '')}</select>
     <select data-field="target_grade"><option value="">Target</option>${gradeOptions(existing ? existing.target_grade : '')}</select>
     <div></div>
@@ -706,6 +727,26 @@ async function loadAmericanData(){
   }
 }
 
+const americanSubjectGroups = {
+  'English': ['English 9','English 10','English 11','English 12 / AP Literature','AP Language and Composition'],
+  'Mathematics': ['Algebra I','Algebra II','Geometry','Pre-Calculus','Calculus','AP Calculus AB','AP Calculus BC','AP Statistics'],
+  'Sciences': ['Biology','Chemistry','Physics','Environmental Science','AP Biology','AP Chemistry','AP Physics','AP Environmental Science'],
+  'Social Studies': ['World History','US History','Government','Economics','Psychology','AP US History','AP World History','AP Government','AP Psychology','AP Economics'],
+  'Languages and Arts': ['Spanish','French','Mandarin','Art','Music','Computer Science','AP Computer Science','AP Studio Art']
+};
+
+function buildAmericanSubjectOptions(selected){
+  let html = '<option value="">Select subject…</option>';
+  for(const group in americanSubjectGroups){
+    html += `<optgroup label="${group}">`;
+    americanSubjectGroups[group].forEach(subj => {
+      html += `<option value="${subj}" ${subj===selected?'selected':''}>${subj}</option>`;
+    });
+    html += '</optgroup>';
+  }
+  return html;
+}
+
 function addAmericanSubjectRow(existing){
   americanSubjectRowCount++;
   const id = 'american_row_' + americanSubjectRowCount;
@@ -717,7 +758,7 @@ function addAmericanSubjectRow(existing){
   const levels = ['Regular','Honors','AP-IB'];
   const levelOpts = levels.map(l => `<option value="${l}" ${existing && existing.course_level===l?'selected':''}>${l}</option>`).join('');
   row.innerHTML = `
-    <input type="text" placeholder="e.g. Chemistry" value="${existing ? existing.subject : ''}" data-field="subject">
+    <select data-field="subject">${buildAmericanSubjectOptions(existing ? existing.subject : '')}</select>
     <select data-field="letter_grade" onchange="recalcGpaFromInputs()">${gradeOpts}</select>
     <select data-field="course_level" onchange="recalcGpaFromInputs()">${levelOpts}</select>
     <div></div>
@@ -854,6 +895,25 @@ async function loadCbseData(){
   calculateCbseCgpa(grades || []);
 }
 
+const cbseSubjectGroups = {
+  'Core / Common': ['English Core','Hindi','Mathematics','Physical Education'],
+  'Science Stream': ['Physics','Chemistry','Biology','Computer Science','Informatics Practices'],
+  'Commerce Stream': ['Accountancy','Business Studies','Economics'],
+  'Humanities Stream': ['History','Geography','Political Science','Sociology','Psychology','Home Science']
+};
+
+function buildCbseSubjectOptions(selected){
+  let html = '<option value="">Select subject…</option>';
+  for(const group in cbseSubjectGroups){
+    html += `<optgroup label="${group}">`;
+    cbseSubjectGroups[group].forEach(subj => {
+      html += `<option value="${subj}" ${subj===selected?'selected':''}>${subj}</option>`;
+    });
+    html += '</optgroup>';
+  }
+  return html;
+}
+
 function addCbseRow(existing){
   cbseRowCount++;
   const id = 'cbse_row_' + cbseRowCount;
@@ -863,7 +923,7 @@ function addCbseRow(existing){
   const marks = existing ? existing.current_marks : '';
   const gradeInfo = marks !== '' && marks !== null && marks !== undefined ? marksToGrade(marks) : null;
   row.innerHTML = `
-    <input type="text" placeholder="e.g. Mathematics" value="${existing ? existing.subject : ''}" data-field="subject">
+    <select data-field="subject">${buildCbseSubjectOptions(existing ? existing.subject : '')}</select>
     <input type="number" min="0" max="100" placeholder="Marks 0-100" value="${marks||''}" data-field="current_marks" oninput="recalcCbseFromInputs()">
     <input type="number" min="0" max="100" placeholder="Target" value="${existing ? existing.target_marks||'' : ''}" data-field="target_marks">
     <div style="font-size:11px;font-weight:700;color:#D2691E;text-align:center" data-field="gradeLabel">${gradeInfo ? gradeInfo.grade+' ('+gradeInfo.gp+')' : '—'}</div>
