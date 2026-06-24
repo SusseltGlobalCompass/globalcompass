@@ -193,6 +193,11 @@ polyfillCountryFlagEmojis();
           <div class="curr-select-name">General / Percentage</div>
           <div class="curr-select-desc">0-100 per subject</div>
         </div>
+        <div class="curr-select-card" data-curr="CBSE" onclick="toggleCurriculum(this,'CBSE')">
+          <div class="curr-badge-lg" style="background:#D2691E;color:#fff">CB</div>
+          <div class="curr-select-name">CBSE</div>
+          <div class="curr-select-desc">Marks, 9-point grades, CGPA</div>
+        </div>
       </div>
       <button class="btn-primary" id="btnContinueCurricula" onclick="saveCurriculaAndContinue()" disabled>Continue →</button>
     </div>
@@ -337,6 +342,26 @@ polyfillCountryFlagEmojis();
     </div>
     </div>
 
+    <div id="cbse-panel" class="curr-detail-panel" style="margin-top:14px">
+    <div class="card">
+      <div class="card-title">CBSE subjects</div>
+      <div class="card-sub">Enter your raw marks (0-100) per subject — we calculate your grade, grade point, CGPA and indicative percentage automatically, exactly as CBSE does. CGPA uses your best 5 main subjects.</div>
+      <div id="cbseSubjectsContainer"></div>
+      <button class="add-row-btn" onclick="addCbseRow()">+ Add subject</button>
+      <button class="save-row-btn" onclick="saveCbseGrades()">Save all marks</button>
+      <div id="cbseStatus"></div>
+      <div class="calc-result-box">
+        <div><div class="calc-result-label">CGPA (best 5 subjects)</div></div>
+        <div class="calc-result-num" id="cbseCgpaDisplay">0.0</div>
+      </div>
+      <div class="calc-result-box" style="background:#D2691E">
+        <div><div class="calc-result-label">Indicative percentage</div></div>
+        <div class="calc-result-num" id="cbsePercentDisplay">0%</div>
+      </div>
+      <div class="gpa-disclaimer">This is a GlobalCompass estimate using CBSE's official CGPA × 9.5 formula. Your official marksheet may show slightly different figures depending on relative grading that year — always check your official CBSE result.</div>
+    </div>
+    </div>
+
     <div class="graduation-box">
       <div class="graduation-title">🎓 Confirmed your university place?</div>
       <div class="graduation-text">Once you confirm, all your data will be automatically and permanently deleted in 90 days. This cannot be undone.</div>
@@ -440,7 +465,8 @@ const curriculumMeta = {
   'IB': { label: 'IB', name: 'IB Diploma', color: '#1B5E3A', textColor: '#fff' },
   'A-Levels': { label: 'AL', name: 'A-Levels', color: '#8B1A3D', textColor: '#fff' },
   'AP': { label: 'AP', name: 'American Pathway', color: '#1B3A7A', textColor: '#F5C842' },
-  'General': { label: '%', name: 'General / Percentage', color: '#9A7020', textColor: '#fff' }
+  'General': { label: '%', name: 'General / Percentage', color: '#9A7020', textColor: '#fff' },
+  'CBSE': { label: 'CB', name: 'CBSE', color: '#D2691E', textColor: '#fff' }
 };
 
 async function loadDashboard(){
@@ -475,10 +501,16 @@ async function loadDashboard(){
         status = `${grades.length} subjects · Average: ${avg}%`;
       }
       await loadGeneralData();
+    } else if(curr === 'CBSE'){
+      const { data: grades } = await sb.from('cbse_grades').select('*').eq('user_id', currentUser.id);
+      if(grades && grades.length > 0){
+        status = `${grades.length} subjects entered`;
+      }
+      await loadCbseData();
     }
 
     overviewHTML += `
-      <div class="curr-overview-card" onclick="togglePanel('${curr === 'IB' ? 'ib' : curr === 'A-Levels' ? 'alevel' : curr === 'AP' ? 'american' : 'general'}-panel', this)">
+      <div class="curr-overview-card" onclick="togglePanel('${curr === 'IB' ? 'ib' : curr === 'A-Levels' ? 'alevel' : curr === 'AP' ? 'american' : curr === 'CBSE' ? 'cbse' : 'general'}-panel', this)">
         <div class="curr-overview-left">
           <div class="curr-badge-sm" style="background:${meta.color};color:${meta.textColor}">${meta.label}</div>
           <div><div class="curr-overview-name">${meta.name}</div><div class="curr-overview-status">${status}</div></div>
@@ -793,6 +825,105 @@ async function saveSatAct(){
     user_id: currentUser.id, sat_current, sat_target, act_current, act_target
   }, { onConflict: 'user_id' });
   document.getElementById('satActStatus').innerHTML = '<div class="status-msg status-success">Saved!</div>';
+  await loadDashboard();
+}
+
+let cbseRowCount = 0;
+
+function marksToGrade(marks){
+  if(marks >= 91) return {grade:'A1', gp:10};
+  if(marks >= 81) return {grade:'A2', gp:9};
+  if(marks >= 71) return {grade:'B1', gp:8};
+  if(marks >= 61) return {grade:'B2', gp:7};
+  if(marks >= 51) return {grade:'C1', gp:6};
+  if(marks >= 41) return {grade:'C2', gp:5};
+  if(marks >= 33) return {grade:'D', gp:4};
+  if(marks >= 21) return {grade:'E1', gp:0};
+  return {grade:'E2', gp:0};
+}
+
+async function loadCbseData(){
+  const { data: grades } = await sb.from('cbse_grades').select('*').eq('user_id', currentUser.id).order('updated_at');
+  document.getElementById('cbseSubjectsContainer').innerHTML = '';
+  cbseRowCount = 0;
+  if(grades && grades.length > 0){
+    grades.forEach(g => addCbseRow(g));
+  } else {
+    for(let i=0;i<5;i++) addCbseRow();
+  }
+  calculateCbseCgpa(grades || []);
+}
+
+function addCbseRow(existing){
+  cbseRowCount++;
+  const id = 'cbse_row_' + cbseRowCount;
+  const row = document.createElement('div');
+  row.className = 'subj-row-multi';
+  row.id = id;
+  const marks = existing ? existing.current_marks : '';
+  const gradeInfo = marks !== '' && marks !== null && marks !== undefined ? marksToGrade(marks) : null;
+  row.innerHTML = `
+    <input type="text" placeholder="e.g. Mathematics" value="${existing ? existing.subject : ''}" data-field="subject">
+    <input type="number" min="0" max="100" placeholder="Marks 0-100" value="${marks||''}" data-field="current_marks" oninput="recalcCbseFromInputs()">
+    <input type="number" min="0" max="100" placeholder="Target" value="${existing ? existing.target_marks||'' : ''}" data-field="target_marks">
+    <div style="font-size:11px;font-weight:700;color:#D2691E;text-align:center" data-field="gradeLabel">${gradeInfo ? gradeInfo.grade+' ('+gradeInfo.gp+')' : '—'}</div>
+    <span class="remove-row-btn" onclick="document.getElementById('${id}').remove();recalcCbseFromInputs()">✕</span>
+  `;
+  if(existing) row.dataset.rowId = existing.id;
+  document.getElementById('cbseSubjectsContainer').appendChild(row);
+}
+
+function recalcCbseFromInputs(){
+  const rows = document.querySelectorAll('#cbseSubjectsContainer .subj-row-multi');
+  const gpList = [];
+  rows.forEach(row => {
+    const marksInput = row.querySelector('[data-field="current_marks"]');
+    const marks = parseInt(marksInput.value);
+    const label = row.querySelector('[data-field="gradeLabel"]');
+    if(!isNaN(marks)){
+      const info = marksToGrade(marks);
+      label.textContent = info.grade + ' (' + info.gp + ')';
+      gpList.push(info.gp);
+    } else {
+      label.textContent = '—';
+    }
+  });
+  gpList.sort((a,b) => b-a);
+  const best5 = gpList.slice(0,5);
+  const cgpa = best5.length > 0 ? (best5.reduce((s,g)=>s+g,0) / best5.length) : 0;
+  document.getElementById('cbseCgpaDisplay').textContent = cgpa.toFixed(2);
+  document.getElementById('cbsePercentDisplay').textContent = (cgpa * 9.5).toFixed(1) + '%';
+}
+
+function calculateCbseCgpa(grades){
+  const gpList = grades.filter(g => g.current_marks !== null).map(g => marksToGrade(g.current_marks).gp);
+  gpList.sort((a,b) => b-a);
+  const best5 = gpList.slice(0,5);
+  const cgpa = best5.length > 0 ? (best5.reduce((s,g)=>s+g,0) / best5.length) : 0;
+  document.getElementById('cbseCgpaDisplay').textContent = cgpa.toFixed(2);
+  document.getElementById('cbsePercentDisplay').textContent = (cgpa * 9.5).toFixed(1) + '%';
+}
+
+async function saveCbseGrades(){
+  const rows = document.querySelectorAll('#cbseSubjectsContainer .subj-row-multi');
+  const statusEl = document.getElementById('cbseStatus');
+  let savedCount = 0;
+  for(const row of rows){
+    const subject = row.querySelector('[data-field="subject"]').value.trim();
+    if(!subject) continue;
+    const current_marks = parseInt(row.querySelector('[data-field="current_marks"]').value);
+    const target_marks = parseInt(row.querySelector('[data-field="target_marks"]').value) || null;
+    const payload = { user_id: currentUser.id, subject, current_marks: isNaN(current_marks)?null:current_marks, target_marks, updated_at: new Date().toISOString() };
+    if(row.dataset.rowId){
+      await sb.from('cbse_grades').update(payload).eq('id', row.dataset.rowId);
+    } else {
+      const { data } = await sb.from('cbse_grades').insert(payload).select().single();
+      if(data) row.dataset.rowId = data.id;
+    }
+    savedCount++;
+  }
+  statusEl.innerHTML = '<div class="status-msg status-success">Saved '+savedCount+' subjects!</div>';
+  recalcCbseFromInputs();
   await loadDashboard();
 }
 
