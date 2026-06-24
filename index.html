@@ -129,6 +129,19 @@ footer{padding:28px 32px;background:#0D1F4A;display:flex;align-items:center;just
 .p-feats li i{font-size:10px;color:#F5C842}
 .p-btn{width:100%;padding:8px;border-radius:99px;font-size:10px;font-weight:700;cursor:pointer;font-family:'Twemoji Country Flags','Montserrat',sans-serif;border:none}
 .m-note{font-size:10px;color:#4A6FA5;text-align:center}
+
+.hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px;flex-direction:column;gap:4px}
+.hamburger span{display:block;width:22px;height:2px;background:#fff;border-radius:2px}
+.mobile-drawer{display:none;position:fixed;top:0;right:0;width:80%;max-width:320px;height:100vh;background:#1B3A7A;z-index:2000;padding:24px;overflow-y:auto;box-shadow:-4px 0 20px rgba(0,0,0,0.3)}
+.mobile-drawer.open{display:block}
+.mobile-drawer-close{background:none;border:none;color:#F5C842;font-size:24px;cursor:pointer;float:right}
+.mobile-drawer a{display:block;color:#fff;padding:12px 0;text-decoration:none;font-size:15px;border-bottom:1px solid rgba(255,255,255,0.1)}
+.mobile-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:1999}
+.mobile-overlay.open{display:block}
+@media (max-width: 880px){
+  .nav-menu, .nav-r{display:none}
+  .hamburger{display:flex}
+}
 </style>
 <script type="module">
 import { polyfillCountryFlagEmojis } from "https://cdn.jsdelivr.net/npm/country-flag-emoji-polyfill@0.1/dist/index.mjs";
@@ -179,7 +192,26 @@ polyfillCountryFlagEmojis();
     <div class="ni"><button class="nb">Universities <span class="soon">Coming soon</span></button></div>
   </div>
   <div class="nav-r"><button class="btn-g">Sign in</button><button class="btn-p" onclick="openModal()">Pro ↗</button></div>
+  <button class="hamburger" onclick="openMobileMenu()"><span></span><span></span><span></span></button>
 </nav>
+
+<div class="mobile-overlay" id="mobileOverlay" onclick="closeMobileMenu()"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+  <button class="mobile-drawer-close" onclick="closeMobileMenu()">✕</button>
+  <div style="clear:both;margin-bottom:20px"></div>
+  <a href="#">Early Years</a>
+  <a href="#">Schools</a>
+  <a href="#">Curricula</a>
+  <a href="#">Final Years</a>
+  <a href="academic-passport.html" style="color:#F5C842;font-weight:700">Track my scores</a>
+  <a href="#">Countries</a>
+  <a href="#">Forum</a>
+  <a href="#">Universities (Coming soon)</a>
+  <div style="margin-top:20px;display:flex;flex-direction:column;gap:10px">
+    <button class="btn-g" style="width:100%">Sign in</button>
+    <button class="btn-p" style="width:100%" onclick="openModal()">Pro ↗</button>
+  </div>
+</div>
 <section class="hero">
   <svg class="hero-bg" viewBox="0 0 600 600" fill="none"><circle cx="300" cy="300" r="270" stroke="#F5C842" stroke-width="1"/><ellipse cx="300" cy="300" rx="150" ry="270" stroke="#F5C842" stroke-width="0.7"/><ellipse cx="300" cy="300" rx="270" ry="105" stroke="#F5C842" stroke-width="0.7"/><ellipse cx="300" cy="300" rx="270" ry="195" stroke="#F5C842" stroke-width="0.5"/><line x1="30" y1="300" x2="570" y2="300" stroke="#F5C842" stroke-width="0.6"/><line x1="300" y1="30" x2="300" y2="570" stroke="#F5C842" stroke-width="0.6"/></svg>
   <div class="h-tag"><i class="ti ti-world"></i> The world's education search engine for expat families</div>
@@ -301,6 +333,15 @@ async function submitWaitlist(){
 </footer>
 <script>
 function openModal(){document.getElementById('proModal').classList.add('open')}
+
+function openMobileMenu(){
+  document.getElementById('mobileDrawer').classList.add('open');
+  document.getElementById('mobileOverlay').classList.add('open');
+}
+function closeMobileMenu(){
+  document.getElementById('mobileDrawer').classList.remove('open');
+  document.getElementById('mobileOverlay').classList.remove('open');
+}
 function closeModal(){document.getElementById('proModal').classList.remove('open')}
 document.getElementById('proModal').addEventListener('click',function(e){if(e.target===this)closeModal()})
 </script>
