@@ -141,7 +141,13 @@ footer{padding:28px 32px;background:#0D1F4A;display:flex;align-items:center;just
 @media (max-width: 880px){
   .nav-menu, .nav-r{display:none}
   .hamburger{display:flex}
+  a[href="academic-passport.html"].nav-pill-mobile-hide{display:none}
 }
+.mobile-drawer .dd-section{margin-bottom:4px}
+.mobile-drawer .dd-toggle{display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;color:#fff;padding:12px 0;font-size:15px;text-align:left;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.1)}
+.mobile-drawer .dd-content{display:none;padding-left:12px}
+.mobile-drawer .dd-content.open{display:block}
+.mobile-drawer .dd-content a{font-size:13px;padding:8px 0;border-bottom:none;color:#C5D5F0}
 </style>
 <script type="module">
 import { polyfillCountryFlagEmojis } from "https://cdn.jsdelivr.net/npm/country-flag-emoji-polyfill@0.1/dist/index.mjs";
@@ -187,7 +193,7 @@ polyfillCountryFlagEmojis();
     <div class="ni"><button class="nb">Early Years <i class="ti ti-chevron-down" style="font-size:10px;opacity:0.6"></i></button><div class="dd"><div class="dl">Early Years</div><a class="di" href="nursery-compass.html"><i class="ti ti-seeding"></i> Nursery Compass</a><a class="di" href="#"><i class="ti ti-building"></i> UAE Nurseries</a><a class="di" href="#"><i class="ti ti-world"></i> Gulf Nurseries</a><div class="dd-div"></div><div class="dl">By philosophy</div><a class="di" href="#"><i class="ti ti-leaf"></i> Montessori</a><a class="di" href="#"><i class="ti ti-flag"></i> British EYFS</a><a class="di" href="#"><i class="ti ti-palette"></i> Reggio Emilia</a><a class="di" href="#"><i class="ti ti-tree"></i> Forest School</a></div></div><div class="ni"><button class="nb">Schools <i class="ti ti-chevron-down" style="font-size:10px;opacity:0.6"></i></button><div class="dd"><div class="dl">Find schools</div><a class="di" href="#"><i class="ti ti-search"></i> Search schools</a><a class="di" href="#"><i class="ti ti-git-compare"></i> Compare schools</a><a class="di" href="#"><i class="ti ti-map-pin"></i> Schools by country</a><div class="dd-div"></div><div class="dl">Featured</div><a class="di" href="#"><i class="ti ti-star"></i> Spotlight institutions</a></div></div>
     <div class="ni"><button class="nb">Curricula <i class="ti ti-chevron-down" style="font-size:10px;opacity:0.6"></i></button><div class="dd"><div class="dl">Explore</div><a class="di" href="#"><i class="ti ti-brain"></i> Curriculum quiz</a><a class="di" href="#"><i class="ti ti-git-compare"></i> Compare curricula</a><a class="di" href="#"><i class="ti ti-book"></i> Curriculum guides</a><div class="dd-div"></div><div class="dl">By curriculum</div><a class="di" href="#"><i class="ti ti-world"></i> IB · British · American</a><a class="di" href="#"><i class="ti ti-flag"></i> French · German · Canadian</a><a class="di" href="#"><i class="ti ti-sun"></i> Australian · Local</a></div></div>
     <div class="ni"><button class="nb">Final Years <i class="ti ti-chevron-down" style="font-size:10px;opacity:0.6"></i></button><div class="dd"><div class="dl">Senior programmes</div><a class="di" href="academic-passport.html"><i class="ti ti-target-arrow"></i> Track my scores</a><a class="di" href="ib-pathway-navigator.html"><i class="ti ti-diploma"></i> IB Pathway Navigator</a><a class="di" href="career-simulator.html"><i class="ti ti-crown"></i> A-Levels & Sixth Form</a><a class="di" href="cbse-stream-navigator.html"><i class="ti ti-flag"></i> Indian CBSE</a><a class="di" href="french-bac-navigator.html"><i class="ti ti-flag"></i> French Baccalauréat</a><a class="di" href="german-abitur-navigator.html"><i class="ti ti-building"></i> German Abitur</a><a class="di" href="american-pathway-navigator.html"><i class="ti ti-star"></i> American AP & SAT</a><a class="di" href="singapore-pathway-navigator.html"><i class="ti ti-building"></i> Singapore</a><a class="di" href="australian-vce-navigator.html"><i class="ti ti-sun"></i> Australian VCE</a><a class="di" href="brazilian-enem-navigator.html"><i class="ti ti-leaf"></i> Brazilian ENEM</a><div class="dd-div"></div><div class="dl">Plan your path</div><a class="di" href="#"><i class="ti ti-route"></i> Subject navigator</a><a class="di" href="#"><i class="ti ti-users"></i> Student community</a></div></div>
-    <a href="academic-passport.html" style="display:flex;align-items:center;gap:6px;padding:8px 16px;background:rgba(245,200,66,0.15);border:1px solid rgba(245,200,66,0.4);border-radius:99px;color:#F5C842;font-size:12px;font-weight:700;text-decoration:none;font-family:Montserrat,sans-serif;margin-right:8px"><i class="ti ti-target-arrow" style="font-size:14px"></i> Track my scores</a><div class="ni"><button class="nb">Countries <i class="ti ti-chevron-down" style="font-size:10px;opacity:0.6"></i></button><div class="dd"><div class="dl">By region</div><a class="di" href="#"><i class="ti ti-moon"></i> Gulf & Middle East</a><a class="di" href="#"><i class="ti ti-world"></i> Asia Pacific</a><a class="di" href="#"><i class="ti ti-map"></i> Europe</a><a class="di" href="#"><i class="ti ti-map-2"></i> Americas</a><a class="di" href="#"><i class="ti ti-sun"></i> Africa</a><a class="di" href="#"><i class="ti ti-wave-sine"></i> Oceania</a><div class="dd-div"></div><a class="di" href="#"><i class="ti ti-globe"></i> All 190+ countries</a></div></div>
+    <a href="academic-passport.html" class="nav-pill-mobile-hide" style="display:flex;align-items:center;gap:6px;padding:8px 16px;background:rgba(245,200,66,0.15);border:1px solid rgba(245,200,66,0.4);border-radius:99px;color:#F5C842;font-size:12px;font-weight:700;text-decoration:none;font-family:Montserrat,sans-serif;margin-right:8px"><i class="ti ti-target-arrow" style="font-size:14px"></i> Track my scores</a><div class="ni"><button class="nb">Countries <i class="ti ti-chevron-down" style="font-size:10px;opacity:0.6"></i></button><div class="dd"><div class="dl">By region</div><a class="di" href="#"><i class="ti ti-moon"></i> Gulf & Middle East</a><a class="di" href="#"><i class="ti ti-world"></i> Asia Pacific</a><a class="di" href="#"><i class="ti ti-map"></i> Europe</a><a class="di" href="#"><i class="ti ti-map-2"></i> Americas</a><a class="di" href="#"><i class="ti ti-sun"></i> Africa</a><a class="di" href="#"><i class="ti ti-wave-sine"></i> Oceania</a><div class="dd-div"></div><a class="di" href="#"><i class="ti ti-globe"></i> All 190+ countries</a></div></div>
     <div class="ni"><button class="nb">Forum <i class="ti ti-chevron-down" style="font-size:10px;opacity:0.6"></i></button><div class="dd"><div class="dl">Community</div><a class="di" href="#"><i class="ti ti-messages"></i> Parent forum</a><a class="di" href="#"><i class="ti ti-users"></i> Student community</a><a class="di" href="#"><i class="ti ti-map-pin"></i> Forum by country</a><div class="dd-div"></div><a class="di" href="#"><i class="ti ti-star"></i> School reviews</a></div></div>
     <div class="ni"><button class="nb">Universities <span class="soon">Coming soon</span></button></div>
   </div>
@@ -199,13 +205,41 @@ polyfillCountryFlagEmojis();
 <div class="mobile-drawer" id="mobileDrawer">
   <button class="mobile-drawer-close" onclick="closeMobileMenu()">✕</button>
   <div style="clear:both;margin-bottom:20px"></div>
-  <a href="#">Early Years</a>
-  <a href="#">Schools</a>
-  <a href="#">Curricula</a>
-  <a href="#">Final Years</a>
-  <a href="academic-passport.html" style="color:#F5C842;font-weight:700">Track my scores</a>
-  <a href="#">Countries</a>
-  <a href="#">Forum</a>
+  <div class="dd-section">
+    <button class="dd-toggle" onclick="toggleMobileDD(this)">Early Years <span>⌄</span></button>
+    <div class="dd-content"><a href="#">Curriculum Quiz</a><a href="#">Nursery Compass</a></div>
+  </div>
+  <div class="dd-section">
+    <button class="dd-toggle" onclick="toggleMobileDD(this)">Schools <span>⌄</span></button>
+    <div class="dd-content"><a href="#">Search schools</a><a href="#">Compare schools</a></div>
+  </div>
+  <div class="dd-section">
+    <button class="dd-toggle" onclick="toggleMobileDD(this)">Curricula <span>⌄</span></button>
+    <div class="dd-content"><a href="#">All curricula</a></div>
+  </div>
+  <div class="dd-section">
+    <button class="dd-toggle" onclick="toggleMobileDD(this)">Final Years <span>⌄</span></button>
+    <div class="dd-content">
+      <a href="ib-pathway-navigator.html">IB Pathway Navigator</a>
+      <a href="academic-passport.html">Track my scores</a>
+      <a href="career-simulator.html">A-Levels &amp; Sixth Form</a>
+      <a href="cbse-stream-navigator.html">Indian CBSE</a>
+      <a href="french-bac-navigator.html">French Baccalauréat</a>
+      <a href="german-abitur-navigator.html">German Abitur</a>
+      <a href="american-pathway-navigator.html">American AP &amp; SAT</a>
+      <a href="singapore-pathway-navigator.html">Singapore</a>
+      <a href="australian-vce-navigator.html">Australian VCE</a>
+      <a href="brazilian-enem-navigator.html">Brazilian ENEM</a>
+    </div>
+  </div>
+  <div class="dd-section">
+    <button class="dd-toggle" onclick="toggleMobileDD(this)">Countries <span>⌄</span></button>
+    <div class="dd-content"><a href="#">Gulf &amp; Middle East</a><a href="#">Asia Pacific</a><a href="#">Europe</a><a href="#">Americas</a><a href="#">Africa</a><a href="#">Oceania</a></div>
+  </div>
+  <div class="dd-section">
+    <button class="dd-toggle" onclick="toggleMobileDD(this)">Forum <span>⌄</span></button>
+    <div class="dd-content"><a href="#">Parent forum</a><a href="#">Student community</a><a href="#">School reviews</a></div>
+  </div>
   <a href="#">Universities (Coming soon)</a>
   <div style="margin-top:20px;display:flex;flex-direction:column;gap:10px">
     <button class="btn-g" style="width:100%">Sign in</button>
@@ -341,6 +375,11 @@ function openMobileMenu(){
 function closeMobileMenu(){
   document.getElementById('mobileDrawer').classList.remove('open');
   document.getElementById('mobileOverlay').classList.remove('open');
+}
+
+function toggleMobileDD(btn){
+  const content = btn.nextElementSibling;
+  content.classList.toggle('open');
 }
 function closeModal(){document.getElementById('proModal').classList.remove('open')}
 document.getElementById('proModal').addEventListener('click',function(e){if(e.target===this)closeModal()})
