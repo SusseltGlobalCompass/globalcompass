@@ -198,6 +198,11 @@ polyfillCountryFlagEmojis();
           <div class="curr-select-name">CBSE</div>
           <div class="curr-select-desc">Marks, 9-point grades, CGPA</div>
         </div>
+        <div class="curr-select-card" data-curr="French-Bac" onclick="toggleCurriculum(this,'French-Bac')">
+          <div class="curr-badge-lg" style="background:#0055A4;color:#fff">FB</div>
+          <div class="curr-select-name">French Bac</div>
+          <div class="curr-select-desc">0-20 scale, simple average</div>
+        </div>
       </div>
       <button class="btn-primary" id="btnContinueCurricula" onclick="saveCurriculaAndContinue()" disabled>Continue →</button>
     </div>
@@ -379,6 +384,22 @@ polyfillCountryFlagEmojis();
     </div>
     </div>
 
+    <div id="frenchbac-panel" class="curr-detail-panel" style="margin-top:14px">
+    <div class="card">
+      <div class="card-title">French Bac subjects</div>
+      <div class="card-sub">Enter your subjects with current and target grades (0-20 scale). We calculate your simple average — note that the official Bac uses coefficient weighting, so this is a simplified estimate.</div>
+      <div id="frenchbacSubjectsContainer"></div>
+      <button class="add-row-btn" onclick="addFrenchBacRow()">+ Add subject</button>
+      <button class="save-row-btn" onclick="saveFrenchBacGrades()">Save all grades</button>
+      <div id="frenchbacStatus"></div>
+      <div class="calc-result-box" style="background:#0055A4">
+        <div><div class="calc-result-label">Average (out of 20)</div></div>
+        <div class="calc-result-num" id="frenchbacAvgDisplay">0.0</div>
+      </div>
+      <div class="gpa-disclaimer">This is a simple average, not your official weighted Bac average. Specialty subjects (coefficient 16), Philosophy (8), and the Grand Oral (10) count far more than other subjects in your real result — always check Pronote or your school for your true weighted average.</div>
+    </div>
+    </div>
+
     <div class="graduation-box">
       <div class="graduation-title">🎓 Confirmed your university place?</div>
       <div class="graduation-text">Once you confirm, all your data will be automatically and permanently deleted in 90 days. This cannot be undone.</div>
@@ -483,7 +504,8 @@ const curriculumMeta = {
   'A-Levels': { label: 'AL', name: 'A-Levels', color: '#8B1A3D', textColor: '#fff' },
   'AP': { label: 'AP', name: 'American Pathway', color: '#1B3A7A', textColor: '#F5C842' },
   'General': { label: '%', name: 'General / Percentage', color: '#9A7020', textColor: '#fff' },
-  'CBSE': { label: 'CB', name: 'CBSE', color: '#D2691E', textColor: '#fff' }
+  'CBSE': { label: 'CB', name: 'CBSE', color: '#D2691E', textColor: '#fff' },
+  'French-Bac': { label: 'FB', name: 'French Bac', color: '#0055A4', textColor: '#fff' }
 };
 
 async function loadDashboard(){
@@ -524,10 +546,17 @@ async function loadDashboard(){
         status = `${grades.length} subjects entered`;
       }
       await loadCbseData();
+    } else if(curr === 'French-Bac'){
+      const { data: grades } = await sb.from('frenchbac_grades').select('*').eq('user_id', currentUser.id);
+      if(grades && grades.length > 0){
+        const avg = (grades.reduce((s,g) => s + (parseFloat(g.current_grade) || 0), 0) / grades.length).toFixed(1);
+        status = `${grades.length} subjects · Average: ${avg}/20`;
+      }
+      await loadFrenchBacData();
     }
 
     overviewHTML += `
-      <div class="curr-overview-card" onclick="togglePanel('${curr === 'IB' ? 'ib' : curr === 'A-Levels' ? 'alevel' : curr === 'AP' ? 'american' : curr === 'CBSE' ? 'cbse' : 'general'}-panel', this)">
+      <div class="curr-overview-card" onclick="togglePanel('${curr === 'IB' ? 'ib' : curr === 'A-Levels' ? 'alevel' : curr === 'AP' ? 'american' : curr === 'CBSE' ? 'cbse' : curr === 'French-Bac' ? 'frenchbac' : 'general'}-panel', this)">
         <div class="curr-overview-left">
           <div class="curr-badge-sm" style="background:${meta.color};color:${meta.textColor}">${meta.label}</div>
           <div><div class="curr-overview-name">${meta.name}</div><div class="curr-overview-status">${status}</div></div>
@@ -1065,6 +1094,77 @@ async function saveCbseGrades(){
   }
   statusEl.innerHTML = '<div class="status-msg status-success">Saved '+savedCount+' subjects!</div>';
   recalcCbseFromInputs();
+  await loadDashboard();
+}
+
+let frenchbacRowCount = 0;
+
+async function loadFrenchBacData(){
+  const { data: grades } = await sb.from('frenchbac_grades').select('*').eq('user_id', currentUser.id).order('updated_at');
+  document.getElementById('frenchbacSubjectsContainer').innerHTML = '';
+  frenchbacRowCount = 0;
+  if(grades && grades.length > 0){
+    grades.forEach(g => addFrenchBacRow(g));
+  } else {
+    for(let i=0;i<6;i++) addFrenchBacRow();
+  }
+  calculateFrenchBacAvg(grades || []);
+}
+
+function addFrenchBacRow(existing){
+  frenchbacRowCount++;
+  const id = 'frenchbac_row_' + frenchbacRowCount;
+  const row = document.createElement('div');
+  row.className = 'subj-row-multi';
+  row.id = id;
+  row.innerHTML = `
+    <input type="text" placeholder="e.g. Mathématiques" value="${existing ? existing.subject : ''}" data-field="subject">
+    <input type="number" min="0" max="20" step="0.5" placeholder="0-20" value="${existing ? existing.current_grade||'' : ''}" data-field="current_grade" oninput="recalcFrenchBacFromInputs()">
+    <input type="number" min="0" max="20" step="0.5" placeholder="Target" value="${existing ? existing.target_grade||'' : ''}" data-field="target_grade">
+    <div></div>
+    <span class="remove-row-btn" onclick="document.getElementById('${id}').remove();recalcFrenchBacFromInputs()">✕</span>
+  `;
+  if(existing) row.dataset.rowId = existing.id;
+  document.getElementById('frenchbacSubjectsContainer').appendChild(row);
+}
+
+function recalcFrenchBacFromInputs(){
+  const rows = document.querySelectorAll('#frenchbacSubjectsContainer .subj-row-multi');
+  let total = 0, count = 0;
+  rows.forEach(row => {
+    const val = parseFloat(row.querySelector('[data-field="current_grade"]').value);
+    if(!isNaN(val)){ total += val; count++; }
+  });
+  const avg = count > 0 ? (total/count).toFixed(1) : 0;
+  document.getElementById('frenchbacAvgDisplay').textContent = avg;
+}
+
+function calculateFrenchBacAvg(grades){
+  if(grades.length === 0){ document.getElementById('frenchbacAvgDisplay').textContent = '0.0'; return; }
+  const total = grades.reduce((s,g) => s + (parseFloat(g.current_grade) || 0), 0);
+  document.getElementById('frenchbacAvgDisplay').textContent = (total/grades.length).toFixed(1);
+}
+
+async function saveFrenchBacGrades(){
+  const rows = document.querySelectorAll('#frenchbacSubjectsContainer .subj-row-multi');
+  const statusEl = document.getElementById('frenchbacStatus');
+  let savedCount = 0;
+  for(const row of rows){
+    const subject = row.querySelector('[data-field="subject"]').value.trim();
+    if(!subject) continue;
+    const current_grade = parseFloat(row.querySelector('[data-field="current_grade"]').value) || null;
+    const target_grade = parseFloat(row.querySelector('[data-field="target_grade"]').value) || null;
+    const payload = { user_id: currentUser.id, subject, current_grade, target_grade, updated_at: new Date().toISOString() };
+    if(row.dataset.rowId){
+      await sb.from('frenchbac_grades').update(payload).eq('id', row.dataset.rowId);
+    } else {
+      const { data } = await sb.from('frenchbac_grades').insert(payload).select().single();
+      if(data) row.dataset.rowId = data.id;
+    }
+    savedCount++;
+  }
+  statusEl.innerHTML = '<div class="status-msg status-success">Saved '+savedCount+' subjects!</div>';
+  recalcFrenchBacFromInputs();
   await loadDashboard();
 }
 
