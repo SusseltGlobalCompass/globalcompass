@@ -318,6 +318,19 @@ polyfillCountryFlagEmojis();
         <div class="calc-result-num" id="generalAvgDisplay">0%</div>
       </div>
     </div>
+
+    <div class="card" style="border:1.5px dashed #C0D0E8;background:#F8F9FF">
+      <div class="card-title" style="font-size:15px">+ Extra exams (optional)</div>
+      <div class="card-sub">Many international schools let students sit AP exams, A-Levels, or the SAT at the end — add them here without switching curricula.</div>
+      <div id="generalExtrasContainer"></div>
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button class="add-row-btn" style="flex:1" onclick="addExtraExamRow('general', 'AP')">+ AP exam</button>
+        <button class="add-row-btn" style="flex:1" onclick="addExtraExamRow('general', 'A-Level')">+ A-Level</button>
+        <button class="add-row-btn" style="flex:1" onclick="addExtraExamRow('general', 'SAT')">+ SAT</button>
+      </div>
+      <button class="save-row-btn" onclick="saveExtraExams('general')">Save extra exams</button>
+      <div id="generalExtrasStatus"></div>
+    </div>
     </div>
 
     <div id="american-panel" class="curr-detail-panel" style="margin-top:14px">
@@ -745,6 +758,7 @@ async function loadGeneralData(){
     for(let i=0;i<4;i++) addGeneralRow();
   }
   calculateGeneralAvg(grades || []);
+  await loadExtraExams('general');
 }
 
 function addGeneralRow(existing){
