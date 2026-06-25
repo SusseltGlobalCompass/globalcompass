@@ -190,8 +190,8 @@ polyfillCountryFlagEmojis();
         </div>
         <div class="curr-select-card" data-curr="General" onclick="toggleCurriculum(this,'General')">
           <div class="curr-badge-lg" style="background:#9A7020;color:#fff">%</div>
-          <div class="curr-select-name">General / Percentage</div>
-          <div class="curr-select-desc">0-100 per subject</div>
+          <div class="curr-select-name">International Schools</div>
+          <div class="curr-select-desc">0-100 percentage grading</div>
         </div>
         <div class="curr-select-card" data-curr="CBSE" onclick="toggleCurriculum(this,'CBSE')">
           <div class="curr-badge-lg" style="background:#D2691E;color:#fff">CB</div>
@@ -307,7 +307,7 @@ polyfillCountryFlagEmojis();
 
     <div id="general-panel" class="curr-detail-panel" style="margin-top:14px">
     <div class="card">
-      <div class="card-title">General subjects</div>
+      <div class="card-title">International Schools — subjects</div>
       <div class="card-sub">Enter your subjects with current and target percentage scores.</div>
       <div id="generalSubjectsContainer"></div>
       <button class="add-row-btn" onclick="addGeneralRow()">+ Add subject</button>
@@ -516,7 +516,7 @@ const curriculumMeta = {
   'IB': { label: 'IB', name: 'IB Diploma', color: '#1B5E3A', textColor: '#fff' },
   'A-Levels': { label: 'AL', name: 'A-Levels', color: '#8B1A3D', textColor: '#fff' },
   'AP': { label: 'AP', name: 'American Pathway', color: '#1B3A7A', textColor: '#F5C842' },
-  'General': { label: '%', name: 'General / Percentage', color: '#9A7020', textColor: '#fff' },
+  'General': { label: '%', name: 'International Schools', color: '#9A7020', textColor: '#fff' },
   'CBSE': { label: 'CB', name: 'CBSE', color: '#D2691E', textColor: '#fff' },
   'French-Bac': { label: 'FB', name: 'French Bac', color: '#0055A4', textColor: '#fff' }
 };
