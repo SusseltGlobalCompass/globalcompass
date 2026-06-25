@@ -170,6 +170,21 @@ polyfillCountryFlagEmojis();
     <div class="m-note">No commitment · Cancel anytime · Trusted by families worldwide</div>
   </div>
 </div>
+
+<div class="modal-ov" id="privacyTermsModal">
+  <div class="modal-x" style="max-width:480px">
+    <span class="modal-close" onclick="document.getElementById('privacyTermsModal').classList.remove('open')">✕</span>
+    <h2 class="m-h">Privacy &amp; Terms</h2>
+    <p class="m-p" style="text-align:left;line-height:1.7">GlobalCompass's full Privacy Policy and Terms of Service are currently being finalised. In the meantime, here's what matters most:</p>
+    <ul style="text-align:left;font-size:13px;color:#0D1F4A;line-height:1.8;padding-left:20px;margin:14px 0">
+      <li>We never sell your data, to anyone, ever.</li>
+      <li>Your Track My Scores entries are visible only to you.</li>
+      <li>Your academic data is automatically deleted 90 days after you confirm a university place.</li>
+    </ul>
+    <p class="m-p" style="text-align:left;font-size:12px">Questions? Email <a href="mailto:info@globalcompass.education" style="color:#1B3A7A;font-weight:700">info@globalcompass.education</a></p>
+  </div>
+</div>
+
 <div style="background:#F5C842;padding:10px 24px;text-align:center;font-family:Montserrat,sans-serif;font-size:13px;font-weight:600;color:#1B3A7A;display:flex;align-items:center;justify-content:center;gap:10px"><span>🧭</span><span>GlobalCompass is launching soon — you are seeing our preview!</span><a href="#waitlist-section" style="background:#1B3A7A;color:#F5C842;padding:5px 16px;border-radius:99px;text-decoration:none;font-size:12px;font-weight:700;margin-left:8px">Join the waitlist ↗</a><span style="margin-left:auto;cursor:pointer;font-size:16px" onclick="this.parentElement.style.display=none">✕</span></div><nav>
   <a class="logo" href="#">
     <svg width="34" height="34" viewBox="0 0 64 64" fill="none">
@@ -362,7 +377,7 @@ async function submitWaitlist(){
       <div class="ft-copy">Education Worldwide · globalcompass.education · © 2025</div>
     </div>
   </div>
-  <div class="ft-links"><a class="ft-link" href="#">About</a><a class="ft-link" href="#">Schools</a><a class="ft-link" href="#">Curricula</a><a class="ft-link" href="#">Final Years</a><a class="ft-link" href="#">Forum</a><a class="ft-link" href="#">Reviews</a><a class="ft-link" href="#">Spotlight</a><a class="ft-link" href="#">Privacy</a><a class="ft-link" href="#">Terms</a><a class="ft-link" href="mailto:info@globalcompass.education">Contact</a></div>
+  <div class="ft-links"><a class="ft-link" href="#">About</a><a class="ft-link" href="#">Schools</a><a class="ft-link" href="#">Curricula</a><a class="ft-link" href="#">Final Years</a><a class="ft-link" href="#">Forum</a><a class="ft-link" href="#">Reviews</a><a class="ft-link" href="#">Spotlight</a><a class="ft-link" href="#privacy-terms-notice" onclick="document.getElementById('privacyTermsModal').classList.add('open');return false;">Privacy</a><a class="ft-link" href="#privacy-terms-notice" onclick="document.getElementById('privacyTermsModal').classList.add('open');return false;">Terms</a><a class="ft-link" href="mailto:info@globalcompass.education">Contact</a></div>
   <div class="ft-right"><div style="font-family:'Playfair Display',serif;font-size:11px;font-style:italic;color:#4A6FA5">"Every child deserves a compass."</div><div style="font-size:10px;color:#2952A3;margin-top:3px">info@globalcompass.education · All rights reserved.</div></div>
 </footer>
 <script>
