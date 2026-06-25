@@ -94,6 +94,7 @@ body{font-family:'Twemoji Country Flags','Inter',sans-serif;background:#F8F9FF;c
 import { polyfillCountryFlagEmojis } from "https://cdn.jsdelivr.net/npm/country-flag-emoji-polyfill@0.1/dist/index.mjs";
 polyfillCountryFlagEmojis();
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 <nav class="nav">
@@ -204,6 +205,18 @@ polyfillCountryFlagEmojis();
 </div>
 <script>
 let age='',priorities=[],language='';
+const SUPABASE_URL = 'https://qginevdbqaodimcllevb.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_q3hvHIL8bl4oH49Qkyqkgg_w1G2Ud5w';
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+async function getRealNurseries(curriculumMatch){
+  const { data, error } = await sb.from('uae_nurseries').select('*').ilike('curriculum', '%'+curriculumMatch+'%').order('rating', { ascending: false }).limit(4);
+  if(error || !data || data.length === 0){
+    const { data: fallback } = await sb.from('uae_nurseries').select('*').order('rating', { ascending: false }).limit(4);
+    return fallback || [];
+  }
+  return data;
+}
 function selectAge(el,val){age=val;document.querySelectorAll('#s1 .opt-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');document.getElementById('btn1').disabled=false;}
 function togglePriority(el,val){if(el.classList.contains('selected')){el.classList.remove('selected');priorities=priorities.filter(p=>p!==val);}else{if(priorities.length>=2)return;el.classList.add('selected');priorities.push(val);}document.getElementById('btn2').disabled=priorities.length===0;}
 function selectLang(el,val){language=val;document.querySelectorAll('#s3 .opt-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');document.getElementById('btn3').disabled=false;}
@@ -220,7 +233,12 @@ async function generateMatch(){
     const data=await res.json();
     clearInterval(iv);
     const text=data.content[0].text.replace(/```json|```/g,'').trim();
-    showResults(JSON.parse(text));
+    const parsed = JSON.parse(text);
+    const realNurseries = await getRealNurseries(parsed.topMatch);
+    if(realNurseries.length > 0){
+      parsed.topNurseries = realNurseries.map(n => ({name:n.name, location:n.location, curriculum:n.curriculum, ageRange:n.age_range, feeRange:n.fee_range, rating:n.rating}));
+    }
+    showResults(parsed);
   }catch(e){clearInterval(iv);showFallback();}
 }
 function showResults(r){
