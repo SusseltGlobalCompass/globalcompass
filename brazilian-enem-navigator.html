@@ -290,7 +290,6 @@ function setLang(lang){
   opts3.forEach((card,i) => { if(destData[i]){ card.querySelector('.opt-title').textContent = destData[i][0]; card.querySelector('.opt-sub').textContent = destData[i][1]; } });
 
   const examples = document.querySelectorAll('.ep');
-  examples.forEach((ep,i) => { if(t.examplesLabel[i]){ ep.innerHTML = ep.innerHTML.split(' ')[0] + ' ' + t.examplesLabel[i]; } });
 
   const areasTitle = document.querySelector('#s5 .card-title'); if(areasTitle) areasTitle.textContent = t.areasTitle;
 }
