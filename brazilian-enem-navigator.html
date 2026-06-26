@@ -153,14 +153,14 @@ polyfillCountryFlagEmojis();
       <div class="card-sub">Do not think about exam areas yet. Tell us your dream — GlobalCompass maps backwards to the right ENEM focus, essay strategy and university pathway.</div>
       <textarea class="dream-input" id="dreamInput" placeholder="e.g. Quero ser médico e trabalhar em pesquisa médica / I want to become a doctor and work in medical research…"></textarea>
       <div class="example-prompts">
-        <span class="ep" onclick="setDream('I want to become a doctor and work in medicine in Brazil')">🩺 Medicina</span>
-        <span class="ep" onclick="setDream('I want to study engineering and work in technology or infrastructure')">⚙️ Engenharia</span>
-        <span class="ep" onclick="setDream('I want to study law and work as a lawyer or in public service')">⚖️ Direito</span>
-        <span class="ep" onclick="setDream('I want to study business administration economics or finance')">📈 Administração</span>
-        <span class="ep" onclick="setDream('I want to study computer science and work in software engineering, data, or AI')">💻 Computação</span>
-        <span class="ep" onclick="setDream('I want to study international relations or diplomacy')">🌍 Relações Internacionais</span>
-        <span class="ep" onclick="setDream('I want to study psychology or social sciences')">🧠 Psicologia</span>
-        <span class="ep" onclick="setDream('I want to study architecture journalism or communications')">🎨 Arquitetura</span>
+        <span class="ep" data-pt="Quero ser médico e trabalhar com medicina no Brasil" data-en="I want to become a doctor and work in medicine in Brazil" onclick="setDreamChip(this)">🩺 Medicina</span>
+        <span class="ep" data-pt="Quero estudar engenharia e trabalhar com tecnologia ou infraestrutura" data-en="I want to study engineering and work in technology or infrastructure" onclick="setDreamChip(this)">⚙️ Engenharia</span>
+        <span class="ep" data-pt="Quero estudar direito e trabalhar como advogado ou no serviço público" data-en="I want to study law and work as a lawyer or in public service" onclick="setDreamChip(this)">⚖️ Direito</span>
+        <span class="ep" data-pt="Quero estudar administração, economia ou finanças" data-en="I want to study business administration, economics, or finance" onclick="setDreamChip(this)">📈 Administração</span>
+        <span class="ep" data-pt="Quero estudar ciência da computação e trabalhar com engenharia de software, dados ou IA" data-en="I want to study computer science and work in software engineering, data, or AI" onclick="setDreamChip(this)">💻 Computação</span>
+        <span class="ep" data-pt="Quero estudar relações internacionais ou diplomacia" data-en="I want to study international relations or diplomacy" onclick="setDreamChip(this)">🌍 Relações Internacionais</span>
+        <span class="ep" data-pt="Quero estudar psicologia ou ciências sociais" data-en="I want to study psychology or social sciences" onclick="setDreamChip(this)">🧠 Psicologia</span>
+        <span class="ep" data-pt="Quero estudar arquitetura, jornalismo ou comunicação" data-en="I want to study architecture, journalism, or communications" onclick="setDreamChip(this)">🎨 Arquitetura</span>
       </div>
     </div>
     <div class="btn-row"><div></div><button class="btn-next" id="btn1" onclick="goStep(2)" disabled>Next — Seu ano escolar →</button></div>
