@@ -124,7 +124,13 @@ polyfillCountryFlagEmojis();
       <div class="wm-compass">C<span class="o">O</span>MPASS</div>
     </div>
   </div>
-  <div class="nav-tag">🇧🇷 ENEM Navigator</div>
+  <div style="display:flex;align-items:center;gap:14px">
+    <div style="display:flex;background:rgba(255,255,255,0.1);border-radius:99px;padding:3px;gap:2px">
+      <button id="btnPT" onclick="setLang('pt')" style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;padding:5px 12px;border-radius:99px;border:none;background:#FEDD00;color:#002776;cursor:pointer">PT</button>
+      <button id="btnEN" onclick="setLang('en')" style="font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;padding:5px 12px;border-radius:99px;border:none;background:transparent;color:rgba(255,255,255,0.6);cursor:pointer">EN</button>
+    </div>
+    <div class="nav-tag" id="navTag">🇧🇷 ENEM Navigator</div>
+  </div>
 </nav>
 <div class="hero-bar">
   <div class="br-badge">🇧🇷 ENEM · SiSU · Vestibular · UAE & Brazil · No cursinho needed</div>
@@ -218,6 +224,77 @@ polyfillCountryFlagEmojis();
 </div>
 <script>
 let dream='',year='',destination='';
+let currentLang = 'pt';
+
+const translations = {
+  pt: {
+    navTag: '🇧🇷 ENEM Navigator',
+    heroTitle: 'Do seu sonho ao seu<br><em>caminho no ENEM</em>',
+    yearTitle: 'Em que ano você está?',
+    y1Title: '3º Ano — Ensino Médio', y1Sub: 'Final year — taking ENEM this year',
+    y2Title: 'Treineiro / Repetindo', y2Sub: 'Retaking ENEM to improve score',
+    destTitle: 'Onde você quer estudar?',
+    destSub: 'Seu destino define se você foca só no ENEM/SiSU, soma vestibulares específicos, ou se prepara para opções internacionais.',
+    d1Title: 'Brasil — Universidades federais', d1Sub: 'USP, UNICAMP, UFRJ via ENEM/SiSU',
+    d2Title: 'Brasil — Privada com ProUni', d2Sub: 'Caminho de bolsa via ProUni',
+    d3Title: 'Vestibular específico', d3Sub: 'Universidade com exame próprio',
+    d4Title: 'Universidades em Portugal', d4Sub: 'Via acordos internacionais',
+    d5Title: 'Emirados / Internacional', d5Sub: 'Usando o ENEM como qualificação equivalente',
+    d6Title: 'Aberto — todas as opções', d6Sub: 'Brasil e internacional',
+    areasTitle: 'Suas áreas de foco no ENEM',
+    examplesLabel: ['Medicina','Direito','Engenharia','Negócios Internacionais','Psicologia','Arquitetura'],
+    dreamPlaceholder: 'ex. Quero estudar medicina e me tornar médico...'
+  },
+  en: {
+    navTag: '🇧🇷 ENEM Navigator',
+    heroTitle: 'From your dream to your<br><em>ENEM pathway</em>',
+    yearTitle: 'What year are you in?',
+    y1Title: '3rd Year — High School', y1Sub: 'Final year — taking ENEM this year',
+    y2Title: 'Treineiro / Retaking', y2Sub: 'Retaking ENEM to improve score',
+    destTitle: 'Where do you want to study?',
+    destSub: 'Your destination shapes whether you focus purely on ENEM/SiSU, add specific entrance exams, or prepare for international options.',
+    d1Title: 'Brazil — Federal universities', d1Sub: 'USP, UNICAMP, UFRJ via ENEM/SiSU',
+    d2Title: 'Brazil — Private with ProUni', d2Sub: 'Scholarship pathway via ProUni',
+    d3Title: 'Specific entrance exam', d3Sub: 'University with its own exam',
+    d4Title: 'Portugal universities', d4Sub: 'Via international agreements',
+    d5Title: 'UAE / International', d5Sub: 'Using ENEM as equivalent qualification',
+    d6Title: 'Open — all options', d6Sub: 'Brazil and international',
+    areasTitle: 'Your ENEM focus areas',
+    examplesLabel: ['Medicine','Law','Engineering','International Business','Psychology','Architecture'],
+    dreamPlaceholder: 'e.g. I want to study medicine and become a doctor...'
+  }
+};
+
+function setLang(lang){
+  currentLang = lang;
+  const t = translations[lang];
+  document.getElementById('btnPT').style.background = lang==='pt' ? '#FEDD00' : 'transparent';
+  document.getElementById('btnPT').style.color = lang==='pt' ? '#002776' : 'rgba(255,255,255,0.6)';
+  document.getElementById('btnEN').style.background = lang==='en' ? '#FEDD00' : 'transparent';
+  document.getElementById('btnEN').style.color = lang==='en' ? '#002776' : 'rgba(255,255,255,0.6)';
+
+  document.getElementById('navTag').innerHTML = t.navTag;
+  const heroH = document.querySelector('.hero-h'); if(heroH) heroH.innerHTML = t.heroTitle;
+  const t1 = document.querySelectorAll('.card-title')[0]; 
+  const yearCard = document.querySelector('#s2 .card-title'); if(yearCard) yearCard.textContent = t.yearTitle;
+  const destCardTitle = document.querySelector('#s3 .card-title'); if(destCardTitle) destCardTitle.textContent = t.destTitle;
+  const destCardSub = document.querySelector('#s3 .card-sub'); if(destCardSub) destCardSub.textContent = t.destSub;
+  const dreamInput = document.getElementById('dreamInput'); if(dreamInput) dreamInput.placeholder = t.dreamPlaceholder;
+
+  const opts2 = document.querySelectorAll('#s2 .opt-card');
+  if(opts2[0]){ opts2[0].querySelector('.opt-title').textContent = t.y1Title; opts2[0].querySelector('.opt-sub').textContent = t.y1Sub; }
+  if(opts2[1]){ opts2[1].querySelector('.opt-title').textContent = t.y2Title; opts2[1].querySelector('.opt-sub').textContent = t.y2Sub; }
+
+  const opts3 = document.querySelectorAll('#s3 .opt-card');
+  const destData = [[t.d1Title,t.d1Sub],[t.d2Title,t.d2Sub],[t.d3Title,t.d3Sub],[t.d4Title,t.d4Sub],[t.d5Title,t.d5Sub],[t.d6Title,t.d6Sub]];
+  opts3.forEach((card,i) => { if(destData[i]){ card.querySelector('.opt-title').textContent = destData[i][0]; card.querySelector('.opt-sub').textContent = destData[i][1]; } });
+
+  const examples = document.querySelectorAll('.ep');
+  examples.forEach((ep,i) => { if(t.examplesLabel[i]){ ep.innerHTML = ep.innerHTML.split(' ')[0] + ' ' + t.examplesLabel[i]; } });
+
+  const areasTitle = document.querySelector('#s5 .card-title'); if(areasTitle) areasTitle.textContent = t.areasTitle;
+}
+
 document.getElementById('dreamInput').addEventListener('input',function(){dream=this.value.trim();document.getElementById('btn1').disabled=dream.length<10;});
 function setDream(t){document.getElementById('dreamInput').value=t;dream=t;document.getElementById('btn1').disabled=false;}
 function selectYear(el,v){year=v;document.querySelectorAll('#s2 .opt-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');document.getElementById('btn2').disabled=false;}
@@ -226,9 +303,14 @@ function goStep(n){document.querySelectorAll('.screen').forEach(s=>s.classList.r
 function updateSteps(active){for(let i=1;i<=4;i++){const circle=document.getElementById('sc'+i);const label=circle?.nextElementSibling;if(!circle)continue;if(i<active){circle.className='step-circle done';circle.innerHTML='✓';}else if(i===active){circle.className='step-circle active';circle.innerHTML=i;if(label)label.className='step-label active';}else{circle.className='step-circle pending';circle.innerHTML=i;if(label)label.className='step-label';}const line=document.getElementById('sl'+i);if(line)line.className=i<active?'step-line done':'step-line';}}
 async function generatePathway(){
   goStep(4);
-  const msgs=['Mapping your dream to ENEM areas…','Analysing SiSU and vestibular strategy…','Building your redação essay approach…','Finalising your complete ENEM pathway…'];
+  const msgs = currentLang === 'en'
+    ? ['Mapping your dream to ENEM areas…','Analysing SiSU and vestibular strategy…','Building your redação essay approach…','Finalising your complete ENEM pathway…']
+    : ['Mapeando seu sonho para as áreas do ENEM…','Analisando estratégia de SiSU e vestibular…','Construindo sua abordagem de redação…','Finalizando seu caminho completo no ENEM…'];
   let mi=0;const iv=setInterval(()=>{mi=(mi+1)%msgs.length;document.getElementById('loadingText').textContent=msgs[mi];},1800);
-  const prompt='Você é o GlobalCompass ENEM Navigator, substituindo o cursinho caro por orientação gratuita personalizada com IA.\nSONHO: "'+dream+'"\nANO: "'+year+'"\nDESTINO: "'+destination+'"\n\nIMPORTANTE: Responda TODO o conteúdo em PORTUGUÊS DO BRASIL, do início ao fim. Não misture inglês em nenhum campo. Use português brasileiro natural e fluente em absolutamente todos os campos de texto.\n\nFatos do ENEM: 4 áreas - Linguagens e Códigos, Ciências Humanas, Ciências da Natureza, Matemática - mais Redação obrigatória pontuada de 0 a 1000. TRI (Teoria de Resposta ao Item) é a metodologia de pontuação, considera a dificuldade e não apenas o percentual de acertos. SiSU é o sistema unificado que usa notas do ENEM para universidades federais e estaduais. ProUni oferece bolsas em universidades privadas com base na nota do ENEM e na renda. Muitos estudantes precisam de vestibular específico da universidade, como a Fuvest da USP. Cursos top como Medicina e Direito exigem TRI acima de 750-800.\n\nResponda APENAS com JSON válido, com TODO o texto em português brasileiro:\n{"career":"nome da carreira em português","summary":"resumo de 2 frases em português","areas":[{"name":"nome da área em português","priority":"priority","why":"uma frase em português"},{"name":"nome da área","priority":"priority","why":"uma frase em português"},{"name":"nome da área","priority":"normal","why":"uma frase em português"},{"name":"Redação","priority":"priority","why":"Redação obrigatória, essencial para aprovação em cursos concorridos, pontuada separadamente de 0 a 1000"}],"targetTRI":720,"targetRedacao":920,"pathwayAdvice":[{"label":"Estratégia SiSU","detail":"uma frase em português"},{"label":"Elegibilidade ProUni","detail":"uma frase em português"},{"label":"Consideração sobre vestibular","detail":"uma frase em português"},{"label":"Substituindo o cursinho","detail":"uma frase em português sobre estratégia de estudo gratuita substituindo o cursinho pago"}],"targetUniversities":[{"name":"universidade brasileira","programme":"curso específico em português","score":"TRI ou nota de corte necessária"},{"name":"universidade brasileira","programme":"curso específico em português","score":"TRI ou nota de corte necessária"},{"name":"universidade internacional ou de Portugal","programme":"caminho equivalente em português","score":"equivalência ao ENEM"}],"hiddenRequirements":["exigência 1 em português","exigência 2 em português","exigência 3 em português"],"uaeSpecific":"2-3 frases em português para estudantes brasileiros nos Emirados cursando o ENEM, mencionando a falta de acesso a cursinho e a logística de inscrição","aiInsight":"2-3 frases em português com uma dica surpreendente e não óbvia sobre estratégia para o ENEM"}';
+  const langInstruction = currentLang === 'en'
+    ? 'IMPORTANT: Respond ENTIRELY in English, in every single field, from start to finish. You may use Portuguese terms like ENEM, SiSU, ProUni, TRI, and Redação as they are standard terms, but all explanatory sentences must be in English.'
+    : 'IMPORTANTE: Responda TODO o conteúdo em PORTUGUÊS DO BRASIL, do início ao fim. Não misture inglês em nenhum campo. Use português brasileiro natural e fluente em absolutamente todos os campos de texto.';
+  const prompt='Você é o GlobalCompass ENEM Navigator, substituindo o cursinho caro por orientação gratuita personalizada com IA.\nSONHO: "'+dream+'"\nANO: "'+year+'"\nDESTINO: "'+destination+'"\n\n'+langInstruction\n\nFatos do ENEM: 4 áreas - Linguagens e Códigos, Ciências Humanas, Ciências da Natureza, Matemática - mais Redação obrigatória pontuada de 0 a 1000. TRI (Teoria de Resposta ao Item) é a metodologia de pontuação, considera a dificuldade e não apenas o percentual de acertos. SiSU é o sistema unificado que usa notas do ENEM para universidades federais e estaduais. ProUni oferece bolsas em universidades privadas com base na nota do ENEM e na renda. Muitos estudantes precisam de vestibular específico da universidade, como a Fuvest da USP. Cursos top como Medicina e Direito exigem TRI acima de 750-800.\n\nResponda APENAS com JSON válido, com TODO o texto em português brasileiro:\n{"career":"nome da carreira em português","summary":"resumo de 2 frases em português","areas":[{"name":"nome da área em português","priority":"priority","why":"uma frase em português"},{"name":"nome da área","priority":"priority","why":"uma frase em português"},{"name":"nome da área","priority":"normal","why":"uma frase em português"},{"name":"Redação","priority":"priority","why":"Redação obrigatória, essencial para aprovação em cursos concorridos, pontuada separadamente de 0 a 1000"}],"targetTRI":720,"targetRedacao":920,"pathwayAdvice":[{"label":"Estratégia SiSU","detail":"uma frase em português"},{"label":"Elegibilidade ProUni","detail":"uma frase em português"},{"label":"Consideração sobre vestibular","detail":"uma frase em português"},{"label":"Substituindo o cursinho","detail":"uma frase em português sobre estratégia de estudo gratuita substituindo o cursinho pago"}],"targetUniversities":[{"name":"universidade brasileira","programme":"curso específico em português","score":"TRI ou nota de corte necessária"},{"name":"universidade brasileira","programme":"curso específico em português","score":"TRI ou nota de corte necessária"},{"name":"universidade internacional ou de Portugal","programme":"caminho equivalente em português","score":"equivalência ao ENEM"}],"hiddenRequirements":["exigência 1 em português","exigência 2 em português","exigência 3 em português"],"uaeSpecific":"2-3 frases em português para estudantes brasileiros nos Emirados cursando o ENEM, mencionando a falta de acesso a cursinho e a logística de inscrição","aiInsight":"2-3 frases em português com uma dica surpreendente e não óbvia sobre estratégia para o ENEM"}';
   try{
     const res=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:prompt,max_tokens:2000})});
     const data=await res.json();clearInterval(iv);
@@ -236,6 +318,8 @@ async function generatePathway(){
     showResults(JSON.parse(text));
   }catch(e){console.error('Brazilian ENEM Navigator error:',e);clearInterval(iv);showFallback();}
 }
+setLang('pt');
+
 function showResults(r){
   document.getElementById('resultCareer').textContent=r.career;
   document.getElementById('resultSummary').textContent=r.summary;
