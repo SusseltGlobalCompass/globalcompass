@@ -134,7 +134,7 @@ async function resolveCountryIds(q){
 async function runSearch(){
   const q = document.getElementById("qInput").value.trim();
   const age = document.getElementById("ageSel").value;
-  const cur = document.getElementById("curSel").value || getParams().cur;
+  const cur = document.getElementById("curSel").value;
   const budget = document.getElementById("budgetSel").value;
 
   const newUrl = window.location.pathname + "?q=" + encodeURIComponent(q) + "&age=" + age + "&cur=" + cur + "&budget=" + budget;
