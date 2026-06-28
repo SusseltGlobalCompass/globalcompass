@@ -80,9 +80,9 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
       <i class="ti ti-search" style="color:#1B3A7A;font-size:16px;flex-shrink:0"></i>
       <input id="qInput" placeholder="School, country, or city...">
       <div class="f-div"></div>
-      <select id="ageSel" class="f-sel"><option value="">All ages</option><option value="3-5">3-5 Pre-school</option><option value="6-11">6-11 Primary</option><option value="12-15">12-15 Middle</option><option value="16-18">16-18 Final years</option></select>
+      <select id="ageSel" class="f-sel" onchange="setCurriculumOptionSet(this.value==='3-5')"><option value="">All ages</option><option value="3-5">3-5 Pre-school</option><option value="6-11">6-11 Primary</option><option value="12-15">12-15 Middle</option><option value="16-18">16-18 Final years</option></select>
       <div class="f-div"></div>
-      <select id="curSel" class="f-sel"><option value="">All curricula</option><option value="IB">IB</option><option value="British">British</option><option value="American">American</option><option value="CBSE">CBSE</option><option value="French">French</option><option value="German">German</option><option value="Singapore">Singapore</option><option value="Australian">Australian</option><option value="Brazilian">Brazilian</option><option value="International">International Schools</option></select>
+      <select id="curSel" class="f-sel" onchange="document.getElementById('curSel').dataset.userTouched='1'"><option value="">All curricula</option><option value="IB">IB</option><option value="British">British</option><option value="American">American</option><option value="CBSE">CBSE</option><option value="French">French</option><option value="German">German</option><option value="Singapore">Singapore</option><option value="Australian">Australian</option><option value="Brazilian">Brazilian</option><option value="International">International Schools</option></select>
       <div class="f-div"></div>
       <select id="budgetSel" class="f-sel"><option value="">All budgets</option><option value="0-3000">Budget-friendly</option><option value="3000-6000">Mid-range</option><option value="6000-10000">Premium</option><option value="10000-999999">Ultra-premium</option></select>
       <button class="f-btn" onclick="runSearch()">Search</button>
@@ -104,10 +104,21 @@ function getParams(){
   return { q: p.get("q")||"", age: p.get("age")||"", cur: p.get("cur")||"", budget: p.get("budget")||"", type: p.get("type")||"" };
 }
 
+const K12_CURRICULA = '<option value="">All curricula</option><option value="IB">IB</option><option value="British">British</option><option value="American">American</option><option value="CBSE">CBSE</option><option value="French">French</option><option value="German">German</option><option value="Singapore">Singapore</option><option value="Australian">Australian</option><option value="Brazilian">Brazilian</option><option value="International">International Schools</option>';
+const NURSERY_PHILOSOPHIES = '<option value="">All philosophies</option><option value="Montessori">Montessori</option><option value="British EYFS">British EYFS</option><option value="Reggio Emilia">Reggio Emilia</option><option value="Forest School">Forest School</option>';
+
+function setCurriculumOptionSet(isNursery, preserveValue){
+  const sel = document.getElementById("curSel");
+  const current = preserveValue !== undefined ? preserveValue : sel.value;
+  sel.innerHTML = isNursery ? NURSERY_PHILOSOPHIES : K12_CURRICULA;
+  sel.value = current || "";
+}
+
 function applyParamsToUI(params){
   document.getElementById("qInput").value = params.q;
+  const isNursery = (params.type === "Nursery") || (params.age === "3-5");
+  setCurriculumOptionSet(isNursery, params.cur);
   if(params.age) document.getElementById("ageSel").value = params.age;
-  if(params.cur) document.getElementById("curSel").value = params.cur;
   if(params.budget) document.getElementById("budgetSel").value = params.budget;
 }
 
