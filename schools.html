@@ -101,7 +101,7 @@ const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 function getParams(){
   const p = new URLSearchParams(window.location.search);
-  return { q: p.get("q")||"", age: p.get("age")||"", cur: p.get("cur")||"", budget: p.get("budget")||"" };
+  return { q: p.get("q")||"", age: p.get("age")||"", cur: p.get("cur")||"", budget: p.get("budget")||"", type: p.get("type")||"" };
 }
 
 function applyParamsToUI(params){
@@ -123,7 +123,7 @@ async function resolveCountryIds(q){
 async function runSearch(){
   const q = document.getElementById("qInput").value.trim();
   const age = document.getElementById("ageSel").value;
-  const cur = document.getElementById("curSel").value;
+  const cur = document.getElementById("curSel").value || getParams().cur;
   const budget = document.getElementById("budgetSel").value;
 
   const newUrl = window.location.pathname + "?q=" + encodeURIComponent(q) + "&age=" + age + "&cur=" + cur + "&budget=" + budget;
@@ -151,6 +151,10 @@ async function runSearch(){
   if(budget){
     const [bMin,bMax] = budget.split("-").map(Number);
     query = query.lte("fee_min", bMax).gte("fee_max", bMin);
+  }
+  const typeParam = getParams().type;
+  if(typeParam){
+    query = query.ilike("school_type", "%"+typeParam+"%");
   }
 
   query = query.order("is_featured", { ascending:false }).order("rating", { ascending:false, nullsFirst:false }).order("name", { ascending:true });
