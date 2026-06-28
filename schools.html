@@ -111,6 +111,15 @@ function applyParamsToUI(params){
   if(params.budget) document.getElementById("budgetSel").value = params.budget;
 }
 
+async function resolveCountryIds(q){
+  if(!q) return [];
+  const synonyms = {"uae":"United Arab Emirates","u.a.e":"United Arab Emirates","usa":"United States","us":"United States","u.s.a":"United States","u.s":"United States","uk":"United Kingdom","u.k":"United Kingdom"};
+  const key = q.toLowerCase().trim();
+  const lookupTerm = synonyms[key] || q;
+  const { data } = await sb.from("countries").select("id").ilike("name", "%"+lookupTerm+"%");
+  return data ? data.map(c => c.id) : [];
+}
+
 async function runSearch(){
   const q = document.getElementById("qInput").value.trim();
   const age = document.getElementById("ageSel").value;
@@ -125,7 +134,12 @@ async function runSearch(){
   let query = sb.from("schools").select("*, countries(name)");
 
   if(q){
-    query = query.or("name.ilike.%"+q+"%,city.ilike.%"+q+"%");
+    const countryIds = await resolveCountryIds(q);
+    let orParts = ["name.ilike.%"+q+"%","city.ilike.%"+q+"%"];
+    if(countryIds.length){
+      orParts.push("country_id.in.("+countryIds.join(",")+")");
+    }
+    query = query.or(orParts.join(","));
   }
   if(cur){
     query = query.ilike("curriculum", "%"+cur+"%");
