@@ -46,6 +46,13 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
 .empty-state{text-align:center;padding:60px 20px;color:#7A8BAE}
 .empty-state i{font-size:36px;color:#C0D0E8;margin-bottom:12px;display:block}
 .loading-state{text-align:center;padding:60px 20px;color:#7A8BAE;font-size:13px}
+.sc-compare{display:flex;align-items:center;gap:6px;margin-top:12px;padding-top:12px;border-top:0.5px solid #E0E8F5;font-size:11.5px;color:#1B3A7A;font-weight:600;cursor:pointer}
+.sc-compare input{cursor:pointer;width:15px;height:15px;accent-color:#1B3A7A}
+.compare-bar{position:fixed;bottom:0;left:0;right:0;background:#1B3A7A;padding:14px 24px;display:none;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;box-shadow:0 -4px 20px rgba(0,0,0,0.15);z-index:50}
+.compare-chip{background:rgba(245,200,66,0.15);color:#fff;font-size:12px;font-weight:600;padding:6px 12px;border-radius:99px;display:inline-flex;align-items:center;gap:6px}
+.compare-chip i{cursor:pointer;color:#F5C842}
+.compare-btn{background:#F5C842;color:#1B3A7A;border:none;padding:10px 24px;border-radius:99px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Montserrat',sans-serif;white-space:nowrap}
+.compare-btn:disabled{background:rgba(245,200,66,0.3);color:rgba(27,58,122,0.5);cursor:not-allowed}
 </style>
 </head>
 <body>
@@ -98,6 +105,56 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
 const SUPABASE_URL = "https://qginevdbqaodimcllevb.supabase.co";
 const SUPABASE_ANON_KEY = "sb_publishable_q3hvHIL8bl4oH49Qkyqkgg_w1G2Ud5w";
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let compareSelection = [];
+
+function toggleCompare(id, checkbox){
+  const card = checkbox.closest(".school-card");
+  const name = card.querySelector(".sc-name").textContent;
+  if(checkbox.checked){
+    if(compareSelection.length >= 2){
+      checkbox.checked = false;
+      alert("You can compare up to 2 schools at a time. Remove one first.");
+      return;
+    }
+    compareSelection.push({ id, name });
+  } else {
+    compareSelection = compareSelection.filter(s => s.id !== id);
+  }
+  updateCompareBar();
+}
+
+function removeFromCompare(id){
+  compareSelection = compareSelection.filter(s => s.id !== id);
+  const checkbox = document.querySelector('input[data-compare-id="'+id+'"]');
+  if(checkbox) checkbox.checked = false;
+  updateCompareBar();
+}
+
+function updateCompareBar(){
+  const bar = document.getElementById("compareBar");
+  const btn = document.getElementById("compareBtn");
+  if(compareSelection.length === 0){
+    bar.style.display = "none";
+    return;
+  }
+  bar.style.display = "flex";
+  document.getElementById("compareChips").innerHTML = compareSelection.map(s =>
+    '<span class="compare-chip">'+s.name+' <i class="ti ti-x" onclick="removeFromCompare(\''+s.id+'\')"></i></span>'
+  ).join("");
+  if(compareSelection.length === 2){
+    btn.disabled = false;
+    btn.textContent = "Compare these 2 schools";
+  } else {
+    btn.disabled = true;
+    btn.textContent = "Select 1 more to compare";
+  }
+}
+
+function goToCompare(){
+  if(compareSelection.length !== 2) return;
+  window.location.href = "compare.html?a="+compareSelection[0].id+"&b="+compareSelection[1].id;
+}
 
 function getParams(){
   const p = new URLSearchParams(window.location.search);
@@ -201,6 +258,7 @@ function renderResults(schools){
     const badge = s.school_type || "School";
     const desc = s.description || "";
     const website = s.website ? '<a class="sc-link" href="'+s.website+'" target="_blank" rel="noopener">Visit website <i class="ti ti-external-link"></i></a>' : "";
+    const isChecked = compareSelection.find(c => c.id === s.id) ? "checked" : "";
     return '<div class="school-card">'
       + '<div class="sc-top"><div><div class="sc-name">'+s.name+'</div><div class="sc-loc">'+loc+'</div></div><span class="sc-badge">'+badge+'</span></div>'
       + '<div class="sc-tags">'
@@ -210,6 +268,7 @@ function renderResults(schools){
       + '</div>'
       + (desc ? '<div class="sc-desc">'+desc+'</div>' : "")
       + website
+      + '<label class="sc-compare"><input type="checkbox" data-compare-id="'+s.id+'" '+isChecked+' onchange="toggleCompare(\''+s.id+'\', this)"> Add to Compare</label>'
       + '</div>';
   }).join("") + '</div>';
 }
@@ -218,5 +277,9 @@ const initialParams = getParams();
 applyParamsToUI(initialParams);
 runSearch();
 </script>
+<div class="compare-bar" id="compareBar">
+  <div id="compareChips" style="display:flex;gap:8px;flex-wrap:wrap"></div>
+  <button class="compare-btn" id="compareBtn" disabled onclick="goToCompare()">Select 1 more to compare</button>
+</div>
 </body>
 </html>
