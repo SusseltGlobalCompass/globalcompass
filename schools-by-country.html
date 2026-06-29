@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlobalCompass — Schools by Country</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:#1B3A7A;flex-wrap:wrap;gap:10px}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.wm-wrap{display:flex;flex-direction:column}
+.wm-global-row{display:flex;align-items:center;gap:5px;margin-bottom:2px}
+.wm-rule{height:0.7px;background:rgba(245,200,66,0.5);flex:1}
+.wm-global{font-family:'Montserrat',sans-serif;font-size:7px;font-weight:300;color:#fff;letter-spacing:0.3em;text-transform:uppercase}
+.wm-compass{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:800;color:#fff;letter-spacing:0.07em;text-transform:uppercase;line-height:1}
+.wm-compass .o{color:#F5C842}
+.nav-right{display:flex;align-items:center;gap:14px}
+.nav-back{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;color:#A8C4F5;text-decoration:none;display:flex;align-items:center;gap:4px}
+.nav-tag{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;color:#F5C842;letter-spacing:0.12em;text-transform:uppercase;background:rgba(245,200,66,0.12);padding:4px 12px;border-radius:99px;border:0.5px solid rgba(245,200,66,0.3)}
+.hero-bar{background:linear-gradient(135deg,#0D1F4A,#1B3A7A);padding:32px 24px;text-align:center}
+.hero-h{font-family:'Playfair Display',serif;font-size:28px;font-weight:500;color:#fff;margin-bottom:8px}
+.hero-p{font-size:13px;color:#A8C4F5;max-width:540px;margin:0 auto;font-weight:300;line-height:1.6}
+.main{max-width:1000px;margin:0 auto;padding:28px 24px 60px}
+.country-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+@media (max-width:760px){.country-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:480px){.country-grid{grid-template-columns:1fr}}
+.country-card{background:#fff;border:0.5px solid #E0E8F5;border-radius:14px;padding:18px;text-decoration:none;color:#0D1F4A;display:flex;align-items:center;justify-content:space-between;transition:border-color 0.2s}
+.country-card:hover{border-color:#F5C842}
+.cn-name{font-family:'Playfair Display',serif;font-size:15px;color:#0D1F4A}
+.cn-count{font-size:11px;color:#7A8BAE;font-weight:600;margin-top:2px}
+.cn-arrow{color:#1B3A7A;font-size:16px}
+.loading-state{text-align:center;padding:60px 20px;color:#7A8BAE;font-size:13px}
+.empty-state{text-align:center;padding:60px 20px;color:#7A8BAE}
+.empty-state i{font-size:36px;color:#C0D0E8;margin-bottom:12px;display:block}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo">
+    <svg width="26" height="26" viewBox="0 0 64 64" fill="none">
+      <circle cx="32" cy="32" r="29" stroke="#F5C842" stroke-width="1.4" fill="none"/>
+      <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <circle cx="32" cy="32" r="3" fill="#F5C842"/>
+      <polygon points="32,4 35,25 32,26.5 29,25" fill="#F5C842"/>
+    </svg>
+    <div class="wm-wrap">
+      <div class="wm-global-row"><div class="wm-rule"></div><div class="wm-global">GLOBAL</div><div class="wm-rule"></div></div>
+      <div class="wm-compass">C<span class="o">O</span>MPASS</div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <a class="nav-back" href="schools.html"><i class="ti ti-arrow-left"></i> Back to Search</a>
+    <div class="nav-tag">Schools by Country</div>
+  </div>
+</nav>
+
+<div class="hero-bar">
+  <h1 class="hero-h">Browse schools by country</h1>
+  <p class="hero-p">Only countries with real schools in our directory are shown. More are added every week.</p>
+</div>
+
+<div class="main" id="mainArea">
+  <div class="loading-state">Loading countries...</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "https://qginevdbqaodimcllevb.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_q3hvHIL8bl4oH49Qkyqkgg_w1G2Ud5w";
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+async function loadCountries(){
+  const mainArea = document.getElementById("mainArea");
+  const { data, error } = await sb.from("schools").select("countries(name)");
+
+  if(error || !data){
+    mainArea.innerHTML = '<div class="empty-state"><i class="ti ti-alert-circle"></i>Something went wrong loading countries. Please try again.</div>';
+    return;
+  }
+
+  const counts = {};
+  data.forEach(row => {
+    const name = row.countries ? row.countries.name : null;
+    if(name) counts[name] = (counts[name] || 0) + 1;
+  });
+
+  const countries = Object.keys(counts).sort();
+
+  if(countries.length === 0){
+    mainArea.innerHTML = '<div class="empty-state"><i class="ti ti-map-pin-off"></i>We are just getting started building out our school directory. Check back soon as we add more countries every week.</div>';
+    return;
+  }
+
+  mainArea.innerHTML = '<div class="country-grid">' + countries.map(name => {
+    return '<a class="country-card" href="schools.html?q='+encodeURIComponent(name)+'">'
+      + '<div><div class="cn-name">'+name+'</div><div class="cn-count">'+counts[name]+' school'+(counts[name]===1?"":"s")+'</div></div>'
+      + '<i class="ti ti-chevron-right cn-arrow"></i>'
+      + '</a>';
+  }).join("") + '</div>';
+}
+
+loadCountries();
+</script>
+</body>
+</html>

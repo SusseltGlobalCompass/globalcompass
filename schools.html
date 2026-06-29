@@ -158,7 +158,7 @@ function goToCompare(){
 
 function getParams(){
   const p = new URLSearchParams(window.location.search);
-  return { q: p.get("q")||"", age: p.get("age")||"", cur: p.get("cur")||"", budget: p.get("budget")||"", type: p.get("type")||"" };
+  return { q: p.get("q")||"", age: p.get("age")||"", cur: p.get("cur")||"", budget: p.get("budget")||"", type: p.get("type")||"", featured: p.get("featured")||"" };
 }
 
 const K12_CURRICULA = '<option value="">All curricula</option><option value="IB">IB</option><option value="British">British</option><option value="American">American</option><option value="CBSE">CBSE</option><option value="French">French</option><option value="German">German</option><option value="Singapore">Singapore</option><option value="Australian">Australian</option><option value="Brazilian">Brazilian</option><option value="International">International Schools</option>';
@@ -223,6 +223,9 @@ async function runSearch(){
   const typeParam = getParams().type;
   if(typeParam){
     query = query.ilike("school_type", "%"+typeParam+"%");
+  }
+  if(getParams().featured === "1"){
+    query = query.eq("is_spotlight", true);
   }
 
   query = query.order("is_featured", { ascending:false }).order("rating", { ascending:false, nullsFirst:false }).order("name", { ascending:true });
