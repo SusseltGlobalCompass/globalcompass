@@ -42,6 +42,22 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
 .empty-state{text-align:center;padding:60px 20px;color:#7A8BAE}
 .empty-state i{font-size:36px;color:#C0D0E8;margin-bottom:12px;display:block}
 .empty-state a{color:#1B3A7A;font-weight:700;text-decoration:none}
+.picker-card{background:#fff;border:2px solid #F5C842;border-radius:18px;padding:28px;box-shadow:0 0 28px rgba(245,200,66,0.2)}
+.picker-title{font-family:'Playfair Display',serif;font-size:19px;color:#0D1F4A;margin-bottom:18px;text-align:center}
+.picker-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px}
+@media (max-width:600px){.picker-row{grid-template-columns:1fr}}
+.picker-box{position:relative}
+.picker-box label{display:block;font-size:11px;font-weight:700;color:#1B3A7A;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:6px}
+.picker-box input{width:100%;padding:12px 14px;border:1px solid #C0D0E8;border-radius:10px;font-size:14px;color:#0D1F4A;outline:none;font-family:'Inter',sans-serif}
+.picker-box input:focus{border-color:#1B3A7A}
+.picker-suggestions{display:none;position:absolute;top:100%;left:0;right:0;background:#fff;border:1px solid #E0E8F5;border-radius:10px;margin-top:4px;box-shadow:0 8px 24px rgba(0,0,0,0.1);z-index:10;max-height:220px;overflow-y:auto}
+.suggestion-item{padding:10px 14px;cursor:pointer;border-bottom:0.5px solid #F0F3FA}
+.suggestion-item:last-child{border-bottom:none}
+.suggestion-item:hover{background:#F8F9FF}
+.sugg-name{font-size:13px;color:#0D1F4A;font-weight:600}
+.sugg-loc{font-size:11px;color:#7A8BAE}
+.compare-btn{width:100%;background:#1B3A7A;color:#F5C842;border:none;padding:13px 24px;border-radius:99px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Montserrat',sans-serif}
+.compare-btn:disabled{background:#E0E8F5;color:#9AB0D0;cursor:not-allowed}
 </style>
 </head>
 <body>
@@ -121,6 +137,81 @@ async function generateFit(a, b){
   }
 }
 
+let pickedA = null, pickedB = null;
+let lastResultsA = [], lastResultsB = [];
+
+function renderPicker(){
+  const mainArea = document.getElementById("mainArea");
+  mainArea.innerHTML = '<div class="picker-card">'
+    + '<div class="picker-title">Pick two schools to compare</div>'
+    + '<div class="picker-row">'
+    + '<div class="picker-box"><label>School A</label><input id="pickA" placeholder="Type a school name..." autocomplete="off"><div class="picker-suggestions" id="suggA"></div></div>'
+    + '<div class="picker-box"><label>School B</label><input id="pickB" placeholder="Type a school name..." autocomplete="off"><div class="picker-suggestions" id="suggB"></div></div>'
+    + '</div>'
+    + '<button class="compare-btn" id="pickCompareBtn" disabled onclick="goToPickedCompare()">Select both schools to compare</button>'
+    + '</div>';
+
+  setupPickerInput("pickA", "suggA", function(){ return pickedB; });
+  setupPickerInput("pickB", "suggB", function(){ return pickedA; });
+}
+
+function setupPickerInput(inputId, suggId, getExcludeId){
+  let debounceTimer;
+  const input = document.getElementById(inputId);
+  input.addEventListener("input", function(e){
+    clearTimeout(debounceTimer);
+    if(inputId === "pickA") pickedA = null; else pickedB = null;
+    updatePickerButton();
+    const query = e.target.value.trim();
+    debounceTimer = setTimeout(async function(){
+      if(query.length < 2){ document.getElementById(suggId).style.display = "none"; return; }
+      const results = await searchSchools(query, getExcludeId());
+      renderSuggestions(suggId, results);
+    }, 300);
+  });
+}
+
+async function searchSchools(query, excludeId){
+  let q = sb.from("schools").select("id, name, city, countries(name)").ilike("name", "%"+query+"%").limit(6);
+  if(excludeId) q = q.neq("id", excludeId);
+  const { data } = await q;
+  return data || [];
+}
+
+function renderSuggestions(boxId, results){
+  if(boxId === "suggA") lastResultsA = results; else lastResultsB = results;
+  const el = document.getElementById(boxId);
+  if(results.length === 0){ el.innerHTML = ""; el.style.display = "none"; return; }
+  el.style.display = "block";
+  el.innerHTML = results.map(function(r, i){
+    const loc = [r.city, r.countries ? r.countries.name : null].filter(Boolean).join(", ");
+    return '<div class="suggestion-item" data-box="'+boxId+'" data-index="'+i+'"><div class="sugg-name">'+r.name+'</div><div class="sugg-loc">'+loc+'</div></div>';
+  }).join("");
+  el.querySelectorAll(".suggestion-item").forEach(function(item){
+    item.addEventListener("mousedown", function(){ pickSchool(item.dataset.box, parseInt(item.dataset.index)); });
+  });
+}
+
+function pickSchool(boxId, index){
+  const result = boxId === "suggA" ? lastResultsA[index] : lastResultsB[index];
+  if(!result) return;
+  if(boxId === "suggA"){ pickedA = result.id; document.getElementById("pickA").value = result.name; }
+  else { pickedB = result.id; document.getElementById("pickB").value = result.name; }
+  document.getElementById(boxId).style.display = "none";
+  updatePickerButton();
+}
+
+function updatePickerButton(){
+  const btn = document.getElementById("pickCompareBtn");
+  if(pickedA && pickedB){ btn.disabled = false; btn.textContent = "Compare these 2 schools"; }
+  else { btn.disabled = true; btn.textContent = "Select both schools to compare"; }
+}
+
+function goToPickedCompare(){
+  if(!pickedA || !pickedB) return;
+  window.location.href = "compare.html?a="+pickedA+"&b="+pickedB;
+}
+
 async function loadCompare(){
   const params = new URLSearchParams(window.location.search);
   const idA = params.get("a");
@@ -128,7 +219,7 @@ async function loadCompare(){
   const mainArea = document.getElementById("mainArea");
 
   if(!idA || !idB){
-    mainArea.innerHTML = '<div class="empty-state"><i class="ti ti-git-compare"></i>Pick two schools from <a href="schools.html">Search</a> to compare them here.</div>';
+    renderPicker();
     return;
   }
 
