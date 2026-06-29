@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlobalCompass — Compare Schools</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:#1B3A7A;flex-wrap:wrap;gap:10px}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.wm-wrap{display:flex;flex-direction:column}
+.wm-global-row{display:flex;align-items:center;gap:5px;margin-bottom:2px}
+.wm-rule{height:0.7px;background:rgba(245,200,66,0.5);flex:1}
+.wm-global{font-family:'Montserrat',sans-serif;font-size:7px;font-weight:300;color:#fff;letter-spacing:0.3em;text-transform:uppercase}
+.wm-compass{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:800;color:#fff;letter-spacing:0.07em;text-transform:uppercase;line-height:1}
+.wm-compass .o{color:#F5C842}
+.nav-right{display:flex;align-items:center;gap:14px}
+.nav-back{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;color:#A8C4F5;text-decoration:none;display:flex;align-items:center;gap:4px}
+.nav-tag{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;color:#F5C842;letter-spacing:0.12em;text-transform:uppercase;background:rgba(245,200,66,0.12);padding:4px 12px;border-radius:99px;border:0.5px solid rgba(245,200,66,0.3)}
+.hero-bar{background:linear-gradient(135deg,#0D1F4A,#1B3A7A);padding:32px 24px;text-align:center}
+.hero-h{font-family:'Playfair Display',serif;font-size:28px;font-weight:500;color:#fff;margin-bottom:8px}
+.hero-p{font-size:13px;color:#A8C4F5;max-width:540px;margin:0 auto;font-weight:300;line-height:1.6}
+.main{max-width:920px;margin:0 auto;padding:28px 24px 60px}
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+@media (max-width:700px){.compare-grid{grid-template-columns:1fr}}
+.compare-col{background:#fff;border:0.5px solid #E0E8F5;border-radius:16px;padding:22px}
+.cc-name{font-family:'Playfair Display',serif;font-size:19px;color:#0D1F4A;margin-bottom:2px}
+.cc-loc{font-size:12px;color:#7A8BAE;margin-bottom:14px}
+.cc-row{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-top:0.5px solid #EEF1F8;font-size:12.5px}
+.cc-row:first-of-type{border-top:none}
+.cc-label{color:#7A8BAE;font-weight:600;flex-shrink:0}
+.cc-value{color:#0D1F4A;text-align:right;font-weight:500}
+.cc-desc{font-size:12.5px;line-height:1.6;color:#3A4A6B;margin-top:14px;padding-top:14px;border-top:0.5px solid #EEF1F8}
+.cc-link{font-size:11.5px;color:#1B3A7A;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:4px;margin-top:10px}
+.fit-card{background:linear-gradient(135deg,#1B3A7A,#0D1F4A);border-radius:16px;padding:24px}
+.fit-eyebrow{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:#F5C842;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.fit-text{font-family:'Playfair Display',serif;font-style:italic;font-size:14.5px;line-height:1.7;color:#fff}
+.loading-state{text-align:center;padding:60px 20px;color:#7A8BAE;font-size:13px}
+.empty-state{text-align:center;padding:60px 20px;color:#7A8BAE}
+.empty-state i{font-size:36px;color:#C0D0E8;margin-bottom:12px;display:block}
+.empty-state a{color:#1B3A7A;font-weight:700;text-decoration:none}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo">
+    <svg width="26" height="26" viewBox="0 0 64 64" fill="none">
+      <circle cx="32" cy="32" r="29" stroke="#F5C842" stroke-width="1.4" fill="none"/>
+      <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <circle cx="32" cy="32" r="3" fill="#F5C842"/>
+      <polygon points="32,4 35,25 32,26.5 29,25" fill="#F5C842"/>
+    </svg>
+    <div class="wm-wrap">
+      <div class="wm-global-row"><div class="wm-rule"></div><div class="wm-global">GLOBAL</div><div class="wm-rule"></div></div>
+      <div class="wm-compass">C<span class="o">O</span>MPASS</div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <a class="nav-back" href="schools.html"><i class="ti ti-arrow-left"></i> Back to Search</a>
+    <div class="nav-tag">Compare</div>
+  </div>
+</nav>
+
+<div class="hero-bar">
+  <h1 class="hero-h">Compare schools, side by side</h1>
+  <p class="hero-p">Just the facts, no rankings. We will also tell you which kind of student each one tends to fit best.</p>
+</div>
+
+<div class="main" id="mainArea">
+  <div class="loading-state">Loading schools...</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "https://qginevdbqaodimcllevb.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_q3hvHIL8bl4oH49Qkyqkgg_w1G2Ud5w";
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+function row(label, value){
+  if(value === null || value === undefined || value === "") return "";
+  return '<div class="cc-row"><span class="cc-label">'+label+'</span><span class="cc-value">'+value+'</span></div>';
+}
+
+function renderColumn(s){
+  const country = s.countries ? s.countries.name : "";
+  const loc = [s.city, country].filter(Boolean).join(", ");
+  const ageRange = (s.age_min!=null && s.age_max!=null) ? (s.age_min+"-"+s.age_max+" years") : "";
+  const feeRange = (s.fee_min!=null && s.fee_max!=null) ? (s.fee_currency||"AED")+" "+s.fee_min.toLocaleString()+"-"+s.fee_max.toLocaleString()+(s.fee_label?(" "+s.fee_label):"/month") : "";
+  const website = s.website ? '<a class="cc-link" href="'+s.website+'" target="_blank" rel="noopener">Visit website <i class="ti ti-external-link"></i></a>' : "";
+  return '<div class="compare-col">'
+    + '<div class="cc-name">'+s.name+'</div>'
+    + '<div class="cc-loc">'+loc+'</div>'
+    + row("Type", s.school_type)
+    + row("Curriculum", s.curriculum)
+    + row("Age range", ageRange)
+    + row("Fees", feeRange)
+    + row("Language", s.language)
+    + row("Founded", s.founded_year)
+    + row("Students", s.student_count)
+    + row("Nationalities", s.nationality_count)
+    + row("Inspection rating", s.khda_rating)
+    + (s.description ? '<div class="cc-desc">'+s.description+'</div>' : "")
+    + website
+    + '</div>';
+}
+
+async function generateFit(a, b){
+  const prompt = "You are GlobalCompass, an honest education guide. Compare these two schools factually and kindly for a parent deciding between them. Do not rank one as better overall. Write exactly 2 short sentences: one describing what kind of child or family tends to suit School A best, one describing what kind of child or family tends to suit School B best. Be specific, warm, and concrete, not generic.\n\nSchool A: "+JSON.stringify({name:a.name, curriculum:a.curriculum, type:a.school_type, age:[a.age_min,a.age_max], fees:[a.fee_min,a.fee_max], description:a.description})+"\n\nSchool B: "+JSON.stringify({name:b.name, curriculum:b.curriculum, type:b.school_type, age:[b.age_min,b.age_max], fees:[b.fee_min,b.fee_max], description:b.description})+"\n\nRespond with only the 2 sentences, no preamble.";
+
+  try{
+    const res = await fetch("/api/generate", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ prompt: prompt, max_tokens: 300 }) });
+    const data = await res.json();
+    return data.content[0].text.trim();
+  }catch(e){
+    console.error("Compare fit generation error:", e);
+    return "We could not generate a personalised fit summary right now, but you can compare the facts above directly.";
+  }
+}
+
+async function loadCompare(){
+  const params = new URLSearchParams(window.location.search);
+  const idA = params.get("a");
+  const idB = params.get("b");
+  const mainArea = document.getElementById("mainArea");
+
+  if(!idA || !idB){
+    mainArea.innerHTML = '<div class="empty-state"><i class="ti ti-git-compare"></i>Pick two schools from <a href="schools.html">Search</a> to compare them here.</div>';
+    return;
+  }
+
+  const { data, error } = await sb.from("schools").select("*, countries(name)").in("id", [idA, idB]);
+
+  if(error || !data || data.length < 2){
+    mainArea.innerHTML = '<div class="empty-state"><i class="ti ti-alert-circle"></i>We could not load both schools. <a href="schools.html">Go back to Search</a> and try again.</div>';
+    return;
+  }
+
+  const a = data.find(s => s.id === idA) || data[0];
+  const b = data.find(s => s.id === idB) || data[1];
+
+  mainArea.innerHTML = '<div class="compare-grid">' + renderColumn(a) + renderColumn(b) + '</div>'
+    + '<div class="fit-card"><div class="fit-eyebrow"><i class="ti ti-sparkles"></i> Which fits which family</div><div class="fit-text" id="fitText">Thinking this through...</div></div>';
+
+  const fitText = await generateFit(a, b);
+  document.getElementById("fitText").textContent = fitText;
+}
+
+loadCompare();
+</script>
+</body>
+</html>
