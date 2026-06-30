@@ -37,6 +37,9 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
 .fact-cell{background:#fff;padding:20px 24px}
 .fact-label{font-size:10px;color:#7A8BAE;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:4px}
 .fact-value{font-size:15px;color:#0D1F4A;font-weight:600}
+.spotlight-why{background:#F8F9FF;border-radius:12px;padding:16px 18px;margin:0 32px 24px;border-left:3px solid #F5C842}
+.why-label{font-size:10px;color:#7A8BAE;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:5px}
+.why-text{font-size:13.5px;line-height:1.6;color:#3A4A6B;font-style:italic}
 .showcase-actions{display:flex;gap:12px;padding:28px 32px;flex-wrap:wrap}
 .act-btn{flex:1;min-width:180px;text-align:center;padding:13px 20px;border-radius:99px;font-size:13px;font-weight:700;font-family:'Montserrat',sans-serif;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px}
 .act-btn.primary{background:#1B3A7A;color:#F5C842}
@@ -114,7 +117,7 @@ async function loadSpotlight(){
 
   eyebrowContent.innerHTML = '<div class="eyebrow">This week\'s spotlight</div>'
     + '<div class="spot-name">'+s.name+'</div>'
-    + '<div class="spot-loc">'+loc+'</div>';
+    + '<div class="spot-loc">'+loc+(s.founded_year ? ' &middot; Est. '+s.founded_year : "")+'</div>';
 
   mainArea.innerHTML = '<div class="showcase-card">'
     + '<div class="showcase-top">'
@@ -124,11 +127,12 @@ async function loadSpotlight(){
     + '</div>'
     + (s.description ? '<div class="showcase-desc">'+s.description+'</div>' : "")
     + '</div>'
+    + (s.spotlight_note ? '<div class="spotlight-why"><div class="why-label">Why we are featuring this nursery</div><div class="why-text">'+s.spotlight_note+'</div></div>' : "")
     + '<div class="fact-grid">'
+    + fact("Founded", s.founded_year)
     + fact("Age range", ageRange)
     + fact("Fees", feeRange)
     + fact("Language", s.language)
-    + fact("Founded", s.founded_year)
     + fact("Students", s.student_count)
     + fact("Inspection rating", s.khda_rating)
     + '</div>'
