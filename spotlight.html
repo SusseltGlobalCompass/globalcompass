@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlobalCompass — Spotlight</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:#1B3A7A;flex-wrap:wrap;gap:10px}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.wm-wrap{display:flex;flex-direction:column}
+.wm-global-row{display:flex;align-items:center;gap:5px;margin-bottom:2px}
+.wm-rule{height:0.7px;background:rgba(245,200,66,0.5);flex:1}
+.wm-global{font-family:'Montserrat',sans-serif;font-size:7px;font-weight:300;color:#fff;letter-spacing:0.3em;text-transform:uppercase}
+.wm-compass{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:800;color:#fff;letter-spacing:0.07em;text-transform:uppercase;line-height:1}
+.wm-compass .o{color:#F5C842}
+.nav-right{display:flex;align-items:center;gap:14px}
+.nav-back{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;color:#A8C4F5;text-decoration:none;display:flex;align-items:center;gap:4px}
+.nav-tag{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;color:#F5C842;letter-spacing:0.12em;text-transform:uppercase;background:rgba(245,200,66,0.12);padding:4px 12px;border-radius:99px;border:0.5px solid rgba(245,200,66,0.3)}
+.eyebrow-bar{background:linear-gradient(160deg,#1B3A7A 0%,#2952A3 55%,#1B3A7A 100%);padding:40px 24px 90px;text-align:center;position:relative;overflow:hidden}
+.eyebrow-bar svg.wm{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.06;pointer-events:none}
+.eyebrow{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:#F5C842;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:10px;position:relative;z-index:1}
+.spot-name{font-family:'Playfair Display',serif;font-size:38px;font-weight:500;color:#fff;margin-bottom:8px;position:relative;z-index:1}
+.spot-loc{font-size:13px;color:#A8C4F5;position:relative;z-index:1}
+.main{max-width:880px;margin:-56px auto 60px;padding:0 24px;position:relative;z-index:2}
+.showcase-card{background:#fff;border-radius:20px;box-shadow:0 12px 40px rgba(13,31,74,0.12);overflow:hidden}
+.showcase-top{padding:32px 32px 0}
+.badge-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.s-badge{font-size:10.5px;font-weight:700;color:#1B3A7A;background:rgba(245,200,66,0.18);padding:5px 12px;border-radius:99px;text-transform:uppercase;letter-spacing:0.03em}
+.s-badge.spotlight{background:#1B3A7A;color:#F5C842}
+.showcase-desc{font-size:15px;line-height:1.8;color:#3A4A6B;margin-bottom:24px}
+.fact-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:#E0E8F5;border-top:0.5px solid #E0E8F5;border-bottom:0.5px solid #E0E8F5}
+@media (max-width:600px){.fact-grid{grid-template-columns:1fr 1fr}}
+.fact-cell{background:#fff;padding:20px 24px}
+.fact-label{font-size:10px;color:#7A8BAE;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:4px}
+.fact-value{font-size:15px;color:#0D1F4A;font-weight:600}
+.showcase-actions{display:flex;gap:12px;padding:28px 32px;flex-wrap:wrap}
+.act-btn{flex:1;min-width:180px;text-align:center;padding:13px 20px;border-radius:99px;font-size:13px;font-weight:700;font-family:'Montserrat',sans-serif;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.act-btn.primary{background:#1B3A7A;color:#F5C842}
+.act-btn.secondary{background:#F8F9FF;color:#1B3A7A;border:1px solid #E0E8F5}
+.empty-state{text-align:center;padding:80px 20px;color:#7A8BAE}
+.empty-state i{font-size:40px;color:#C0D0E8;margin-bottom:14px;display:block}
+.loading-state{text-align:center;padding:80px 20px;color:#7A8BAE;font-size:13px}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo">
+    <svg width="26" height="26" viewBox="0 0 64 64" fill="none">
+      <circle cx="32" cy="32" r="29" stroke="#F5C842" stroke-width="1.4" fill="none"/>
+      <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <circle cx="32" cy="32" r="3" fill="#F5C842"/>
+      <polygon points="32,4 35,25 32,26.5 29,25" fill="#F5C842"/>
+    </svg>
+    <div class="wm-wrap">
+      <div class="wm-global-row"><div class="wm-rule"></div><div class="wm-global">GLOBAL</div><div class="wm-rule"></div></div>
+      <div class="wm-compass">C<span class="o">O</span>MPASS</div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <a class="nav-back" href="index.html"><i class="ti ti-arrow-left"></i> Back to GlobalCompass</a>
+    <div class="nav-tag">Spotlight</div>
+  </div>
+</nav>
+
+<div class="eyebrow-bar" id="eyebrowBar">
+  <svg class="wm" width="380" height="380" viewBox="0 0 64 64" fill="none">
+    <circle cx="32" cy="32" r="29" stroke="#F5C842" stroke-width="1.4" fill="none"/>
+    <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none"/>
+    <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none"/>
+    <circle cx="32" cy="32" r="3" fill="#F5C842"/>
+    <polygon points="32,4 35,25 32,26.5 29,25" fill="#F5C842"/>
+  </svg>
+  <div id="eyebrowContent">
+    <div class="eyebrow">This week's spotlight</div>
+    <div class="loading-state" style="color:#A8C4F5">Loading...</div>
+  </div>
+</div>
+
+<div class="main" id="mainArea"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "https://qginevdbqaodimcllevb.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_q3hvHIL8bl4oH49Qkyqkgg_w1G2Ud5w";
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+function fact(label, value){
+  if(value === null || value === undefined || value === "") return "";
+  return '<div class="fact-cell"><div class="fact-label">'+label+'</div><div class="fact-value">'+value+'</div></div>';
+}
+
+async function loadSpotlight(){
+  const mainArea = document.getElementById("mainArea");
+  const eyebrowContent = document.getElementById("eyebrowContent");
+
+  const { data, error } = await sb.from("schools").select("*, countries(name)").eq("is_spotlight", true).limit(1);
+
+  if(error || !data || data.length === 0){
+    eyebrowContent.innerHTML = '<div class="eyebrow">This week\'s spotlight</div>';
+    mainArea.innerHTML = '<div class="showcase-card"><div class="empty-state"><i class="ti ti-star"></i>We have not chosen a school to feature yet. Check back soon.</div></div>';
+    return;
+  }
+
+  const s = data[0];
+  const country = s.countries ? s.countries.name : "";
+  const loc = [s.city, country].filter(Boolean).join(", ");
+  const ageRange = (s.age_min!=null && s.age_max!=null) ? (s.age_min+"-"+s.age_max+" years") : "";
+  const feeRange = (s.fee_min!=null && s.fee_max!=null) ? (s.fee_currency||"AED")+" "+s.fee_min.toLocaleString()+"-"+s.fee_max.toLocaleString()+(s.fee_label?(" "+s.fee_label):"/month") : "";
+
+  eyebrowContent.innerHTML = '<div class="eyebrow">This week\'s spotlight</div>'
+    + '<div class="spot-name">'+s.name+'</div>'
+    + '<div class="spot-loc">'+loc+'</div>';
+
+  mainArea.innerHTML = '<div class="showcase-card">'
+    + '<div class="showcase-top">'
+    + '<div class="badge-row"><span class="s-badge spotlight"><i class="ti ti-star" style="font-size:11px;margin-right:3px"></i> Spotlight pick</span>'
+    + (s.school_type ? '<span class="s-badge">'+s.school_type+'</span>' : "")
+    + (s.curriculum ? '<span class="s-badge">'+s.curriculum+'</span>' : "")
+    + '</div>'
+    + (s.description ? '<div class="showcase-desc">'+s.description+'</div>' : "")
+    + '</div>'
+    + '<div class="fact-grid">'
+    + fact("Age range", ageRange)
+    + fact("Fees", feeRange)
+    + fact("Language", s.language)
+    + fact("Founded", s.founded_year)
+    + fact("Students", s.student_count)
+    + fact("Inspection rating", s.khda_rating)
+    + '</div>'
+    + '<div class="showcase-actions">'
+    + (s.website ? '<a class="act-btn primary" href="'+s.website+'" target="_blank" rel="noopener">Visit website <i class="ti ti-external-link"></i></a>' : '')
+    + '<a class="act-btn secondary" href="compare.html?a='+s.id+'">Compare with another school <i class="ti ti-git-compare"></i></a>'
+    + '</div>'
+    + '</div>';
+}
+
+loadSpotlight();
+</script>
+</body>
+</html>
