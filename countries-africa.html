@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlobalCompass — Africa</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:#1B3A7A;flex-wrap:wrap;gap:10px}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.wm-wrap{display:flex;flex-direction:column}
+.wm-global-row{display:flex;align-items:center;gap:5px;margin-bottom:2px}
+.wm-rule{height:0.7px;background:rgba(245,200,66,0.5);flex:1}
+.wm-global{font-family:'Montserrat',sans-serif;font-size:7px;font-weight:300;color:#fff;letter-spacing:0.3em;text-transform:uppercase}
+.wm-compass{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:800;color:#fff;letter-spacing:0.07em;text-transform:uppercase;line-height:1}
+.wm-compass .o{color:#F5C842}
+.nav-right{display:flex;align-items:center;gap:14px}
+.nav-back{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;color:#A8C4F5;text-decoration:none;display:flex;align-items:center;gap:4px}
+.nav-tag{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;color:#F5C842;letter-spacing:0.12em;text-transform:uppercase;background:rgba(245,200,66,0.12);padding:4px 12px;border-radius:99px;border:0.5px solid rgba(245,200,66,0.3)}
+.hero-bar{padding:36px 24px;text-align:center;color:#fff}
+.hero-h{font-family:'Playfair Display',serif;font-size:28px;font-weight:500;margin-bottom:6px}
+.hero-p{font-size:13px;opacity:0.85;font-weight:300}
+.main{max-width:680px;margin:0 auto;padding:32px 24px 60px}
+.country-list{background:#fff;border-radius:16px;border:0.5px solid #E0E8F5;overflow:hidden}
+.country-row{display:flex;align-items:center;justify-content:space-between;padding:15px 22px;text-decoration:none;color:#0D1F4A;border-bottom:0.5px solid #F0F3FA}
+.country-row:last-child{border-bottom:none}
+.country-row:hover{background:#F8F9FF}
+.cn-name{font-size:14px;font-weight:500}
+.cn-right{display:flex;align-items:center;gap:8px}
+.cn-status{font-size:10px;font-weight:700;padding:4px 11px;border-radius:99px;text-transform:uppercase;letter-spacing:0.03em}
+.cn-status.live{background:rgba(245,200,66,0.18);color:#8a6a14}
+.cn-status.soon{background:#F0F3FA;color:#9AB0D0}
+.cn-arrow{color:#1B3A7A;font-size:14px}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo">
+    <svg width="26" height="26" viewBox="0 0 64 64" fill="none">
+      <circle cx="32" cy="32" r="29" stroke="#F5C842" stroke-width="1.4" fill="none"/>
+      <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <circle cx="32" cy="32" r="3" fill="#F5C842"/>
+      <polygon points="32,4 35,25 32,26.5 29,25" fill="#F5C842"/>
+    </svg>
+    <div class="wm-wrap">
+      <div class="wm-global-row"><div class="wm-rule"></div><div class="wm-global">GLOBAL</div><div class="wm-rule"></div></div>
+      <div class="wm-compass">C<span class="o">O</span>MPASS</div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <a class="nav-back" href="countries.html"><i class="ti ti-arrow-left"></i> All regions</a>
+    <div class="nav-tag">Africa</div>
+  </div>
+</nav>
+
+<div class="hero-bar" style="background:#C29A3D">
+  <i class="ti ti-sun" style="font-size:26px;margin-bottom:8px;display:block"></i>
+  <h1 class="hero-h">Africa</h1>
+  <p class="hero-p">Countries with real schools in our directory are ready to explore now.</p>
+</div>
+
+<div class="main">
+  <div class="country-list">
+<div class="country-row"><span class="cn-name">South Africa</span><span class="cn-right"><span class="cn-status soon">Coming soon</span></span></div>
+<div class="country-row"><span class="cn-name">Kenya</span><span class="cn-right"><span class="cn-status soon">Coming soon</span></span></div>
+  </div>
+</div>
+</body>
+</html>

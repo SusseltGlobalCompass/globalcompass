@@ -25,21 +25,13 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
 .hero-h{font-family:'Playfair Display',serif;font-size:28px;font-weight:500;color:#fff;margin-bottom:8px;position:relative;z-index:1}
 .hero-p{font-size:13px;color:#A8C4F5;max-width:540px;margin:0 auto;font-weight:300;line-height:1.6;position:relative;z-index:1}
 .main{max-width:1000px;margin:0 auto;padding:32px 24px 60px}
-.region-block{margin-bottom:28px;border-radius:16px;overflow:hidden;border:0.5px solid #E0E8F5}
-.region-head{padding:16px 22px;display:flex;align-items:center;gap:10px}
-.region-head i{font-size:18px;color:#fff}
-.region-name{font-family:'Playfair Display',serif;font-size:17px;color:#fff}
-.country-list{background:#fff;padding:6px 0}
-.country-row{display:flex;align-items:center;justify-content:space-between;padding:13px 22px;text-decoration:none;color:#0D1F4A;border-bottom:0.5px solid #F0F3FA}
-.country-row:last-child{border-bottom:none}
-.country-row:hover{background:#F8F9FF}
-.cn-name{font-size:13.5px;font-weight:500}
-.cn-right{display:flex;align-items:center;gap:8px}
-.cn-status{font-size:10px;font-weight:700;padding:3px 10px;border-radius:99px;text-transform:uppercase;letter-spacing:0.03em}
-.cn-status.live{background:rgba(245,200,66,0.18);color:#8a6a14}
-.cn-status.soon{background:#F0F3FA;color:#9AB0D0}
-.cn-arrow{color:#C0D0E8;font-size:14px}
-.country-row.is-live .cn-arrow{color:#1B3A7A}
+.region-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+@media (max-width:760px){.region-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:480px){.region-grid{grid-template-columns:1fr}}
+.region-card{border-radius:16px;padding:26px 22px;text-decoration:none;color:#fff;display:flex;flex-direction:column;gap:10px;min-height:140px;justify-content:space-between}
+.region-card i{font-size:24px}
+.region-card-name{font-family:'Playfair Display',serif;font-size:18px}
+.region-card-count{font-size:11px;opacity:0.85;font-weight:500}
 </style>
 </head>
 <body>
@@ -70,67 +62,18 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
     <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none"/>
   </svg>
   <h1 class="hero-h">Education around the world</h1>
-  <p class="hero-p">Browse by region. Countries with real schools in our directory are ready to explore now; the rest are being added every week.</p>
+  <p class="hero-p">Choose a region to explore its countries.</p>
 </div>
 
 <div class="main">
-
-  <div class="region-block" id="gulf">
-    <div class="region-head" style="background:#C17A52"><i class="ti ti-building-mosque"></i><div class="region-name">Gulf and Middle East</div></div>
-    <div class="country-list">
-      <a class="country-row is-live" href="schools.html?q=UAE"><span class="cn-name">United Arab Emirates</span><span class="cn-right"><span class="cn-status live">8 schools</span><i class="ti ti-chevron-right cn-arrow"></i></span></a>
-      <div class="country-row"><span class="cn-name">Qatar</span><span class="cn-right"><span class="cn-status soon">Coming soon</span></span></div>
-      <div class="country-row"><span class="cn-name">Saudi Arabia</span><span class="cn-right"><span class="cn-status soon">Coming soon</span></span></div>
-      <div class="country-row"><span class="cn-name">Egypt</span><span class="cn-right"><span class="cn-status soon">Coming soon</span></span></div>
-    </div>
+  <div class="region-grid">
+    <a class="region-card" href="countries-gulf.html" style="background:#C17A52"><i class="ti ti-building-mosque"></i><div><div class="region-card-name">Gulf and Middle East</div><div class="region-card-count">4 countries</div></div></a>
+    <a class="region-card" href="countries-asia.html" style="background:#2D7D6E"><i class="ti ti-mountain"></i><div><div class="region-card-name">Asia Pacific</div><div class="region-card-count">5 countries</div></div></a>
+    <a class="region-card" href="countries-europe.html" style="background:#4A6FA5"><i class="ti ti-castle"></i><div><div class="region-card-name">Europe</div><div class="region-card-count">4 countries</div></div></a>
+    <a class="region-card" href="countries-americas.html" style="background:#B5563C"><i class="ti ti-building-skyscraper"></i><div><div class="region-card-name">Americas</div><div class="region-card-count">3 countries</div></div></a>
+    <a class="region-card" href="countries-africa.html" style="background:#C29A3D"><i class="ti ti-sun"></i><div><div class="region-card-name">Africa</div><div class="region-card-count">2 countries</div></div></a>
+    <a class="region-card" href="countries-oceania.html" style="background:#1F7A8C"><i class="ti ti-anchor"></i><div><div class="region-card-name">Oceania</div><div class="region-card-count">2 countries</div></div></a>
   </div>
-
-  <div class="region-block" id="asia">
-    <div class="region-head" style="background:#2D7D6E"><i class="ti ti-mountain"></i><div class="region-name">Asia Pacific</div></div>
-    <div class="country-list">
-      <div class="country-row"><span class="cn-name">Singapore</span><span class="cn-right"><span class="cn-status soon">Coming soon</span></span></div>
-      <div class="country-row"><span class="cn-name">India</span><span class="cn-right"><span class="cn-status soon">Coming soon</span></span></div>
-      <div class="country-row"><span class="cn-name">Malaysia</span><span class="cn-right"><span class="cn-status soon">Coming soon</span></span></div>
-      <div class="country-row"><span class="cn-name">Japan</span><span class="cn-right"><span class="cn-status soon">Coming soon</span></span></div>
-      <div class="country-row"><span class="cn-name">Hong Kong</span><span class="cn-right"><span class="cn-status soon">Coming soon</span></span></div>
-    </div>
-  </div>
-
-  <div class="region-block" id="europe">
-    <div class="region-head" style="background:#4A6FA5"><i class="ti ti-castle"></i><div class="region-name">Europe</div></div>
-    <div class="country-list">
-      <div class="country-row"><span class="cn-name">United Kingdom</span><span class="cn-right"><span class="cn-status soon">Coming soon</span></span></div>
-      <div class="country-row"><span class="cn-name">France</span><span class="cn-right"><span class="cn-status soon">Coming soon</span></span></div>
-      <div class="country-row"><span class="cn-name">Germany</span><span class="cn-right"><span class="cn-status soon">Coming soon</span></span></div>
-      <div class="country-row"><span class="cn-name">Switzerland</span><span class="cn-right"><span class="cn-status soon">Coming soon</span></span></div>
-    </div>
-  </div>
-
-  <div class="region-block" id="americas">
-    <div class="region-head" style="background:#B5563C"><i class="ti ti-building-skyscraper"></i><div class="region-name">Americas</div></div>
-    <div class="country-list">
-      <div class="country-row"><span class="cn-name">United States</span><span class="cn-right"><span class="cn-status soon">Coming soon</span></span></div>
-      <div class="country-row"><span class="cn-name">Canada</span><span class="cn-right"><span class="cn-status soon">Coming soon</span></span></div>
-      <div class="country-row"><span class="cn-name">Brazil</span><span class="cn-right"><span class="cn-status soon">Coming soon</span></span></div>
-    </div>
-  </div>
-
-  <div class="region-block" id="africa">
-    <div class="region-head" style="background:#C29A3D"><i class="ti ti-sun"></i><div class="region-name">Africa</div></div>
-    <div class="country-list">
-      <div class="country-row"><span class="cn-name">South Africa</span><span class="cn-right"><span class="cn-status soon">Coming soon</span></span></div>
-      <div class="country-row"><span class="cn-name">Kenya</span><span class="cn-right"><span class="cn-status soon">Coming soon</span></span></div>
-    </div>
-  </div>
-
-  <div class="region-block" id="oceania">
-    <div class="region-head" style="background:#1F7A8C"><i class="ti ti-anchor"></i><div class="region-name">Oceania</div></div>
-    <div class="country-list">
-      <div class="country-row"><span class="cn-name">Australia</span><span class="cn-right"><span class="cn-status soon">Coming soon</span></span></div>
-      <div class="country-row"><span class="cn-name">New Zealand</span><span class="cn-right"><span class="cn-status soon">Coming soon</span></span></div>
-    </div>
-  </div>
-
 </div>
 </body>
 </html>
