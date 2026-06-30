@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlobalCompass — Forum</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:#1B3A7A;flex-wrap:wrap;gap:10px}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.wm-wrap{display:flex;flex-direction:column}
+.wm-global-row{display:flex;align-items:center;gap:5px;margin-bottom:2px}
+.wm-rule{height:0.7px;background:rgba(245,200,66,0.5);flex:1}
+.wm-global{font-family:'Montserrat',sans-serif;font-size:7px;font-weight:300;color:#fff;letter-spacing:0.3em;text-transform:uppercase}
+.wm-compass{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:800;color:#fff;letter-spacing:0.07em;text-transform:uppercase;line-height:1}
+.wm-compass .o{color:#F5C842}
+.nav-right{display:flex;align-items:center;gap:14px}
+.nav-back{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;color:#A8C4F5;text-decoration:none;display:flex;align-items:center;gap:4px}
+.nav-tag{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;color:#F5C842;letter-spacing:0.12em;text-transform:uppercase;background:rgba(245,200,66,0.12);padding:4px 12px;border-radius:99px;border:0.5px solid rgba(245,200,66,0.3)}
+.hero-bar{background:linear-gradient(160deg,#1B3A7A 0%,#2952A3 55%,#1B3A7A 100%);padding:36px 24px;text-align:center;position:relative;overflow:hidden}
+.hero-bar svg.wm{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.06;pointer-events:none}
+.hero-h{font-family:'Playfair Display',serif;font-size:28px;font-weight:500;color:#fff;margin-bottom:8px;position:relative;z-index:1}
+.hero-p{font-size:13px;color:#A8C4F5;max-width:540px;margin:0 auto;font-weight:300;line-height:1.6;position:relative;z-index:1}
+.main{max-width:880px;margin:0 auto;padding:32px 24px 60px}
+.guidelines-banner{background:#FFF8E8;border:0.5px solid rgba(245,200,66,0.5);border-radius:14px;padding:16px 20px;margin-bottom:28px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.gb-text{font-size:13px;color:#6b5410;line-height:1.5}
+.gb-link{font-size:12.5px;font-weight:700;color:#1B3A7A;text-decoration:none;white-space:nowrap;display:flex;align-items:center;gap:4px}
+.topic-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+@media (max-width:760px){.topic-grid{grid-template-columns:1fr}}
+.topic-card{background:#fff;border:0.5px solid #E0E8F5;border-radius:16px;padding:26px 22px;text-align:center}
+.topic-icon{width:48px;height:48px;border-radius:12px;background:rgba(245,200,66,0.15);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;color:#1B3A7A;font-size:22px}
+.topic-name{font-family:'Playfair Display',serif;font-size:16px;color:#0D1F4A;margin-bottom:8px}
+.topic-desc{font-size:12.5px;line-height:1.6;color:#7A8BAE;margin-bottom:16px}
+.topic-status{display:inline-block;font-size:10px;font-weight:700;color:#9AB0D0;background:#F0F3FA;padding:5px 14px;border-radius:99px;text-transform:uppercase;letter-spacing:0.04em}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo">
+    <svg width="26" height="26" viewBox="0 0 64 64" fill="none">
+      <circle cx="32" cy="32" r="29" stroke="#F5C842" stroke-width="1.4" fill="none"/>
+      <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <circle cx="32" cy="32" r="3" fill="#F5C842"/>
+      <polygon points="32,4 35,25 32,26.5 29,25" fill="#F5C842"/>
+    </svg>
+    <div class="wm-wrap">
+      <div class="wm-global-row"><div class="wm-rule"></div><div class="wm-global">GLOBAL</div><div class="wm-rule"></div></div>
+      <div class="wm-compass">C<span class="o">O</span>MPASS</div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <a class="nav-back" href="index.html"><i class="ti ti-arrow-left"></i> Back to GlobalCompass</a>
+    <div class="nav-tag">Forum</div>
+  </div>
+</nav>
+
+<div class="hero-bar">
+  <svg class="wm" width="320" height="320" viewBox="0 0 64 64" fill="none">
+    <circle cx="32" cy="32" r="29" stroke="#F5C842" stroke-width="1.4" fill="none"/>
+    <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none"/>
+    <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none"/>
+  </svg>
+  <h1 class="hero-h">The GlobalCompass community</h1>
+  <p class="hero-p">A space for parents and students to share real experiences, honestly and respectfully.</p>
+</div>
+
+<div class="main">
+
+  <div class="guidelines-banner">
+    <div class="gb-text"><i class="ti ti-shield-check" style="margin-right:6px;color:#8a6a14"></i>Every post will be held to clear community standards before this opens.</div>
+    <a class="gb-link" href="community-guidelines.html">Read the Community Guidelines <i class="ti ti-arrow-right"></i></a>
+  </div>
+
+  <div class="topic-grid">
+    <div class="topic-card">
+      <div class="topic-icon"><i class="ti ti-plane-departure"></i></div>
+      <div class="topic-name">Relocation and settling in</div>
+      <div class="topic-desc">Practical advice for families moving countries — visas, housing, first weeks at a new school.</div>
+      <span class="topic-status">Opening soon</span>
+    </div>
+    <div class="topic-card">
+      <div class="topic-icon"><i class="ti ti-school"></i></div>
+      <div class="topic-name">School experiences</div>
+      <div class="topic-desc">Honest, specific experiences from families who have attended a school — not a rating, a real story.</div>
+      <span class="topic-status">Opening soon</span>
+    </div>
+    <div class="topic-card">
+      <div class="topic-icon"><i class="ti ti-messages"></i></div>
+      <div class="topic-name">General parent discussion</div>
+      <div class="topic-desc">Curriculum questions, exam stress, university applications — open conversation for parents.</div>
+      <span class="topic-status">Opening soon</span>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
