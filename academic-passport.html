@@ -203,6 +203,21 @@ polyfillCountryFlagEmojis();
           <div class="curr-select-name">French Bac</div>
           <div class="curr-select-desc">0-20 scale, simple average</div>
         </div>
+        <div class="curr-select-card" data-curr="Singapore" onclick="toggleCurriculum(this,'Singapore')">
+          <div class="curr-badge-lg" style="background:#EF3340;color:#fff">SG</div>
+          <div class="curr-select-name">Singapore</div>
+          <div class="curr-select-desc">O/A-Levels, H1/H2/H3 grades</div>
+        </div>
+        <div class="curr-select-card" data-curr="German-Abitur" onclick="toggleCurriculum(this,'German-Abitur')">
+          <div class="curr-badge-lg" style="background:#000;color:#FFCE00">AB</div>
+          <div class="curr-select-name">German Abitur</div>
+          <div class="curr-select-desc">15-point scale, GPA equivalent</div>
+        </div>
+        <div class="curr-select-card" data-curr="ENEM" onclick="toggleCurriculum(this,'ENEM')">
+          <div class="curr-badge-lg" style="background:#009739;color:#FEDD00">EN</div>
+          <div class="curr-select-name">Brazilian ENEM</div>
+          <div class="curr-select-desc">5 areas, 0-1000 TRI scoring</div>
+        </div>
       </div>
       <button class="btn-primary" id="btnContinueCurricula" onclick="saveCurriculaAndContinue()" disabled>Continue →</button>
     </div>
@@ -413,6 +428,54 @@ polyfillCountryFlagEmojis();
     </div>
     </div>
 
+    <div id="singapore-panel" class="curr-detail-panel" style="margin-top:14px">
+    <div class="card">
+      <div class="card-title">Singapore subjects</div>
+      <div class="card-sub">Enter your H1, H2, or H3 subjects with current and target grades (A-E / S / U scale or 1-9 points). We calculate your University Admission Score (UAS) estimate.</div>
+      <div id="singaporeSubjectsContainer"></div>
+      <button class="add-row-btn" onclick="addSingaporeRow()">+ Add subject</button>
+      <button class="save-row-btn" onclick="saveSingaporeGrades()">Save all grades</button>
+      <div id="singaporeStatus"></div>
+      <div class="calc-result-box" style="background:#EF3340">
+        <div><div class="calc-result-label">UAS Estimate (out of 90)</div></div>
+        <div class="calc-result-num" id="singaporeUASDisplay">0</div>
+      </div>
+      <div class="gpa-disclaimer">UAS estimate based on H1 (1×) and H2/H3 (2×) subject weightings. GP and Project Work count separately. Always verify with your school's official results.</div>
+      <div class="gpa-disclaimer" style="border-left-color:#EF3340;margin-top:8px"><strong>Planning to apply internationally?</strong> SAT, AP exams, or A-Levels are commonly required or recommended for Singapore students applying to universities outside Singapore. Consider adding them below as Extra Exams.</div>
+    </div>
+    </div>
+
+    <div id="german-abitur-panel" class="curr-detail-panel" style="margin-top:14px">
+    <div class="card">
+      <div class="card-title">German Abitur subjects</div>
+      <div class="card-sub">Enter your subjects with current and target grades (1-15 point scale: 15 is highest, 1 is minimum pass). We calculate your Abitur GPA equivalent.</div>
+      <div id="germanSubjectsContainer"></div>
+      <button class="add-row-btn" onclick="addGermanRow()">+ Add subject</button>
+      <button class="save-row-btn" onclick="saveGermanGrades()">Save all grades</button>
+      <div id="germanStatus"></div>
+      <div class="calc-result-box" style="background:#1a1a1a">
+        <div><div class="calc-result-label">Average (1-15 points)</div></div>
+        <div class="calc-result-num" id="germanAvgDisplay">0.0</div>
+      </div>
+      <div class="gpa-disclaimer">15-point scale: 15-13 = excellent (1.0 GPA equivalent), 12-10 = good, 9-7 = satisfactory, 6-5 = sufficient, 4-1 = minimum pass. Your final Abitur grade is set by your school using the official formula.</div>
+    </div>
+    </div>
+
+    <div id="enem-panel" class="curr-detail-panel" style="margin-top:14px">
+    <div class="card">
+      <div class="card-title">ENEM areas</div>
+      <div class="card-sub">Enter your current and target TRI scores for each of the 5 ENEM areas (0-1000 scale). We calculate your overall average.</div>
+      <div id="enemAreasContainer"></div>
+      <div id="enemStatus"></div>
+      <div class="calc-result-box" style="background:#009739">
+        <div><div class="calc-result-label">Average TRI Score (0-1000)</div></div>
+        <div class="calc-result-num" id="enemAvgDisplay">0</div>
+      </div>
+      <div class="gpa-disclaimer">TRI (Teoria de Resposta ao Item) scoring: above 750-800 is typically needed for competitive courses like Medicine and Law. Your Redação (essay) score of 0-1000 is separate and counted individually by each university.</div>
+      <div class="gpa-disclaimer" style="border-left-color:#009739;margin-top:8px"><strong>Planning to apply internationally?</strong> Many universities abroad now accept ENEM as a direct entry qualification — but also require SAT or AP scores alongside it. Consider adding them below as Extra Exams.</div>
+    </div>
+    </div>
+
     <div class="graduation-box">
       <div class="graduation-title">🎓 Confirmed your university place?</div>
       <div class="graduation-text">Once you confirm, all your data will be automatically and permanently deleted in 90 days. This cannot be undone.</div>
@@ -518,7 +581,10 @@ const curriculumMeta = {
   'AP': { label: 'AP', name: 'American Pathway', color: '#1B3A7A', textColor: '#F5C842' },
   'General': { label: '%', name: 'International Schools', color: '#9A7020', textColor: '#fff' },
   'CBSE': { label: 'CB', name: 'CBSE', color: '#D2691E', textColor: '#fff' },
-  'French-Bac': { label: 'FB', name: 'French Bac', color: '#0055A4', textColor: '#fff' }
+  'French-Bac': { label: 'FB', name: 'French Bac', color: '#0055A4', textColor: '#fff' },
+  'Singapore': { label: 'SG', name: 'Singapore', color: '#EF3340', textColor: '#fff' },
+  'German-Abitur': { label: 'AB', name: 'German Abitur', color: '#1a1a1a', textColor: '#FFCE00' },
+  'ENEM': { label: 'EN', name: 'Brazilian ENEM', color: '#009739', textColor: '#FEDD00' }
 };
 
 async function loadDashboard(){
@@ -559,6 +625,18 @@ async function loadDashboard(){
         status = `${grades.length} subjects entered`;
       }
       await loadCbseData();
+    } else if(curr === 'Singapore'){
+      const { data: grades } = await sb.from('singapore_grades').select('*').eq('user_id', currentUser.id);
+      if(grades && grades.length > 0){ status = `${grades.length} subjects entered`; }
+      await loadSingaporeData();
+    } else if(curr === 'German-Abitur'){
+      const { data: grades } = await sb.from('german_grades').select('*').eq('user_id', currentUser.id);
+      if(grades && grades.length > 0){ status = `${grades.length} subjects entered`; }
+      await loadGermanData();
+    } else if(curr === 'ENEM'){
+      const { data: areas } = await sb.from('enem_grades').select('*').eq('user_id', currentUser.id);
+      if(areas && areas.length > 0){ status = `${areas.length} areas entered`; }
+      await loadEnemData();
     } else if(curr === 'French-Bac'){
       const { data: grades } = await sb.from('frenchbac_grades').select('*').eq('user_id', currentUser.id);
       if(grades && grades.length > 0){
@@ -569,7 +647,7 @@ async function loadDashboard(){
     }
 
     overviewHTML += `
-      <div class="curr-overview-card" onclick="togglePanel('${curr === 'IB' ? 'ib' : curr === 'A-Levels' ? 'alevel' : curr === 'AP' ? 'american' : curr === 'CBSE' ? 'cbse' : curr === 'French-Bac' ? 'frenchbac' : 'general'}-panel', this)">
+      <div class="curr-overview-card" onclick="togglePanel('${curr === 'IB' ? 'ib' : curr === 'A-Levels' ? 'alevel' : curr === 'AP' ? 'american' : curr === 'CBSE' ? 'cbse' : curr === 'French-Bac' ? 'frenchbac' : curr === 'Singapore' ? 'singapore' : curr === 'German-Abitur' ? 'german-abitur' : curr === 'ENEM' ? 'enem' : 'general'}-panel', this)">
         <div class="curr-overview-left">
           <div class="curr-badge-sm" style="background:${meta.color};color:${meta.textColor}">${meta.label}</div>
           <div><div class="curr-overview-name">${meta.name}</div><div class="curr-overview-status">${status}</div></div>
@@ -1385,6 +1463,165 @@ async function confirmGraduation(){
 }
 
 checkSession();
+
+// ===== SINGAPORE =====
+let singaporeRowCount = 0;
+async function loadSingaporeData(){
+  const { data: grades } = await sb.from('singapore_grades').select('*').eq('user_id', currentUser.id).order('updated_at');
+  document.getElementById('singaporeSubjectsContainer').innerHTML = '';
+  singaporeRowCount = 0;
+  const levels = ['H2','H1','H3','O-Level'];
+  if(grades && grades.length > 0){ grades.forEach(g => addSingaporeRow(g, levels)); }
+  else { addSingaporeRow(null, levels); }
+  recalcSingaporeFromInputs();
+}
+function addSingaporeRow(existing, levels){
+  singaporeRowCount++;
+  const id = 'singapore_row_' + singaporeRowCount;
+  const levelOpts = (levels||['H2','H1','H3','O-Level']).map(l => `<option value="${l}" ${existing && existing.level===l?'selected':''}>${l}</option>`).join('');
+  const row = document.createElement('div');
+  row.className = 'subj-row-multi'; row.id = id;
+  row.innerHTML = `
+    <input type="text" placeholder="Subject" value="${existing ? existing.subject||'' : ''}" data-field="subject">
+    <select data-field="level">${levelOpts}</select>
+    <input type="number" min="1" max="20" step="1" placeholder="Points (1-20)" value="${existing ? existing.current_grade||'' : ''}" data-field="current_grade" oninput="recalcSingaporeFromInputs()">
+    <input type="number" min="1" max="20" step="1" placeholder="Target" value="${existing ? existing.target_grade||'' : ''}" data-field="target_grade">
+    <div></div>
+    <span class="remove-row-btn" onclick="document.getElementById('${id}').remove();recalcSingaporeFromInputs()">✕</span>
+  `;
+  if(existing) row.dataset.rowId = existing.id;
+  document.getElementById('singaporeSubjectsContainer').appendChild(row);
+}
+function recalcSingaporeFromInputs(){
+  const rows = document.querySelectorAll('#singaporeSubjectsContainer .subj-row-multi');
+  let uas = 0;
+  rows.forEach(row => {
+    const pts = parseFloat(row.querySelector('[data-field="current_grade"]').value);
+    const level = row.querySelector('[data-field="level"]').value;
+    if(!isNaN(pts)){ uas += level === 'H1' ? pts : pts * 2; }
+  });
+  document.getElementById('singaporeUASDisplay').textContent = Math.min(uas, 90);
+}
+async function saveSingaporeGrades(){
+  const rows = document.querySelectorAll('#singaporeSubjectsContainer .subj-row-multi');
+  const st = document.getElementById('singaporeStatus');
+  for(const row of rows){
+    const subject = row.querySelector('[data-field="subject"]').value.trim();
+    if(!subject) continue;
+    const payload = { user_id: currentUser.id, subject,
+      level: row.querySelector('[data-field="level"]').value,
+      current_grade: parseFloat(row.querySelector('[data-field="current_grade"]').value)||null,
+      target_grade: parseFloat(row.querySelector('[data-field="target_grade"]').value)||null,
+      updated_at: new Date().toISOString() };
+    if(row.dataset.rowId){ await sb.from('singapore_grades').update(payload).eq('id', row.dataset.rowId); }
+    else { const {data} = await sb.from('singapore_grades').insert(payload).select().single(); if(data) row.dataset.rowId = data.id; }
+  }
+  st.textContent = 'Saved!'; setTimeout(()=>st.textContent='', 2000);
+  await loadSingaporeData();
+}
+
+// ===== GERMAN ABITUR =====
+let germanRowCount = 0;
+async function loadGermanData(){
+  const { data: grades } = await sb.from('german_grades').select('*').eq('user_id', currentUser.id).order('updated_at');
+  document.getElementById('germanSubjectsContainer').innerHTML = '';
+  germanRowCount = 0;
+  const levels = ['Leistungskurs (LK)','Grundkurs (GK)','Prüfungsfach','Nicht-Prüfungsfach'];
+  if(grades && grades.length > 0){ grades.forEach(g => addGermanRow(g, levels)); }
+  else { addGermanRow(null, levels); }
+  recalcGermanFromInputs();
+}
+function addGermanRow(existing, levels){
+  germanRowCount++;
+  const id = 'german_row_' + germanRowCount;
+  const levelOpts = (levels||['Leistungskurs (LK)','Grundkurs (GK)','Prüfungsfach','Nicht-Prüfungsfach']).map(l => `<option value="${l}" ${existing && existing.level===l?'selected':''}>${l}</option>`).join('');
+  const row = document.createElement('div');
+  row.className = 'subj-row-multi'; row.id = id;
+  row.innerHTML = `
+    <input type="text" placeholder="Subject" value="${existing ? existing.subject||'' : ''}" data-field="subject">
+    <select data-field="level">${levelOpts}</select>
+    <input type="number" min="1" max="15" step="1" placeholder="Points (1-15)" value="${existing ? existing.current_grade||'' : ''}" data-field="current_grade" oninput="recalcGermanFromInputs()">
+    <input type="number" min="1" max="15" step="1" placeholder="Target" value="${existing ? existing.target_grade||'' : ''}" data-field="target_grade">
+    <div></div>
+    <span class="remove-row-btn" onclick="document.getElementById('${id}').remove();recalcGermanFromInputs()">✕</span>
+  `;
+  if(existing) row.dataset.rowId = existing.id;
+  document.getElementById('germanSubjectsContainer').appendChild(row);
+}
+function recalcGermanFromInputs(){
+  const rows = document.querySelectorAll('#germanSubjectsContainer .subj-row-multi');
+  let total = 0, count = 0;
+  rows.forEach(row => {
+    const val = parseFloat(row.querySelector('[data-field="current_grade"]').value);
+    if(!isNaN(val)){ total += val; count++; }
+  });
+  document.getElementById('germanAvgDisplay').textContent = count > 0 ? (total/count).toFixed(1) : '0.0';
+}
+async function saveGermanGrades(){
+  const rows = document.querySelectorAll('#germanSubjectsContainer .subj-row-multi');
+  const st = document.getElementById('germanStatus');
+  for(const row of rows){
+    const subject = row.querySelector('[data-field="subject"]').value.trim();
+    if(!subject) continue;
+    const payload = { user_id: currentUser.id, subject,
+      level: row.querySelector('[data-field="level"]').value,
+      current_grade: parseFloat(row.querySelector('[data-field="current_grade"]').value)||null,
+      target_grade: parseFloat(row.querySelector('[data-field="target_grade"]').value)||null,
+      updated_at: new Date().toISOString() };
+    if(row.dataset.rowId){ await sb.from('german_grades').update(payload).eq('id', row.dataset.rowId); }
+    else { const {data} = await sb.from('german_grades').insert(payload).select().single(); if(data) row.dataset.rowId = data.id; }
+  }
+  st.textContent = 'Saved!'; setTimeout(()=>st.textContent='', 2000);
+  await loadGermanData();
+}
+
+// ===== BRAZILIAN ENEM =====
+const enemAreas = ['Linguagens e Códigos','Ciências Humanas','Ciências da Natureza','Matemática','Redação'];
+async function loadEnemData(){
+  const { data: areas } = await sb.from('enem_grades').select('*').eq('user_id', currentUser.id).order('updated_at');
+  const container = document.getElementById('enemAreasContainer');
+  container.innerHTML = '';
+  enemAreas.forEach(area => {
+    const existing = areas ? areas.find(a => a.area === area) : null;
+    const row = document.createElement('div');
+    row.className = 'subj-row-multi';
+    if(existing) row.dataset.rowId = existing.id;
+    row.dataset.area = area;
+    row.innerHTML = `
+      <input type="text" value="${area}" readonly data-field="area" style="background:#F8F9FF;color:#7A8BAE">
+      <div></div>
+      <input type="number" min="0" max="1000" step="0.1" placeholder="Score (0-1000)" value="${existing ? existing.current_score||'' : ''}" data-field="current_score" oninput="recalcEnemFromInputs()">
+      <input type="number" min="0" max="1000" step="0.1" placeholder="Target" value="${existing ? existing.target_score||'' : ''}" data-field="target_score">
+      <div></div><div></div>
+    `;
+    container.appendChild(row);
+  });
+  recalcEnemFromInputs();
+}
+function recalcEnemFromInputs(){
+  const rows = document.querySelectorAll('#enemAreasContainer .subj-row-multi');
+  let total = 0, count = 0;
+  rows.forEach(row => {
+    const val = parseFloat(row.querySelector('[data-field="current_score"]').value);
+    if(!isNaN(val)){ total += val; count++; }
+  });
+  document.getElementById('enemAvgDisplay').textContent = count > 0 ? Math.round(total/count) : '0';
+}
+async function saveEnemGrades(){
+  const rows = document.querySelectorAll('#enemAreasContainer .subj-row-multi');
+  const st = document.getElementById('enemStatus');
+  for(const row of rows){
+    const area = row.dataset.area;
+    const payload = { user_id: currentUser.id, area,
+      current_score: parseFloat(row.querySelector('[data-field="current_score"]').value)||null,
+      target_score: parseFloat(row.querySelector('[data-field="target_score"]').value)||null,
+      updated_at: new Date().toISOString() };
+    if(row.dataset.rowId){ await sb.from('enem_grades').update(payload).eq('id', row.dataset.rowId); }
+    else { const {data} = await sb.from('enem_grades').insert(payload).select().single(); if(data) row.dataset.rowId = data.id; }
+  }
+  st.textContent = 'Saved!'; setTimeout(()=>st.textContent='', 2000);
+  await loadEnemData();
+}
 </script>
 </body>
 </html>
