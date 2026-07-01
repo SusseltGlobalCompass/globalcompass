@@ -409,6 +409,30 @@ polyfillCountryFlagEmojis();
         <div class="calc-result-num" id="cbsePercentDisplay">0%</div>
       </div>
       <div class="gpa-disclaimer">This is a GlobalCompass estimate using CBSE's official CGPA × 9.5 formula. Your official marksheet may show slightly different figures depending on relative grading that year — always check your official CBSE result.</div>
+
+    <div class="card">
+      <div class="card-title">Your target</div>
+      <div class="card-sub">Tell us your target university and score so we can calculate your gap.</div>
+      <label class="field-label">Target university (optional)</label>
+      <input type="text" class="text-input" id="cbseTargetUni" placeholder="e.g. National University of Singapore">
+      <label class="field-label">Target CGPA (out of 10)</label>
+      <input type="number" class="text-input" id="cbseTargetScore" placeholder="e.g. 9.5" min="1" max="10">
+      <button class="save-btn" onclick="saveCbseTarget()">Save target</button>
+      <div id="cbseTargetStatus"></div>
+      <div id="cbseGapDisplay"></div>
+    </div>
+    <div class="card" style="border:1.5px dashed #C0D0E8;background:#F8F9FF">
+      <div class="card-title" style="font-size:15px">+ Extra exams (optional)</div>
+      <div class="card-sub">Many CBSE students sitting international university applications benefit from SAT or AP exams alongside their board results — add them here.</div>
+      <div id="cbseExtrasContainer"></div>
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button class="add-row-btn" style="flex:1" onclick="addExtraExamRow('cbse', 'SAT')">+ SAT</button>
+        <button class="add-row-btn" style="flex:1" onclick="addExtraExamRow('cbse', 'AP')">+ AP</button>
+        <button class="add-row-btn" style="flex:1" onclick="addExtraExamRow('cbse', 'A-Level')">+ A-Level</button>
+      </div>
+      <button class="save-row-btn" onclick="saveExtraExams('cbse')">Save extra exams</button>
+      <div id="cbseExtrasStatus"></div>
+    </div>
     </div>
     </div>
 
@@ -442,6 +466,30 @@ polyfillCountryFlagEmojis();
       </div>
       <div class="gpa-disclaimer">UAS estimate based on H1 (1×) and H2/H3 (2×) subject weightings. GP and Project Work count separately. Always verify with your school's official results.</div>
       <div class="gpa-disclaimer" style="border-left-color:#EF3340;margin-top:8px"><strong>Planning to apply internationally?</strong> SAT, AP exams, or A-Levels are commonly required or recommended for Singapore students applying to universities outside Singapore. Consider adding them below as Extra Exams.</div>
+
+    <div class="card">
+      <div class="card-title">Your target</div>
+      <div class="card-sub">Tell us your target university and score so we can calculate your gap.</div>
+      <label class="field-label">Target university (optional)</label>
+      <input type="text" class="text-input" id="singaporeTargetUni" placeholder="e.g. National University of Singapore">
+      <label class="field-label">Target UAS score (out of 90)</label>
+      <input type="number" class="text-input" id="singaporeTargetScore" placeholder="e.g. 82" min="1" max="90">
+      <button class="save-btn" onclick="saveSingaporeTarget()">Save target</button>
+      <div id="singaporeTargetStatus"></div>
+      <div id="singaporeGapDisplay"></div>
+    </div>
+    <div class="card" style="border:1.5px dashed #C0D0E8;background:#F8F9FF">
+      <div class="card-title" style="font-size:15px">+ Extra exams (optional)</div>
+      <div class="card-sub">SAT, AP exams, and A-Levels are commonly needed for Singapore students applying to universities outside Singapore — add them here alongside your main scores.</div>
+      <div id="singaporeExtrasContainer"></div>
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button class="add-row-btn" style="flex:1" onclick="addExtraExamRow('singapore', 'SAT')">+ SAT</button>
+        <button class="add-row-btn" style="flex:1" onclick="addExtraExamRow('singapore', 'AP')">+ AP</button>
+        <button class="add-row-btn" style="flex:1" onclick="addExtraExamRow('singapore', 'A-Level')">+ A-Level</button>
+      </div>
+      <button class="save-row-btn" onclick="saveExtraExams('singapore')">Save extra exams</button>
+      <div id="singaporeExtrasStatus"></div>
+    </div>
     </div>
     </div>
 
@@ -458,6 +506,30 @@ polyfillCountryFlagEmojis();
         <div class="calc-result-num" id="germanAvgDisplay">0.0</div>
       </div>
       <div class="gpa-disclaimer">15-point scale: 15-13 = excellent (1.0 GPA equivalent), 12-10 = good, 9-7 = satisfactory, 6-5 = sufficient, 4-1 = minimum pass. Your final Abitur grade is set by your school using the official formula.</div>
+
+    <div class="card">
+      <div class="card-title">Your target</div>
+      <div class="card-sub">Tell us your target university and score so we can calculate your gap.</div>
+      <label class="field-label">Target university (optional)</label>
+      <input type="text" class="text-input" id="germanTargetUni" placeholder="e.g. National University of Singapore">
+      <label class="field-label">Target average (out of 15)</label>
+      <input type="number" class="text-input" id="germanTargetScore" placeholder="e.g. 13" min="1" max="15">
+      <button class="save-btn" onclick="saveGermanTarget()">Save target</button>
+      <div id="germanTargetStatus"></div>
+      <div id="germanGapDisplay"></div>
+    </div>
+    <div class="card" style="border:1.5px dashed #C0D0E8;background:#F8F9FF">
+      <div class="card-title" style="font-size:15px">+ Extra exams (optional)</div>
+      <div class="card-sub">The Abitur is widely recognised internationally. SAT and AP can strengthen applications to US universities — add them here as optional extras.</div>
+      <div id="germanExtrasContainer"></div>
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button class="add-row-btn" style="flex:1" onclick="addExtraExamRow('german', 'SAT')">+ SAT</button>
+        <button class="add-row-btn" style="flex:1" onclick="addExtraExamRow('german', 'AP')">+ AP</button>
+        <button class="add-row-btn" style="flex:1" onclick="addExtraExamRow('german', 'A-Level')">+ A-Level</button>
+      </div>
+      <button class="save-row-btn" onclick="saveExtraExams('german')">Save extra exams</button>
+      <div id="germanExtrasStatus"></div>
+    </div>
     </div>
     </div>
 
@@ -472,7 +544,30 @@ polyfillCountryFlagEmojis();
         <div class="calc-result-num" id="enemAvgDisplay">0</div>
       </div>
       <div class="gpa-disclaimer">TRI (Teoria de Resposta ao Item) scoring: above 750-800 is typically needed for competitive courses like Medicine and Law. Your Redação (essay) score of 0-1000 is separate and counted individually by each university.</div>
-      <div class="gpa-disclaimer" style="border-left-color:#009739;margin-top:8px"><strong>Planning to apply internationally?</strong> Many universities abroad now accept ENEM as a direct entry qualification — but also require SAT or AP scores alongside it. Consider adding them below as Extra Exams.</div>
+      <div class="gpa-disclaimer" style="border-left-color:#009739;margin-top:8px"><strong>Planning to apply internationally?</strong> Many universities abroad now accept ENEM as a direct entry qualification — but also require SAT or AP scores alongside it. Add them below.</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Your target</div>
+      <div class="card-sub">Tell us your target university and score so we can calculate your gap.</div>
+      <label class="field-label">Target university (optional)</label>
+      <input type="text" class="text-input" id="enemTargetUni" placeholder="e.g. National University of Singapore">
+      <label class="field-label">Target average TRI score (out of 1000)</label>
+      <input type="number" class="text-input" id="enemTargetScore" placeholder="e.g. 750" min="1" max="1000">
+      <button class="save-btn" onclick="saveEnemTarget()">Save target</button>
+      <div id="enemTargetStatus"></div>
+      <div id="enemGapDisplay"></div>
+    </div>
+    <div class="card" style="border:1.5px dashed #C0D0E8;background:#F8F9FF">
+      <div class="card-title" style="font-size:15px">+ Extra exams (optional)</div>
+      <div class="card-sub">Many international universities now accept ENEM but also require SAT or AP scores alongside it — add them here.</div>
+      <div id="enemExtrasContainer"></div>
+      <div style="display:flex;gap:8px;margin-top:8px">
+        <button class="add-row-btn" style="flex:1" onclick="addExtraExamRow('enem', 'SAT')">+ SAT</button>
+        <button class="add-row-btn" style="flex:1" onclick="addExtraExamRow('enem', 'AP')">+ AP</button>
+        <button class="add-row-btn" style="flex:1" onclick="addExtraExamRow('enem', 'A-Level')">+ A-Level</button>
+      </div>
+      <button class="save-row-btn" onclick="saveExtraExams('enem')">Save extra exams</button>
+      <div id="enemExtrasStatus"></div>
     </div>
     </div>
 
@@ -1474,6 +1569,8 @@ async function loadSingaporeData(){
   if(grades && grades.length > 0){ grades.forEach(g => addSingaporeRow(g, levels)); }
   else { addSingaporeRow(null, levels); }
   recalcSingaporeFromInputs();
+  await loadExtraExams('singapore');
+  renderGap('singapore');
 }
 function addSingaporeRow(existing, levels){
   singaporeRowCount++;
@@ -1530,6 +1627,8 @@ async function loadGermanData(){
   if(grades && grades.length > 0){ grades.forEach(g => addGermanRow(g, levels)); }
   else { addGermanRow(null, levels); }
   recalcGermanFromInputs();
+  await loadExtraExams('german');
+  renderGap('german');
 }
 function addGermanRow(existing, levels){
   germanRowCount++;
@@ -1597,6 +1696,8 @@ async function loadEnemData(){
     container.appendChild(row);
   });
   recalcEnemFromInputs();
+  await loadExtraExams('enem');
+  renderGap('enem');
 }
 function recalcEnemFromInputs(){
   const rows = document.querySelectorAll('#enemAreasContainer .subj-row-multi');
@@ -1621,6 +1722,56 @@ async function saveEnemGrades(){
   }
   st.textContent = 'Saved!'; setTimeout(()=>st.textContent='', 2000);
   await loadEnemData();
+}
+
+// ===== TARGET UNIVERSITY + GAP HELPERS =====
+async function renderGap(key){
+  const el = document.getElementById(key + 'GapDisplay');
+  if(!el) return;
+  const { data } = await sb.from('student_curricula').select('target_university,target_score').eq('user_id', currentUser.id).eq('curriculum', key === 'singapore' ? 'Singapore' : key === 'german' ? 'German-Abitur' : key === 'enem' ? 'ENEM' : 'CBSE').single();
+  if(!data || (!data.target_score && !data.target_university)){ el.innerHTML = ''; return; }
+  const currentEl = document.getElementById(key === 'singapore' ? 'singaporeUASDisplay' : key === 'german' ? 'germanAvgDisplay' : key === 'enem' ? 'enemAvgDisplay' : 'cbseCgpaDisplay');
+  const current = currentEl ? parseFloat(currentEl.textContent) : 0;
+  const target = parseFloat(data.target_score) || 0;
+  const gap = current - target;
+  const gapStr = gap > 0 ? '+' + gap.toFixed(1) : gap.toFixed(1);
+  el.innerHTML = `<div class="gap-to-target" style="background:#1B3A7A;border-radius:14px;padding:18px 20px;margin-top:12px;text-align:center"><div style="font-size:10px;font-weight:700;color:#F5C842;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:6px">Your gap to target</div><div style="font-size:42px;font-weight:800;color:${gap >= 0 ? '#4ade80' : '#F5C842'};font-family:Montserrat,sans-serif">${gapStr}</div><div style="font-size:12px;color:#A8C4F5;margin-top:4px">Current: ${current} · Target: ${target}${data.target_university ? ' · ' + data.target_university : ''}</div></div>`;
+}
+
+async function saveSingaporeTarget(){
+  const uni = document.getElementById('singaporeTargetUni').value.trim();
+  const score = parseFloat(document.getElementById('singaporeTargetScore').value) || null;
+  await sb.from('student_curricula').update({ target_university: uni, target_score: score }).eq('user_id', currentUser.id).eq('curriculum', 'Singapore');
+  document.getElementById('singaporeTargetStatus').textContent = 'Saved!';
+  setTimeout(()=>document.getElementById('singaporeTargetStatus').textContent='', 2000);
+  renderGap('singapore');
+}
+
+async function saveGermanTarget(){
+  const uni = document.getElementById('germanTargetUni').value.trim();
+  const score = parseFloat(document.getElementById('germanTargetScore').value) || null;
+  await sb.from('student_curricula').update({ target_university: uni, target_score: score }).eq('user_id', currentUser.id).eq('curriculum', 'German-Abitur');
+  document.getElementById('germanTargetStatus').textContent = 'Saved!';
+  setTimeout(()=>document.getElementById('germanTargetStatus').textContent='', 2000);
+  renderGap('german');
+}
+
+async function saveEnemTarget(){
+  const uni = document.getElementById('enemTargetUni').value.trim();
+  const score = parseFloat(document.getElementById('enemTargetScore').value) || null;
+  await sb.from('student_curricula').update({ target_university: uni, target_score: score }).eq('user_id', currentUser.id).eq('curriculum', 'ENEM');
+  document.getElementById('enemTargetStatus').textContent = 'Saved!';
+  setTimeout(()=>document.getElementById('enemTargetStatus').textContent='', 2000);
+  renderGap('enem');
+}
+
+async function saveCbseTarget(){
+  const uni = document.getElementById('cbseTargetUni').value.trim();
+  const score = parseFloat(document.getElementById('cbseTargetScore').value) || null;
+  await sb.from('student_curricula').update({ target_university: uni, target_score: score }).eq('user_id', currentUser.id).eq('curriculum', 'CBSE');
+  document.getElementById('cbseTargetStatus').textContent = 'Saved!';
+  setTimeout(()=>document.getElementById('cbseTargetStatus').textContent='', 2000);
+  renderGap('cbse');
 }
 </script>
 </body>
