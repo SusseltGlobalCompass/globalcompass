@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlobalCompass — Community Action Board</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:#1B3A7A;flex-wrap:wrap;gap:10px}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.wm-wrap{display:flex;flex-direction:column}
+.wm-global-row{display:flex;align-items:center;gap:5px;margin-bottom:2px}
+.wm-rule{height:0.7px;background:rgba(245,200,66,0.5);flex:1}
+.wm-global{font-family:'Montserrat',sans-serif;font-size:7px;font-weight:300;color:#fff;letter-spacing:0.3em;text-transform:uppercase}
+.wm-compass{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:800;color:#fff;letter-spacing:0.07em;text-transform:uppercase;line-height:1}
+.wm-compass .o{color:#F5C842}
+.nav-right{display:flex;align-items:center;gap:14px}
+.nav-back{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;color:#A8C4F5;text-decoration:none;display:flex;align-items:center;gap:4px}
+.nav-tag{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;color:#F5C842;letter-spacing:0.12em;text-transform:uppercase;background:rgba(245,200,66,0.12);padding:4px 12px;border-radius:99px;border:0.5px solid rgba(245,200,66,0.3)}
+.hero-bar{background:linear-gradient(160deg,#1B3A7A 0%,#2952A3 55%,#1B3A7A 100%);padding:40px 24px;text-align:center;position:relative;overflow:hidden}
+.hero-bar svg.wm{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.06;pointer-events:none}
+.hero-eyebrow{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:#F5C842;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:10px;position:relative;z-index:1}
+.hero-h{font-family:'Playfair Display',serif;font-size:30px;font-weight:500;color:#fff;margin-bottom:10px;position:relative;z-index:1}
+.hero-p{font-size:13px;color:#A8C4F5;max-width:560px;margin:0 auto 20px;font-weight:300;line-height:1.7;position:relative;z-index:1}
+.hero-note{font-size:12px;color:rgba(245,200,66,0.8);font-style:italic;position:relative;z-index:1}
+.main{max-width:1000px;margin:0 auto;padding:32px 24px 60px}
+.section-eyebrow{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:#1B3A7A;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:18px;padding-bottom:10px;border-bottom:2px solid #F5C842;display:inline-block}
+.cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:40px}
+@media(max-width:700px){.cards-grid{grid-template-columns:1fr}}
+.project-card{background:#fff;border:0.5px solid #E0E8F5;border-radius:16px;overflow:hidden}
+.card-top{padding:18px 20px 14px;border-bottom:0.5px solid #F0F3FA}
+.card-region{font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px}
+.card-title{font-family:'Playfair Display',serif;font-size:17px;color:#0D1F4A;margin-bottom:6px;line-height:1.3}
+.card-org{font-size:11.5px;color:#7A8BAE;font-weight:500}
+.card-body{padding:14px 20px}
+.card-desc{font-size:13px;line-height:1.65;color:#3A4A6B;margin-bottom:12px}
+.card-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.card-tag{font-size:10.5px;padding:4px 10px;border-radius:99px;font-weight:600}
+.tag-type{background:#EEF3FF;color:#1B3A7A}
+.tag-hours{background:#E8F8F0;color:#1A7A4A}
+.tag-curricula{background:rgba(245,200,66,0.15);color:#8A6000}
+.card-footer{font-size:11.5px;color:#7A8BAE;display:flex;align-items:center;gap:5px}
+.submit-banner{background:linear-gradient(135deg,#0D1F4A,#1B3A7A);border-radius:16px;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:8px}
+.sb-text{}
+.sb-eyebrow{font-size:10px;font-weight:700;color:#F5C842;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:6px}
+.sb-title{font-family:'Playfair Display',serif;font-size:20px;color:#fff;margin-bottom:8px}
+.sb-desc{font-size:13px;color:#A8C4F5;line-height:1.6;max-width:500px}
+.sb-btn{background:#F5C842;color:#1B3A7A;border:none;padding:12px 24px;border-radius:99px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Montserrat',sans-serif;white-space:nowrap;flex-shrink:0}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo">
+    <svg width="26" height="26" viewBox="0 0 64 64" fill="none">
+      <circle cx="32" cy="32" r="29" stroke="#F5C842" stroke-width="1.4" fill="none"/>
+      <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <circle cx="32" cy="32" r="3" fill="#F5C842"/>
+      <polygon points="32,4 35,25 32,26.5 29,25" fill="#F5C842"/>
+    </svg>
+    <div class="wm-wrap">
+      <div class="wm-global-row"><div class="wm-rule"></div><div class="wm-global">GLOBAL</div><div class="wm-rule"></div></div>
+      <div class="wm-compass">C<span class="o">O</span>MPASS</div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <a class="nav-back" href="index.html"><i class="ti ti-arrow-left"></i> Back to GlobalCompass</a>
+    <div class="nav-tag">Community Action Board</div>
+  </div>
+</nav>
+
+<div class="hero-bar">
+  <svg class="wm" width="320" height="320" viewBox="0 0 64 64" fill="none">
+    <circle cx="32" cy="32" r="29" stroke="#F5C842" stroke-width="1.4" fill="none"/>
+    <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none"/>
+    <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none"/>
+  </svg>
+  <div class="hero-eyebrow">Student action, worldwide</div>
+  <h1 class="hero-h">Community Action Board</h1>
+  <p class="hero-p">Real community projects for students who want to do something that matters — and count their hours toward CAS, Duke of Edinburgh, VCE, and other service requirements at the same time.</p>
+  <div class="hero-note">Every project listed here has been reviewed by the GlobalCompass team before appearing.</div>
+</div>
+
+<div class="main">
+  <div class="section-eyebrow">Gulf and Middle East</div>
+  <div class="cards-grid">
+
+    <div class="project-card">
+      <div class="card-top">
+        <div class="card-region" style="color:#C17A52">Dubai, UAE</div>
+        <div class="card-title">Beach Clean and Marine Awareness Day</div>
+        <div class="card-org">Organised by: EcoSchools UAE Network</div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">Join a monthly beach clean along Jumeirah Beach, followed by a short awareness session on marine plastic pollution and its effect on the Gulf's coral reefs. Students also help create bilingual awareness materials distributed to local families.</div>
+        <div class="card-tags">
+          <span class="card-tag tag-type"><i class="ti ti-leaf" style="font-size:10px;margin-right:3px"></i> Environment</span>
+          <span class="card-tag tag-hours">3-5 hours per session</span>
+          <span class="card-tag tag-curricula">IB CAS · DofE</span>
+        </div>
+        <div class="card-footer"><i class="ti ti-calendar" style="font-size:13px"></i> Monthly — last Saturday</div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="card-top">
+        <div class="card-region" style="color:#C17A52">Abu Dhabi, UAE</div>
+        <div class="card-title">Literacy Tutoring for Migrant Children</div>
+        <div class="card-org">Organised by: Gulf Education Volunteers</div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">Volunteer tutors help children of migrant workers (ages 6-12) with basic English and mathematics literacy in weekend sessions. No teaching experience needed — training is provided. One of the most meaningful CAS projects available in the UAE.</div>
+        <div class="card-tags">
+          <span class="card-tag tag-type"><i class="ti ti-school" style="font-size:10px;margin-right:3px"></i> Education</span>
+          <span class="card-tag tag-hours">4 hours per week</span>
+          <span class="card-tag tag-curricula">IB CAS · A-Levels</span>
+        </div>
+        <div class="card-footer"><i class="ti ti-calendar" style="font-size:13px"></i> Weekends year-round</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-eyebrow">Africa</div>
+  <div class="cards-grid">
+
+    <div class="project-card">
+      <div class="card-top">
+        <div class="card-region" style="color:#C29A3D">Rural Kenya</div>
+        <div class="card-title">Build a Classroom — Rift Valley Schools Project</div>
+        <div class="card-org">Organised by: Bridges of Hope Kenya</div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">A two-week residential programme helping build and paint classrooms for primary schools in the Rift Valley region. Students work alongside local builders, contribute to fundraising before travel, and run a one-day reading event for local children on the final day.</div>
+        <div class="card-tags">
+          <span class="card-tag tag-type"><i class="ti ti-building" style="font-size:10px;margin-right:3px"></i> Construction</span>
+          <span class="card-tag tag-hours">80+ hours</span>
+          <span class="card-tag tag-curricula">IB CAS · DofE Gold · VCE</span>
+        </div>
+        <div class="card-footer"><i class="ti ti-calendar" style="font-size:13px"></i> July and December cohorts</div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="card-top">
+        <div class="card-region" style="color:#C29A3D">Cape Town, South Africa</div>
+        <div class="card-title">Girls' Education Campaign — Township Schools</div>
+        <div class="card-org">Organised by: She Leads Africa Foundation</div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">Create and deliver age-appropriate educational workshops on career pathways and digital literacy for girls aged 12-16 in Cape Town township schools. Students design their own session with support from the foundation's education team.</div>
+        <div class="card-tags">
+          <span class="card-tag tag-type"><i class="ti ti-users" style="font-size:10px;margin-right:3px"></i> Education</span>
+          <span class="card-tag tag-hours">20-40 hours</span>
+          <span class="card-tag tag-curricula">IB CAS · CBSE</span>
+        </div>
+        <div class="card-footer"><i class="ti ti-calendar" style="font-size:13px"></i> Term-time and holidays</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-eyebrow">Asia Pacific</div>
+  <div class="cards-grid">
+
+    <div class="project-card">
+      <div class="card-top">
+        <div class="card-region" style="color:#2D7D6E">Bali, Indonesia</div>
+        <div class="card-title">Reef Restoration and Ocean Education</div>
+        <div class="card-org">Organised by: Coral Triangle Initiative</div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">Work with marine biologists to plant coral fragments on degraded reef sections off Bali's north coast. Students also create illustrated guides explaining reef ecology, distributed to local fishing communities in Indonesian and English.</div>
+        <div class="card-tags">
+          <span class="card-tag tag-type"><i class="ti ti-leaf" style="font-size:10px;margin-right:3px"></i> Environment</span>
+          <span class="card-tag tag-hours">30-60 hours</span>
+          <span class="card-tag tag-curricula">IB CAS · Singapore · VCE</span>
+        </div>
+        <div class="card-footer"><i class="ti ti-calendar" style="font-size:13px"></i> June and November cohorts</div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="card-top">
+        <div class="card-region" style="color:#2D7D6E">Rural India</div>
+        <div class="card-title">Digital Literacy for Village Schools</div>
+        <div class="card-org">Organised by: Teach for Rural India</div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">Train primary school teachers in rural Rajasthan to use basic tablet technology in their classrooms. Students develop short training sessions, deliver them in person or remotely, and follow up with resource packs tailored to each school's needs.</div>
+        <div class="card-tags">
+          <span class="card-tag tag-type"><i class="ti ti-device-laptop" style="font-size:10px;margin-right:3px"></i> Education</span>
+          <span class="card-tag tag-hours">40+ hours</span>
+          <span class="card-tag tag-curricula">IB CAS · CBSE · DofE</span>
+        </div>
+        <div class="card-footer"><i class="ti ti-calendar" style="font-size:13px"></i> Year-round with remote option</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="section-eyebrow">Americas</div>
+  <div class="cards-grid">
+
+    <div class="project-card">
+      <div class="card-top">
+        <div class="card-region" style="color:#B5563C">São Paulo, Brazil</div>
+        <div class="card-title">Reading Circles in Favela Communities</div>
+        <div class="card-org">Organised by: Leitura Viva Brasil</div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">Run weekly reading sessions for children aged 5-10 in community centres across São Paulo's peripheral neighbourhoods. Students choose and adapt books, create simple activities, and keep a reflective journal — a natural fit for ENEM students and strong CAS evidence.</div>
+        <div class="card-tags">
+          <span class="card-tag tag-type"><i class="ti ti-book" style="font-size:10px;margin-right:3px"></i> Education</span>
+          <span class="card-tag tag-hours">3 hours per week</span>
+          <span class="card-tag tag-curricula">IB CAS · ENEM · French Bac</span>
+        </div>
+        <div class="card-footer"><i class="ti ti-calendar" style="font-size:13px"></i> School term weeks</div>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="card-top">
+        <div class="card-region" style="color:#B5563C">Medellín, Colombia</div>
+        <div class="card-title">Urban Garden and Food Security Project</div>
+        <div class="card-org">Organised by: Huerta Comunitaria Medellín</div>
+      </div>
+      <div class="card-body">
+        <div class="card-desc">Help design and maintain rooftop vegetable gardens in low-income neighbourhoods, with harvests donated to local families. Students also run nutrition workshops and document the project through photography and written reports.</div>
+        <div class="card-tags">
+          <span class="card-tag tag-type"><i class="ti ti-plant" style="font-size:10px;margin-right:3px"></i> Environment</span>
+          <span class="card-tag tag-hours">20-50 hours</span>
+          <span class="card-tag tag-curricula">IB CAS · DofE · ENEM</span>
+        </div>
+        <div class="card-footer"><i class="ti ti-calendar" style="font-size:13px"></i> Ongoing — flexible commitment</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="submit-banner">
+    <div class="sb-text">
+      <div class="sb-eyebrow">Know a project worth sharing?</div>
+      <div class="sb-title">Submit a community project</div>
+      <div class="sb-desc">If you know a verified, student-friendly community project that deserves a wider audience, submit it here. Every submission is reviewed by the GlobalCompass team before going live.</div>
+    </div>
+    <button class="sb-btn" onclick="alert('Project submission is coming soon. Check back shortly!')">Submit a project →</button>
+  </div>
+
+</div>
+</body>
+</html>
