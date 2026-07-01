@@ -182,7 +182,7 @@ async function exploreSubject(){
   };
   const responseLang = langMap[curriculum] || "English";
   const langInstruction = responseLang !== "English"
-    ? `IMPORTANT: Write your entire response in ${responseLang}. All section labels, all content — everything in ${responseLang}.`
+    ? `IMPORTANT: Write ALL your content in ${responseLang}. However, keep the section label markers themselves in ENGLISH exactly as shown (WHAT IT REALLY IS:, DIFFICULTY:, THE REAL PROS:, COMMON MISCONCEPTIONS:, CAREERS THAT BENEFIT:, SURPRISE FACTOR:) — these are structural markers only. Only translate the content within each section.`
     : "";
 
   const prompt = `You are an experienced international educator writing for GlobalCompass, an education platform for expat families. A student or parent has selected: "${subject}" from the "${curriculum}" curriculum.
