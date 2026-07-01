@@ -175,8 +175,18 @@ async function exploreSubject(){
     if(sub) sub.textContent = loadMsgs[msgIdx][1];
   }, 2500);
 
-  const prompt = `You are an experienced international educator writing for GlobalCompass, an education platform for expat families. A student or parent has selected: "${subject}" from the "${curriculum}" curriculum.
+  const langMap = {
+    "French Baccalauréat": "French",
+    "German Abitur": "German",
+    "Brazilian ENEM": "Portuguese"
+  };
+  const responseLang = langMap[curriculum] || "English";
+  const langInstruction = responseLang !== "English"
+    ? `IMPORTANT: Write your entire response in ${responseLang}. All section labels, all content — everything in ${responseLang}.`
+    : "";
 
+  const prompt = `You are an experienced international educator writing for GlobalCompass, an education platform for expat families. A student or parent has selected: "${subject}" from the "${curriculum}" curriculum.
+${langInstruction}
 Write an honest, punchy, human description of this subject using EXACTLY this structure. Your audience is a 16-17 year old student deciding whether to take this subject. Be real, be direct, avoid sounding like a textbook or a university brochure. Short sentences work. Speak like an experienced teacher who actually likes young people, with each section clearly separated:
 
 WHAT IT REALLY IS:
@@ -209,12 +219,60 @@ Keep the tone warm, honest, and direct — like advice from a knowledgeable teac
     const data = await res.json();
     const text = data.content[0].text.trim();
 
+    // Language-mapped section labels
+    const labelMap = {
+      "French": {
+        "WHAT IT REALLY IS": "CE QUE C'EST VRAIMENT",
+        "DIFFICULTY": "DIFFICULTÉ",
+        "THE REAL PROS": "LES VRAIS AVANTAGES",
+        "COMMON MISCONCEPTIONS": "IDÉES REÇUES",
+        "CAREERS THAT BENEFIT": "MÉTIERS QUI EN BÉNÉFICIENT",
+        "SURPRISE FACTOR": "CE QUI POURRAIT TE SURPRENDRE"
+      },
+      "German": {
+        "WHAT IT REALLY IS": "WAS ES WIRKLICH IST",
+        "DIFFICULTY": "SCHWIERIGKEIT",
+        "THE REAL PROS": "DIE ECHTEN VORTEILE",
+        "COMMON MISCONCEPTIONS": "HÄUFIGE MISSVERSTÄNDNISSE",
+        "CAREERS THAT BENEFIT": "BERUFE DIE DAVON PROFITIEREN",
+        "SURPRISE FACTOR": "DAS ÜBERRASCHENDE DARAN"
+      },
+      "Portuguese": {
+        "WHAT IT REALLY IS": "O QUE É DE VERDADE",
+        "DIFFICULTY": "DIFICULDADE",
+        "THE REAL PROS": "AS VANTAGENS REAIS",
+        "COMMON MISCONCEPTIONS": "CONCEITOS ERRADOS",
+        "CAREERS THAT BENEFIT": "CARREIRAS QUE SE BENEFICIAM",
+        "SURPRISE FACTOR": "O QUE PODE TE SURPREENDER"
+      }
+    };
+    const currentLabels = labelMap[responseLang] || {};
+
+    function getLabel(englishLabel) {
+      return currentLabels[englishLabel] || englishLabel;
+    }
+
     function extract(label, nextLabel) {
-      const start = text.indexOf(label + ':');
+      const localLabel = getLabel(label);
+      const tryLabels = [localLabel, label];
+      let start = -1;
+      let usedLabel = localLabel;
+      for(const l of tryLabels){
+        start = text.indexOf(l + ':');
+        if(start !== -1){ usedLabel = l; break; }
+      }
       if(start === -1) return '';
-      const contentStart = start + label.length + 1;
-      const end = nextLabel ? text.indexOf(nextLabel + ':') : text.length;
-      return text.slice(contentStart, end !== -1 ? end : text.length).trim();
+      const contentStart = start + usedLabel.length + 1;
+      const nextLocalLabel = nextLabel ? getLabel(nextLabel) : null;
+      let end = text.length;
+      if(nextLabel){
+        const tryNextLabels = [nextLocalLabel, nextLabel];
+        for(const l of tryNextLabels){
+          const idx = text.indexOf(l + ':');
+          if(idx !== -1){ end = idx; break; }
+        }
+      }
+      return text.slice(contentStart, end).trim();
     }
 
     clearInterval(msgTimer2);
@@ -236,7 +294,7 @@ Keep the tone warm, honest, and direct — like advice from a knowledgeable teac
       + sections.map(s => {
           const txt = extract(s.label, s.next);
           if(!txt) return '';
-          const lowerLabel = s.label.charAt(0) + s.label.slice(1).toLowerCase();
+          const translatedLabel = getLabel(s.label); const lowerLabel = translatedLabel.charAt(0) + translatedLabel.slice(1).toLowerCase();
           return '<div class="section"><div class="section-label" style="background:' + s.bg + ';color:' + s.color + '"><i class="ti ' + s.icon + '" style="color:' + s.color + '"></i>' + lowerLabel + '</div><div class="section-text">' + txt + '</div></div>';
         }).join('')
       + (surprise ? '<div class="hook-card"><div class="hook-label">✦ The thing that might surprise you</div><div class="hook-text">' + surprise + '</div></div>' : '')
