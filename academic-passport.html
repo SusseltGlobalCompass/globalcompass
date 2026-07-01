@@ -538,6 +538,7 @@ polyfillCountryFlagEmojis();
       <div class="card-title">ENEM areas</div>
       <div class="card-sub">Enter your current and target TRI scores for each of the 5 ENEM areas (0-1000 scale). We calculate your overall average.</div>
       <div id="enemAreasContainer"></div>
+      <button class="save-row-btn" onclick="saveEnemGrades()">Save all scores</button>
       <div id="enemStatus"></div>
       <div class="calc-result-box" style="background:#009739">
         <div><div class="calc-result-label">Average TRI Score (0-1000)</div></div>
@@ -1579,7 +1580,34 @@ function addSingaporeRow(existing, levels){
   const row = document.createElement('div');
   row.className = 'subj-row-multi'; row.id = id;
   row.innerHTML = `
-    <input type="text" placeholder="Subject" value="${existing ? existing.subject||'' : ''}" data-field="subject">
+    <select data-field="subject">
+      <option value="">Select subject...</option>
+      <optgroup label="Sciences">
+        <option value="Mathematics" ${existing && existing.subject==='Mathematics'?'selected':''}>Mathematics</option>
+        <option value="Physics" ${existing && existing.subject==='Physics'?'selected':''}>Physics</option>
+        <option value="Chemistry" ${existing && existing.subject==='Chemistry'?'selected':''}>Chemistry</option>
+        <option value="Biology" ${existing && existing.subject==='Biology'?'selected':''}>Biology</option>
+        <option value="Computing" ${existing && existing.subject==='Computing'?'selected':''}>Computing</option>
+      </optgroup>
+      <optgroup label="Humanities">
+        <option value="Economics" ${existing && existing.subject==='Economics'?'selected':''}>Economics</option>
+        <option value="History" ${existing && existing.subject==='History'?'selected':''}>History</option>
+        <option value="Geography" ${existing && existing.subject==='Geography'?'selected':''}>Geography</option>
+        <option value="Literature in English" ${existing && existing.subject==="Literature in English"?'selected':''}>Literature in English</option>
+        <option value="China Studies" ${existing && existing.subject==='China Studies'?'selected':''}>China Studies</option>
+      </optgroup>
+      <optgroup label="Languages">
+        <option value="General Paper (GP)" ${existing && existing.subject==='General Paper (GP)'?'selected':''}>General Paper (GP)</option>
+        <option value="English Language" ${existing && existing.subject==='English Language'?'selected':''}>English Language</option>
+        <option value="Mother Tongue Language" ${existing && existing.subject==='Mother Tongue Language'?'selected':''}>Mother Tongue Language</option>
+        <option value="Chinese Language" ${existing && existing.subject==='Chinese Language'?'selected':''}>Chinese Language</option>
+        <option value="Malay Language" ${existing && existing.subject==='Malay Language'?'selected':''}>Malay Language</option>
+      </optgroup>
+      <optgroup label="Arts">
+        <option value="Art" ${existing && existing.subject==='Art'?'selected':''}>Art</option>
+        <option value="Music" ${existing && existing.subject==='Music'?'selected':''}>Music</option>
+      </optgroup>
+    </select>
     <select data-field="level">${levelOpts}</select>
     <input type="number" min="1" max="20" step="1" placeholder="Points (1-20)" value="${existing ? existing.current_grade||'' : ''}" data-field="current_grade" oninput="recalcSingaporeFromInputs()">
     <input type="number" min="1" max="20" step="1" placeholder="Target" value="${existing ? existing.target_grade||'' : ''}" data-field="target_grade">
@@ -1637,7 +1665,32 @@ function addGermanRow(existing, levels){
   const row = document.createElement('div');
   row.className = 'subj-row-multi'; row.id = id;
   row.innerHTML = `
-    <input type="text" placeholder="Subject" value="${existing ? existing.subject||'' : ''}" data-field="subject">
+    <select data-field="subject">
+      <option value="">Select subject...</option>
+      <optgroup label="Core">
+        <option value="Mathematik" ${existing && existing.subject==='Mathematik'?'selected':''}>Mathematik</option>
+        <option value="Deutsch" ${existing && existing.subject==='Deutsch'?'selected':''}>Deutsch</option>
+        <option value="Fremdsprache (Englisch)" ${existing && existing.subject==="Fremdsprache (Englisch)"?'selected':''}>Fremdsprache (Englisch)</option>
+      </optgroup>
+      <optgroup label="Sciences">
+        <option value="Physik" ${existing && existing.subject==='Physik'?'selected':''}>Physik</option>
+        <option value="Chemie" ${existing && existing.subject==='Chemie'?'selected':''}>Chemie</option>
+        <option value="Biologie" ${existing && existing.subject==='Biologie'?'selected':''}>Biologie</option>
+        <option value="Informatik" ${existing && existing.subject==='Informatik'?'selected':''}>Informatik</option>
+      </optgroup>
+      <optgroup label="Humanities">
+        <option value="Geschichte" ${existing && existing.subject==='Geschichte'?'selected':''}>Geschichte</option>
+        <option value="Geographie" ${existing && existing.subject==='Geographie'?'selected':''}>Geographie</option>
+        <option value="Wirtschaft" ${existing && existing.subject==='Wirtschaft'?'selected':''}>Wirtschaft</option>
+        <option value="Politik" ${existing && existing.subject==='Politik'?'selected':''}>Politik</option>
+        <option value="Philosophie" ${existing && existing.subject==='Philosophie'?'selected':''}>Philosophie</option>
+      </optgroup>
+      <optgroup label="Arts">
+        <option value="Kunst" ${existing && existing.subject==='Kunst'?'selected':''}>Kunst</option>
+        <option value="Musik" ${existing && existing.subject==='Musik'?'selected':''}>Musik</option>
+        <option value="Sport" ${existing && existing.subject==='Sport'?'selected':''}>Sport</option>
+      </optgroup>
+    </select>
     <select data-field="level">${levelOpts}</select>
     <input type="number" min="1" max="15" step="1" placeholder="Points (1-15)" value="${existing ? existing.current_grade||'' : ''}" data-field="current_grade" oninput="recalcGermanFromInputs()">
     <input type="number" min="1" max="15" step="1" placeholder="Target" value="${existing ? existing.target_grade||'' : ''}" data-field="target_grade">
