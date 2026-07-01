@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlobalCompass — Subject Explorer</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:#1B3A7A;flex-wrap:wrap;gap:10px}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.wm-wrap{display:flex;flex-direction:column}
+.wm-global-row{display:flex;align-items:center;gap:5px;margin-bottom:2px}
+.wm-rule{height:0.7px;background:rgba(245,200,66,0.5);flex:1}
+.wm-global{font-family:'Montserrat',sans-serif;font-size:7px;font-weight:300;color:#fff;letter-spacing:0.3em;text-transform:uppercase}
+.wm-compass{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:800;color:#fff;letter-spacing:0.07em;text-transform:uppercase;line-height:1}
+.wm-compass .o{color:#F5C842}
+.nav-right{display:flex;align-items:center;gap:14px}
+.nav-back{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;color:#A8C4F5;text-decoration:none;display:flex;align-items:center;gap:4px}
+.nav-tag{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;color:#F5C842;letter-spacing:0.12em;text-transform:uppercase;background:rgba(245,200,66,0.12);padding:4px 12px;border-radius:99px;border:0.5px solid rgba(245,200,66,0.3)}
+.hero-bar{background:linear-gradient(160deg,#1B3A7A 0%,#2952A3 55%,#1B3A7A 100%);padding:36px 24px;text-align:center;position:relative;overflow:hidden}
+.hero-bar svg.wm{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.06;pointer-events:none}
+.hero-h{font-family:'Playfair Display',serif;font-size:28px;font-weight:500;color:#fff;margin-bottom:8px;position:relative;z-index:1}
+.hero-p{font-size:13px;color:#A8C4F5;max-width:540px;margin:0 auto;font-weight:300;line-height:1.6;position:relative;z-index:1}
+.main{max-width:800px;margin:0 auto;padding:32px 24px 60px}
+.picker-card{background:#fff;border:2px solid #F5C842;border-radius:18px;padding:24px;box-shadow:0 0 28px rgba(245,200,66,0.2);margin-bottom:24px}
+.picker-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+@media(max-width:600px){.picker-row{grid-template-columns:1fr}}
+.picker-label{font-size:11px;font-weight:700;color:#1B3A7A;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:6px}
+.picker-sel{width:100%;padding:11px 14px;border:1px solid #C0D0E8;border-radius:10px;font-size:14px;color:#0D1F4A;background:#fff;font-family:'Inter',sans-serif;outline:none}
+.picker-sel:focus{border-color:#1B3A7A}
+.explore-btn{width:100%;background:#1B3A7A;color:#F5C842;border:none;padding:13px 24px;border-radius:99px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Montserrat',sans-serif}
+.explore-btn:disabled{background:#E0E8F5;color:#9AB0D0;cursor:not-allowed}
+.result-card{background:#fff;border:0.5px solid #E0E8F5;border-radius:16px;overflow:hidden}
+.result-header{background:linear-gradient(135deg,#1B3A7A,#2952A3);padding:24px 28px}
+.result-curriculum{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:#F5C842;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:6px}
+.result-subject{font-family:'Playfair Display',serif;font-size:26px;color:#fff}
+.result-body{padding:24px 28px}
+.section{margin-bottom:20px;padding-bottom:20px;border-bottom:0.5px solid #EEF1F8}
+.section:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
+.section-label{font-size:10px;font-weight:700;color:#1B3A7A;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.section-label i{font-size:14px}
+.section-text{font-size:14px;line-height:1.75;color:#3A4A6B}
+.loading-pulse{text-align:center;padding:40px 20px;color:#7A8BAE;font-size:13px}
+.loading-pulse i{font-size:32px;color:#C0D0E8;margin-bottom:10px;display:block}
+.hook-card{background:linear-gradient(135deg,#0D1F4A,#1B3A7A);border-radius:12px;padding:18px 20px;margin-top:16px}
+.hook-label{font-size:10px;font-weight:700;color:#F5C842;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:6px}
+.hook-text{font-size:14px;line-height:1.65;color:#fff;font-style:italic}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo">
+    <svg width="26" height="26" viewBox="0 0 64 64" fill="none">
+      <circle cx="32" cy="32" r="29" stroke="#F5C842" stroke-width="1.4" fill="none"/>
+      <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <circle cx="32" cy="32" r="3" fill="#F5C842"/>
+      <polygon points="32,4 35,25 32,26.5 29,25" fill="#F5C842"/>
+    </svg>
+    <div class="wm-wrap">
+      <div class="wm-global-row"><div class="wm-rule"></div><div class="wm-global">GLOBAL</div><div class="wm-rule"></div></div>
+      <div class="wm-compass">C<span class="o">O</span>MPASS</div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <a class="nav-back" href="index.html"><i class="ti ti-arrow-left"></i> Back to GlobalCompass</a>
+    <div class="nav-tag">Subject Explorer</div>
+  </div>
+</nav>
+
+<div class="hero-bar">
+  <svg class="wm" width="320" height="320" viewBox="0 0 64 64" fill="none">
+    <circle cx="32" cy="32" r="29" stroke="#F5C842" stroke-width="1.4" fill="none"/>
+    <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none"/>
+    <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none"/>
+  </svg>
+  <h1 class="hero-h">See any subject differently</h1>
+  <p class="hero-p">Honest, human descriptions of every subject — what it is really like, who it suits, what doors it opens, and one thing about it that might genuinely surprise you.</p>
+</div>
+
+<div class="main">
+  <div class="picker-card">
+    <div class="picker-row">
+      <div>
+        <div class="picker-label">Curriculum</div>
+        <select class="picker-sel" id="curriculumSel" onchange="updateSubjects()">
+          <option value="">Choose curriculum...</option>
+          <option value="IB Diploma">IB Diploma</option>
+          <option value="A-Levels">A-Levels & Sixth Form</option>
+          <option value="American AP">American AP</option>
+          <option value="CBSE">Indian CBSE</option>
+          <option value="French Baccalauréat">French Baccalauréat</option>
+          <option value="German Abitur">German Abitur</option>
+          <option value="Singapore A-Levels">Singapore A-Levels</option>
+          <option value="Australian VCE">Australian VCE</option>
+          <option value="Brazilian ENEM">Brazilian ENEM</option>
+        </select>
+      </div>
+      <div>
+        <div class="picker-label">Subject</div>
+        <select class="picker-sel" id="subjectSel" disabled>
+          <option value="">Select curriculum first...</option>
+        </select>
+      </div>
+    </div>
+    <button class="explore-btn" id="exploreBtn" disabled onclick="exploreSubject()">Explore this subject</button>
+  </div>
+
+  <div id="resultArea"></div>
+</div>
+
+<script>
+const subjects = {
+  "IB Diploma": ["Mathematics: Analysis and Approaches (HL)","Mathematics: Analysis and Approaches (SL)","Mathematics: Applications and Interpretation (HL)","Mathematics: Applications and Interpretation (SL)","Physics (HL)","Physics (SL)","Chemistry (HL)","Chemistry (SL)","Biology (HL)","Biology (SL)","Computer Science (HL)","Computer Science (SL)","Economics (HL)","Economics (SL)","History (HL)","History (SL)","Geography (HL)","Geography (SL)","Psychology (HL)","Psychology (SL)","English A: Literature (HL)","English A: Literature (SL)","English A: Language and Literature (HL)","English A: Language and Literature (SL)","English B (HL)","English B (SL)","Visual Arts (HL)","Visual Arts (SL)","Theatre (HL)","Theatre (SL)","Music (HL)","Music (SL)","Business Management (HL)","Business Management (SL)","Theory of Knowledge (TOK)","Extended Essay (EE)"],
+  "A-Levels": ["Mathematics","Further Mathematics","Physics","Chemistry","Biology","Computer Science","Economics","History","Geography","Psychology","English Literature","English Language","French","Spanish","German","Art & Design","Music","Business Studies","Sociology","Law","Politics","Philosophy"],
+  "American AP": ["AP Calculus AB","AP Calculus BC","AP Statistics","AP Physics 1","AP Physics 2","AP Physics C: Mechanics","AP Chemistry","AP Biology","AP Environmental Science","AP Computer Science A","AP Computer Science Principles","AP Economics: Macro","AP Economics: Micro","AP US History","AP World History","AP European History","AP Psychology","AP English Literature","AP English Language","AP French Language","AP Spanish Language","AP Art History","AP Studio Art","AP Government & Politics"],
+  "CBSE": ["Mathematics","Physics","Chemistry","Biology","Computer Science","English Core","Hindi Core","Economics","History","Geography","Political Science","Psychology","Business Studies","Accountancy","Physical Education","Informatics Practices","Sociology"],
+  "French Baccalauréat": ["Mathématiques","Physique-Chimie","Sciences de la vie et de la Terre (SVT)","Numérique et Sciences Informatiques (NSI)","Histoire-Géographie","Sciences Économiques et Sociales (SES)","Humanités, Littérature et Philosophie (HLP)","Langues, Littératures et Cultures Étrangères (LLCE)","Littérature et Langues et Cultures de l'Antiquité (LLCA)","Art","Éducation physique et sportive (EPS)","Philosophie","Grand Oral"],
+  "German Abitur": ["Mathematik","Deutsch","Englisch","Physik","Chemie","Biologie","Informatik","Geschichte","Geographie","Wirtschaft","Politik und Gesellschaft","Philosophie","Kunst","Musik","Sport","Latein","Französisch","Spanisch"],
+  "Singapore A-Levels": ["H2 Mathematics","H2 Physics","H2 Chemistry","H2 Biology","H2 Economics","H2 History","H2 Geography","H2 Literature in English","H2 Computing","H2 Further Mathematics","H1 General Paper","H1 Mother Tongue Language","H1 Project Work","H3 Mathematics","H3 Physics","H3 Chemistry"],
+  "Australian VCE": ["Mathematical Methods","Specialist Mathematics","Further Mathematics","Physics","Chemistry","Biology","Psychology","Economics","History","Geography","English","English Literature","Legal Studies","Accounting","Business Management","Software Development","Visual Communication Design","Media","Music","Physical Education"],
+  "Brazilian ENEM": ["Linguagens e Códigos","Ciências Humanas","Ciências da Natureza","Matemática","Redação"]
+};
+
+function updateSubjects(){
+  const curr = document.getElementById('curriculumSel').value;
+  const subSel = document.getElementById('subjectSel');
+  const btn = document.getElementById('exploreBtn');
+  subSel.innerHTML = '<option value="">Choose subject...</option>';
+  if(curr && subjects[curr]){
+    subjects[curr].forEach(s => {
+      const opt = document.createElement('option');
+      opt.value = s; opt.textContent = s;
+      subSel.appendChild(opt);
+    });
+    subSel.disabled = false;
+  } else {
+    subSel.disabled = true;
+    subSel.innerHTML = '<option value="">Select curriculum first...</option>';
+  }
+  btn.disabled = true;
+  subSel.onchange = () => { btn.disabled = !subSel.value; };
+}
+
+async function exploreSubject(){
+  const curriculum = document.getElementById('curriculumSel').value;
+  const subject = document.getElementById('subjectSel').value;
+  if(!curriculum || !subject) return;
+
+  const area = document.getElementById('resultArea');
+  area.innerHTML = '<div class="loading-pulse"><i class="ti ti-telescope"></i>Exploring ' + subject + '...</div>';
+
+  const prompt = `You are an experienced international educator writing for GlobalCompass, an education platform for expat families. A student or parent has selected: "${subject}" from the "${curriculum}" curriculum.
+
+Write an honest, engaging, human description of this subject using EXACTLY this structure, with each section clearly separated:
+
+WHAT IT REALLY IS:
+[2-3 sentences. Plain language — what a student actually does in this subject day to day, not the official syllabus description. Avoid jargon.]
+
+DIFFICULTY:
+[1-2 sentences. Be honest without being discouraging. Mention what specifically makes it challenging and what kind of student tends to find it manageable.]
+
+THE REAL PROS:
+[2-3 sentences. What students who genuinely enjoy this subject say about it. What skills it builds that apply beyond school.]
+
+COMMON MISCONCEPTIONS:
+[2-3 sentences. Address the fears or wrong assumptions students have about this subject — the things that put people off who might actually enjoy it. Be direct and reassuring.]
+
+CAREERS THAT BENEFIT:
+[List 5-7 specific careers — not broad fields but real job titles. Format as a comma-separated list.]
+
+SURPRISE FACTOR:
+[1-2 sentences. One genuinely surprising, interesting fact about this subject or its real-world applications that reframes how a student might see it. Make it memorable.]
+
+Keep the tone warm, honest, and direct — like advice from a knowledgeable teacher who knows the student well. Do not use bullet points or markdown. Write in flowing sentences within each section.`;
+
+  try {
+    const res = await fetch('/api/generate', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ prompt, max_tokens: 700 })
+    });
+    const data = await res.json();
+    const text = data.content[0].text.trim();
+
+    function extract(label, nextLabel) {
+      const start = text.indexOf(label + ':');
+      if(start === -1) return '';
+      const contentStart = start + label.length + 1;
+      const end = nextLabel ? text.indexOf(nextLabel + ':') : text.length;
+      return text.slice(contentStart, end !== -1 ? end : text.length).trim();
+    }
+
+    const sections = [
+      { label: 'WHAT IT REALLY IS', next: 'DIFFICULTY', icon: 'ti-book' },
+      { label: 'DIFFICULTY', next: 'THE REAL PROS', icon: 'ti-flame' },
+      { label: 'THE REAL PROS', next: 'COMMON MISCONCEPTIONS', icon: 'ti-thumb-up' },
+      { label: 'COMMON MISCONCEPTIONS', next: 'CAREERS THAT BENEFIT', icon: 'ti-bulb' },
+      { label: 'CAREERS THAT BENEFIT', next: 'SURPRISE FACTOR', icon: 'ti-briefcase' },
+    ];
+    const surprise = extract('SURPRISE FACTOR', null);
+
+    area.innerHTML = '<div class="result-card">'
+      + '<div class="result-header">'
+      + '<div class="result-curriculum">' + curriculum + '</div>'
+      + '<div class="result-subject">' + subject + '</div>'
+      + '</div>'
+      + '<div class="result-body">'
+      + sections.map(s => {
+          const txt = extract(s.label, s.next);
+          if(!txt) return '';
+          return '<div class="section"><div class="section-label"><i class="ti ' + s.icon + '"></i>' + s.label.charAt(0) + s.label.slice(1).toLowerCase() + '</div><div class="section-text">' + txt + '</div></div>';
+        }).join('')
+      + (surprise ? '<div class="hook-card"><div class="hook-label">✦ The thing that might surprise you</div><div class="hook-text">' + surprise + '</div></div>' : '')
+      + '</div></div>';
+
+  } catch(e) {
+    area.innerHTML = '<div class="loading-pulse"><i class="ti ti-alert-circle"></i>Something went wrong generating the description. Please try again.</div>';
+  }
+}
+</script>
+</body>
+</html>
