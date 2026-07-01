@@ -43,11 +43,19 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
 .section-label{font-size:10px;font-weight:700;color:#1B3A7A;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:8px;display:flex;align-items:center;gap:6px}
 .section-label i{font-size:14px}
 .section-text{font-size:14px;line-height:1.75;color:#3A4A6B}
-.loading-pulse{text-align:center;padding:40px 20px;color:#7A8BAE;font-size:13px}
-.loading-pulse i{font-size:32px;color:#C0D0E8;margin-bottom:10px;display:block}
-.hook-card{background:linear-gradient(135deg,#0D1F4A,#1B3A7A);border-radius:12px;padding:18px 20px;margin-top:16px}
-.hook-label{font-size:10px;font-weight:700;color:#F5C842;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:6px}
-.hook-text{font-size:14px;line-height:1.65;color:#fff;font-style:italic}
+.loading-pulse{text-align:center;padding:48px 20px;color:#3A4A6B}
+.spin{width:44px;height:44px;border:3px solid #E0E8F5;border-top-color:#1B3A7A;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 16px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-msg{font-size:15px;font-weight:600;color:#1B3A7A;margin-bottom:6px}
+.loading-sub{font-size:12px;color:#9AB0D0}
+.hook-card{background:linear-gradient(135deg,#0D1F4A,#1B3A7A);border-radius:14px;padding:20px 22px;margin-top:20px}
+.hook-label{font-size:11px;font-weight:700;color:#F5C842;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.hook-text{font-size:15px;line-height:1.7;color:#fff}
+.section-label{font-size:11px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:6px;display:inline-flex}
+.section-label i{font-size:15px}
+.section-text{font-size:15px;line-height:1.8;color:#3A4A6B;margin-top:8px}
+.section{margin-bottom:22px;padding-bottom:22px;border-bottom:0.5px solid #EEF1F8}
+.section:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
 </style>
 </head>
 <body>
@@ -151,11 +159,25 @@ async function exploreSubject(){
   if(!curriculum || !subject) return;
 
   const area = document.getElementById('resultArea');
-  area.innerHTML = '<div class="loading-pulse"><i class="ti ti-telescope"></i>Exploring ' + subject + '...</div>';
+  const loadMsgs = [
+    ['Looking at the syllabus...', 'Give it a moment'],
+    ['Asking a former teacher...', 'Almost there'],
+    ['Finding the real story...', 'Nearly done'],
+    ['Digging up the surprise...', 'Just a few seconds more'],
+  ];
+  let msgIdx = 0;
+  area.innerHTML = '<div class="loading-pulse"><div class="spin"></div><div class="loading-msg">' + loadMsgs[0][0] + '</div><div class="loading-sub">' + loadMsgs[0][1] + '</div></div>';
+  const msgTimer = setInterval(() => {
+    msgIdx = (msgIdx + 1) % loadMsgs.length;
+    const el = area.querySelector('.loading-msg');
+    const sub = area.querySelector('.loading-sub');
+    if(el) el.textContent = loadMsgs[msgIdx][0];
+    if(sub) sub.textContent = loadMsgs[msgIdx][1];
+  }, 2500);
 
   const prompt = `You are an experienced international educator writing for GlobalCompass, an education platform for expat families. A student or parent has selected: "${subject}" from the "${curriculum}" curriculum.
 
-Write an honest, engaging, human description of this subject using EXACTLY this structure, with each section clearly separated:
+Write an honest, punchy, human description of this subject using EXACTLY this structure. Your audience is a 16-17 year old student deciding whether to take this subject. Be real, be direct, avoid sounding like a textbook or a university brochure. Short sentences work. Speak like an experienced teacher who actually likes young people, with each section clearly separated:
 
 WHAT IT REALLY IS:
 [2-3 sentences. Plain language — what a student actually does in this subject day to day, not the official syllabus description. Avoid jargon.]
@@ -177,6 +199,7 @@ SURPRISE FACTOR:
 
 Keep the tone warm, honest, and direct — like advice from a knowledgeable teacher who knows the student well. Do not use bullet points or markdown. Write in flowing sentences within each section.`;
 
+  let msgTimer2 = msgTimer;
   try {
     const res = await fetch('/api/generate', {
       method: 'POST',
@@ -194,12 +217,13 @@ Keep the tone warm, honest, and direct — like advice from a knowledgeable teac
       return text.slice(contentStart, end !== -1 ? end : text.length).trim();
     }
 
+    clearInterval(msgTimer2);
     const sections = [
-      { label: 'WHAT IT REALLY IS', next: 'DIFFICULTY', icon: 'ti-book' },
-      { label: 'DIFFICULTY', next: 'THE REAL PROS', icon: 'ti-flame' },
-      { label: 'THE REAL PROS', next: 'COMMON MISCONCEPTIONS', icon: 'ti-thumb-up' },
-      { label: 'COMMON MISCONCEPTIONS', next: 'CAREERS THAT BENEFIT', icon: 'ti-bulb' },
-      { label: 'CAREERS THAT BENEFIT', next: 'SURPRISE FACTOR', icon: 'ti-briefcase' },
+      { label: 'WHAT IT REALLY IS', next: 'DIFFICULTY', icon: 'ti-book', bg: '#EEF3FF', color: '#1B3A7A' },
+      { label: 'DIFFICULTY', next: 'THE REAL PROS', icon: 'ti-flame', bg: '#FFF0E8', color: '#C05A1A' },
+      { label: 'THE REAL PROS', next: 'COMMON MISCONCEPTIONS', icon: 'ti-thumb-up', bg: '#E8F8F0', color: '#1A7A4A' },
+      { label: 'COMMON MISCONCEPTIONS', next: 'CAREERS THAT BENEFIT', icon: 'ti-bulb', bg: '#FFF8E0', color: '#8A6000' },
+      { label: 'CAREERS THAT BENEFIT', next: 'SURPRISE FACTOR', icon: 'ti-briefcase', bg: '#F0EEFF', color: '#4A1A9A' },
     ];
     const surprise = extract('SURPRISE FACTOR', null);
 
@@ -212,7 +236,8 @@ Keep the tone warm, honest, and direct — like advice from a knowledgeable teac
       + sections.map(s => {
           const txt = extract(s.label, s.next);
           if(!txt) return '';
-          return '<div class="section"><div class="section-label"><i class="ti ' + s.icon + '"></i>' + s.label.charAt(0) + s.label.slice(1).toLowerCase() + '</div><div class="section-text">' + txt + '</div></div>';
+          const lowerLabel = s.label.charAt(0) + s.label.slice(1).toLowerCase();
+          return '<div class="section"><div class="section-label" style="background:' + s.bg + ';color:' + s.color + '"><i class="ti ' + s.icon + '" style="color:' + s.color + '"></i>' + lowerLabel + '</div><div class="section-text">' + txt + '</div></div>';
         }).join('')
       + (surprise ? '<div class="hook-card"><div class="hook-label">✦ The thing that might surprise you</div><div class="hook-text">' + surprise + '</div></div>' : '')
       + '</div></div>';
