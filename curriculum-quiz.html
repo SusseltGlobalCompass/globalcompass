@@ -153,6 +153,7 @@ const questions = [
       {t:"Indian", v:{cbse:5,ib:3,british:2,american:2,singapore:2,french:1,german:1,australian:1,enem:0}},
       {t:"Brazilian", v:{enem:5,ib:3,american:2,british:1,french:2,german:1,singapore:0,cbse:0,australian:1}},
       {t:"Singaporean or Malaysian", v:{singapore:5,ib:3,british:3,american:2,australian:2,cbse:1,french:1,german:1,enem:0}},
+      {t:"Arab / Middle Eastern", v:{american:5,british:4,ib:4,french:2,german:1,singapore:1,australian:2,cbse:1,enem:0}},
       {t:"Mixed, international or open", v:{ib:5,american:3,british:3,french:2,german:2,singapore:2,australian:2,cbse:2,enem:1}}
     ]},
   { cat:"Your child", icon:"ti-brain",
@@ -177,7 +178,7 @@ const questions = [
     q:"What matters most to you in your child's school environment?",
     opts:[
       {t:"Strong academic discipline and high standards", v:{british:5,german:5,french:5,singapore:5,cbse:5,ib:3,american:2,australian:2,enem:2}},
-      {t:"Cultural and religious sensitivity in daily school life", v:{cbse:4,enem:4,french:3,ib:3,british:3,american:3,australian:3,german:2,singapore:2}},
+      {t:"Cultural and religious sensitivity in daily school life", v:{american:4,british:4,ib:4,cbse:3,enem:3,french:3,australian:3,german:2,singapore:2}},
       {t:"Creative freedom, wellbeing and emotional support", v:{american:5,australian:5,ib:4,british:3,french:2,german:2,singapore:2,cbse:2,enem:3}},
       {t:"International diversity and exposure to different cultures", v:{ib:5,american:4,australian:4,british:3,french:3,german:2,singapore:3,cbse:2,enem:2}},
       {t:"A balance of all — nothing too extreme", v:{ib:4,american:3,british:3,australian:3,french:3,german:3,singapore:3,cbse:3,enem:3}}
@@ -200,6 +201,7 @@ const questions = [
       {t:"Indian universities (JEE or NEET)", v:{cbse:5,ib:2,british:1,american:1,singapore:1,french:0,german:0,australian:0,enem:0}},
       {t:"Brazilian universities (SISU)", v:{enem:5,ib:2,american:1,british:0,french:1,german:0,singapore:0,cbse:0,australian:0}},
       {t:"Singapore or Asian universities", v:{singapore:5,ib:4,british:3,american:2,australian:2,cbse:2,french:1,german:1,enem:0}},
+      {t:"UAE or Gulf universities / regional branch campuses (NYU Abu Dhabi, Sorbonne, AUS, Heriot-Watt)", v:{american:5,british:4,ib:4,french:3,german:2,australian:2,singapore:2,cbse:2,enem:1}},
       {t:"Not sure yet — keeping all options open", v:{ib:5,british:3,american:3,singapore:2,australian:2,french:2,german:2,cbse:2,enem:1}}
     ]}
 ];
@@ -303,6 +305,10 @@ function showResult(){
       <div class="other-grid">
         ${others.map(k=>`<div class="other-chip">${curricula[k].name.split('(')[0].trim()} <span>${Math.round((scores[k]/maxScores[k])*100)}%</span></div>`).join('')}
       </div>
+    </div>
+    <div style="background:#FFF8E8;border:0.5px solid rgba(245,200,66,0.4);border-radius:12px;padding:14px 18px;margin-top:14px">
+      <div style="font-size:10px;font-weight:700;color:#8a6a14;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:5px">📍 A note for families in the UAE and Gulf</div>
+      <div style="font-size:12.5px;color:#6b5410;line-height:1.65">All private schools in the UAE include <strong>Arabic Language, Islamic Education, and UAE Social Studies</strong> as mandatory subjects — regardless of which international curriculum the school follows. Your curriculum choice does not affect these. Emirati and Arab students study Arabic as a first language (Arabic A); other students study it as an additional language (Arabic B). Every private school is regulated by KHDA (Dubai), ADEK (Abu Dhabi), or SPEA (Sharjah) and inspected against the UAE Unified Inspection Framework.</div>
     </div>
     <div class="retake-row">
       <button class="btn-retake" onclick="retake()">Retake the quiz with different answers</button>
