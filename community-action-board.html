@@ -6,6 +6,7 @@
 <title>GlobalCompass — Community Action Board</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@twemoji/api@latest/dist/twemoji.min.js" crossorigin="anonymous"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Twemoji Country Flags','Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
@@ -469,6 +470,9 @@ body{font-family:'Twemoji Country Flags','Inter',sans-serif;background:#F8F9FF;c
 </div>
 
 <script>
+document.addEventListener('DOMContentLoaded', function(){
+  twemoji.parse(document.body, { folder: 'svg', ext: '.svg' });
+});
 const projects = {
   "build-classroom": {
     title: "Build a Classroom — Rift Valley Schools Project",
@@ -680,6 +684,7 @@ function openModal(id){
   document.getElementById('modalBtn').href = 'mailto:info@globalcompass.education?subject=Community%20Action%20Board%20%E2%80%94%20Interest%20in%20' + encodeURIComponent(p.title);
   document.getElementById('modalOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
+  setTimeout(()=>{ if(window.twemoji) twemoji.parse(document.getElementById('modalBox'), { folder: 'svg', ext: '.svg' }); }, 50);
 }
 
 function closeModal(e){
