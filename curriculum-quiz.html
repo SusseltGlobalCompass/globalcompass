@@ -5,264 +5,314 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>GlobalCompass — Curriculum Finder Quiz</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Twemoji Country Flags',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#1a1a1a;background:#f9f9f7;min-height:100vh;padding:24px}
-.container{max-width:600px;margin:0 auto;background:#fff;border-radius:16px;padding:28px;border:0.5px solid #e5e5e5}
-.screen{display:none}
-.screen.active{display:block}
-.nav{display:flex;align-items:center;gap:8px;padding:0 0 20px}
-.logo-icon{width:28px;height:28px;border-radius:50%;background:#1D9E75;display:flex;align-items:center;justify-content:center}
-.logo-icon i{font-size:15px;color:#fff}
-.logo-name{font-size:15px;font-weight:500;color:#085041}
-.hero{text-align:center;padding:32px 0 28px}
-.hero-tag{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:4px 12px;border-radius:8px;background:#E1F5EE;color:#0F6E56;margin-bottom:16px}
-.hero h1{font-size:24px;font-weight:500;margin-bottom:10px;color:#1a1a1a}
-.hero p{font-size:14px;color:#666;line-height:1.7;max-width:460px;margin:0 auto 28px}
-.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:500px;margin:0 auto}
-.mode-card{background:#fff;border:0.5px solid #e5e5e5;border-radius:12px;padding:20px;cursor:pointer;text-align:left;transition:border-color 0.15s}
-.mode-card:hover{border-color:#1D9E75}
-.mode-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:12px}
-.mode-card h3{font-size:14px;font-weight:500;margin-bottom:4px}
-.mode-card p{font-size:12px;color:#888;line-height:1.5}
-.mode-tag{font-size:11px;padding:2px 8px;border-radius:8px;margin-bottom:10px;display:inline-block}
-.tag-free{background:#E1F5EE;color:#0F6E56}
-.tag-pro{background:#E6F1FB;color:#185FA5}
-.quiz-wrap{max-width:540px;margin:0 auto}
-.progress-bar{background:#f0f0f0;border-radius:99px;height:4px;margin-bottom:8px}
-.progress-fill{background:#1D9E75;height:4px;border-radius:99px;transition:width 0.4s}
-.progress-label{font-size:12px;color:#888;margin-bottom:24px}
-.q-number{font-size:12px;font-weight:500;color:#1D9E75;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em}
-.q-text{font-size:18px;font-weight:500;margin-bottom:20px;line-height:1.4}
-.options{display:flex;flex-direction:column;gap:10px}
-.opt{background:#fff;border:0.5px solid #e5e5e5;border-radius:12px;padding:14px 16px;cursor:pointer;text-align:left;font-size:14px;color:#1a1a1a;transition:all 0.15s;display:flex;align-items:center;gap:12px;width:100%}
-.opt:hover{border-color:#1D9E75;background:#E1F5EE}
-.opt.selected{border-color:#1D9E75;background:#E1F5EE;color:#085041;font-weight:500}
-.opt-icon{width:32px;height:32px;border-radius:8px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
-.opt.selected .opt-icon{background:#1D9E75;color:#fff}
-.btn-row{display:flex;justify-content:space-between;align-items:center;margin-top:24px}
-.btn{font-size:13px;padding:9px 20px;border-radius:8px;cursor:pointer;font-weight:500;border:0.5px solid #ddd;background:transparent;color:#1a1a1a}
-.btn-primary{background:#1D9E75;color:#fff;border:none}
-.btn-primary:not(:disabled):hover{background:#0F6E56}
-.btn:disabled{opacity:0.35;cursor:not-allowed}
-.cat-intro{margin-bottom:20px;padding:14px 16px;background:#f9f9f7;border-radius:8px}
-.cat-tag{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:4px 12px;border-radius:8px;background:#E6F1FB;color:#185FA5;margin-bottom:8px}
-.cat-intro h3{font-size:15px;font-weight:500;margin-bottom:4px}
-.cat-intro p{font-size:13px;color:#666;line-height:1.5}
-.result-wrap{max-width:540px;margin:0 auto}
-.result-hero{text-align:center;padding:24px 0 20px}
-.result-badge{width:72px;height:72px;border-radius:50%;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;font-size:32px}
-.result-name{font-size:22px;font-weight:500;margin-bottom:6px}
-.result-tagline{font-size:14px;color:#666;margin-bottom:20px}
-.match-bar{background:#f0f0f0;border-radius:99px;height:8px;margin-bottom:6px}
-.match-fill{height:8px;border-radius:99px;background:#1D9E75}
-.traits{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:20px 0}
-.trait{background:#f9f9f7;border-radius:8px;padding:12px 14px}
-.trait-label{font-size:11px;color:#888;margin-bottom:4px}
-.trait-val{font-size:13px;font-weight:500}
-.other-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;margin-top:10px}
-.other-card{background:#fff;border:0.5px solid #e5e5e5;border-radius:8px;padding:10px 12px;text-align:center}
-.other-name{font-size:12px;font-weight:500;margin-bottom:2px}
-.other-pct{font-size:11px;color:#1D9E75}
-.cta-row{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
-.cta-btn{font-size:13px;padding:10px 20px;border-radius:8px;cursor:pointer;font-weight:500;border:none}
-.loading{text-align:center;padding:48px 0}
-.loading i{font-size:32px;color:#1D9E75;animation:spin 1s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
+body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A;min-height:100vh}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:#1B3A7A}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.wm-wrap{display:flex;flex-direction:column}
+.wm-global-row{display:flex;align-items:center;gap:5px;margin-bottom:2px}
+.wm-rule{height:0.7px;background:rgba(245,200,66,0.5);flex:1}
+.wm-global{font-family:'Montserrat',sans-serif;font-size:7px;font-weight:300;color:#fff;letter-spacing:0.3em;text-transform:uppercase}
+.wm-compass{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:800;color:#fff;letter-spacing:0.07em;text-transform:uppercase;line-height:1}
+.wm-compass .o{color:#F5C842}
+.nav-back{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;color:#A8C4F5;text-decoration:none;display:flex;align-items:center;gap:4px}
+
+.hero{background:linear-gradient(160deg,#1B3A7A 0%,#2952A3 55%,#1B3A7A 100%);padding:36px 24px;text-align:center;position:relative;overflow:hidden}
+.hero svg.wm{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.06;pointer-events:none}
+.hero-eyebrow{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:#F5C842;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:8px;position:relative;z-index:1}
+.hero-h{font-family:'Playfair Display',serif;font-size:26px;color:#fff;margin-bottom:8px;position:relative;z-index:1}
+.hero-p{font-size:13px;color:#A8C4F5;max-width:480px;margin:0 auto;line-height:1.65;position:relative;z-index:1}
+
+.wrap{max-width:600px;margin:0 auto;padding:28px 20px 60px}
+
+/* PROGRESS */
+.prog-wrap{margin-bottom:24px}
+.prog-bar{background:#E0E8F5;border-radius:99px;height:5px;margin-bottom:6px}
+.prog-fill{background:#F5C842;height:5px;border-radius:99px;transition:width 0.4s cubic-bezier(.4,0,.2,1)}
+.prog-label{font-size:11px;color:#7A8BAE;font-weight:500;display:flex;justify-content:space-between}
+
+/* CARD */
+.q-card{background:#fff;border:0.5px solid #E0E8F5;border-radius:16px;padding:26px;margin-bottom:20px}
+.q-cat{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;color:#F5C842;background:#1B3A7A;padding:3px 10px;border-radius:99px;display:inline-flex;align-items:center;gap:5px;margin-bottom:14px;letter-spacing:0.1em;text-transform:uppercase}
+.q-text{font-family:'Playfair Display',serif;font-size:20px;color:#0D1F4A;margin-bottom:18px;line-height:1.35}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{background:#F8F9FF;border:1.5px solid #E0E8F5;border-radius:12px;padding:13px 16px;cursor:pointer;text-align:left;font-size:14px;color:#3A4A6B;transition:all 0.15s;display:flex;align-items:center;gap:12px;width:100%;font-family:'Inter',sans-serif}
+.opt:hover{border-color:#1B3A7A;background:#EEF3FF;color:#0D1F4A}
+.opt.selected{border-color:#1B3A7A;background:#1B3A7A;color:#fff}
+.opt-dot{width:20px;height:20px;border-radius:50%;border:2px solid #C0D0E8;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.15s}
+.opt.selected .opt-dot{border-color:#F5C842;background:#F5C842}
+.opt.selected .opt-dot::after{content:"";width:8px;height:8px;border-radius:50%;background:#1B3A7A}
+
+/* NAV BUTTONS */
+.btn-row{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.btn-back{background:transparent;border:1.5px solid #C0D0E8;color:#7A8BAE;padding:10px 20px;border-radius:99px;font-size:12px;font-weight:600;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all 0.15s}
+.btn-back:hover{border-color:#1B3A7A;color:#1B3A7A}
+.btn-next{background:#1B3A7A;color:#F5C842;border:none;padding:10px 24px;border-radius:99px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Montserrat',sans-serif;transition:all 0.15s;display:flex;align-items:center;gap:6px}
+.btn-next:disabled{background:#E0E8F5;color:#9AB0D0;cursor:not-allowed}
+.btn-next:not(:disabled):hover{background:#2952A3}
+
+/* RESULT */
+.result-card{background:#fff;border:0.5px solid #E0E8F5;border-radius:16px;overflow:hidden;margin-bottom:16px}
+.result-hero{background:linear-gradient(135deg,#1B3A7A,#2952A3);padding:24px 26px}
+.result-eyebrow{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;color:#F5C842;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:6px}
+.result-name{font-family:'Playfair Display',serif;font-size:24px;color:#fff;margin-bottom:4px}
+.result-tagline{font-size:12px;color:#A8C4F5}
+.result-score{display:flex;align-items:center;gap:12px;margin-top:14px}
+.score-bar-wrap{flex:1;background:rgba(255,255,255,0.15);border-radius:99px;height:8px}
+.score-bar{height:8px;border-radius:99px;background:#F5C842;transition:width 1s ease}
+.score-pct{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:800;color:#F5C842;min-width:44px;text-align:right}
+.result-body{padding:20px 26px}
+.traits-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.trait-box{background:#F8F9FF;border-radius:10px;padding:10px 12px}
+.trait-label{font-size:10px;color:#9AB0D0;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:3px}
+.trait-val{font-size:13px;color:#0D1F4A;font-weight:600}
+.result-cta{display:flex;gap:10px;flex-wrap:wrap}
+.btn-cta-primary{background:#1B3A7A;color:#F5C842;border:none;padding:11px 20px;border-radius:99px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Montserrat',sans-serif;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn-cta-secondary{background:transparent;border:1.5px solid #1B3A7A;color:#1B3A7A;padding:11px 20px;border-radius:99px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Montserrat',sans-serif;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.other-matches{background:#F8F9FF;border:0.5px solid #E0E8F5;border-radius:14px;padding:18px 20px}
+.other-title{font-size:11px;font-weight:700;color:#7A8BAE;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px}
+.other-grid{display:flex;flex-wrap:wrap;gap:8px}
+.other-chip{background:#fff;border:0.5px solid #C0D0E8;border-radius:99px;padding:6px 14px;font-size:12px;color:#3A4A6B;font-weight:600}
+.other-chip span{color:#1B3A7A;font-weight:700}
+.retake-row{text-align:center;margin-top:16px}
+.btn-retake{background:transparent;border:none;color:#7A8BAE;font-size:13px;cursor:pointer;font-family:'Inter',sans-serif;text-decoration:underline}
 </style>
-<script type="module">
-import { polyfillCountryFlagEmojis } from "https://cdn.jsdelivr.net/npm/country-flag-emoji-polyfill@0.1/dist/index.mjs";
-polyfillCountryFlagEmojis();
-</script>
 </head>
 <body>
-<div class="container">
-
-<div class="nav">
-  <div class="logo-icon"><i class="ti ti-compass"></i></div>
-  <span class="logo-name">GlobalCompass</span>
-</div>
-
-<div id="screen-home" class="screen active">
-  <div class="hero">
-    <div class="hero-tag"><i class="ti ti-brain"></i> Curriculum finder</div>
-    <h1>Which curriculum is right for your child?</h1>
-    <p>Answer a few questions and GlobalCompass will match your child to the best curriculum from 8 international options.</p>
-  </div>
-  <div class="mode-grid">
-    <div class="mode-card" onclick="startQuick()">
-      <span class="mode-tag tag-free">Free</span>
-      <div class="mode-icon" style="background:#E1F5EE"><i class="ti ti-bolt" style="color:#0F6E56"></i></div>
-      <h3>Quick quiz</h3>
-      <p>5 questions · 2 minutes · instant recommendation</p>
-    </div>
-    <div class="mode-card" onclick="startDeep()">
-      <span class="mode-tag tag-pro">Pro</span>
-      <div class="mode-icon" style="background:#E6F1FB"><i class="ti ti-microscope" style="color:#185FA5"></i></div>
-      <h3>Deep assessment</h3>
-      <p>12 questions · 5 minutes · full profile report</p>
+<nav class="nav">
+  <div class="nav-logo">
+    <svg width="26" height="26" viewBox="0 0 64 64" fill="none">
+      <circle cx="32" cy="32" r="29" stroke="#F5C842" stroke-width="1.4" fill="none"/>
+      <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <circle cx="32" cy="32" r="3" fill="#F5C842"/>
+      <polygon points="32,4 35,25 32,26.5 29,25" fill="#F5C842"/>
+    </svg>
+    <div class="wm-wrap">
+      <div class="wm-global-row"><div class="wm-rule"></div><div class="wm-global">GLOBAL</div><div class="wm-rule"></div></div>
+      <div class="wm-compass">C<span class="o">O</span>MPASS</div>
     </div>
   </div>
+  <a class="nav-back" href="index.html"><i class="ti ti-arrow-left"></i> Back to GlobalCompass</a>
+</nav>
+
+<div class="hero">
+  <svg class="wm" width="320" height="320" viewBox="0 0 64 64" fill="none">
+    <circle cx="32" cy="32" r="29" stroke="#F5C842" stroke-width="1.4" fill="none"/>
+    <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none"/>
+    <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none"/>
+  </svg>
+  <div class="hero-eyebrow">Curriculum Finder</div>
+  <h1 class="hero-h">Which curriculum suits your child?</h1>
+  <p class="hero-p">8 questions. Honest answers. A personalised curriculum match based on your child and your family — not just reviews.</p>
 </div>
 
-<div id="screen-quiz" class="screen">
-  <div class="quiz-wrap">
-    <div class="progress-bar"><div class="progress-fill" id="q-progress" style="width:0%"></div></div>
-    <div class="progress-label" id="q-label"></div>
-    <div id="cat-intro-box" style="display:none" class="cat-intro">
-      <div class="cat-tag" id="cat-tag-label"></div>
-      <h3 id="cat-title"></h3>
-      <p id="cat-desc"></p>
+<div class="wrap">
+  <div id="quiz-area"></div>
+</div>
+
+<script>
+const curricula = {
+  ib:       { name:"International Baccalaureate (IB)", tagline:"Globally mobile · inquiry-based · university-ready worldwide", color:"#1B3A7A", traits:[{l:"Teaching style",v:"Inquiry & discussion"},{l:"Assessment",v:"Mixed exams & coursework"},{l:"Best for",v:"Globally mobile families"},{l:"University access",v:"Worldwide"},{l:"Class environment",v:"International & diverse"},{l:"Values fit",v:"Open, multicultural"}], guide:"ib-curriculum-guide.html", nav:"ib-pathway-navigator.html" },
+  british:  { name:"British Curriculum (A-Levels)", tagline:"Structured · academically rigorous · UK university pathway", color:"#712B13", traits:[{l:"Teaching style",v:"Structured, teacher-led"},{l:"Assessment",v:"GCSEs & A-Levels"},{l:"Best for",v:"UK university pathway"},{l:"University access",v:"UK + international"},{l:"Class environment",v:"Disciplined & focused"},{l:"Values fit",v:"Academic tradition"}], guide:"alevels-curriculum-guide.html", nav:"career-simulator.html" },
+  american: { name:"American Curriculum (AP)", tagline:"Flexible · holistic · creative and open learning", color:"#27500A", traits:[{l:"Teaching style",v:"Flexible & project-based"},{l:"Assessment",v:"GPA + SAT/ACT + AP"},{l:"Best for",v:"Creative, social children"},{l:"University access",v:"USA + worldwide"},{l:"Class environment",v:"Open & participatory"},{l:"Values fit",v:"Progressive & inclusive"}], guide:"american-curriculum-guide.html", nav:"american-pathway-navigator.html" },
+  cbse:     { name:"Indian Curriculum (CBSE)", tagline:"Rigorous · STEM-strong · exam-focused", color:"#7A3010", traits:[{l:"Teaching style",v:"Structured & content-heavy"},{l:"Assessment",v:"Board exams (Class 10 & 12)"},{l:"Best for",v:"Indian expat families"},{l:"University access",v:"India + international"},{l:"Class environment",v:"Disciplined, teacher-led"},{l:"Values fit",v:"Academic ambition"}], guide:"cbse-curriculum-guide.html", nav:"cbse-stream-navigator.html" },
+  french:   { name:"French Baccalauréat", tagline:"Intellectually rigorous · Francophone · analytical", color:"#633806", traits:[{l:"Teaching style",v:"Highly academic & analytical"},{l:"Assessment",v:"Baccalauréat + Grand Oral"},{l:"Best for",v:"Francophone families"},{l:"University access",v:"France + Europe"},{l:"Class environment",v:"Formal & structured"},{l:"Values fit",v:"Intellectual rigour"}], guide:"frenchbac-curriculum-guide.html", nav:"french-bac-navigator.html" },
+  german:   { name:"German Abitur (Gymnasium)", tagline:"STEM-focused · disciplined · tuition-free universities", color:"#1a1a1a", traits:[{l:"Teaching style",v:"Structured + STEM depth"},{l:"Assessment",v:"Abitur (15-point scale)"},{l:"Best for",v:"STEM-oriented families"},{l:"University access",v:"Germany + Europe (free)"},{l:"Class environment",v:"Disciplined & precise"},{l:"Values fit",v:"Academic excellence"}], guide:"german-abitur-curriculum-guide.html", nav:"german-abitur-navigator.html" },
+  singapore:{ name:"Singapore A-Levels", tagline:"World-leading maths · highly competitive · globally respected", color:"#8B0A14", traits:[{l:"Teaching style",v:"Structured & exam-focused"},{l:"Assessment",v:"H1/H2/H3 + UAS score"},{l:"Best for",v:"High-achieving families"},{l:"University access",v:"Singapore + worldwide"},{l:"Class environment",v:"Competitive & rigorous"},{l:"Values fit",v:"Meritocratic achievement"}], guide:"singapore-curriculum-guide.html", nav:"singapore-pathway-navigator.html" },
+  australian:{ name:"Australian Curriculum (VCE)", tagline:"Modern · holistic · ATAR-driven university entry", color:"#791F1F", traits:[{l:"Teaching style",v:"Modern & balanced"},{l:"Assessment",v:"ATAR + coursework"},{l:"Best for",v:"Families heading to Australia"},{l:"University access",v:"Australia + worldwide"},{l:"Class environment",v:"Supportive & social"},{l:"Values fit",v:"Wellbeing & achievement"}], guide:"australian-vce-curriculum-guide.html", nav:"australian-vce-navigator.html" },
+  enem:     { name:"Brazilian ENEM", tagline:"Broad knowledge · nationally recognised · growing globally", color:"#0A5C2A", traits:[{l:"Teaching style",v:"Broad, interdisciplinary"},{l:"Assessment",v:"TRI scoring (0-1000)"},{l:"Best for",v:"Brazilian families"},{l:"University access",v:"Brazil + Portugal"},{l:"Class environment",v:"Collaborative"},{l:"Values fit",v:"Community & inclusion"}], guide:"enem-curriculum-guide.html", nav:"brazilian-enem-navigator.html" }
+};
+
+const questions = [
+  { cat:"Your family", icon:"ti-plane",
+    q:"How often does your family relocate between countries?",
+    opts:[
+      {t:"Very often — every 2 to 3 years", v:{ib:5,british:3,american:3,french:4,german:3,singapore:2,australian:2,cbse:2,enem:1}},
+      {t:"Regularly — every 4 to 6 years", v:{ib:4,british:3,american:3,french:3,german:2,singapore:2,australian:2,cbse:3,enem:2}},
+      {t:"Rarely — we plan to stay long term", v:{british:4,american:4,cbse:4,enem:4,ib:2,french:2,german:2,singapore:3,australian:3}},
+      {t:"This is our first international move", v:{ib:3,british:4,american:4,french:3,german:3,singapore:3,australian:3,cbse:3,enem:2}}
+    ]},
+  { cat:"Your family", icon:"ti-coins",
+    q:"What is your annual school fee budget?",
+    opts:[
+      {t:"Under AED 20,000 — we need an affordable option", v:{german:5,enem:4,cbse:4,french:3,australian:2,american:1,british:1,ib:0,singapore:0}},
+      {t:"AED 20,000 to 45,000", v:{cbse:5,british:3,american:3,australian:2,french:2,german:2,enem:3,ib:1,singapore:1}},
+      {t:"AED 45,000 to 85,000", v:{british:4,american:4,ib:3,french:3,australian:3,singapore:3,german:2,cbse:2,enem:1}},
+      {t:"AED 85,000 and above — quality is the priority", v:{ib:5,british:4,american:4,french:4,singapore:5,australian:3,german:2,cbse:2,enem:1}}
+    ]},
+  { cat:"Your family", icon:"ti-flag",
+    q:"What is your family's home nationality or cultural background?",
+    opts:[
+      {t:"British or Irish", v:{british:5,ib:3,american:2,australian:2,french:1,german:1,singapore:1,cbse:0,enem:0}},
+      {t:"American or Canadian", v:{american:5,ib:3,british:2,australian:2,french:1,german:1,singapore:1,cbse:0,enem:0}},
+      {t:"French or Francophone", v:{french:5,ib:3,british:1,american:1,german:1,singapore:0,australian:1,cbse:0,enem:0}},
+      {t:"German, Austrian or Swiss", v:{german:5,ib:3,british:1,american:1,french:2,singapore:0,australian:1,cbse:0,enem:0}},
+      {t:"Indian", v:{cbse:5,ib:3,british:2,american:2,singapore:2,french:1,german:1,australian:1,enem:0}},
+      {t:"Brazilian", v:{enem:5,ib:3,american:2,british:1,french:2,german:1,singapore:0,cbse:0,australian:1}},
+      {t:"Singaporean or Malaysian", v:{singapore:5,ib:3,british:3,american:2,australian:2,cbse:1,french:1,german:1,enem:0}},
+      {t:"Mixed, international or open", v:{ib:5,american:3,british:3,french:2,german:2,singapore:2,australian:2,cbse:2,enem:1}}
+    ]},
+  { cat:"Your child", icon:"ti-brain",
+    q:"How does your child learn best?",
+    opts:[
+      {t:"Through clear structure, lessons and practice", v:{british:5,cbse:5,german:5,french:5,singapore:4,ib:2,american:2,australian:2,enem:2}},
+      {t:"Through projects, creativity and exploration", v:{american:5,australian:5,ib:4,british:2,french:2,german:2,singapore:2,cbse:1,enem:3}},
+      {t:"Through discussion, debate and questioning", v:{ib:5,british:4,french:4,american:3,australian:3,german:3,singapore:3,cbse:2,enem:2}},
+      {t:"Through a mix — it depends on the subject", v:{ib:4,american:4,australian:4,british:3,french:3,german:3,singapore:3,cbse:3,enem:3}},
+      {t:"Still discovering — they are young", v:{ib:3,american:4,australian:4,british:3,french:2,german:2,singapore:2,cbse:2,enem:2}}
+    ]},
+  { cat:"Your child", icon:"ti-user-heart",
+    q:"Which best describes your child's personality?",
+    opts:[
+      {t:"Confident and outgoing — thrives in group settings", v:{american:5,australian:5,ib:4,british:3,french:2,german:2,singapore:2,cbse:2,enem:4}},
+      {t:"Quiet and focused — prefers depth over breadth", v:{british:5,german:5,cbse:5,french:4,singapore:4,ib:3,american:2,australian:2,enem:2}},
+      {t:"Competitive and driven — motivated by clear results", v:{singapore:5,cbse:5,british:4,german:4,french:3,ib:3,american:3,australian:3,enem:2}},
+      {t:"Creative and independent — follows their own path", v:{american:5,australian:5,ib:4,british:2,french:3,german:2,singapore:2,cbse:1,enem:3}},
+      {t:"Still developing — I would like the school to help", v:{ib:4,american:4,australian:4,british:3,french:3,german:3,singapore:2,cbse:3,enem:3}}
+    ]},
+  { cat:"Your values", icon:"ti-heart",
+    q:"What matters most to you in your child's school environment?",
+    opts:[
+      {t:"Strong academic discipline and high standards", v:{british:5,german:5,french:5,singapore:5,cbse:5,ib:3,american:2,australian:2,enem:2}},
+      {t:"Cultural and religious sensitivity in daily school life", v:{cbse:4,enem:4,french:3,ib:3,british:3,american:3,australian:3,german:2,singapore:2}},
+      {t:"Creative freedom, wellbeing and emotional support", v:{american:5,australian:5,ib:4,british:3,french:2,german:2,singapore:2,cbse:2,enem:3}},
+      {t:"International diversity and exposure to different cultures", v:{ib:5,american:4,australian:4,british:3,french:3,german:2,singapore:3,cbse:2,enem:2}},
+      {t:"A balance of all — nothing too extreme", v:{ib:4,american:3,british:3,australian:3,french:3,german:3,singapore:3,cbse:3,enem:3}}
+    ]},
+  { cat:"Your child", icon:"ti-clipboard-check",
+    q:"How does your child handle exam pressure?",
+    opts:[
+      {t:"Thrives under pressure — it brings out the best in them", v:{singapore:5,cbse:5,british:5,german:5,french:5,ib:3,american:2,australian:2,enem:3}},
+      {t:"Manages well with the right preparation", v:{ib:4,british:4,cbse:4,french:3,german:3,singapore:3,american:3,australian:3,enem:3}},
+      {t:"Prefers ongoing coursework over high-stakes exams", v:{american:5,australian:5,ib:4,british:2,french:2,german:2,singapore:2,cbse:1,enem:2}},
+      {t:"Still too young to know", v:{ib:3,american:4,australian:4,british:3,french:3,german:3,singapore:2,cbse:3,enem:3}}
+    ]},
+  { cat:"University goals", icon:"ti-building-community",
+    q:"Where are you hoping your child studies at university?",
+    opts:[
+      {t:"UK universities", v:{british:5,ib:4,american:2,french:2,german:2,singapore:2,australian:1,cbse:2,enem:0}},
+      {t:"US universities", v:{american:5,ib:4,british:3,singapore:3,french:2,german:2,australian:2,cbse:2,enem:1}},
+      {t:"Australian universities", v:{australian:5,ib:3,british:3,american:2,singapore:2,french:1,german:1,cbse:1,enem:0}},
+      {t:"German or European universities", v:{german:5,french:4,ib:3,british:2,american:1,singapore:1,australian:1,cbse:1,enem:0}},
+      {t:"Indian universities (JEE or NEET)", v:{cbse:5,ib:2,british:1,american:1,singapore:1,french:0,german:0,australian:0,enem:0}},
+      {t:"Brazilian universities (SISU)", v:{enem:5,ib:2,american:1,british:0,french:1,german:0,singapore:0,cbse:0,australian:0}},
+      {t:"Singapore or Asian universities", v:{singapore:5,ib:4,british:3,american:2,australian:2,cbse:2,french:1,german:1,enem:0}},
+      {t:"Not sure yet — keeping all options open", v:{ib:5,british:3,american:3,singapore:2,australian:2,french:2,german:2,cbse:2,enem:1}}
+    ]}
+];
+
+let current = 0;
+let answers = {};
+const total = questions.length;
+
+function render(){
+  const area = document.getElementById('quiz-area');
+  if(current >= total){ showResult(); return; }
+  const q = questions[current];
+  const pct = Math.round((current / total) * 100);
+
+  area.innerHTML = `
+    <div class="prog-wrap">
+      <div class="prog-bar"><div class="prog-fill" id="pfill" style="width:${pct}%"></div></div>
+      <div class="prog-label"><span>Question ${current+1} of ${total}</span><span>${pct}% complete</span></div>
     </div>
-    <div class="q-number" id="q-num"></div>
-    <div class="q-text" id="q-text"></div>
-    <div class="options" id="q-options"></div>
-    <div class="btn-row">
-      <button class="btn" onclick="goHome()">← Back</button>
-      <button class="btn btn-primary" id="btn-next" onclick="nextQ()" disabled>Next →</button>
-    </div>
-  </div>
-</div>
-
-<div id="screen-loading" class="screen">
-  <div class="loading">
-    <i class="ti ti-loader-2"></i>
-    <p style="margin-top:16px;font-size:14px;color:#888" id="loading-text">Analysing your answers…</p>
-  </div>
-</div>
-
-<div id="screen-result" class="screen">
-  <div class="result-wrap">
-    <div class="result-hero">
-      <div class="result-badge" id="res-badge"></div>
-      <div class="result-name" id="res-name"></div>
-      <div class="result-tagline" id="res-tagline"></div>
-      <div style="background:#E1F5EE;border-radius:8px;padding:14px 16px;text-align:left;margin-bottom:16px">
-        <div style="font-size:12px;color:#0F6E56;font-weight:500;margin-bottom:6px">Your match score</div>
-        <div class="match-bar"><div class="match-fill" id="res-match-bar" style="width:0%"></div></div>
-        <div style="font-size:14px;color:#085041;font-weight:500;margin-top:4px" id="res-match-pct"></div>
+    <div class="q-card">
+      <div class="q-cat"><i class="ti ${q.icon}" style="font-size:11px"></i>${q.cat}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="opts" id="opts-wrap">
+        ${q.opts.map((o,i)=>`
+          <button class="opt${answers[current]===i?' selected':''}" onclick="pick(${i})">
+            <div class="opt-dot"></div>
+            <span>${o.t}</span>
+          </button>`).join('')}
       </div>
     </div>
-    <div style="font-size:13px;font-weight:500;margin-bottom:10px">Why this curriculum suits your child</div>
-    <div class="traits" id="res-traits"></div>
-    <div>
-      <div style="font-size:13px;color:#888;margin-bottom:8px">Other strong matches</div>
-      <div class="other-grid" id="res-others"></div>
-    </div>
-    <div class="cta-row">
-      <button class="cta-btn" style="border:0.5px solid #ddd" onclick="goHome()">Retake quiz</button>
-      <button class="cta-btn" style="background:#1D9E75;color:#fff" onclick="window.location.href='https://globalcompass.education'">Find schools with this curriculum →</button>
-      <button class="cta-btn" style="background:#EEF3FF;color:#2952A3;border:0.5px solid #C0D0E8" onclick="window.location.href='index.html'">Back to GlobalCompass →</button>
-    </div>
-  </div>
-</div>
+    <div class="btn-row">
+      <button class="btn-back" onclick="goBack()" ${current===0?'disabled':''}>← Back</button>
+      <button class="btn-next" id="btn-next" onclick="goNext()" ${answers[current]===undefined?'disabled':''}>
+        ${current===total-1?'See my result':'Next'} <i class="ti ti-arrow-right"></i>
+      </button>
+    </div>`;
+}
 
-</div>
-<script>
-const quickQs=[{q:"How old is your child?",icon:"ti-calendar",opts:[{t:"3–5 years (Pre-school)",v:{ib:2,local:3,british:2,french:2,american:2,german:2,canadian:2,australian:2}},{t:"6–11 years (Primary)",v:{ib:2,local:2,british:3,american:3,french:2,german:2,canadian:2,australian:2}},{t:"12–15 years (Middle school)",v:{ib:3,british:3,american:2,french:3,german:2,canadian:2,australian:2,local:1}},{t:"16–18 years (High school)",v:{ib:4,british:4,american:3,french:3,german:3,canadian:2,australian:2,local:1}}]},{q:"Where is your family likely to be in 5 years?",icon:"ti-world",opts:[{t:"Still in the same country",v:{local:4,ib:1,british:1,american:1,french:1,german:1,canadian:1,australian:1}},{t:"Moving within the Gulf / Middle East",v:{ib:3,british:3,american:2,french:2,german:1,canadian:1,australian:1,local:0}},{t:"Moving to Europe",v:{ib:3,british:3,french:3,german:3,american:1,canadian:1,australian:1,local:0}},{t:"Unsure — we move often",v:{ib:4,british:3,american:3,french:3,german:2,canadian:2,australian:2,local:0}}]},{q:"What matters most to you in an education?",icon:"ti-target",opts:[{t:"Academic rigour and university preparation",v:{ib:4,british:4,french:3,german:3,american:2,canadian:2,australian:2,local:1}},{t:"Creativity, arts and wellbeing",v:{ib:3,american:3,australian:3,canadian:3,british:2,french:1,german:2,local:2}},{t:"Strong structure and discipline",v:{french:4,german:4,british:3,local:3,ib:2,american:2,canadian:2,australian:2}},{t:"Flexibility and child-led learning",v:{american:4,australian:4,canadian:4,ib:3,british:2,french:1,german:1,local:2}}]},{q:"What is your budget for school fees per year?",icon:"ti-coins",opts:[{t:"Free / public school only",v:{local:5,german:4,french:3,australian:2,canadian:2,american:1,british:1,ib:0}},{t:"AED 15,000–40,000 / year",v:{local:3,british:3,american:3,australian:2,canadian:2,french:2,german:2,ib:1}},{t:"AED 40,000–80,000 / year",v:{british:4,american:4,ib:3,french:3,australian:3,canadian:3,german:2,local:1}},{t:"AED 80,000+ / year",v:{ib:5,british:4,american:4,french:4,australian:3,canadian:3,german:2,local:0}}]},{q:"What is your family's home language / nationality?",icon:"ti-language",opts:[{t:"English-speaking (UK, US, Australia, Canada)",v:{british:4,american:4,ib:3,australian:4,canadian:4,french:1,german:1,local:1}},{t:"French-speaking",v:{french:5,ib:3,british:1,american:1,german:1,canadian:2,australian:1,local:1}},{t:"German-speaking",v:{german:5,ib:3,british:1,american:1,french:2,canadian:1,australian:1,local:1}},{t:"Arabic / other — open to any curriculum",v:{ib:4,american:3,british:3,french:2,german:2,canadian:2,australian:2,local:3}}]}];
-const deepQs=[
-{cat:"Your family",catIcon:"ti-home",catDesc:"Help us understand your situation.",q:"How often does your family move countries?",icon:"ti-plane",opts:[
-{t:"Very often — every 2–3 years",v:{ib:5,british:3,american:3,french:4,german:3,singapore:2,australian:2,cbse:2,enem:1}},
-{t:"Regularly — every 4–6 years",v:{ib:4,british:3,american:3,french:3,german:2,singapore:2,australian:2,cbse:3,enem:2}},
-{t:"Rarely — we plan to stay long term",v:{british:4,american:4,cbse:4,enem:4,ib:2,french:2,german:2,singapore:3,australian:3}},
-{t:"This is our first international move",v:{ib:3,british:4,american:4,french:3,german:3,singapore:3,australian:3,cbse:3,enem:2}}]},
-{cat:"Your family",catIcon:"ti-home",catDesc:"",q:"What is your annual school fee budget?",icon:"ti-coins",opts:[
-{t:"Free / public school",v:{german:5,enem:4,french:3,australian:2,american:1,british:1,ib:0,cbse:0,singapore:0}},
-{t:"AED 15,000–40,000",v:{cbse:5,british:3,american:3,australian:2,french:2,german:2,enem:3,ib:1,singapore:1}},
-{t:"AED 40,000–80,000",v:{british:4,american:4,ib:3,french:3,australian:3,singapore:3,german:2,cbse:2,enem:1}},
-{t:"AED 80,000+",v:{ib:5,british:4,american:4,french:4,singapore:5,australian:3,german:2,cbse:2,enem:1}}]},
-{cat:"Your family",catIcon:"ti-home",catDesc:"",q:"What is your family's home nationality?",icon:"ti-flag",opts:[
-{t:"British / Irish",v:{british:5,ib:3,american:2,australian:2,french:1,german:1,singapore:1,cbse:0,enem:0}},
-{t:"American / Canadian",v:{american:5,ib:3,british:2,australian:2,french:1,german:1,singapore:1,cbse:0,enem:0}},
-{t:"French",v:{french:5,ib:3,british:1,american:1,german:1,singapore:0,australian:1,cbse:0,enem:0}},
-{t:"German / Austrian / Swiss",v:{german:5,ib:3,british:1,american:1,french:2,singapore:0,australian:1,cbse:0,enem:0}},
-{t:"Indian",v:{cbse:5,ib:3,british:2,american:2,singapore:2,french:1,german:1,australian:1,enem:0}},
-{t:"Brazilian",v:{enem:5,ib:3,american:2,british:1,french:2,german:1,singapore:0,cbse:0,australian:1}},
-{t:"Singaporean / Malaysian",v:{singapore:5,ib:3,british:3,american:2,australian:2,cbse:1,french:1,german:1,enem:0}},
-{t:"Other / Mixed / Open",v:{ib:5,american:3,british:3,french:2,german:2,singapore:2,australian:2,cbse:2,enem:1}}]},
-{cat:"Learning values",catIcon:"ti-heart",catDesc:"Your preferences for how education should work.",q:"How do you feel about exams and testing?",icon:"ti-clipboard-check",opts:[
-{t:"Regular exams build discipline",v:{british:5,french:5,german:5,singapore:5,cbse:5,ib:3,american:2,australian:2,enem:3}},
-{t:"A balance of exams and coursework",v:{ib:5,british:3,american:3,australian:3,french:3,german:3,singapore:3,cbse:3,enem:2}},
-{t:"Project-based assessment is better",v:{american:5,australian:5,ib:3,british:2,french:1,german:2,singapore:2,cbse:1,enem:1}},
-{t:"No strong preference",v:{ib:3,american:3,british:3,australian:3,french:3,german:3,singapore:3,cbse:3,enem:3}}]},
-{cat:"Learning values",catIcon:"ti-heart",catDesc:"",q:"How important are extracurricular activities?",icon:"ti-music",opts:[
-{t:"Very important — holistic education matters",v:{american:5,australian:5,ib:4,british:3,french:2,german:2,singapore:2,cbse:2,enem:2}},
-{t:"Important but academics come first",v:{british:4,ib:4,french:3,german:3,american:3,australian:3,singapore:3,cbse:3,enem:2}},
-{t:"Less important — focus on academics",v:{french:5,german:5,british:4,singapore:5,cbse:5,ib:2,american:1,australian:1,enem:3}},
-{t:"No preference",v:{ib:3,american:3,british:3,australian:3,french:3,german:3,singapore:3,cbse:3,enem:3}}]},
-{cat:"Learning values",catIcon:"ti-heart",catDesc:"",q:"What classroom environment do you prefer?",icon:"ti-users",opts:[
-{t:"Small classes, close teacher relationships",v:{american:4,australian:4,ib:4,british:3,french:2,german:2,singapore:2,cbse:2,enem:2}},
-{t:"Structured, teacher-led classroom",v:{british:4,french:4,german:4,singapore:4,cbse:5,ib:2,american:2,australian:2,enem:3}},
-{t:"Flexible, open learning environment",v:{american:5,australian:5,ib:4,british:2,french:1,german:1,singapore:2,cbse:1,enem:2}},
-{t:"No strong preference",v:{ib:3,american:3,british:3,australian:3,french:3,german:3,singapore:3,cbse:3,enem:3}}]},
-{cat:"University goals",catIcon:"ti-school",catDesc:"Where your child might be heading.",q:"Which university destination are you thinking about?",icon:"ti-building-community",opts:[
-{t:"UK universities",v:{british:5,ib:4,american:2,french:2,german:2,singapore:2,australian:1,cbse:2,enem:0}},
-{t:"US universities",v:{american:5,ib:4,british:3,singapore:3,french:2,german:2,australian:2,cbse:2,enem:1}},
-{t:"Australian universities",v:{australian:5,ib:3,british:3,american:2,singapore:2,french:1,german:1,cbse:1,enem:0}},
-{t:"German / European universities",v:{german:5,french:4,ib:3,british:2,american:1,singapore:1,australian:1,cbse:1,enem:0}},
-{t:"Indian universities (JEE/NEET)",v:{cbse:5,ib:2,british:1,american:1,singapore:1,french:0,german:0,australian:0,enem:0}},
-{t:"Brazilian universities (SISU)",v:{enem:5,ib:2,american:1,british:0,french:1,german:0,singapore:0,cbse:0,australian:0}},
-{t:"Singapore / Asian universities",v:{singapore:5,ib:4,british:3,american:2,australian:2,cbse:2,french:1,german:1,enem:0}},
-{t:"Not sure yet — keeping options open",v:{ib:5,british:3,american:3,singapore:2,australian:2,french:2,german:2,cbse:2,enem:1}}]}];
-const curricula={ib:{name:"International Baccalaureate (IB)",short:"IB",color:"#E6F1FB",textColor:"#0C447C",icon:"ti-world",tagline:"Globally recognised · inquiry-based · university-ready",traits:[{l:"Style",v:"Inquiry-based"},{l:"Assessment",v:"Mixed exams & coursework"},{l:"Best for",v:"Globally mobile families"},{l:"University access",v:"Worldwide"}]},british:{name:"British Curriculum (A-Levels)",short:"British",color:"#FAECE7",textColor:"#712B13",icon:"ti-crown",tagline:"Structured · rigorous · globally respected",traits:[{l:"Style",v:"Structured & academic"},{l:"Assessment",v:"GCSEs & A-Levels"},{l:"Best for",v:"UK university pathway"},{l:"University access",v:"UK + international"}]},american:{name:"American Curriculum (AP)",short:"American",color:"#EAF3DE",textColor:"#27500A",icon:"ti-star",tagline:"Flexible · holistic · project-based learning",traits:[{l:"Style",v:"Flexible & holistic"},{l:"Assessment",v:"GPA + SAT/ACT"},{l:"Best for",v:"Creative, well-rounded children"},{l:"University access",v:"USA + worldwide"}]},cbse:{name:"Indian Curriculum (CBSE)",short:"CBSE",color:"#FFF0E8",textColor:"#7A3010",icon:"ti-flag",tagline:"Rigorous · STEM-strong · globally mobile",traits:[{l:"Style",v:"Structured & exam-focused"},{l:"Assessment",v:"Board exams (Class 10 & 12)"},{l:"Best for",v:"Indian expat families"},{l:"University access",v:"India + international"}]},french:{name:"French Baccalauréat",short:"French",color:"#FAEEDA",textColor:"#633806",icon:"ti-flag",tagline:"Academic · rigorous · discipline-focused",traits:[{l:"Style",v:"Highly academic"},{l:"Assessment",v:"Baccalauréat + Grand Oral"},{l:"Best for",v:"Francophone families"},{l:"University access",v:"France + Europe"}]},german:{name:"German Abitur (Gymnasium)",short:"German",color:"#EEEDFE",textColor:"#3C3489",icon:"ti-building",tagline:"STEM-focused · disciplined · tuition-free universities",traits:[{l:"Style",v:"Structured + STEM focus"},{l:"Assessment",v:"Abitur (15-point scale)"},{l:"Best for",v:"STEM-oriented families"},{l:"University access",v:"Germany + Europe (free)"}]},singapore:{name:"Singapore A-Levels",short:"Singapore",color:"#FCEAEA",textColor:"#8B0A14",icon:"ti-building",tagline:"Rigorous · world-leading maths · highly competitive",traits:[{l:"Style",v:"Structured & exam-focused"},{l:"Assessment",v:"H1/H2/H3 + UAS score"},{l:"Best for",v:"High-achieving, STEM families"},{l:"University access",v:"Singapore + worldwide"}]},australian:{name:"Australian Curriculum (VCE)",short:"Australian",color:"#FCEBEB",textColor:"#791F1F",icon:"ti-sun",tagline:"Modern · holistic · ATAR-driven",traits:[{l:"Style",v:"Modern & holistic"},{l:"Assessment",v:"ATAR + coursework"},{l:"Best for",v:"Families heading to Australia"},{l:"University access",v:"Australia + worldwide"}]},enem:{name:"Brazilian ENEM",short:"ENEM",color:"#E8F8EE",textColor:"#0A5C2A",icon:"ti-leaf",tagline:"Broad · nationally recognised · growing internationally",traits:[{l:"Style",v:"Broad knowledge areas"},{l:"Assessment",v:"TRI scoring (0-1000)"},{l:"Best for",v:"Brazilian families"},{l:"University access",v:"Brazil + Portugal"}]}};
-let answers={},idx=0,mode='quick',qs=[];
-function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
-function goHome(){answers={};idx=0;show('screen-home');}
-function startQuick(){mode='quick';qs=quickQs;answers={};idx=0;show('screen-quiz');render();}
-function startDeep(){mode='deep';qs=deepQs;answers={};idx=0;show('screen-quiz');render();}
-function render(){
-  const q=qs[idx],total=qs.length;
-  document.getElementById('q-progress').style.width=((idx/total)*100)+'%';
-  document.getElementById('q-label').textContent='Question '+(idx+1)+' of '+total;
-  document.getElementById('q-num').textContent='Question '+(idx+1);
-  document.getElementById('q-text').textContent=q.q;
-  const catBox=document.getElementById('cat-intro-box');
-  if(mode==='deep'&&(idx===0||(idx>0&&qs[idx].cat!==qs[idx-1].cat))){
-    catBox.style.display='block';
-    document.getElementById('cat-tag-label').innerHTML=`<i class="ti ${q.catIcon}"></i> ${q.cat}`;
-    document.getElementById('cat-title').textContent=q.cat;
-    document.getElementById('cat-desc').textContent=q.catDesc||'';
-  } else {catBox.style.display='none';}
-  const btnNext=document.getElementById('btn-next');
-  btnNext.textContent=idx===total-1?'See my result →':'Next →';
-  btnNext.disabled=(answers[idx]===undefined);
-  const opts=document.getElementById('q-options');
-  opts.innerHTML='';
-  q.opts.forEach((o,i)=>{
-    const btn=document.createElement('button');
-    btn.className='opt'+(answers[idx]===i?' selected':'');
-    btn.innerHTML=`<div class="opt-icon"><i class="ti ${q.icon}"></i></div><span>${o.t}</span>`;
-    btn.addEventListener('click',()=>{answers[idx]=i;document.getElementById('btn-next').disabled=false;opts.querySelectorAll('.opt').forEach((b,j)=>b.classList.toggle('selected',j===i));});
-    opts.appendChild(btn);
+function pick(i){
+  answers[current] = i;
+  document.querySelectorAll('.opt').forEach((b,idx)=>{
+    b.classList.toggle('selected', idx===i);
   });
+  document.getElementById('btn-next').disabled = false;
 }
-function nextQ(){if(answers[idx]===undefined)return;if(idx<qs.length-1){idx++;render();}else{computeResult();}}
-function computeResult(){
-  show('screen-loading');
-  document.getElementById('loading-text').textContent=mode==='quick'?'Analysing your answers…':'Building your full curriculum profile…';
-  const scores={ib:0,british:0,american:0,french:0,german:0,canadian:0,australian:0,local:0};
-  qs.forEach((q,qi)=>{if(answers[qi]!==undefined){const v=q.opts[answers[qi]].v;Object.keys(v).forEach(k=>scores[k]+=v[k]);}});
-  const max=Math.max(...Object.values(scores));
-  const pcts={};Object.keys(scores).forEach(k=>pcts[k]=Math.round((scores[k]/max)*100));
-  const sorted=Object.keys(pcts).sort((a,b)=>pcts[b]-pcts[a]);
-  setTimeout(()=>showResult(sorted,pcts),1800);
+
+function goNext(){ if(answers[current]!==undefined){ current++; render(); } }
+function goBack(){ if(current>0){ current--; render(); } }
+
+function showResult(){
+  const scores = {};
+  Object.keys(curricula).forEach(k=>scores[k]=0);
+  questions.forEach((q,qi)=>{
+    const picked = answers[qi];
+    if(picked!==undefined){
+      const vals = q.opts[picked].v;
+      Object.keys(vals).forEach(k=>{ if(scores[k]!==undefined) scores[k]+=vals[k]; });
+    }
+  });
+
+  // Max possible per curriculum
+  const maxScores = {};
+  Object.keys(curricula).forEach(k=>maxScores[k]=0);
+  questions.forEach(q=>{
+    Object.keys(curricula).forEach(k=>{
+      const best = Math.max(...q.opts.map(o=>o.v[k]||0));
+      maxScores[k] += best;
+    });
+  });
+
+  const sorted = Object.keys(scores).sort((a,b)=>scores[b]-scores[a]);
+  const top = sorted[0];
+  const others = sorted.slice(1,5);
+  const topPct = Math.round((scores[top]/maxScores[top])*100);
+  const c = curricula[top];
+
+  const area = document.getElementById('quiz-area');
+  area.innerHTML = `
+    <div class="result-card">
+      <div class="result-hero">
+        <div class="result-eyebrow">Your best curriculum match</div>
+        <div class="result-name">${c.name}</div>
+        <div class="result-tagline">${c.tagline}</div>
+        <div class="result-score">
+          <div class="score-bar-wrap"><div class="score-bar" id="sbar" style="width:0%"></div></div>
+          <div class="score-pct">${topPct}%</div>
+        </div>
+      </div>
+      <div class="result-body">
+        <div class="traits-grid">
+          ${c.traits.map(t=>`<div class="trait-box"><div class="trait-label">${t.l}</div><div class="trait-val">${t.v}</div></div>`).join('')}
+        </div>
+        <div class="result-cta">
+          <a class="btn-cta-primary" href="${c.guide}"><i class="ti ti-book"></i> Read the ${c.name.split('(')[0].trim()} guide</a>
+          <a class="btn-cta-secondary" href="${c.nav}"><i class="ti ti-compass"></i> Open the navigator</a>
+        </div>
+      </div>
+    </div>
+    <div class="other-matches">
+      <div class="other-title">Other strong matches for your family</div>
+      <div class="other-grid">
+        ${others.map(k=>`<div class="other-chip">${curricula[k].name.split('(')[0].trim()} <span>${Math.round((scores[k]/maxScores[k])*100)}%</span></div>`).join('')}
+      </div>
+    </div>
+    <div class="retake-row">
+      <button class="btn-retake" onclick="retake()">Retake the quiz with different answers</button>
+    </div>`;
+
+  setTimeout(()=>{ const bar=document.getElementById('sbar'); if(bar) bar.style.width=topPct+'%'; }, 100);
 }
-function showResult(sorted,pcts){
-  const top=sorted[0],c=curricula[top];
-  document.getElementById('res-badge').innerHTML=`<i class="ti ${c.icon}" style="font-size:32px;color:${c.textColor}"></i>`;
-  document.getElementById('res-badge').style.background=c.color;
-  document.getElementById('res-name').textContent=c.name;
-  document.getElementById('res-tagline').textContent=c.tagline;
-  document.getElementById('res-match-bar').style.width=pcts[top]+'%';
-  document.getElementById('res-match-pct').textContent=pcts[top]+'% match for your child';
-  const traits=document.getElementById('res-traits');
-  traits.innerHTML='';
-  c.traits.forEach(t=>{traits.innerHTML+=`<div class="trait"><div class="trait-label">${t.l}</div><div class="trait-val">${t.v}</div></div>`;});
-  const others=document.getElementById('res-others');
-  others.innerHTML='';
-  sorted.slice(1,5).forEach(k=>{others.innerHTML+=`<div class="other-card"><div class="other-name">${curricula[k].short}</div><div class="other-pct">${pcts[k]}% match</div></div>`;});
-  show('screen-result');
-}
+
+function retake(){ current=0; answers={}; render(); }
+render();
 </script>
 </body>
 </html>
