@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlobalCompass — American Curriculum Guide</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:#1B3A7A;flex-wrap:wrap;gap:10px}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.wm-wrap{display:flex;flex-direction:column}
+.wm-global-row{display:flex;align-items:center;gap:5px;margin-bottom:2px}
+.wm-rule{height:0.7px;background:rgba(245,200,66,0.5);flex:1}
+.wm-global{font-family:'Montserrat',sans-serif;font-size:7px;font-weight:300;color:#fff;letter-spacing:0.3em;text-transform:uppercase}
+.wm-compass{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:800;color:#fff;letter-spacing:0.07em;text-transform:uppercase;line-height:1}
+.wm-compass .o{color:#F5C842}
+.nav-right{display:flex;align-items:center;gap:14px}
+.nav-back{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;color:#A8C4F5;text-decoration:none;display:flex;align-items:center;gap:4px}
+.nav-tag{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;color:#F5C842;letter-spacing:0.12em;text-transform:uppercase;background:rgba(245,200,66,0.12);padding:4px 12px;border-radius:99px;border:0.5px solid rgba(245,200,66,0.3)}
+.guide-hero{background:linear-gradient(160deg,#1B3A7A 0%,#2952A3 55%,#1B3A7A 100%);padding:48px 32px 40px;position:relative;overflow:hidden}
+.guide-hero svg.wm{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.06;pointer-events:none}
+.hero-eyebrow{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:#F5C842;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:10px;position:relative;z-index:1}
+.hero-title{font-family:'Playfair Display',serif;font-size:36px;color:#fff;margin-bottom:10px;position:relative;z-index:1}
+.hero-sub{font-size:14px;color:#A8C4F5;max-width:600px;line-height:1.7;position:relative;z-index:1}
+.main{max-width:1060px;margin:0 auto;padding:36px 24px 60px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:28px}
+@media(max-width:820px){.grid-2{grid-template-columns:1fr}}
+.card{background:#fff;border:0.5px solid #E0E8F5;border-radius:14px;padding:22px 24px}
+.card-eyebrow{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:#1B3A7A;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.card-eyebrow i{font-size:14px}
+.card-title{font-family:'Playfair Display',serif;font-size:20px;color:#0D1F4A;margin-bottom:10px}
+.card-body{font-size:14px;line-height:1.8;color:#3A4A6B}
+.card-body p{margin-bottom:10px}
+.card-body p:last-child{margin-bottom:0}
+.timeline{position:relative;padding-left:6px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px}
+@media(max-width:820px){.timeline{grid-template-columns:1fr}}
+.t-item{background:#fff;border:0.5px solid #E0E8F5;border-radius:12px;padding:18px 20px;position:relative}
+.t-year{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:800;color:#F5C842;background:#1B3A7A;padding:3px 10px;border-radius:99px;display:inline-block;margin-bottom:8px}
+.t-title{font-family:'Playfair Display',serif;font-size:15px;color:#0D1F4A;margin-bottom:6px}
+.t-text{font-size:12.5px;line-height:1.65;color:#3A4A6B}
+.section-label{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:#1B3A7A;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #F5C842;display:inline-block}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stat-box{background:linear-gradient(135deg,#1B3A7A,#2952A3);border-radius:12px;padding:16px 18px;text-align:center}
+.stat-num{font-family:'Montserrat',sans-serif;font-size:26px;font-weight:800;color:#F5C842}
+.stat-label{font-size:11px;color:#A8C4F5;margin-top:3px;font-weight:500}
+.cta-card{background:linear-gradient(135deg,#0D1F4A,#1B3A7A);border-radius:14px;padding:24px;display:flex;flex-direction:column;justify-content:center}
+.cta-title{font-family:'Playfair Display',serif;font-size:18px;color:#fff;margin-bottom:8px}
+.cta-text{font-size:13px;color:#A8C4F5;line-height:1.6;margin-bottom:16px}
+.cta-btn{background:#F5C842;color:#1B3A7A;padding:10px 20px;border-radius:99px;font-size:12px;font-weight:700;text-decoration:none;font-family:'Montserrat',sans-serif;display:inline-flex;align-items:center;gap:6px;width:fit-content}
+.full-card{background:#fff;border:0.5px solid #E0E8F5;border-radius:14px;padding:22px 24px;margin-bottom:28px}
+.ap-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:14px}
+@media(max-width:700px){.ap-grid{grid-template-columns:1fr 1fr}}
+.ap-box{background:#F8F9FF;border:0.5px solid #E0E8F5;border-radius:10px;padding:12px 14px}
+.ap-subject{font-size:12.5px;font-weight:600;color:#0D1F4A;margin-bottom:3px}
+.ap-note{font-size:11px;color:#7A8BAE}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo">
+    <svg width="26" height="26" viewBox="0 0 64 64" fill="none">
+      <circle cx="32" cy="32" r="29" stroke="#F5C842" stroke-width="1.4" fill="none"/>
+      <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <circle cx="32" cy="32" r="3" fill="#F5C842"/>
+      <polygon points="32,4 35,25 32,26.5 29,25" fill="#F5C842"/>
+    </svg>
+    <div class="wm-wrap">
+      <div class="wm-global-row"><div class="wm-rule"></div><div class="wm-global">GLOBAL</div><div class="wm-rule"></div></div>
+      <div class="wm-compass">C<span class="o">O</span>MPASS</div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <a class="nav-back" href="index.html"><i class="ti ti-arrow-left"></i> Back to GlobalCompass</a>
+    <div class="nav-tag">Curriculum Guide</div>
+  </div>
+</nav>
+
+<div class="guide-hero">
+  <svg class="wm" width="480" height="480" viewBox="0 0 64 64" fill="none">
+    <circle cx="32" cy="32" r="29" stroke="#F5C842" stroke-width="1.4" fill="none"/>
+    <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none"/>
+    <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none"/>
+    <circle cx="32" cy="32" r="3" fill="#F5C842"/>
+    <polygon points="32,4 35,25 32,26.5 29,25" fill="#F5C842"/>
+  </svg>
+  <div class="hero-eyebrow">Curriculum Guide</div>
+  <div class="hero-title">The American Pathway</div>
+  <p class="hero-sub">AP exams, the SAT, GPA, and one of the most flexible curriculum systems in the world — understood plainly, for families deciding whether it fits their child.</p>
+</div>
+
+<div class="main">
+
+  <div class="grid-2" style="margin-bottom:28px">
+    <div class="card">
+      <div class="card-eyebrow"><i class="ti ti-info-circle"></i> What it actually is</div>
+      <div class="card-body">
+        <p>The American curriculum is not a single unified system the way the IB is. It is built around flexibility: students take a broad set of subjects through high school, measured by GPA (grade point average), and can choose to sit Advanced Placement (AP) exams in subjects they want to pursue at a higher level.</p>
+        <p>The SAT or ACT standardised test sits alongside this as a university admissions tool — not an exam that replaces school grades, but one that supplements them. Put together, a strong American pathway student arrives at university applications with a GPA, AP exam scores, SAT scores, and a portfolio of extracurricular activities.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-eyebrow"><i class="ti ti-world"></i> Who follows it internationally</div>
+      <div class="card-body">
+        <p>American curriculum schools are among the most widespread internationally — found across the Middle East, Asia, Latin America, and Europe. Many international schools in the UAE, Qatar, Singapore, and elsewhere follow the American system, making it one of the most common curricula expat families encounter.</p>
+        <p>It is also the natural choice for families who expect to return to the United States for university, or for students aiming at US universities from anywhere in the world — including increasingly competitive candidates from India, China, and the Gulf.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label" style="margin-bottom:16px">How the American system evolved</div>
+  <div class="timeline" style="margin-bottom:28px">
+    <div class="t-item">
+      <div class="t-year">1900</div>
+      <div class="t-title">The College Board is founded</div>
+      <div class="t-text">Established to standardise university admissions across the United States, creating the first common academic assessments for college entry — the foundation that would eventually produce both the SAT and AP programmes.</div>
+    </div>
+    <div class="t-item">
+      <div class="t-year">1955</div>
+      <div class="t-title">AP launches in 11 subjects</div>
+      <div class="t-text">Advanced Placement begins as a programme allowing exceptional high school students to take university-level courses. Originally piloted in 11 subjects at a handful of elite schools, it would grow into today's 38-subject programme taken by over 1.2 million students annually.</div>
+    </div>
+    <div class="t-item">
+      <div class="t-year">Today</div>
+      <div class="t-title">The most globally accessed US qualification</div>
+      <div class="t-text">AP exams are now accepted as advanced standing credit by universities across the United States, the United Kingdom, Canada, and Australia. A score of 4 or 5 (out of 5) in a relevant AP can exempt a student from first-year university courses — saving both time and tuition fees.</div>
+    </div>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:28px">
+    <div class="card">
+      <div class="card-eyebrow"><i class="ti ti-calculator"></i> Understanding GPA</div>
+      <div class="card-body">
+        <p>GPA (Grade Point Average) is measured on a 4.0 scale in most American schools — an A grade earns 4.0, a B earns 3.0, and so on. Many schools use a "weighted" GPA for AP and Honors courses, where an A in an AP class might earn 5.0 instead, to acknowledge the higher difficulty level.</p>
+        <p>Selective US universities typically expect a weighted GPA above 3.7, and the most competitive programmes (Ivy League, MIT, Stanford) see applicants with GPAs above 3.9. But unlike the IB's single final score, GPA is built up across four years — a strong recovery from a weak freshman year is genuinely possible.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-eyebrow"><i class="ti ti-pencil"></i> The SAT and ACT explained</div>
+      <div class="card-body">
+        <p>The SAT (scored 400-1600) and ACT (scored 1-36) are standardised tests used by US universities as a common measure across different high schools. They test reasoning, reading, and mathematics — not specific curriculum content, which is why a student from any country can sit them.</p>
+        <p>Many US universities went "test optional" after 2020, but selective schools have largely reinstated requirements. A competitive SAT score for top universities is typically 1500+, though strong scores combined with a compelling application matter more than the number alone. NTU in Singapore also publishes a minimum SAT score of 1250 for international students, showing the test's reach well beyond the US.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="full-card" style="margin-bottom:28px">
+    <div class="card-eyebrow"><i class="ti ti-list-check"></i> AP Exams — the advanced layer</div>
+    <div class="card-body">
+      <p style="margin-bottom:14px">AP exams are optional but strategically important. A student who takes 4-6 APs in relevant subjects and scores 4-5 on each arrives at a US university application with strong evidence of academic ability — and potentially skips introductory university courses in those subjects entirely.</p>
+    </div>
+    <div class="ap-grid">
+      <div class="ap-box"><div class="ap-subject">AP Calculus BC</div><div class="ap-note">Most selective for STEM applicants</div></div>
+      <div class="ap-box"><div class="ap-subject">AP Physics C</div><div class="ap-note">Engineering and physics pathways</div></div>
+      <div class="ap-box"><div class="ap-subject">AP Chemistry</div><div class="ap-note">Pre-med and science programmes</div></div>
+      <div class="ap-box"><div class="ap-subject">AP US History</div><div class="ap-note">Humanities and law pathways</div></div>
+      <div class="ap-box"><div class="ap-subject">AP English Literature</div><div class="ap-note">Strong writing and analysis signal</div></div>
+      <div class="ap-box"><div class="ap-subject">AP Economics</div><div class="ap-note">Business and social science entry</div></div>
+    </div>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:28px">
+    <div class="card">
+      <div class="card-eyebrow"><i class="ti ti-chart-bar"></i> By the numbers</div>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="stat-num">38</div><div class="stat-label">AP subjects available</div></div>
+        <div class="stat-box"><div class="stat-num">4,000+</div><div class="stat-label">US universities accept AP credit</div></div>
+        <div class="stat-box"><div class="stat-num">1.2M+</div><div class="stat-label">AP exams taken annually</div></div>
+        <div class="stat-box"><div class="stat-num">1600</div><div class="stat-label">Maximum SAT score</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-eyebrow"><i class="ti ti-scale"></i> American vs IB — honest comparison</div>
+      <div class="card-body">
+        <p>The IB requires every student to study six subjects plus TOK, CAS, and an Extended Essay — a structured, broad experience with little flexibility. The American pathway is the opposite: a student can go deep into 2-3 AP subjects that align with their intended major while keeping other subjects at standard level.</p>
+        <p>Neither is objectively better. The IB suits students who want breadth and a globally portable qualification. The American pathway suits students who already know their direction and want to signal that focus clearly to admissions committees.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-eyebrow"><i class="ti ti-target-arrow"></i> Who tends to thrive</div>
+      <div class="card-body">
+        <p>Students who thrive in the American curriculum tend to be self-directed — the system gives them genuine freedom to choose their academic direction, but that freedom requires knowing (or discovering) what they care about. The extracurricular component also matters: US universities look at activities, leadership, and community involvement alongside grades, which rewards students with genuine interests outside the classroom.</p>
+        <p>For expat families, it is worth noting that the American curriculum travels well — international American schools follow largely the same structure, so a student moving from Dubai to Singapore to London on this pathway faces less disruption than on some national systems.</p>
+      </div>
+    </div>
+    <div class="cta-card">
+      <div class="cta-title">Curious how the American pathway fits your child?</div>
+      <div class="cta-text">Our American Pathway Navigator gives you a personalised breakdown based on your child's interests and university goals — including which AP subjects align with their target major.</div>
+      <a class="cta-btn" href="american-pathway-navigator.html"><i class="ti ti-compass"></i> Try the American Pathway Navigator</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
