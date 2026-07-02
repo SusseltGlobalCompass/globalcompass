@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlobalCompass — A-Levels Curriculum Guide</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:#1B3A7A;flex-wrap:wrap;gap:10px}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.wm-wrap{display:flex;flex-direction:column}
+.wm-global-row{display:flex;align-items:center;gap:5px;margin-bottom:2px}
+.wm-rule{height:0.7px;background:rgba(245,200,66,0.5);flex:1}
+.wm-global{font-family:'Montserrat',sans-serif;font-size:7px;font-weight:300;color:#fff;letter-spacing:0.3em;text-transform:uppercase}
+.wm-compass{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:800;color:#fff;letter-spacing:0.07em;text-transform:uppercase;line-height:1}
+.wm-compass .o{color:#F5C842}
+.nav-right{display:flex;align-items:center;gap:14px}
+.nav-back{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;color:#A8C4F5;text-decoration:none;display:flex;align-items:center;gap:4px}
+.nav-tag{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;color:#F5C842;letter-spacing:0.12em;text-transform:uppercase;background:rgba(245,200,66,0.12);padding:4px 12px;border-radius:99px;border:0.5px solid rgba(245,200,66,0.3)}
+.guide-hero{background:linear-gradient(160deg,#1B3A7A 0%,#2952A3 55%,#1B3A7A 100%);padding:48px 32px 40px;position:relative;overflow:hidden}
+.guide-hero svg.wm{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.06;pointer-events:none}
+.hero-eyebrow{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:#F5C842;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:10px;position:relative;z-index:1}
+.hero-title{font-family:'Playfair Display',serif;font-size:36px;color:#fff;margin-bottom:10px;position:relative;z-index:1}
+.hero-sub{font-size:14px;color:#A8C4F5;max-width:600px;line-height:1.7;position:relative;z-index:1}
+.main{max-width:1060px;margin:0 auto;padding:36px 24px 60px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:28px}
+@media(max-width:820px){.grid-2{grid-template-columns:1fr}}
+.card{background:#fff;border:0.5px solid #E0E8F5;border-radius:14px;padding:22px 24px}
+.card-eyebrow{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:#1B3A7A;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.card-eyebrow i{font-size:14px}
+.card-body{font-size:14px;line-height:1.8;color:#3A4A6B}
+.card-body p{margin-bottom:10px}
+.card-body p:last-child{margin-bottom:0}
+.timeline{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-bottom:28px}
+@media(max-width:820px){.timeline{grid-template-columns:1fr}}
+.t-item{background:#fff;border:0.5px solid #E0E8F5;border-radius:12px;padding:18px 20px}
+.t-year{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:800;color:#F5C842;background:#1B3A7A;padding:3px 10px;border-radius:99px;display:inline-block;margin-bottom:8px}
+.t-title{font-family:'Playfair Display',serif;font-size:15px;color:#0D1F4A;margin-bottom:6px}
+.t-text{font-size:12.5px;line-height:1.65;color:#3A4A6B}
+.section-label{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:#1B3A7A;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #F5C842;display:inline-block}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stat-box{background:linear-gradient(135deg,#1B3A7A,#2952A3);border-radius:12px;padding:16px 18px;text-align:center}
+.stat-num{font-family:'Montserrat',sans-serif;font-size:26px;font-weight:800;color:#F5C842}
+.stat-label{font-size:11px;color:#A8C4F5;margin-top:3px;font-weight:500}
+.cta-card{background:linear-gradient(135deg,#0D1F4A,#1B3A7A);border-radius:14px;padding:24px;display:flex;flex-direction:column;justify-content:center}
+.cta-title{font-family:'Playfair Display',serif;font-size:18px;color:#fff;margin-bottom:8px}
+.cta-text{font-size:13px;color:#A8C4F5;line-height:1.6;margin-bottom:16px}
+.cta-btn{background:#F5C842;color:#1B3A7A;padding:10px 20px;border-radius:99px;font-size:12px;font-weight:700;text-decoration:none;font-family:'Montserrat',sans-serif;display:inline-flex;align-items:center;gap:6px;width:fit-content}
+.grade-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:14px}
+@media(max-width:600px){.grade-grid{grid-template-columns:repeat(3,1fr)}}
+.grade-box{background:#F8F9FF;border:0.5px solid #E0E8F5;border-radius:10px;padding:12px;text-align:center}
+.grade-letter{font-family:'Montserrat',sans-serif;font-size:22px;font-weight:800;color:#1B3A7A}
+.grade-ucas{font-size:11px;color:#7A8BAE;margin-top:2px}
+.grade-note{font-size:10px;color:#9AB0D0;margin-top:2px}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo">
+    <svg width="26" height="26" viewBox="0 0 64 64" fill="none">
+      <circle cx="32" cy="32" r="29" stroke="#F5C842" stroke-width="1.4" fill="none"/>
+      <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <circle cx="32" cy="32" r="3" fill="#F5C842"/>
+      <polygon points="32,4 35,25 32,26.5 29,25" fill="#F5C842"/>
+    </svg>
+    <div class="wm-wrap">
+      <div class="wm-global-row"><div class="wm-rule"></div><div class="wm-global">GLOBAL</div><div class="wm-rule"></div></div>
+      <div class="wm-compass">C<span class="o">O</span>MPASS</div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <a class="nav-back" href="index.html"><i class="ti ti-arrow-left"></i> Back to GlobalCompass</a>
+    <div class="nav-tag">Curriculum Guide</div>
+  </div>
+</nav>
+
+<div class="guide-hero">
+  <svg class="wm" width="480" height="480" viewBox="0 0 64 64" fill="none">
+    <circle cx="32" cy="32" r="29" stroke="#F5C842" stroke-width="1.4" fill="none"/>
+    <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none"/>
+    <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none"/>
+    <circle cx="32" cy="32" r="3" fill="#F5C842"/>
+    <polygon points="32,4 35,25 32,26.5 29,25" fill="#F5C842"/>
+  </svg>
+  <div class="hero-eyebrow">Curriculum Guide</div>
+  <div class="hero-title">A-Levels & Sixth Form</div>
+  <p class="hero-sub">The British qualification that opened doors to Oxford, Cambridge, and universities across the world for over 70 years — understood plainly, for families deciding whether depth over breadth is the right fit.</p>
+</div>
+
+<div class="main">
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-eyebrow"><i class="ti ti-info-circle"></i> What it actually is</div>
+      <div class="card-body">
+        <p>A-Levels (Advanced Levels) are the UK's main pre-university qualification, typically studied over two years in Years 12 and 13 — known as Sixth Form. Unlike the IB's requirement of six subjects, A-Level students choose just 3 or 4 subjects and study them in genuine depth.</p>
+        <p>That focus is the defining feature. A student who wants to study Medicine picks Biology, Chemistry, and one more. A student heading for Law picks History, English, and Politics. The subjects chosen send a clear, direct signal to university admissions teams about exactly what a student intends to do next.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-eyebrow"><i class="ti ti-world"></i> Who follows it internationally</div>
+      <div class="card-body">
+        <p>A-Levels are taught at British curriculum schools across more than 160 countries, making them one of the most internationally portable qualifications in existence. They are especially prevalent across the Middle East, South and Southeast Asia, East Africa, and the Caribbean.</p>
+        <p>In the UAE alone, British curriculum schools make up a significant proportion of the international school landscape. A-Levels are also widely recognised by universities in the United States, Canada, Australia, and Singapore — not just the UK — giving students genuine flexibility about where they end up applying.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">How A-Levels developed</div>
+  <div class="timeline">
+    <div class="t-item">
+      <div class="t-year">1951</div>
+      <div class="t-title">A-Levels replace the Higher School Certificate</div>
+      <div class="t-text">Introduced by the UK government as a more rigorous two-year qualification replacing the old Higher School Certificate. The original design emphasised subject depth over breadth — a philosophy that has remained unchanged for over 70 years.</div>
+    </div>
+    <div class="t-item">
+      <div class="t-year">1980s</div>
+      <div class="t-title">UCAS points and international spread</div>
+      <div class="t-text">The UCAS tariff system standardises A-Level grades into points for UK university applications. Simultaneously, British international schools expand rapidly across Asia, the Middle East, and Africa, carrying A-Levels to a genuinely global student population.</div>
+    </div>
+    <div class="t-item">
+      <div class="t-year">Today</div>
+      <div class="t-title">The world's most recognised subject-specialist qualification</div>
+      <div class="t-text">Over 700,000 students sit A-Levels annually across 160+ countries. Cambridge International A-Levels (CIE) and Edexcel are the two dominant international boards, each offering the same core qualifications with minor differences in syllabus style and exam format.</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-eyebrow"><i class="ti ti-chart-bar"></i> The grading system</div>
+      <div class="card-body"><p>A-Levels are graded A* to E, with U (ungraded) below the pass threshold. Each grade converts to UCAS points used for UK university applications.</p></div>
+      <div class="grade-grid">
+        <div class="grade-box"><div class="grade-letter">A*</div><div class="grade-ucas">56 pts</div><div class="grade-note">Exceptional</div></div>
+        <div class="grade-box"><div class="grade-letter">A</div><div class="grade-ucas">48 pts</div><div class="grade-note">Excellent</div></div>
+        <div class="grade-box"><div class="grade-letter">B</div><div class="grade-ucas">40 pts</div><div class="grade-note">Good</div></div>
+        <div class="grade-box"><div class="grade-letter">C</div><div class="grade-ucas">32 pts</div><div class="grade-note">Solid</div></div>
+        <div class="grade-box"><div class="grade-letter">D</div><div class="grade-ucas">24 pts</div><div class="grade-note">Pass</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-eyebrow"><i class="ti ti-chart-bar"></i> By the numbers</div>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="stat-num">3–4</div><div class="stat-label">Subjects studied</div></div>
+        <div class="stat-box"><div class="stat-num">160+</div><div class="stat-label">Countries offering A-Levels</div></div>
+        <div class="stat-box"><div class="stat-num">700K+</div><div class="stat-label">Students sit A-Levels annually</div></div>
+        <div class="stat-box"><div class="stat-num">2</div><div class="stat-label">Years of Sixth Form study</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-eyebrow"><i class="ti ti-scale"></i> A-Levels vs IB — honest comparison</div>
+      <div class="card-body">
+        <p>The IB asks every student to study six subjects across sciences, humanities, languages, and arts — a genuinely broad experience. A-Levels ask a student to pick 3 subjects and go deep. There is no universally better option: it depends entirely on whether the student benefits from breadth or has already identified their direction.</p>
+        <p>One practical difference worth knowing: UK universities design their entry requirements specifically around A-Levels, so a student aiming at UK universities on an A-Level pathway faces a more straightforward admissions process than a student converting IB scores. For US universities, the IB tends to be better recognised, though strong A-Levels are accepted widely.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-eyebrow"><i class="ti ti-target-arrow"></i> Who tends to thrive</div>
+      <div class="card-body">
+        <p>Students who thrive on A-Levels tend to have a clear sense of direction — or at least a strong preference for certain types of thinking. A student who loves mathematics and wants to go deep into it, or who is passionate about history and wants to spend two years really understanding it, will find A-Levels genuinely satisfying.</p>
+        <p>Students who are still broadly curious about everything, or who are uncertain about their direction, sometimes find the early subject narrowing of A-Levels uncomfortable. For those students, the IB's breadth can be a better fit while they figure out where they are heading.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2" style="margin-top:22px">
+    <div class="card">
+      <div class="card-eyebrow"><i class="ti ti-award"></i> A personal note</div>
+      <div class="card-body">
+        <p>What A-Levels do particularly well is prepare students for the style of university study that most of the world's top programmes expect — independent, subject-focused, essay-driven, and analytically rigorous. Students who come out of strong A-Level programmes often find the jump to university less jarring than those from broader, more assessed curricula, because the depth of engagement they have practised is exactly what university tutors expect.</p>
+      </div>
+    </div>
+    <div class="cta-card">
+      <div class="cta-title">Curious how A-Levels fit your child?</div>
+      <div class="cta-text">Our A-Levels & Sixth Form Navigator gives you a personalised subject breakdown based on your child's interests and target university — including which subject combinations open which doors.</div>
+      <a class="cta-btn" href="career-simulator.html"><i class="ti ti-compass"></i> Try the A-Levels Navigator</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
