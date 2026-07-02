@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlobalCompass — German Abitur Guide</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:#1B3A7A;flex-wrap:wrap;gap:10px}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.wm-wrap{display:flex;flex-direction:column}
+.wm-global-row{display:flex;align-items:center;gap:5px;margin-bottom:2px}
+.wm-rule{height:0.7px;background:rgba(245,200,66,0.5);flex:1}
+.wm-global{font-family:'Montserrat',sans-serif;font-size:7px;font-weight:300;color:#fff;letter-spacing:0.3em;text-transform:uppercase}
+.wm-compass{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:800;color:#fff;letter-spacing:0.07em;text-transform:uppercase;line-height:1}
+.wm-compass .o{color:#F5C842}
+.nav-right{display:flex;align-items:center;gap:14px}
+.nav-back{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;color:#A8C4F5;text-decoration:none;display:flex;align-items:center;gap:4px}
+.nav-tag{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;color:#FFCE00;letter-spacing:0.12em;text-transform:uppercase;background:rgba(255,206,0,0.12);padding:4px 12px;border-radius:99px;border:0.5px solid rgba(255,206,0,0.3)}
+.guide-hero{background:linear-gradient(160deg,#1a1a1a 0%,#333 55%,#1a1a1a 100%);padding:48px 32px 40px;position:relative;overflow:hidden}
+.guide-hero svg.wm{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.06;pointer-events:none}
+.hero-eyebrow{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:#FFCE00;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:10px;position:relative;z-index:1}
+.hero-title{font-family:'Playfair Display',serif;font-size:36px;color:#fff;margin-bottom:10px;position:relative;z-index:1}
+.hero-sub{font-size:14px;color:rgba(255,255,255,0.8);max-width:600px;line-height:1.7;position:relative;z-index:1}
+.main{max-width:1060px;margin:0 auto;padding:36px 24px 60px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:28px}
+@media(max-width:820px){.grid-2{grid-template-columns:1fr}}
+.card{background:#fff;border:0.5px solid #E0E8F5;border-radius:14px;padding:22px 24px}
+.card-eyebrow{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:#1a1a1a;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.card-eyebrow i{font-size:14px}
+.card-body{font-size:14px;line-height:1.8;color:#3A4A6B}
+.card-body p{margin-bottom:10px}
+.card-body p:last-child{margin-bottom:0}
+.timeline{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-bottom:28px}
+@media(max-width:820px){.timeline{grid-template-columns:1fr}}
+.t-item{background:#fff;border:0.5px solid #E0E8F5;border-radius:12px;padding:18px 20px}
+.t-year{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:800;color:#1a1a1a;background:#FFCE00;padding:3px 10px;border-radius:99px;display:inline-block;margin-bottom:8px}
+.t-title{font-family:'Playfair Display',serif;font-size:15px;color:#0D1F4A;margin-bottom:6px}
+.t-text{font-size:12.5px;line-height:1.65;color:#3A4A6B}
+.section-label{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:#1a1a1a;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #FFCE00;display:inline-block}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stat-box{background:linear-gradient(135deg,#1a1a1a,#333);border-radius:12px;padding:16px 18px;text-align:center}
+.stat-num{font-family:'Montserrat',sans-serif;font-size:26px;font-weight:800;color:#FFCE00}
+.stat-label{font-size:11px;color:rgba(255,255,255,0.75);margin-top:3px;font-weight:500}
+.cta-card{background:linear-gradient(135deg,#1a1a1a,#333);border-radius:14px;padding:24px;display:flex;flex-direction:column;justify-content:center}
+.cta-title{font-family:'Playfair Display',serif;font-size:18px;color:#fff;margin-bottom:8px}
+.cta-text{font-size:13px;color:rgba(255,255,255,0.8);line-height:1.6;margin-bottom:16px}
+.cta-btn{background:#FFCE00;color:#1a1a1a;padding:10px 20px;border-radius:99px;font-size:12px;font-weight:700;text-decoration:none;font-family:'Montserrat',sans-serif;display:inline-flex;align-items:center;gap:6px;width:fit-content}
+.grade-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.grade-box{background:#F8F9FF;border:0.5px solid #E0E8F5;border-radius:10px;padding:12px;text-align:center}
+.grade-pts{font-family:'Montserrat',sans-serif;font-size:20px;font-weight:800;color:#1a1a1a}
+.grade-word{font-size:11px;color:#3A4A6B;margin-top:2px;font-weight:600}
+.grade-gpa{font-size:10px;color:#9AB0D0;margin-top:2px}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo">
+    <svg width="26" height="26" viewBox="0 0 64 64" fill="none">
+      <circle cx="32" cy="32" r="29" stroke="#F5C842" stroke-width="1.4" fill="none"/>
+      <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <circle cx="32" cy="32" r="3" fill="#F5C842"/>
+      <polygon points="32,4 35,25 32,26.5 29,25" fill="#F5C842"/>
+    </svg>
+    <div class="wm-wrap">
+      <div class="wm-global-row"><div class="wm-rule"></div><div class="wm-global">GLOBAL</div><div class="wm-rule"></div></div>
+      <div class="wm-compass">C<span class="o">O</span>MPASS</div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <a class="nav-back" href="index.html"><i class="ti ti-arrow-left"></i> Back to GlobalCompass</a>
+    <div class="nav-tag">Curriculum Guide</div>
+  </div>
+</nav>
+
+<div class="guide-hero">
+  <svg class="wm" width="480" height="480" viewBox="0 0 64 64" fill="none">
+    <circle cx="32" cy="32" r="29" stroke="#FFCE00" stroke-width="1.4" fill="none"/>
+    <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#FFCE00" stroke-width="0.8" fill="none"/>
+    <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#FFCE00" stroke-width="0.8" fill="none"/>
+  </svg>
+  <div class="hero-eyebrow">Curriculum Guide</div>
+  <div class="hero-title">Das Abitur</div>
+  <p class="hero-sub">Germany's university entrance qualification — one of the most rigorous and internationally recognised school-leaving certificates in the world, built on depth, oral examination, and genuine intellectual demand.</p>
+</div>
+
+<div class="main">
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-eyebrow"><i class="ti ti-info-circle"></i> What it actually is</div>
+      <div class="card-body">
+        <p>The Abitur (short for Reifezeugnis or Abiturprüfung) is Germany's school-leaving examination, taken at the end of the Gymnasiale Oberstufe — the upper secondary school years (typically Years 11–13, or Klassen 10–12 in some states). It combines continuous assessment (Kursarbeit) with final written and oral examinations across four subjects.</p>
+        <p>Every Abitur student must sit examinations in at least four subjects, including at least one from the sciences or mathematics and one from the humanities. This built-in breadth requirement is one of the Abitur's distinguishing features — unlike A-Levels, a student cannot entirely avoid either hard science or analytical writing.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-eyebrow"><i class="ti ti-world"></i> Who follows it internationally</div>
+      <div class="card-body">
+        <p>German international schools (Deutsche Auslandsschulen) exist in over 70 countries, many offering the Abitur alongside local qualifications. The DIA (Deutsches Internationales Abitur) is also offered at some non-German international schools as a standalone qualification.</p>
+        <p>German expat communities in the UAE, Brazil, Argentina, and across Southeast Asia have well-established German schools. For non-German families, the Abitur is increasingly attractive for its direct recognition by European universities, its rigour in mathematics and sciences, and the fact that German public universities charge minimal or no tuition — a significant financial consideration.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">A brief history</div>
+  <div class="timeline">
+    <div class="t-item">
+      <div class="t-year">1788</div>
+      <div class="t-title">Prussia introduces the Abitur</div>
+      <div class="t-text">Frederick the Great of Prussia introduces the first formal Abitur examination as a prerequisite for university study, making it one of the oldest continuous school-leaving qualifications in the world. The emphasis on breadth and oral examination is present from the beginning.</div>
+    </div>
+    <div class="t-item">
+      <div class="t-year">Post-1945</div>
+      <div class="t-title">Decentralisation and state control</div>
+      <div class="t-text">After World War II, education becomes a matter for each German state (Bundesland), leading to variations in the Abitur across Germany's 16 states. While the core structure remains consistent, specific requirements, subject options, and grading practices vary — a fact that still causes occasional confusion for international applicants.</div>
+    </div>
+    <div class="t-item">
+      <div class="t-year">Today</div>
+      <div class="t-title">Europe's gold-standard school qualification</div>
+      <div class="t-text">The Abitur is accepted by universities across Europe, North America, and Australia. German universities are tuition-free for Abitur holders, and some of the world's top engineering and scientific institutions — TU Munich, KIT, Heidelberg — recruit directly from strong Abitur graduates. A score of 1.0 (the maximum) is among the most coveted academic achievements in European secondary education.</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-eyebrow"><i class="ti ti-chart-bar"></i> The grading scale explained</div>
+      <div class="card-body"><p>The Abitur uses a 15-point scale — the reverse of what most systems use: 15 is the highest possible score, not 1. This confuses many international families at first glance.</p></div>
+      <div class="grade-grid">
+        <div class="grade-box"><div class="grade-pts">15–13</div><div class="grade-word">Sehr gut</div><div class="grade-gpa">≈ 1.0 (A)</div></div>
+        <div class="grade-box"><div class="grade-pts">12–10</div><div class="grade-word">Gut</div><div class="grade-gpa">≈ 2.0 (B)</div></div>
+        <div class="grade-box"><div class="grade-pts">9–7</div><div class="grade-word">Befriedigend</div><div class="grade-gpa">≈ 3.0 (C)</div></div>
+        <div class="grade-box"><div class="grade-pts">6–5</div><div class="grade-word">Ausreichend</div><div class="grade-gpa">≈ 4.0 (D)</div></div>
+        <div class="grade-box"><div class="grade-pts">4–1</div><div class="grade-word">Mangelhaft</div><div class="grade-gpa">Minimum pass</div></div>
+        <div class="grade-box"><div class="grade-pts">0</div><div class="grade-word">Ungenügend</div><div class="grade-gpa">Fail</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-eyebrow"><i class="ti ti-chart-bar"></i> By the numbers</div>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="stat-num">1788</div><div class="stat-label">Year the Abitur was created</div></div>
+        <div class="stat-box"><div class="stat-num">70+</div><div class="stat-label">Countries with German schools</div></div>
+        <div class="stat-box"><div class="stat-num">€0</div><div class="stat-label">Tuition at most German universities</div></div>
+        <div class="stat-box"><div class="stat-num">4</div><div class="stat-label">Subjects examined at final level</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-eyebrow"><i class="ti ti-scale"></i> Abitur vs IB — honest comparison</div>
+      <div class="card-body">
+        <p>Both are rigorous, internationally recognised qualifications. The IB is explicitly designed for international mobility and requires six subjects plus TOK, CAS, and an Extended Essay. The Abitur requires four examined subjects with built-in breadth across science and humanities, but without the IB's community service or extended writing requirements.</p>
+        <p>The Abitur's single most distinctive advantage for many families is cost: German public universities charge between €0 and €3,000 per year in semester fees, compared to £35,000+ for UK universities or $80,000+ for top US programmes. A family choosing the Abitur may be making a significant financial decision as much as an academic one.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-eyebrow"><i class="ti ti-target-arrow"></i> Who tends to thrive</div>
+      <div class="card-body">
+        <p>Students who thrive in the Abitur tend to be methodical, comfortable with long-form written examinations, and capable of sustained focus across multiple demanding subjects simultaneously. German academic culture values precision, thoroughness, and the ability to construct careful arguments — qualities the Abitur both rewards and develops.</p>
+        <p>The oral examination component (mündliche Prüfung) is significant and cannot be avoided — students who are strong writers but struggle under oral questioning conditions will need specific preparation. On the other hand, students who are precise, articulate, and enjoy genuine intellectual challenge tend to find the Abitur deeply satisfying.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2" style="margin-top:22px">
+    <div class="card">
+      <div class="card-eyebrow"><i class="ti ti-award"></i> The tuition-free advantage</div>
+      <div class="card-body">
+        <p>It is worth stating plainly: for families considering the Abitur pathway, German public universities are essentially free. The Technische Universität München, Heidelberg, and the Karlsruhe Institute of Technology are among Europe's leading research universities — and accessible to strong Abitur graduates without the tuition debt burden of comparable UK or US institutions. This is not a minor footnote; for many families it is the deciding factor.</p>
+      </div>
+    </div>
+    <div class="cta-card">
+      <div class="cta-title">Curious how the Abitur fits your child?</div>
+      <div class="cta-text">Our German Abitur Navigator helps students choose the right Leistungskurse (advanced courses) based on their university direction and academic strengths.</div>
+      <a class="cta-btn" href="german-abitur-navigator.html"><i class="ti ti-compass"></i> Try the German Abitur Navigator</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
