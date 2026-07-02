@@ -94,9 +94,10 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
 .modal-close{position:absolute;top:12px;right:14px;background:rgba(0,0,0,0.35);color:#fff;border:none;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;z-index:10}
 .modal-interest-btn{background:#1B3A7A;color:#F5C842;border:none;padding:10px 20px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Montserrat',sans-serif;text-decoration:none;display:inline-block}
 .modal-cal{font-size:12px;color:#7A8BAE;display:flex;align-items:center;gap:5px}
-.project-card{cursor:pointer;transition:transform 0.15s,box-shadow 0.15s}
-.project-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(13,31,74,0.1)}
-.featured-card{cursor:pointer}
+.project-card{cursor:pointer;transition:transform 0.22s cubic-bezier(.25,.8,.25,1),box-shadow 0.22s cubic-bezier(.25,.8,.25,1)}
+.project-card:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 12px 32px rgba(13,31,74,0.14)}
+.featured-card{cursor:pointer;transition:box-shadow 0.22s cubic-bezier(.25,.8,.25,1)}
+.featured-card:hover{box-shadow:0 16px 40px rgba(13,31,74,0.18)}
 /* SUBMIT BANNER */
 .submit-banner{background:#0D1F4A;border:1.5px solid rgba(245,200,66,0.3);padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:32px}
 .sb-eyebrow{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:800;color:#F5C842;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:6px}
@@ -155,9 +156,13 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
   <!-- FEATURED PROJECT -->
   <div class="featured-label">&#9733; This edition's spotlight project</div>
   <div class="featured-card" onclick="openModal('build-classroom')">
-    <div class="featured-img" style="background:linear-gradient(135deg,#C17A52 0%,#8B4A2A 100%)">
-      <div class="featured-img-placeholder"><i class="ti ti-building"></i></div>
-      <div class="featured-region">Rural Kenya &mdash; Africa</div>
+    <div class="featured-img" style="background:linear-gradient(135deg,#C17A52 0%,#8B4A2A 100%);overflow:hidden">
+      <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.18" viewBox="0 0 400 500" fill="none" preserveAspectRatio="xMidYMid slice">
+        <path d="M200,30 C240,28 280,35 310,55 C340,75 355,105 365,135 C375,165 378,200 370,235 C362,270 345,295 340,325 C335,355 345,380 340,405 C335,430 315,455 295,465 C275,475 250,470 230,460 C210,450 195,430 180,415 C165,400 150,390 140,375 C130,360 125,340 120,318 C115,296 112,272 105,250 C98,228 85,210 80,188 C75,166 78,140 88,118 C98,96 118,78 142,62 C166,46 180,32 200,30 Z" fill="#F5C842"/>
+        <path d="M250,380 C265,390 270,410 260,425 C250,440 230,445 218,435 C206,425 205,405 215,393 C225,381 240,375 250,380 Z" fill="#F5C842" opacity="0.6"/>
+      </svg>
+      <div class="featured-img-placeholder" style="opacity:0.08"><i class="ti ti-building"></i></div>
+      <div class="featured-region">🇰🇪 Rural Kenya &mdash; Africa</div>
     </div>
     <div class="featured-body">
       <div>
@@ -442,6 +447,7 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
   <div class="modal-box" id="modalBox">
     <button class="modal-close" onclick="closeModalDirect()">&times;</button>
     <div class="modal-img" id="modalImg">
+      <div id="modalSvg" style="position:absolute;inset:0;width:100%;height:100%;display:flex;align-items:center;justify-content:center;opacity:0.15;overflow:hidden"></div>
       <div class="modal-img-icon"><i class="ti ti-building" id="modalIcon"></i></div>
       <div class="modal-region-tag" id="modalRegion"></div>
       <div class="modal-img-photo-note">Photo coming soon</div>
@@ -637,10 +643,31 @@ const projects = {
   }
 };
 
+const regionSVGs = {
+  "africa": '<svg viewBox="0 0 400 500" width="300" fill="#fff"><path d="M200,30 C240,28 280,35 310,55 C340,75 355,105 365,135 C375,165 378,200 370,235 C362,270 345,295 340,325 C335,355 345,380 340,405 C335,430 315,455 295,465 C275,475 250,470 230,460 C210,450 195,430 180,415 C165,400 150,390 140,375 C130,360 125,340 120,318 C115,296 112,272 105,250 C98,228 85,210 80,188 C75,166 78,140 88,118 C98,96 118,78 142,62 C166,46 180,32 200,30 Z"/></svg>',
+  "europe": '<svg viewBox="0 0 400 400" width="300" fill="#fff"><path d="M180,40 C210,38 245,45 265,65 C285,85 288,115 285,145 C282,175 270,198 265,225 C260,252 268,275 260,295 C252,315 232,328 212,325 C192,322 175,308 162,292 C149,276 142,256 138,235 C134,214 135,190 130,168 C125,146 112,128 115,105 C118,82 135,62 158,50 C168,44 175,41 180,40 Z"/></svg>',
+  "asia": '<svg viewBox="0 0 500 400" width="340" fill="#fff"><path d="M250,35 C295,30 345,42 375,72 C405,102 410,148 400,188 C390,228 365,255 355,285 C345,315 352,345 338,365 C324,385 295,392 270,382 C245,372 228,348 215,322 C202,296 195,266 188,238 C181,210 170,185 168,158 C166,131 172,102 188,80 C204,58 222,40 250,35 Z"/></svg>',
+  "americas": '<svg viewBox="0 0 350 500" width="250" fill="#fff"><path d="M175,25 C205,22 238,35 255,62 C272,89 268,125 260,158 C252,191 238,218 242,248 C246,278 268,302 268,330 C268,358 248,382 224,392 C200,402 172,394 152,378 C132,362 122,336 118,308 C114,280 120,250 115,222 C110,194 95,170 92,142 C89,114 98,84 116,62 C134,40 152,28 175,25 Z"/></svg>',
+  "oceania": '<svg viewBox="0 0 500 350" width="340" fill="#fff"><ellipse cx="180" cy="175" rx="140" ry="90"/><ellipse cx="360" cy="140" rx="80" ry="55"/></svg>',
+  "gulf": '<svg viewBox="0 0 400 350" width="300" fill="#fff"><path d="M200,40 C235,36 272,48 295,75 C318,102 320,142 310,175 C300,208 278,230 272,258 C266,286 278,312 265,332 C252,352 224,358 200,348 C176,338 160,314 150,288 C140,262 142,232 138,204 C134,176 122,152 122,124 C122,96 136,68 158,52 C170,44 185,42 200,40 Z"/></svg>'
+};
+
+const projectRegions = {
+  "build-classroom": "africa", "beach-clean": "gulf", "literacy-tutoring": "gulf",
+  "refugee-art": "gulf", "girls-education": "africa", "beekeeping": "africa",
+  "solar-lantern": "africa", "digital-berlin": "europe", "paris-reading": "europe",
+  "food-bank": "europe", "reef-bali": "asia", "digital-india": "asia",
+  "eldercare-sg": "asia", "reading-sao-paulo": "americas", "urban-garden": "americas",
+  "immigrant-ny": "americas", "indigenous-language": "oceania", "wetland-nz": "oceania",
+  "solar-fiji": "oceania"
+};
+
 function openModal(id){
   const p = projects[id];
   if(!p) return;
   document.getElementById('modalImg').style.background = p.color;
+  const svgKey = projectRegions[id] || 'africa';
+  document.getElementById('modalSvg').innerHTML = regionSVGs[svgKey] || '';
   document.getElementById('modalIcon').className = 'ti ' + p.icon;
   document.getElementById('modalRegion').textContent = p.region;
   document.getElementById('modalTitle').textContent = p.title;
