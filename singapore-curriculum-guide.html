@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlobalCompass — Singapore Curriculum Guide</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:#1B3A7A;flex-wrap:wrap;gap:10px}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.wm-wrap{display:flex;flex-direction:column}
+.wm-global-row{display:flex;align-items:center;gap:5px;margin-bottom:2px}
+.wm-rule{height:0.7px;background:rgba(245,200,66,0.5);flex:1}
+.wm-global{font-family:'Montserrat',sans-serif;font-size:7px;font-weight:300;color:#fff;letter-spacing:0.3em;text-transform:uppercase}
+.wm-compass{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:800;color:#fff;letter-spacing:0.07em;text-transform:uppercase;line-height:1}
+.wm-compass .o{color:#F5C842}
+.nav-right{display:flex;align-items:center;gap:14px}
+.nav-back{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;color:#A8C4F5;text-decoration:none;display:flex;align-items:center;gap:4px}
+.nav-tag{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;color:#F5C842;letter-spacing:0.12em;text-transform:uppercase;background:rgba(245,200,66,0.12);padding:4px 12px;border-radius:99px;border:0.5px solid rgba(245,200,66,0.3)}
+.guide-hero{background:linear-gradient(160deg,#EF3340 0%,#C01020 55%,#EF3340 100%);padding:48px 32px 40px;position:relative;overflow:hidden}
+.guide-hero svg.wm{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.08;pointer-events:none}
+.hero-eyebrow{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:#fff;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:10px;position:relative;z-index:1;opacity:0.8}
+.hero-title{font-family:'Playfair Display',serif;font-size:36px;color:#fff;margin-bottom:10px;position:relative;z-index:1}
+.hero-sub{font-size:14px;color:rgba(255,255,255,0.85);max-width:600px;line-height:1.7;position:relative;z-index:1}
+.main{max-width:1060px;margin:0 auto;padding:36px 24px 60px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:28px}
+@media(max-width:820px){.grid-2{grid-template-columns:1fr}}
+.card{background:#fff;border:0.5px solid #E0E8F5;border-radius:14px;padding:22px 24px}
+.card-eyebrow{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:#EF3340;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.card-body{font-size:14px;line-height:1.8;color:#3A4A6B}
+.card-body p{margin-bottom:10px}
+.card-body p:last-child{margin-bottom:0}
+.timeline{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;margin-bottom:28px}
+@media(max-width:820px){.timeline{grid-template-columns:1fr}}
+.t-item{background:#fff;border:0.5px solid #E0E8F5;border-radius:12px;padding:18px 20px}
+.t-year{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:800;color:#fff;background:#EF3340;padding:3px 10px;border-radius:99px;display:inline-block;margin-bottom:8px}
+.t-title{font-family:'Playfair Display',serif;font-size:15px;color:#0D1F4A;margin-bottom:6px}
+.t-text{font-size:12.5px;line-height:1.65;color:#3A4A6B}
+.section-label{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:#EF3340;letter-spacing:0.14em;text-transform:uppercase;margin-bottom:16px;padding-bottom:8px;border-bottom:2px solid #EF3340;display:inline-block}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stat-box{background:linear-gradient(135deg,#EF3340,#C01020);border-radius:12px;padding:16px 18px;text-align:center}
+.stat-num{font-family:'Montserrat',sans-serif;font-size:26px;font-weight:800;color:#fff}
+.stat-label{font-size:11px;color:rgba(255,255,255,0.8);margin-top:3px;font-weight:500}
+.cta-card{background:linear-gradient(135deg,#C01020,#EF3340);border-radius:14px;padding:24px;display:flex;flex-direction:column;justify-content:center}
+.cta-title{font-family:'Playfair Display',serif;font-size:18px;color:#fff;margin-bottom:8px}
+.cta-text{font-size:13px;color:rgba(255,255,255,0.85);line-height:1.6;margin-bottom:16px}
+.cta-btn{background:#fff;color:#EF3340;padding:10px 20px;border-radius:99px;font-size:12px;font-weight:700;text-decoration:none;font-family:'Montserrat',sans-serif;display:inline-flex;align-items:center;gap:6px;width:fit-content}
+.level-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:14px}
+.level-box{border-radius:10px;padding:14px;border:0.5px solid #E0E8F5;background:#F8F9FF}
+.level-name{font-family:'Montserrat',sans-serif;font-size:12px;font-weight:700;color:#EF3340;margin-bottom:4px}
+.level-desc{font-size:12px;color:#3A4A6B;line-height:1.5}
+.level-uas{font-size:10px;color:#9AB0D0;margin-top:4px}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo">
+    <svg width="26" height="26" viewBox="0 0 64 64" fill="none">
+      <circle cx="32" cy="32" r="29" stroke="#F5C842" stroke-width="1.4" fill="none"/>
+      <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <circle cx="32" cy="32" r="3" fill="#F5C842"/>
+      <polygon points="32,4 35,25 32,26.5 29,25" fill="#F5C842"/>
+    </svg>
+    <div class="wm-wrap">
+      <div class="wm-global-row"><div class="wm-rule"></div><div class="wm-global">GLOBAL</div><div class="wm-rule"></div></div>
+      <div class="wm-compass">C<span class="o">O</span>MPASS</div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <a class="nav-back" href="index.html"><i class="ti ti-arrow-left"></i> Back to GlobalCompass</a>
+    <div class="nav-tag">Curriculum Guide</div>
+  </div>
+</nav>
+
+<div class="guide-hero">
+  <svg class="wm" width="480" height="480" viewBox="0 0 64 64" fill="none">
+    <circle cx="32" cy="32" r="29" stroke="#fff" stroke-width="1.4" fill="none"/>
+    <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#fff" stroke-width="0.8" fill="none"/>
+    <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#fff" stroke-width="0.8" fill="none"/>
+  </svg>
+  <div class="hero-eyebrow">Curriculum Guide</div>
+  <div class="hero-title">Singapore A-Levels</div>
+  <p class="hero-sub">One of Asia's most rigorous and internationally admired school systems — combining British academic traditions with Singapore's relentless focus on excellence, producing graduates who compete at the highest levels globally.</p>
+</div>
+
+<div class="main">
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-eyebrow"><i class="ti ti-info-circle"></i> What it actually is</div>
+      <div class="card-body">
+        <p>Singapore's education system runs through primary school (PSLE), secondary school (O-Levels), and culminates in the pre-university years at Junior College (JC) — two years of intensive study leading to the Singapore A-Level examinations, administered by the Singapore Examinations and Assessment Board (SEAB) in partnership with Cambridge Assessment.</p>
+        <p>Students take a combination of H1, H2, and H3 subjects — Higher 1, Higher 2, and Higher 3 — where H2 is the standard university-preparatory level, H1 is a lighter version, and H3 represents genuinely university-level content taken by the most advanced students. The University Admission Score (UAS) is calculated from these results and determines admission to Singapore's universities.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-eyebrow"><i class="ti ti-world"></i> Global reputation and reach</div>
+      <div class="card-body">
+        <p>Singapore consistently ranks among the world's top education systems in PISA, TIMSS, and other international assessments — not by a small margin, but by significant ones. Singapore students routinely outperform their peers globally in mathematics and science.</p>
+        <p>Singapore A-Level results are recognised by universities across the UK, US, Australia, Canada, and across Asia. NTU publishes a minimum SAT equivalent score for international students (SAT 1250), reflecting how Singapore-educated students are viewed as genuine competitors for global university places. Many Singapore students also sit SAT or AP exams specifically to strengthen international applications.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-label">The Singapore education journey</div>
+  <div class="timeline">
+    <div class="t-item">
+      <div class="t-year">1965</div>
+      <div class="t-title">Independence and the education imperative</div>
+      <div class="t-text">Singapore gains independence with almost no natural resources and a small population. Lee Kuan Yew's government identifies education as the nation's primary competitive advantage — a decision that would shape one of the most intensive school systems the world has ever seen.</div>
+    </div>
+    <div class="t-item">
+      <div class="t-year">1980s</div>
+      <div class="t-title">Streaming and meritocracy</div>
+      <div class="t-text">Singapore introduces academic streaming, directing students toward different pathways based on assessed ability. The system is controversial internationally but produces exceptionally high academic standards at the top — and is gradually being reformed toward a more flexible, subject-based banding system today.</div>
+    </div>
+    <div class="t-item">
+      <div class="t-year">Today</div>
+      <div class="t-title">World-leading results, evolving system</div>
+      <div class="t-text">Singapore students rank first or second globally in mathematics and science. The Ministry of Education continues to evolve the system — reducing high-stakes examinations, introducing more project-based learning, and placing greater emphasis on applied skills alongside academic rigour.</div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-eyebrow"><i class="ti ti-list-check"></i> H1, H2, and H3 explained</div>
+      <div class="card-body"><p>Every Singapore A-Level student combines subjects at different levels to build their subject portfolio. The combination determines their UAS score and university eligibility.</p></div>
+      <div class="level-grid">
+        <div class="level-box">
+          <div class="level-name">H1</div>
+          <div class="level-desc">Lighter coverage of a subject. Required for General Paper and Mother Tongue Language. Some students take H1 Mathematics.</div>
+          <div class="level-uas">Counts ×1 toward UAS</div>
+        </div>
+        <div class="level-box">
+          <div class="level-name">H2</div>
+          <div class="level-desc">Standard university-preparatory level. Most students take 3–4 H2 subjects. The core of most students' programmes.</div>
+          <div class="level-uas">Counts ×2 toward UAS</div>
+        </div>
+        <div class="level-box">
+          <div class="level-name">H3</div>
+          <div class="level-desc">University-level content for the most able students. Taken alongside H2 in the same subject. Highly regarded by top universities.</div>
+          <div class="level-uas">Counts ×2 toward UAS</div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-eyebrow"><i class="ti ti-chart-bar"></i> By the numbers</div>
+      <div class="stat-grid">
+        <div class="stat-box"><div class="stat-num">#1</div><div class="stat-label">Global maths ranking (PISA)</div></div>
+        <div class="stat-box"><div class="stat-num">90</div><div class="stat-label">Maximum UAS score</div></div>
+        <div class="stat-box"><div class="stat-num">1250</div><div class="stat-label">Minimum SAT published by NTU</div></div>
+        <div class="stat-box"><div class="stat-num">2</div><div class="stat-label">Years at Junior College</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-eyebrow"><i class="ti ti-scale"></i> Singapore A-Levels vs IB — honest comparison</div>
+      <div class="card-body">
+        <p>Both are highly regarded internationally. The IB is explicitly designed for global mobility and requires breadth across six subjects. Singapore A-Levels are more focused — typically 3–4 H2 subjects — but the depth and rigour at H2 and especially H3 level is genuinely exceptional.</p>
+        <p>Where Singapore A-Levels stand apart is in mathematical and scientific rigour: H2 Mathematics and H2 Physics in Singapore are considered among the most demanding pre-university courses in the world. Students from other systems who encounter Singapore-trained peers at university often note the difference in mathematical fluency specifically.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-eyebrow"><i class="ti ti-target-arrow"></i> Who tends to thrive</div>
+      <div class="card-body">
+        <p>Students who thrive in the Singapore system tend to be disciplined, competitive, and genuinely motivated by academic achievement — the system is highly transparent about ranking and performance, which suits students who respond well to clear benchmarks.</p>
+        <p>The workload is significant and the pace is fast. Students who struggle most are those who need more time to explore and discover, or who learn best through project work and practical application rather than examination performance. Singapore is actively working to address this through curriculum reforms, but the examination culture remains intense by most international comparisons.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2" style="margin-top:22px">
+    <div class="card">
+      <div class="card-eyebrow"><i class="ti ti-award"></i> The General Paper — a hidden gem</div>
+      <div class="card-body">
+        <p>Every Singapore A-Level student sits the General Paper (GP) — a compulsory H1 subject that requires students to read widely across politics, science, culture, economics, and current affairs, then write analytical essays and comprehension responses under examination conditions. GP is often underestimated by students who consider it a "soft" subject, but it produces graduates with genuinely broad intellectual awareness that complements their deep subject expertise.</p>
+      </div>
+    </div>
+    <div class="cta-card">
+      <div class="cta-title">Curious how Singapore A-Levels fit your child?</div>
+      <div class="cta-text">Our Singapore Pathway Navigator helps students choose the right H1, H2, and H3 subject combination based on their university direction and genuine academic strengths.</div>
+      <a class="cta-btn" href="singapore-pathway-navigator.html"><i class="ti ti-compass"></i> Try the Singapore Navigator</a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
