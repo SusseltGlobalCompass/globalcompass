@@ -76,7 +76,7 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
 /* MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(13,31,74,0.75);z-index:100;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px)}
 .modal-overlay.open{display:flex}
-.modal-box{background:#fff;max-width:640px;width:100%;border-radius:0;max-height:90vh;overflow-y:auto;position:relative;animation:modalIn 0.2s ease}
+.modal-box{background:#fff;max-width:640px;width:100%;border-radius:16px;overflow:hidden;max-height:90vh;overflow-y:auto;position:relative;animation:modalIn 0.2s ease}
 @keyframes modalIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 .modal-img{min-height:180px;display:flex;align-items:flex-end;padding:18px 22px;position:relative;overflow:hidden}
 .modal-img-icon{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0.1}
@@ -94,9 +94,9 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
 .modal-close{position:absolute;top:12px;right:14px;background:rgba(0,0,0,0.35);color:#fff;border:none;width:30px;height:30px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;z-index:10}
 .modal-interest-btn{background:#1B3A7A;color:#F5C842;border:none;padding:10px 20px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Montserrat',sans-serif;text-decoration:none;display:inline-block}
 .modal-cal{font-size:12px;color:#7A8BAE;display:flex;align-items:center;gap:5px}
-.project-card{cursor:pointer;transition:transform 0.22s cubic-bezier(.25,.8,.25,1),box-shadow 0.22s cubic-bezier(.25,.8,.25,1)}
-.project-card:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 12px 32px rgba(13,31,74,0.14)}
-.featured-card{cursor:pointer;transition:box-shadow 0.22s cubic-bezier(.25,.8,.25,1)}
+.project-card{cursor:pointer;transition:transform 0.22s cubic-bezier(.25,.8,.25,1),box-shadow 0.22s cubic-bezier(.25,.8,.25,1);border-radius:14px;overflow:hidden}
+.project-card:hover{transform:translateY(-8px) scale(1.04);box-shadow:0 20px 44px rgba(13,31,74,0.18)}
+.featured-card{cursor:pointer;transition:box-shadow 0.22s cubic-bezier(.25,.8,.25,1);border-radius:14px;overflow:hidden}
 .featured-card:hover{box-shadow:0 16px 40px rgba(13,31,74,0.18)}
 /* SUBMIT BANNER */
 .submit-banner{background:#0D1F4A;border:1.5px solid rgba(245,200,66,0.3);padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-top:32px}
@@ -473,7 +473,7 @@ const projects = {
   "build-classroom": {
     title: "Build a Classroom — Rift Valley Schools Project",
     org: "Organised by: Bridges of Hope Kenya",
-    region: "Rural Kenya — Africa",
+    region: "🇰🇪 Rural Kenya — Africa",
     color: "linear-gradient(135deg,#C17A52,#8B4A2A)",
     icon: "ti-building",
     desc: "A two-week residential programme helping build and paint classrooms for primary schools in the Rift Valley region. Students work alongside local builders, contribute to fundraising before travel, and run a one-day reading event for local children on the final day. One of the most complete CAS project experiences available globally — covering Action, Creativity, and Service in a single project.",
@@ -482,7 +482,7 @@ const projects = {
   "beach-clean": {
     title: "Beach Clean and Marine Awareness Day",
     org: "EcoSchools UAE Network",
-    region: "Dubai, UAE",
+    region: "🇦🇪 Dubai, UAE",
     color: "linear-gradient(135deg,#C17A52,#8B4A2A)",
     icon: "ti-wave-sine",
     desc: "Monthly beach clean along Jumeirah Beach followed by a short session on marine plastic pollution and its effect on the Gulf's coral reefs. Students help create bilingual awareness materials distributed to local families. Sessions are welcoming to all levels of physical fitness and prior environmental knowledge.",
@@ -491,7 +491,7 @@ const projects = {
   "literacy-tutoring": {
     title: "Literacy Tutoring for Migrant Children",
     org: "Gulf Education Volunteers",
-    region: "Abu Dhabi, UAE",
+    region: "🇦🇪 Abu Dhabi, UAE",
     color: "linear-gradient(135deg,#C17A52,#8B4A2A)",
     icon: "ti-book",
     desc: "Volunteer tutors help children of migrant workers (ages 6–12) with basic English and mathematics literacy in weekend sessions. No teaching experience needed — a full training session is provided before you start. Widely regarded as one of the most meaningful and personally rewarding CAS projects available in the UAE.",
@@ -500,7 +500,7 @@ const projects = {
   "refugee-art": {
     title: "Refugee Children's Art and Expression Programme",
     org: "Collateral Repair Project",
-    region: "Amman, Jordan",
+    region: "🇯🇴 Amman, Jordan",
     color: "linear-gradient(135deg,#C17A52,#8B4A2A)",
     icon: "ti-palette",
     desc: "Weekly art and creative writing sessions for refugee children in Amman's Hashmi Shamali neighbourhood. Students plan and lead sessions independently, documenting outcomes through a reflective portfolio that serves as strong CAS evidence.",
@@ -509,7 +509,7 @@ const projects = {
   "girls-education": {
     title: "Girls' Education Campaign — Township Schools",
     org: "She Leads Africa Foundation",
-    region: "Cape Town, South Africa",
+    region: "🇿🇦 Cape Town, South Africa",
     color: "linear-gradient(135deg,#C29A3D,#8A6A1A)",
     icon: "ti-users",
     desc: "Create and deliver age-appropriate workshops on career pathways and digital literacy for girls aged 12–16 in Cape Town township schools. Students design their own session with support from the foundation's education team — a real experience of curriculum design and facilitation.",
@@ -518,7 +518,7 @@ const projects = {
   "beekeeping": {
     title: "Urban Beekeeping and Food Security",
     org: "Green Belt Movement Kenya",
-    region: "Nairobi, Kenya",
+    region: "🇰🇪 Nairobi, Kenya",
     color: "linear-gradient(135deg,#C29A3D,#8A6A1A)",
     icon: "ti-leaf",
     desc: "Train urban community members in sustainable beekeeping practices, helping create supplementary income for low-income families. Students research local plant species and build educational signage for the community garden.",
@@ -527,7 +527,7 @@ const projects = {
   "solar-lantern": {
     title: "Solar Lantern Assembly for Off-Grid Villages",
     org: "SolarAid Morocco",
-    region: "Rural Morocco",
+    region: "🇲🇦 Rural Morocco",
     color: "linear-gradient(135deg,#C29A3D,#8A6A1A)",
     icon: "ti-sun",
     desc: "Assemble and distribute solar lanterns to families in rural High Atlas villages without reliable electricity, replacing kerosene lamps. Students also run basic solar energy literacy sessions for local school children — no technical background required.",
@@ -536,7 +536,7 @@ const projects = {
   "digital-berlin": {
     title: "Intergenerational Digital Skills Programme",
     org: "Digitale Nachbarschaft Berlin",
-    region: "Berlin, Germany",
+    region: "🇩🇪 Berlin, Germany",
     color: "linear-gradient(135deg,#4A6FA5,#1B3A7A)",
     icon: "ti-device-laptop",
     desc: "Teach older residents (65+) basic smartphone, internet safety, and video call skills at community centres across Berlin. Sessions are self-designed by students and adapted week by week based on participant feedback — a genuine exercise in communication and adaptability.",
@@ -545,7 +545,7 @@ const projects = {
   "paris-reading": {
     title: "Reading Mentorship in Priority Schools",
     org: "Coup de Pouce — Lire et Écrire",
-    region: "Paris, France",
+    region: "🇫🇷 Paris, France",
     color: "linear-gradient(135deg,#4A6FA5,#1B3A7A)",
     icon: "ti-book",
     desc: "Volunteer reading mentors support primary school children in Paris's priority education zones (REP+) with weekly one-to-one sessions. Students receive training and keep a reflective journal that serves as preparation for the French Bac's Grand Oral.",
@@ -554,7 +554,7 @@ const projects = {
   "food-bank": {
     title: "Food Bank Coordination and Community Kitchen",
     org: "The Trussell Trust",
-    region: "London, UK",
+    region: "🇬🇧 London, UK",
     color: "linear-gradient(135deg,#4A6FA5,#1B3A7A)",
     icon: "ti-building-store",
     desc: "Sort and pack food donations, assist with client coordination, and help run community cooking sessions teaching budget-friendly nutrition at food banks across London. One of the most flexible and widely recognised UK service projects for A-Level and DofE students.",
@@ -563,7 +563,7 @@ const projects = {
   "reef-bali": {
     title: "Reef Restoration and Ocean Education",
     org: "Coral Triangle Initiative",
-    region: "Bali, Indonesia",
+    region: "🇮🇩 Bali, Indonesia",
     color: "linear-gradient(135deg,#2D7D6E,#1A4A40)",
     icon: "ti-wave-sine",
     desc: "Plant coral fragments on degraded reef sections off Bali's north coast. Students create illustrated guides explaining reef ecology, distributed to local fishing communities in Indonesian and English. Diving certification is not required for the reef planting component.",
@@ -572,7 +572,7 @@ const projects = {
   "digital-india": {
     title: "Digital Literacy for Village Schools",
     org: "Teach for Rural India",
-    region: "Rural India",
+    region: "🇮🇳 Rural India",
     color: "linear-gradient(135deg,#2D7D6E,#1A4A40)",
     icon: "ti-device-tablet",
     desc: "Train primary school teachers in rural Rajasthan to use basic tablet technology in their classrooms. Students develop short training sessions, deliver them in person or remotely, and follow up with resource packs tailored to each school's needs.",
@@ -581,7 +581,7 @@ const projects = {
   "eldercare-sg": {
     title: "Eldercare Companionship and Life Stories Project",
     org: "Agency for Integrated Care Singapore",
-    region: "Singapore",
+    region: "🇸🇬 Singapore",
     color: "linear-gradient(135deg,#2D7D6E,#1A4A40)",
     icon: "ti-heart",
     desc: "Visit elderly residents in care homes weekly for conversation and companionship sessions. Students document life stories into illustrated booklets given to families — a widely recognised Singapore CIP (Community Involvement Programme) activity that also produces powerful CAS reflection material.",
@@ -590,7 +590,7 @@ const projects = {
   "reading-sao-paulo": {
     title: "Reading Circles in Favela Communities",
     org: "Leitura Viva Brasil",
-    region: "São Paulo, Brazil",
+    region: "🇧🇷 São Paulo, Brazil",
     color: "linear-gradient(135deg,#B5563C,#7A2A1A)",
     icon: "ti-book-2",
     desc: "Run weekly reading sessions for children aged 5–10 in community centres across São Paulo's peripheral neighbourhoods. Students choose and adapt books, create simple activities, and keep a reflective journal — a natural fit for ENEM students seeking structured service hours.",
@@ -599,7 +599,7 @@ const projects = {
   "urban-garden": {
     title: "Urban Garden and Food Security Project",
     org: "Huerta Comunitaria Medellín",
-    region: "Medellín, Colombia",
+    region: "🇨🇴 Medellín, Colombia",
     color: "linear-gradient(135deg,#B5563C,#7A2A1A)",
     icon: "ti-plant",
     desc: "Help design and maintain rooftop vegetable gardens in low-income neighbourhoods, with harvests donated to local families. Students also run nutrition workshops and document the project through photography and written reports.",
@@ -608,7 +608,7 @@ const projects = {
   "immigrant-ny": {
     title: "Immigrant Family Language Access Project",
     org: "International Rescue Committee NY",
-    region: "New York, USA",
+    region: "🇺🇸 New York, USA",
     color: "linear-gradient(135deg,#B5563C,#7A2A1A)",
     icon: "ti-world",
     desc: "Provide basic interpretation support and English conversation practice for recently arrived immigrant families navigating school enrolment, medical appointments, and community services in New York City. Bilingual students especially valued.",
@@ -617,7 +617,7 @@ const projects = {
   "indigenous-language": {
     title: "Indigenous Language and Culture Documentation",
     org: "First Languages Australia",
-    region: "Melbourne, Australia",
+    region: "🇦🇺 Melbourne, Australia",
     color: "linear-gradient(135deg,#1F7A8C,#0D4A5A)",
     icon: "ti-writing",
     desc: "Work alongside Elders and community linguists to help document and digitise materials in Australian Indigenous languages at risk of being lost. Students contribute to recording sessions, transcription, and creating illustrated vocabulary resources for local schools.",
@@ -626,7 +626,7 @@ const projects = {
   "wetland-nz": {
     title: "Kaitiakitanga — Coastal Wetland Restoration",
     org: "Te Whānau-ā-Apanui Environment Trust",
-    region: "Auckland, New Zealand",
+    region: "🇳🇿 Auckland, New Zealand",
     color: "linear-gradient(135deg,#1F7A8C,#0D4A5A)",
     icon: "ti-leaf",
     desc: "Remove invasive plant species and replant native vegetation along Auckland coastal wetlands under the guidance of local iwi environmental guardians. Students learn about Māori concepts of environmental stewardship alongside practical conservation work.",
@@ -635,7 +635,7 @@ const projects = {
   "solar-fiji": {
     title: "Solar Water Purification for Rural Communities",
     org: "Engineers Without Borders Pacific",
-    region: "Fiji",
+    region: "🇫🇯 Fiji",
     color: "linear-gradient(135deg,#1F7A8C,#0D4A5A)",
     icon: "ti-droplet",
     desc: "Help install and maintain low-cost solar water purification systems for rural Fijian villages without clean water access. Students also run community health education sessions on waterborne disease prevention. No engineering background required.",
