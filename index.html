@@ -165,22 +165,6 @@ polyfillCountryFlagEmojis();
 </script>
 </head>
 <body>
-<div class="modal-ov" id="proModal">
-  <div class="modal">
-    <button class="modal-x" onclick="closeModal()">✕</button>
-    <div class="m-ew">Unlock GlobalCompass Pro</div>
-    <h2 class="m-h">Go further with your child's education journey</h2>
-    <p class="m-p">GlobalCompass is free for every family. Upgrade when you need deeper guidance, expert access, or corporate relocation support.</p>
-    <div class="m-rule"></div>
-    <div class="plans">
-      <div class="plan"><div class="p-name">Free</div><div class="p-price">$0</div><div class="p-per">forever</div><ul class="p-feats"><li><i class="ti ti-check"></i>School search</li><li><i class="ti ti-check"></i>Quick quiz</li><li><i class="ti ti-check"></i>Country guides</li><li><i class="ti ti-check"></i>Forum access</li></ul><button class="p-btn" style="background:#2952A3;color:#A8C4F5;border:0.5px solid #5B8DEF">Continue free</button></div>
-      <div class="plan hi"><div class="p-name">Pro</div><div class="p-price">$9.99</div><div class="p-per">per month</div><ul class="p-feats"><li><i class="ti ti-check"></i>Deep assessment</li><li><i class="ti ti-check"></i>Subject navigator</li><li><i class="ti ti-check"></i>Save & compare</li><li><i class="ti ti-check"></i>Expert sessions</li><li><i class="ti ti-check"></i>University planner</li></ul><button class="p-btn" style="background:#F5C842;color:#1B3A7A">Start Pro</button></div>
-      <div class="plan"><div class="p-name">Corporate</div><div class="p-price">Custom</div><div class="p-per">per year</div><ul class="p-feats"><li><i class="ti ti-check"></i>HR portal</li><li><i class="ti ti-check"></i>Relocation packs</li><li><i class="ti ti-check"></i>Account manager</li><li><i class="ti ti-check"></i>Priority support</li></ul><button class="p-btn" style="background:#2E5C3A;color:#9FE8C8">Contact us</button></div>
-    </div>
-    <div class="m-note">No commitment · Cancel anytime · Trusted by families worldwide</div>
-  </div>
-</div>
-
 <div class="modal-ov" id="privacyTermsModal">
   <div class="modal-x" style="max-width:480px">
     <span class="modal-close" onclick="document.getElementById('privacyTermsModal').classList.remove('open')">✕</span>
@@ -418,7 +402,7 @@ async function submitWaitlist(){
   <div class="ft-right"><div style="font-family:'Playfair Display',serif;font-size:11px;font-style:italic;color:#4A6FA5">"Every child deserves a compass."</div><div style="font-size:10px;color:#2952A3;margin-top:3px">info@globalcompass.education · All rights reserved.</div></div>
 </footer>
 <script>
-function openModal(){document.getElementById('proModal').classList.add('open')}
+
 
 function openMobileMenu(){
   document.getElementById('mobileDrawer').classList.add('open');
@@ -433,8 +417,8 @@ function toggleMobileDD(btn){
   const content = btn.nextElementSibling;
   content.classList.toggle('open');
 }
-function closeModal(){document.getElementById('proModal').classList.remove('open')}
-document.getElementById('proModal').addEventListener('click',function(e){if(e.target===this)closeModal()})
+
+closeModal()})
 </script>
 <script>
 const H_K12_CURRICULA = '<option value="">All curricula</option><option value="IB">IB</option><option value="British">British</option><option value="American">American</option><option value="CBSE">CBSE</option><option value="French">French</option><option value="German">German</option><option value="Singapore">Singapore</option><option value="Australian">Australian</option><option value="Brazilian">Brazilian</option><option value="International">International Schools</option>';
