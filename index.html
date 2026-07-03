@@ -92,7 +92,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:13px 3
 .fl-h{font-family:'Twemoji Country Flags','Playfair Display',Georgia,serif;font-size:14px;color:#FFFFFF;margin-bottom:5px}
 .fl-p{font-size:11px;color:#A8C4F5;line-height:1.6;font-weight:300}
 .cg{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px}
-.cc{background:#fff;border:0.5px solid #E0E8F5;border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all 0.15s}
+.cc{cursor:pointer;transition:transform 0.15s;background:#fff;border:0.5px solid #E0E8F5;border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:all 0.15s}
 .cc:hover{border-color:#2952A3;background:#EEF3FF}
 .c-flag{font-size:24px}
 .c-name{font-family:'Twemoji Country Flags','Playfair Display',Georgia,serif;font-size:13px;color:#0D1F4A}
@@ -341,18 +341,18 @@ polyfillCountryFlagEmojis();
   <h2 class="sh2">Schools in 190+ countries</h2>
   <div class="s-rule"></div>
   <div class="cg">
-    <div class="cc"><span class="c-flag">🇦🇪</span><div><div class="c-name">UAE</div><div class="c-count">640 schools</div></div></div>
-    <div class="cc"><span class="c-flag">🇸🇬</span><div><div class="c-name">Singapore</div><div class="c-count">210 schools</div></div></div>
-    <div class="cc"><span class="c-flag">🇬🇧</span><div><div class="c-name">United Kingdom</div><div class="c-count">1,200 schools</div></div></div>
-    <div class="cc"><span class="c-flag">🇩🇪</span><div><div class="c-name">Germany</div><div class="c-count">390 schools</div></div></div>
-    <div class="cc"><span class="c-flag">🇦🇺</span><div><div class="c-name">Australia</div><div class="c-count">520 schools</div></div></div>
-    <div class="cc"><span class="c-flag">🇶🇦</span><div><div class="c-name">Qatar</div><div class="c-count">180 schools</div></div></div>
-    <div class="cc"><span class="c-flag">🇨🇦</span><div><div class="c-name">Canada</div><div class="c-count">480 schools</div></div></div>
-    <div class="cc"><span class="c-flag">🇫🇷</span><div><div class="c-name">France</div><div class="c-count">340 schools</div></div></div>
-    <div class="cc"><span class="c-flag">🇿🇦</span><div><div class="c-name">South Africa</div><div class="c-count">290 schools</div></div></div>
-    <div class="cc"><span class="c-flag">🇳🇬</span><div><div class="c-name">Nigeria</div><div class="c-count">180 schools</div></div></div>
-    <div class="cc"><span class="c-flag">🇰🇪</span><div><div class="c-name">Kenya</div><div class="c-count">140 schools</div></div></div>
-    <div class="cc"><span class="c-flag">🇳🇿</span><div><div class="c-name">New Zealand</div><div class="c-count">160 schools</div></div></div>
+    <a class="cc" href="schools.html?q=UAE" style="text-decoration:none;cursor:pointer"><span class="c-flag">🇦🇪</span><div><div class="c-name">UAE</div><div class="c-count">640 schools</div></div></a>
+    <a class="cc" href="schools.html?q=Singapore" style="text-decoration:none;cursor:pointer"><span class="c-flag">🇸🇬</span><div><div class="c-name">Singapore</div><div class="c-count">210 schools</div></div></a>
+    <a class="cc" href="schools.html?q=UK" style="text-decoration:none;cursor:pointer"><span class="c-flag">🇬🇧</span><div><div class="c-name">United Kingdom</div><div class="c-count">1,200 schools</div></div></a>
+    <a class="cc" href="schools.html?q=Germany" style="text-decoration:none;cursor:pointer"><span class="c-flag">🇩🇪</span><div><div class="c-name">Germany</div><div class="c-count">390 schools</div></div></a>
+    <a class="cc" href="schools.html?q=Australia" style="text-decoration:none;cursor:pointer"><span class="c-flag">🇦🇺</span><div><div class="c-name">Australia</div><div class="c-count">520 schools</div></div></a>
+    <a class="cc" href="schools.html?q=Qatar" style="text-decoration:none;cursor:pointer"><span class="c-flag">🇶🇦</span><div><div class="c-name">Qatar</div><div class="c-count">180 schools</div></div></a>
+    <a class="cc" href="schools.html?q=Canada" style="text-decoration:none;cursor:pointer"><span class="c-flag">🇨🇦</span><div><div class="c-name">Canada</div><div class="c-count">480 schools</div></div></a>
+    <a class="cc" href="schools.html?q=France" style="text-decoration:none;cursor:pointer"><span class="c-flag">🇫🇷</span><div><div class="c-name">France</div><div class="c-count">340 schools</div></div></a>
+    <a class="cc" href="schools.html?q=South+Africa" style="text-decoration:none;cursor:pointer"><span class="c-flag">🇿🇦</span><div><div class="c-name">South Africa</div><div class="c-count">290 schools</div></div></a>
+    <a class="cc" href="schools.html?q=Nigeria" style="text-decoration:none;cursor:pointer"><span class="c-flag">🇳🇬</span><div><div class="c-name">Nigeria</div><div class="c-count">180 schools</div></div></a>
+    <a class="cc" href="schools.html?q=Kenya" style="text-decoration:none;cursor:pointer"><span class="c-flag">🇰🇪</span><div><div class="c-name">Kenya</div><div class="c-count">140 schools</div></div></a>
+    <a class="cc" href="schools.html?q=New+Zealand" style="text-decoration:none;cursor:pointer"><span class="c-flag">🇳🇿</span><div><div class="c-name">New Zealand</div><div class="c-count">160 schools</div></div></a>
   </div>
 </section>
 <section class="sec">
