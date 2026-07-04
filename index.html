@@ -55,6 +55,18 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:13px 3
 .s-tag:hover{border-color:#1B3A7A;color:#1B3A7A;background:#D0DEFF}
 .stats{display:flex;justify-content:center;gap:0;max-width:540px;margin:0 auto}
 .stat{text-align:center;padding:0 28px;border-right:0.5px solid rgba(245,200,66,0.15)}
+.s-filters{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-top:10px}
+.s-filter{background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:8px 12px;cursor:pointer}
+.s-filter-label{font-family:'Montserrat',sans-serif;font-size:8px;font-weight:700;color:rgba(168,196,245,0.6);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:3px}
+.s-filter-sel{background:transparent;border:none;color:#fff;font-size:12px;font-family:'Inter',sans-serif;width:100%;outline:none;cursor:pointer;padding:0}
+.s-filter-sel option{color:#0D1F4A;background:#fff}
+.region-bar{background:#0D1F4A;padding:14px 24px 18px;max-width:800px;margin:0 auto;text-align:center}
+.region-label{font-family:'Montserrat',sans-serif;font-size:8px;font-weight:700;color:rgba(168,196,245,0.4);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:10px}
+.region-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.region-chip{display:inline-flex;align-items:center;gap:7px;background:var(--rb);border:1px solid var(--rt);border-radius:99px;padding:7px 16px;text-decoration:none;color:var(--rc);font-size:12px;font-weight:600;font-family:'Montserrat',sans-serif;transition:all 0.15s}
+.region-chip:hover{opacity:0.85;transform:translateY(-1px)}
+.rc-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+@media(max-width:600px){.s-filters{grid-template-columns:1fr 1fr}.region-chips{gap:6px}.region-chip{font-size:11px;padding:6px 12px}}
 .stat:last-child{border-right:none}
 .stat-n{font-family:'Twemoji Country Flags','Montserrat',sans-serif;font-size:24px;font-weight:700;color:#F5C842}
 .stat-l{font-size:10px;color:#A8C4F5;margin-top:3px;letter-spacing:0.06em;font-weight:500;text-transform:uppercase}
@@ -292,28 +304,76 @@ polyfillCountryFlagEmojis();
       <select class="s-sel"><option value="">All budgets</option><option value="0-20000">Under AED 20,000/yr</option><option value="20000-45000">AED 20,000–45,000/yr</option><option value="45000-75000">AED 45,000–75,000/yr</option><option value="75000-999999">AED 75,000+/yr</option></select>
       <button class="s-btn" onclick="goToSchoolSearch()">Search</button>
     </div>
-    <div class="s-tags">
-<span class="s-tag" onclick="window.location.href='schools.html?q=UAE'">🇦🇪 UAE</span>
-<span class="s-tag" onclick="window.location.href='schools.html?q=USA'">🇺🇸 USA</span>
-<span class="s-tag" onclick="window.location.href='schools.html?q=UK'">🇬🇧 UK</span>
-<span class="s-tag" onclick="window.location.href='schools.html?q=Singapore'">🇸🇬 Singapore</span>
-<span class="s-tag" onclick="window.location.href='schools.html?q=France'">🇫🇷 France</span>
-<span class="s-tag" onclick="window.location.href='schools.html?q=Brazil'">🇧🇷 Brazil</span>
-<span class="s-tag" onclick="window.location.href='schools.html?q=India'">🇮🇳 India</span>
-<span class="s-tag" onclick="window.location.href='schools.html?q=Germany'">🇩🇪 Germany</span>
-<span class="s-tag" onclick="window.location.href='schools.html?q=Qatar'">🇶🇦 Qatar</span>
-<span class="s-tag" onclick="window.location.href='schools.html?q=Malaysia'">🇲🇾 Malaysia</span>
-<span class="s-tag" onclick="window.location.href='schools.html?q=Japan'">🇯🇵 Japan</span>
-<span class="s-tag" onclick="window.location.href='schools.html'">+179 more</span>
-</div>
+    </div>
+  <!-- Filter pills row -->
+  <div class="s-filters">
+    <div class="s-filter">
+      <div class="s-filter-label">Age group</div>
+      <select class="s-filter-sel" id="hAgePill" onchange="document.getElementById('hAge').value=this.value;setMainCurriculumOptionSet(this.value==='3-5')">
+        <option value="">All ages</option>
+        <option value="3-5">3–5 Pre-school</option>
+        <option value="6-11">6–11 Primary</option>
+        <option value="12-15">12–15 Middle</option>
+        <option value="16-18">16–18 Final years</option>
+      </select>
+    </div>
+    <div class="s-filter">
+      <div class="s-filter-label">Curriculum</div>
+      <select class="s-filter-sel" id="hCurPill" onchange="document.getElementById('hCur').value=this.value">
+        <option value="">All curricula</option>
+        <option value="IB">International Baccalaureate</option>
+        <option value="British">British (A-Levels)</option>
+        <option value="American">American (AP)</option>
+        <option value="CBSE">Indian (CBSE)</option>
+        <option value="French">French Baccalauréat</option>
+        <option value="German">German Abitur</option>
+        <option value="Singapore">Singapore A-Levels</option>
+        <option value="Australian">Australian (VCE)</option>
+        <option value="Brazilian">Brazilian ENEM</option>
+        <option value="International">International Schools</option>
+      </select>
+    </div>
+    <div class="s-filter">
+      <div class="s-filter-label">Budget</div>
+      <select class="s-filter-sel" id="hBudPill" onchange="document.getElementById('hBud').value=this.value">
+        <option value="">All budgets</option>
+        <option value="0-20000">Under AED 20,000/yr</option>
+        <option value="20000-45000">AED 20,000–45,000/yr</option>
+        <option value="45000-75000">AED 45,000–75,000/yr</option>
+        <option value="75000-999999">AED 75,000+/yr</option>
+      </select>
+    </div>
+    <div class="s-filter">
+      <div class="s-filter-label">KHDA Rating</div>
+      <select class="s-filter-sel" id="hKhda">
+        <option value="">Any rating</option>
+        <option value="Outstanding">Outstanding</option>
+        <option value="Very Good">Very Good</option>
+        <option value="Good">Good</option>
+      </select>
+    </div>
+  </div>
+  </div>
+  <!-- Region chips -->
+  <div class="region-bar">
+    <div class="region-label">Explore by region</div>
+    <div class="region-chips">
+      <a class="region-chip" href="countries-gulf.html" style="--rc:#F5C842;--rb:rgba(245,200,66,0.15);--rt:rgba(245,200,66,0.35)"><span class="rc-dot" style="background:#F5C842"></span>Gulf &amp; Middle East</a>
+      <a class="region-chip" href="countries-asia.html" style="--rc:#E88A97;--rb:rgba(179,0,27,0.15);--rt:rgba(179,0,27,0.35)"><span class="rc-dot" style="background:#B3001B"></span>Asia Pacific</a>
+      <a class="region-chip" href="countries-europe.html" style="--rc:#8EB4F5;--rb:rgba(0,51,160,0.2);--rt:rgba(100,140,220,0.35)"><span class="rc-dot" style="background:#5B8DEF"></span>Europe</a>
+      <a class="region-chip" href="countries-americas.html" style="--rc:#7EC87E;--rb:rgba(26,77,26,0.2);--rt:rgba(60,140,60,0.35)"><span class="rc-dot" style="background:#3C8C3C"></span>Americas</a>
+      <a class="region-chip" href="countries-africa.html" style="--rc:#E8A870;--rb:rgba(139,58,0,0.2);--rt:rgba(200,110,40,0.35)"><span class="rc-dot" style="background:#C86E28"></span>Africa</a>
+      <a class="region-chip" href="countries-oceania.html" style="--rc:#D4A840;--rb:rgba(139,96,0,0.2);--rt:rgba(180,130,0,0.35)"><span class="rc-dot" style="background:#B48200"></span>Oceania</a>
+    </div>
   </div>
   <div class="stats">
     <div class="stat"><div class="stat-n">12,400+</div><div class="stat-l">Schools</div></div>
     <div class="stat"><div class="stat-n">190+</div><div class="stat-l">Countries</div></div>
-    <div class="stat"><div class="stat-n">280M+</div><div class="stat-l">Expat families</div></div>
-    <div class="stat"><div class="stat-n">8</div><div class="stat-l">Curricula</div></div>
+    <div class="stat"><div class="stat-n">9</div><div class="stat-l">Curricula</div></div>
+    <div class="stat"><div class="stat-n">Free</div><div class="stat-l">For every family</div></div>
   </div>
 </section>
+
 <section class="sec">
   <div class="ew">What GlobalCompass offers</div>
   <h2 class="sh2">Your complete education guidance platform</h2>
