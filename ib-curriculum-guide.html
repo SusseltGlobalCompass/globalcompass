@@ -20,7 +20,10 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
 .nav-right{display:flex;align-items:center;gap:14px}
 .nav-back{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;color:#A8C4F5;text-decoration:none;display:flex;align-items:center;gap:4px}
 .nav-tag{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;color:#F5C842;letter-spacing:0.12em;text-transform:uppercase;background:rgba(245,200,66,0.12);padding:4px 12px;border-radius:99px;border:0.5px solid rgba(245,200,66,0.3)}
-.hero-bar{background:linear-gradient(135deg,#0D1F4A,#1B3A7A);padding:36px 24px;text-align:center;border-bottom:2px solid #F5C842}
+.guide-hero{background:linear-gradient(160deg,#1A4D1A 0%,#0F3010 55%,#1A4D1A 100%);padding:48px 32px 40px;position:relative;overflow:hidden}
+.guide-hero svg.wm{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);opacity:0.06;pointer-events:none}
+.hero-title{font-family:'Playfair Display',serif;font-size:36px;color:#fff;margin-bottom:10px;position:relative;z-index:1}
+.hero-sub{font-size:14px;color:rgba(255,255,255,0.85);max-width:600px;line-height:1.7;position:relative;z-index:1}
 .hero-eyebrow{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:#F5C842;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:10px}
 .hero-h{font-family:'Playfair Display',serif;font-size:32px;font-weight:500;color:#fff;line-height:1.25;margin-bottom:10px}
 .hero-h em{color:#F5C842;font-style:normal}
@@ -88,11 +91,15 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
   </div>
 </nav>
 
-<div class="hero-bar">
-  <div class="hero-eyebrow">Understanding the curricula</div>
-  <div class="ib-badge"><i class="ti ti-world"></i> Est. 1968 - Geneva, Switzerland</div>
-  <h1 class="hero-h">The International<br><em>Baccalaureate (IB)</em></h1>
-  <p class="hero-p">A single educational framework taught the same way in over 160 countries - built specifically for families who move. Here is what it actually is, where it came from, and who it tends to suit.</p>
+<div class="guide-hero">
+  <svg class="wm" width="480" height="480" viewBox="0 0 64 64" fill="none">
+    <circle cx="32" cy="32" r="29" stroke="#F5C842" stroke-width="1.4" fill="none"/>
+    <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none"/>
+    <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none"/>
+  </svg>
+  <div class="hero-eyebrow">Curriculum Guide</div>
+  <div class="hero-title">International Baccalaureate (IB)</div>
+  <p class="hero-sub">A single educational framework taught the same way in over 160 countries — built specifically for families who move. Here is what it actually is, where it came from, and who it tends to suit.</p>
 </div>
 
 <div class="main">
