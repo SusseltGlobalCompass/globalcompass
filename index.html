@@ -294,66 +294,57 @@ polyfillCountryFlagEmojis();
   <p class="h-p">Search, compare and discover schools and curricula across 190+ countries — all budgets, all ages, all curricula. Free for every family.</p>
   <div class="search-card">
     <div class="s-row">
-      <i class="ti ti-search" style="color:#1B3A7A;font-size:16px;flex-shrink:0"></i>
-      <input id="hQ" placeholder="School, country, or city…" onkeydown="if(event.key==='Enter')goToSchoolSearch()">
-      <div class="s-div"></div>
-      <select class="s-sel" id="hAge" onchange="setMainCurriculumOptionSet(this.value==='3-5')"><option value="">All ages</option><option value="3-5">3-5 Pre-school</option><option value="6-11">6-11 Primary</option><option value="12-15">12-15 Middle</option><option value="16-18">16-18 Final years</option></select>
-      <div class="s-div"></div>
-      <select class="s-sel" id="hCur"><option value="">All curricula</option><option value="IB">IB</option><option value="British">British</option><option value="American">American</option><option value="CBSE">CBSE</option><option value="French">French</option><option value="German">German</option><option value="Singapore">Singapore</option><option value="Australian">Australian</option><option value="Brazilian">Brazilian</option><option value="International">International Schools</option></select>
-      <div class="s-div"></div>
-      <select class="s-sel"><option value="">All budgets</option><option value="0-20000">Under AED 20,000/yr</option><option value="20000-45000">AED 20,000–45,000/yr</option><option value="45000-75000">AED 45,000–75,000/yr</option><option value="75000-999999">AED 75,000+/yr</option></select>
-      <button class="s-btn" onclick="goToSchoolSearch()">Search</button>
+      <svg width="16" height="16" viewBox="0 0 32 32" fill="none" style="flex-shrink:0"><circle cx="13" cy="13" r="8" stroke="#9AB0D0" stroke-width="2.5"/><line x1="19" y1="19" x2="27" y2="27" stroke="#9AB0D0" stroke-width="2.5" stroke-linecap="round"/></svg>
+      <input id="hQ" placeholder="School, country, or city..." onkeydown="if(event.key==='Enter')goToSchoolSearch()" style="flex:1;border:none;background:transparent;font-size:14px;color:#0D1F4A;outline:none">
+      <button class="s-btn" onclick="goToSchoolSearch()">Search →</button>
     </div>
-    </div>
-  <!-- Filter pills row -->
-  <div class="s-filters">
-    <div class="s-filter">
-      <div class="s-filter-label">Age group</div>
-      <select class="s-filter-sel" id="hAgePill" onchange="document.getElementById('hAge').value=this.value;setMainCurriculumOptionSet(this.value==='3-5')">
-        <option value="">All ages</option>
-        <option value="3-5">3–5 Pre-school</option>
-        <option value="6-11">6–11 Primary</option>
-        <option value="12-15">12–15 Middle</option>
-        <option value="16-18">16–18 Final years</option>
-      </select>
-    </div>
-    <div class="s-filter">
-      <div class="s-filter-label">Curriculum</div>
-      <select class="s-filter-sel" id="hCurPill" onchange="document.getElementById('hCur').value=this.value">
-        <option value="">All curricula</option>
-        <option value="IB">International Baccalaureate</option>
-        <option value="British">British (A-Levels)</option>
-        <option value="American">American (AP)</option>
-        <option value="CBSE">Indian (CBSE)</option>
-        <option value="French">French Baccalauréat</option>
-        <option value="German">German Abitur</option>
-        <option value="Singapore">Singapore A-Levels</option>
-        <option value="Australian">Australian (VCE)</option>
-        <option value="Brazilian">Brazilian ENEM</option>
-        <option value="International">International Schools</option>
-      </select>
-    </div>
-    <div class="s-filter">
-      <div class="s-filter-label">Budget</div>
-      <select class="s-filter-sel" id="hBudPill" onchange="document.getElementById('hBud').value=this.value">
-        <option value="">All budgets</option>
-        <option value="0-20000">Under AED 20,000/yr</option>
-        <option value="20000-45000">AED 20,000–45,000/yr</option>
-        <option value="45000-75000">AED 45,000–75,000/yr</option>
-        <option value="75000-999999">AED 75,000+/yr</option>
-      </select>
-    </div>
-    <div class="s-filter">
-      <div class="s-filter-label">KHDA Rating</div>
-      <select class="s-filter-sel" id="hKhda">
-        <option value="">Any rating</option>
-        <option value="Outstanding">Outstanding</option>
-        <option value="Very Good">Very Good</option>
-        <option value="Good">Good</option>
-      </select>
-    </div>
-  </div>
-  </div>
+    <div class="s-filters">
+      <div class="s-filter">
+        <div class="s-filter-label">Age group</div>
+        <select class="s-filter-sel" id="hAge" onchange="setMainCurriculumOptionSet(this.value==='3-5')">
+          <option value="">All ages</option>
+          <option value="3-5">3–5 Pre-school</option>
+          <option value="6-11">6–11 Primary</option>
+          <option value="12-15">12–15 Middle</option>
+          <option value="16-18">16–18 Final years</option>
+        </select>
+      </div>
+      <div class="s-filter">
+        <div class="s-filter-label">Curriculum</div>
+        <select class="s-filter-sel" id="hCur">
+          <option value="">All curricula</option>
+          <option value="IB">International Baccalaureate</option>
+          <option value="British">British (A-Levels)</option>
+          <option value="American">American (AP)</option>
+          <option value="CBSE">Indian (CBSE)</option>
+          <option value="French">French Baccalauréat</option>
+          <option value="German">German Abitur</option>
+          <option value="Singapore">Singapore A-Levels</option>
+          <option value="Australian">Australian (VCE)</option>
+          <option value="Brazilian">Brazilian ENEM</option>
+          <option value="International">International Schools</option>
+        </select>
+      </div>
+      <div class="s-filter">
+        <div class="s-filter-label">Budget</div>
+        <select class="s-filter-sel" id="hBud">
+          <option value="">All budgets</option>
+          <option value="0-20000">Under AED 20,000/yr</option>
+          <option value="20000-45000">AED 20,000–45,000/yr</option>
+          <option value="45000-75000">AED 45,000–75,000/yr</option>
+          <option value="75000-999999">AED 75,000+/yr</option>
+        </select>
+      </div>
+      <div class="s-filter">
+        <div class="s-filter-label">KHDA Rating</div>
+        <select class="s-filter-sel" id="hKhda">
+          <option value="">Any rating</option>
+          <option value="Outstanding">Outstanding</option>
+          <option value="Very Good">Very Good</option>
+          <option value="Good">Good</option>
+        </select>
+      </div>
+    </div></div>
   <!-- Region chips -->
   <div class="region-bar">
     <div class="region-label">Explore by region</div>
