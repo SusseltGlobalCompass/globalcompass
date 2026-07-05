@@ -33,14 +33,15 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#1a1a1a}
 .step-note{font-size:12px;color:#7A8BAE;margin-bottom:16px}
 .cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 @media(max-width:640px){.cat-grid{grid-template-columns:1fr}}
-.cat-card{border:1px solid #E0E8F5;border-radius:10px;padding:12px 14px;cursor:pointer;transition:all 0.15s}
+.cat-card{border:1px solid #E0E8F5;border-radius:10px;padding:16px 18px;cursor:pointer;transition:all 0.15s;min-height:64px}
+.cat-icon{font-size:20px;color:#1B3A7A;margin-bottom:6px;display:block}
 .cat-card:hover{border-color:#A8C4F5}
 .cat-card.selected{border-color:#1B3A7A;background:#EEF3FF}
-.cat-name{font-size:13.5px;font-weight:600;color:#0D1F4A}
-.cat-desc{font-size:11.5px;color:#7A8BAE;margin-top:2px}
+.cat-name{font-size:15.5px;font-weight:600;color:#0D1F4A}
+.cat-desc{font-size:13px;color:#7A8BAE;margin-top:3px;line-height:1.5}
 .not-sure{text-align:center;margin-top:14px;font-size:12.5px;color:#1B3A7A;font-weight:600;text-decoration:underline;cursor:pointer}
 .chip-row{display:flex;gap:8px;flex-wrap:wrap}
-.chip{border:1px solid #E0E8F5;border-radius:99px;padding:8px 16px;font-size:12.5px;cursor:pointer;font-weight:500;color:#0D1F4A}
+.chip{border:1px solid #E0E8F5;border-radius:99px;padding:12px 20px;font-size:14px;cursor:pointer;font-weight:500;color:#0D1F4A}
 .chip.selected{border-color:#1B3A7A;background:#1B3A7A;color:#fff}
 .find-btn{background:#1B3A7A;color:#F5C842;border:none;padding:13px 30px;border-radius:99px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Montserrat',sans-serif;width:100%;margin-top:6px}
 .results-wrap{display:grid;grid-template-columns:2fr 1fr;gap:20px;margin-top:8px}
@@ -89,8 +90,8 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#1a1a1a}
   <div class="disclaimer-bar">GlobalCompass doesn't diagnose or assess children. This tool helps you find support by what you're looking for — for a formal diagnosis, please consult a licensed specialist.</div>
 
   <div id="whereStart" class="where-start">
-    <p><strong>It's okay not to know yet.</strong> Many parents notice something first, often around communication or language, long before any formal assessment. Trusting what you've noticed is a completely valid place to start.</p>
-    <p>If you haven't had a formal assessment yet, a good first step in the UAE is speaking with your child's paediatrician or school, who can refer you to a licensed specialist for evaluation.</p>
+    <p><strong>You don't have to have all the answers today.</strong> Many parents come to this page simply because something feels different, and that's more than enough reason to be here. Whatever you're feeling right now — worried, exhausted, unsure, or all at once — you're not alone in it, and you're already doing something right by looking.</p>
+    <p>A gentle first step: speaking with your child's paediatrician or school. They can help guide you toward the right specialist for a proper assessment, at your own pace.</p>
   </div>
 
   <div class="step-card">
@@ -99,24 +100,34 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#1a1a1a}
     <div class="step-note">Select as many as apply</div>
     <div class="cat-grid" id="catGrid">
       <div class="cat-card" data-cat="Communication & Language" onclick="toggleCat(this)">
+        <i class="ti ti-message-circle cat-icon"></i>
         <div class="cat-name">Communication &amp; Language</div>
-        <div class="cat-desc">Speech delays, difficulty communicating</div>
+        <div class="cat-desc">Speech delay, stuttering, non-verbal</div>
       </div>
       <div class="cat-card" data-cat="Learning & Cognition" onclick="toggleCat(this)">
+        <i class="ti ti-brain cat-icon"></i>
         <div class="cat-name">Learning &amp; Cognition</div>
-        <div class="cat-desc">Reading, learning pace, attention</div>
+        <div class="cat-desc">Dyslexia, dyscalculia, ADHD/ADD</div>
       </div>
       <div class="cat-card" data-cat="Social, Emotional & Behavioural" onclick="toggleCat(this)">
+        <i class="ti ti-mood-smile cat-icon"></i>
         <div class="cat-name">Social, Emotional &amp; Behavioural</div>
+        <div class="cat-desc">Autism, anxiety, emotional regulation</div>
       </div>
       <div class="cat-card" data-cat="Sensory & Physical/Motor" onclick="toggleCat(this)">
+        <i class="ti ti-eye cat-icon"></i>
         <div class="cat-name">Sensory &amp; Physical / Motor</div>
+        <div class="cat-desc">Blind/low vision, deaf/hard of hearing, physical disability</div>
       </div>
       <div class="cat-card" data-cat="Self-Care & Daily Living" onclick="toggleCat(this)">
+        <i class="ti ti-home-heart cat-icon"></i>
         <div class="cat-name">Self-Care &amp; Daily Living</div>
+        <div class="cat-desc">Down syndrome, developmental delay</div>
       </div>
       <div class="cat-card" data-cat="Complex or Multiple Needs" onclick="toggleCat(this)">
+        <i class="ti ti-puzzle cat-icon"></i>
         <div class="cat-name">Complex or Multiple Needs</div>
+        <div class="cat-desc">Multiple or overlapping diagnoses</div>
       </div>
     </div>
     <div class="not-sure" onclick="showWhereStart()">Not sure yet? See where to start →</div>
