@@ -481,10 +481,12 @@ function setMainCurriculumOptionSet(isNursery){
 
 function goToSchoolSearch(){
   const q = document.getElementById('hQ').value.trim();
-  const sels = document.querySelectorAll('.s-row .s-sel');
-  const age = sels[0] ? sels[0].value : '';
-  const cur = sels[1] ? sels[1].value : '';
-  const budget = sels[2] ? sels[2].value : '';
+  const ageEl = document.getElementById('hAge');
+  const curEl = document.getElementById('hCur');
+  const budEl = document.getElementById('hBud');
+  const age = ageEl ? ageEl.value : '';
+  const cur = curEl ? curEl.value : '';
+  const budget = budEl ? budEl.value : '';
   const params = new URLSearchParams();
   if(q) params.set('q', q);
   if(age) params.set('age', age);
