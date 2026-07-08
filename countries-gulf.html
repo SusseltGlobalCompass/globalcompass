@@ -65,7 +65,7 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
 
 <div class="main">
   <div class="country-list">
-  <a class="country-row is-live" href="schools.html?q=United Arab Emirates"><span class="cn-name">United Arab Emirates</span><span class="cn-right"><span class="cn-status live">260+ schools</span><i class="ti ti-chevron-right cn-arrow"></i></span></a>
+  <a class="country-row is-live" href="schools.html?q=United Arab Emirates"><span class="cn-name">United Arab Emirates</span><span class="cn-right"><span class="cn-status live" id="uaeSchoolCount">260+ schools</span><i class="ti ti-chevron-right cn-arrow"></i></span></a>
   <div class="country-row"><span class="cn-name">Qatar</span><span class="cn-right"><span class="cn-status soon">Coming soon</span></span></div>
   <div class="country-row"><span class="cn-name">Saudi Arabia</span><span class="cn-right"><span class="cn-status soon">Coming soon</span></span></div>
   <div class="country-row"><span class="cn-name">Kuwait</span><span class="cn-right"><span class="cn-status soon">Coming soon</span></span></div>
@@ -75,5 +75,15 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
   <div class="country-row"><span class="cn-name">Egypt</span><span class="cn-right"><span class="cn-status soon">Coming soon</span></span></div>
   </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const sb = supabase.createClient("https://qginevdbqaodimcllevb.supabase.co", "sb_publishable_q3hvHIL8bl4oH49Qkyqkgg_w1G2Ud5w");
+(async () => {
+  const { count } = await sb.from('schools').select('*', { count: 'exact', head: true }).eq('country_id', '9beb50ee-a772-4b1a-b63a-d35a4b0e59e1');
+  if (count) {
+    document.getElementById('uaeSchoolCount').textContent = count + '+ schools';
+  }
+})();
+</script>
 </body>
 </html>
