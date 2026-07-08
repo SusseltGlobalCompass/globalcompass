@@ -210,9 +210,9 @@ const SUPABASE_ANON_KEY = 'sb_publishable_q3hvHIL8bl4oH49Qkyqkgg_w1G2Ud5w';
 const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 async function getRealNurseries(curriculumMatch){
-  const { data, error } = await sb.from('uae_nurseries').select('*').ilike('curriculum', '%'+curriculumMatch+'%').order('rating', { ascending: false }).limit(4);
+  const { data, error } = await sb.from('schools').select('*').ilike('school_type', '%nursery%').ilike('curriculum', '%'+curriculumMatch+'%').order('rating', { ascending: false }).limit(4);
   if(error || !data || data.length === 0){
-    const { data: fallback } = await sb.from('uae_nurseries').select('*').order('rating', { ascending: false }).limit(4);
+    const { data: fallback } = await sb.from('schools').select('*').ilike('school_type', '%nursery%').order('rating', { ascending: false }).limit(4);
     return fallback || [];
   }
   return data;
@@ -236,7 +236,7 @@ async function generateMatch(){
     const parsed = JSON.parse(text);
     const realNurseries = await getRealNurseries(parsed.topMatch);
     if(realNurseries.length > 0){
-      parsed.topNurseries = realNurseries.map(n => ({name:n.name, location:n.location, curriculum:n.curriculum, ageRange:n.age_range, feeRange:n.fee_range, rating:n.rating}));
+      parsed.topNurseries = realNurseries.map(n => ({name:n.name, location:n.city, curriculum:n.curriculum, ageRange:(n.age_min!=null&&n.age_max!=null)?(n.age_min+'-'+n.age_max+' years'):'', feeRange:(n.fee_min!=null&&n.fee_max!=null)?((n.fee_currency||'AED')+' '+n.fee_min.toLocaleString()+'-'+n.fee_max.toLocaleString()+' '+(n.fee_label||'per month')):'Fee not yet verified', rating:n.rating}));
     }
     showResults(parsed);
   }catch(e){clearInterval(iv);showFallback();}
