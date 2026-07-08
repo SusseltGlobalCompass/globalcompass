@@ -352,7 +352,7 @@ polyfillCountryFlagEmojis();
     </div>
   </div>
   <div class="stats">
-    <div class="stat"><div class="stat-n">260+</div><div class="stat-l">UAE Schools</div></div>
+    <div class="stat"><div class="stat-n" id="homeSchoolCount">260+</div><div class="stat-l">UAE Schools</div></div>
     <div class="stat"><div class="stat-n">190+</div><div class="stat-l">Countries</div></div>
     <div class="stat"><div class="stat-n">9</div><div class="stat-l">Curricula</div></div>
     <div class="stat"><div class="stat-n">Free</div><div class="stat-l">For every family</div></div>
@@ -497,6 +497,16 @@ function goToSchoolSearch(){
   const qs = params.toString();
   window.location.href = 'schools.html' + (qs ? ('?' + qs) : '');
 }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const sbHome = supabase.createClient("https://qginevdbqaodimcllevb.supabase.co", "sb_publishable_q3hvHIL8bl4oH49Qkyqkgg_w1G2Ud5w");
+(async () => {
+  const { count } = await sbHome.from('schools').select('*', { count: 'exact', head: true }).eq('country_id', '9beb50ee-a772-4b1a-b63a-d35a4b0e59e1');
+  if (count) {
+    document.getElementById('homeSchoolCount').textContent = count + '+';
+  }
+})();
 </script>
 </body>
 </html>
