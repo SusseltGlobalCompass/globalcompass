@@ -67,7 +67,7 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
   </div>
   <div class="nav-right">
     <a class="nav-back" href="index.html"><i class="ti ti-arrow-left"></i> Back to GlobalCompass</a>
-    <div class="nav-tag">Forum</div>
+    <div class="nav-tag">Community</div>
   </div>
 </nav>
 
@@ -77,8 +77,8 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
     <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none"/>
     <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none"/>
   </svg>
-  <h1 class="hero-h">The GlobalCompass community</h1>
-  <p class="hero-p">A space for parents and students to share real experiences, honestly and respectfully.</p>
+  <h1 class="hero-h">The GlobalCompass Community</h1>
+  <p class="hero-p">Two spaces, one shared purpose: real people, real experience, honestly and respectfully shared.</p>
 </div>
 
 <div class="main">
@@ -88,26 +88,29 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
     <a class="gb-link" href="community-guidelines.html">Read the Community Guidelines <i class="ti ti-arrow-right"></i></a>
   </div>
 
-  <div class="topic-grid">
-    <div class="topic-card">
-      <div class="topic-icon"><i class="ti ti-plane-departure"></i></div>
-      <div class="topic-name">Relocation and settling in</div>
-      <div class="topic-desc">Practical advice for families moving countries — visas, housing, first weeks at a new school.</div>
+  <div class="topic-grid" id="topicGrid">
+    <div class="topic-card" id="studentCard">
+      <div class="topic-icon"><i class="ti ti-users"></i></div>
+      <div class="topic-name">Student Community</div>
+      <div class="topic-desc">Peer-to-peer advice for the high school to university bridge. Considering studying in a new city or country? Ask a student who's actually living it — real life, real costs, real experience, from someone who made the same jump.</div>
       <span class="topic-status">Opening soon</span>
     </div>
-    <div class="topic-card">
+    <div class="topic-card" id="parentsCard">
       <div class="topic-icon"><i class="ti ti-school"></i></div>
-      <div class="topic-name">School experiences</div>
-      <div class="topic-desc">Honest, specific experiences from families who have attended a school — not a rating, a real story.</div>
-      <span class="topic-status">Opening soon</span>
-    </div>
-    <div class="topic-card">
-      <div class="topic-icon"><i class="ti ti-messages"></i></div>
-      <div class="topic-name">General parent discussion</div>
-      <div class="topic-desc">Curriculum questions, exam stress, university applications — open conversation for parents.</div>
+      <div class="topic-name">Parents Community</div>
+      <div class="topic-desc">Honest school experiences, pros and cons, curriculum questions, and open discussion between parents — governed by our Community Guidelines, not a star rating.</div>
       <span class="topic-status">Opening soon</span>
     </div>
   </div>
+  <div style="text-align:center;margin-top:24px">
+    <a href="relocation-guide.html" style="color:#1B3A7A;font-weight:600;font-size:13px;text-decoration:none">Looking for relocation help instead? Visit the Relocation Guide <i class="ti ti-arrow-right"></i></a>
+  </div>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const tab = params.get('tab');
+    if (tab === 'student') { document.getElementById('studentCard').scrollIntoView({behavior:'smooth', block:'center'}); }
+    if (tab === 'parents') { document.getElementById('parentsCard').scrollIntoView({behavior:'smooth', block:'center'}); }
+  </script>
 
 </div>
 </body>
