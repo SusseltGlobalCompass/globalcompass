@@ -95,7 +95,7 @@
 
   async function loadPendingPosts(){
     const { data, error } = await sb.from('forum_posts')
-      .select('*, forum_profiles(display_name)')
+      .select('*')
       .eq('is_approved', false)
       .order('created_at', { ascending: false });
     const list = document.getElementById('postsList');
@@ -108,7 +108,7 @@
       return;
     }
     list.innerHTML = data.map(p => {
-      const name = p.forum_profiles ? p.forum_profiles.display_name : 'Member';
+      const name = 'Member';
       return '<div class="card" id="post-'+p.id+'">'+
         '<div class="title">'+p.title+'</div>'+
         '<div class="meta">'+name+' · '+p.category+' · '+new Date(p.created_at).toLocaleString()+'</div>'+
