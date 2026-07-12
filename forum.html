@@ -111,10 +111,14 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
     <div id="panelTitle" style="font-family:'Playfair Display',serif;font-size:20px;color:#0D1F4A;margin-bottom:16px"></div>
 
     <div id="loginGate">
-      <p style="font-size:13px;color:#7A8BAE;margin-bottom:14px">Sign in with your email to read and post — no password needed, we'll send you a secure link.</p>
+      <p style="font-size:13px;color:#7A8BAE;margin-bottom:14px">Sign in with your email to read and post — no password needed, we'll send you a secure code.</p>
       <div style="display:flex;gap:8px;max-width:420px">
         <input id="commEmail" type="email" placeholder="you@email.com" style="flex:1;padding:10px 14px;border:1px solid #E0E8F5;border-radius:8px;font-size:13px">
         <button onclick="sendCommMagicLink()" id="btnCommLogin" style="background:#1B3A7A;color:#F5C842;border:none;padding:10px 18px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap">Send link</button>
+      </div>
+      <div id="commCodeRow" style="display:none;gap:8px;max-width:420px;margin-top:10px">
+        <input id="commCode" type="text" inputmode="numeric" maxlength="6" placeholder="6-digit code" style="flex:1;padding:10px 14px;border:1px solid #E0E8F5;border-radius:8px;font-size:13px;letter-spacing:2px">
+        <button onclick="verifyCommCode()" id="btnCommVerify" style="background:#F5C842;color:#1B3A7A;border:none;padding:10px 18px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap">Verify code</button>
       </div>
       <div id="commLoginStatus" style="font-size:12px;margin-top:8px"></div>
     </div>
@@ -195,7 +199,27 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
         document.getElementById('commLoginStatus').innerHTML = '<span style="color:#B3001B">'+error.message+'</span>';
         return;
       }
-      document.getElementById('commLoginStatus').innerHTML = '<span style="color:#1A7A3C">Check your email for the secure link.</span>';
+      document.getElementById('commLoginStatus').innerHTML = '<span style="color:#1A7A3C">Check your email for the code (or link).</span>';
+      document.getElementById('commCodeRow').style.display = 'flex';
+    }
+
+    async function verifyCommCode(){
+      const email = document.getElementById('commEmail').value.trim();
+      const code = document.getElementById('commCode').value.trim();
+      if(!code || code.length < 6){
+        document.getElementById('commLoginStatus').innerHTML = '<span style="color:#B3001B">Please enter the 6-digit code.</span>';
+        return;
+      }
+      document.getElementById('btnCommVerify').disabled = true;
+      document.getElementById('btnCommVerify').textContent = 'Verifying...';
+      const { error } = await sb.auth.verifyOtp({ email: email, token: code, type: 'email' });
+      document.getElementById('btnCommVerify').disabled = false;
+      document.getElementById('btnCommVerify').textContent = 'Verify code';
+      if(error){
+        document.getElementById('commLoginStatus').innerHTML = '<span style="color:#B3001B">'+error.message+'</span>';
+        return;
+      }
+      checkForumSession();
     }
 
     async function checkForumProfile(){
