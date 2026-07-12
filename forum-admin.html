@@ -114,8 +114,8 @@
         '<div class="meta">'+name+' · '+p.category+' · '+new Date(p.created_at).toLocaleString()+'</div>'+
         '<div class="content">'+p.content+'</div>'+
         '<div style="margin-top:12px;display:flex;gap:8px">'+
-          '<button class="approve" onclick="approvePost(\\''+p.id+'\\')">Approve</button>'+
-          '<button class="reject" onclick="rejectPost(\\''+p.id+'\\')">Reject</button>'+
+          "<button class=\"approve\" onclick=\"approvePost(&#39;"+p.id+"&#39;)\">Approve</button>"+
+          "<button class=\"reject\" onclick=\"rejectPost(&#39;"+p.id+"&#39;)\">Reject</button>"+
         '</div>'+
       '</div>';
     }).join('');
