@@ -117,7 +117,7 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
         <button onclick="sendCommMagicLink()" id="btnCommLogin" style="background:#1B3A7A;color:#F5C842;border:none;padding:10px 18px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap">Send link</button>
       </div>
       <div id="commCodeRow" style="display:none;gap:8px;max-width:420px;margin-top:10px">
-        <input id="commCode" type="text" inputmode="numeric" maxlength="6" placeholder="6-digit code" style="flex:1;padding:10px 14px;border:1px solid #E0E8F5;border-radius:8px;font-size:13px;letter-spacing:2px">
+        <input id="commCode" type="text" inputmode="numeric" maxlength="8" placeholder="Enter your code" style="flex:1;padding:10px 14px;border:1px solid #E0E8F5;border-radius:8px;font-size:13px;letter-spacing:2px">
         <button onclick="verifyCommCode()" id="btnCommVerify" style="background:#F5C842;color:#1B3A7A;border:none;padding:10px 18px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap">Verify code</button>
       </div>
       <div id="commLoginStatus" style="font-size:12px;margin-top:8px"></div>
@@ -206,8 +206,8 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
     async function verifyCommCode(){
       const email = document.getElementById('commEmail').value.trim();
       const code = document.getElementById('commCode').value.trim();
-      if(!code || code.length < 6){
-        document.getElementById('commLoginStatus').innerHTML = '<span style="color:#B3001B">Please enter the 6-digit code.</span>';
+      if(!code){
+        document.getElementById('commLoginStatus').innerHTML = '<span style="color:#B3001B">Please enter the code from your email.</span>';
         return;
       }
       document.getElementById('btnCommVerify').disabled = true;
