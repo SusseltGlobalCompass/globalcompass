@@ -162,8 +162,9 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
       document.getElementById('communityPanel').scrollIntoView({behavior:'smooth', block:'start'});
       checkForumSession();
     }
-    if (tab === 'student') openCategory('student');
-    if (tab === 'parents') openCategory('parents');
+    const savedTab = localStorage.getItem('gc_forum_tab');
+    if (tab === 'student' || savedTab === 'student') { openCategory('student'); localStorage.removeItem('gc_forum_tab'); }
+    else if (tab === 'parents' || savedTab === 'parents') { openCategory('parents'); localStorage.removeItem('gc_forum_tab'); }
 
     async function checkForumSession(){
       const { data: { session } } = await sb.auth.getSession();
@@ -185,7 +186,9 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
       }
       document.getElementById('btnCommLogin').disabled = true;
       document.getElementById('btnCommLogin').textContent = 'Sending...';
-      const { error } = await sb.auth.signInWithOtp({ email: email, options: { emailRedirectTo: window.location.href } });
+      if (currentCategory) { localStorage.setItem('gc_forum_tab', currentCategory); }
+      const cleanUrl = window.location.origin + window.location.pathname;
+      const { error } = await sb.auth.signInWithOtp({ email: email, options: { emailRedirectTo: cleanUrl } });
       document.getElementById('btnCommLogin').disabled = false;
       document.getElementById('btnCommLogin').textContent = 'Send link';
       if(error){
