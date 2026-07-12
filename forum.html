@@ -49,6 +49,7 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
 <link rel="icon" type="image/png" sizes="48x48" href="favicon-48.png">
 <link rel="icon" type="image/png" sizes="96x96" href="favicon-96.png">
 <link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 <nav class="nav">
@@ -89,29 +90,204 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
   </div>
 
   <div class="topic-grid" id="topicGrid">
-    <div class="topic-card" id="studentCard">
+    <div class="topic-card" id="studentCard" onclick="openCategory('student')" style="cursor:pointer">
       <div class="topic-icon"><i class="ti ti-users"></i></div>
       <div class="topic-name">Student Community</div>
       <div class="topic-desc">Peer-to-peer advice for the high school to university bridge. Considering studying in a new city or country? Ask a student who's actually living it — real life, real costs, real experience, from someone who made the same jump.</div>
-      <span class="topic-status">Opening soon</span>
+      <span class="topic-status" style="background:#EEF3FF;color:#1B3A7A">Enter →</span>
     </div>
-    <div class="topic-card" id="parentsCard">
+    <div class="topic-card" id="parentsCard" onclick="openCategory('parents')" style="cursor:pointer">
       <div class="topic-icon"><i class="ti ti-school"></i></div>
       <div class="topic-name">Parents Community</div>
       <div class="topic-desc">Honest school experiences, pros and cons, curriculum questions, and open discussion between parents — governed by our Community Guidelines, not a star rating.</div>
-      <span class="topic-status">Opening soon</span>
+      <span class="topic-status" style="background:#EEF3FF;color:#1B3A7A">Enter →</span>
     </div>
   </div>
   <div style="text-align:center;margin-top:24px">
     <a href="relocation-guide.html" style="color:#1B3A7A;font-weight:600;font-size:13px;text-decoration:none">Looking for relocation help instead? Visit the Relocation Guide <i class="ti ti-arrow-right"></i></a>
   </div>
+
+  <div id="communityPanel" style="display:none;margin-top:28px;background:#fff;border:0.5px solid #E0E8F5;border-radius:16px;padding:28px">
+    <div id="panelTitle" style="font-family:'Playfair Display',serif;font-size:20px;color:#0D1F4A;margin-bottom:16px"></div>
+
+    <div id="loginGate">
+      <p style="font-size:13px;color:#7A8BAE;margin-bottom:14px">Sign in with your email to read and post — no password needed, we'll send you a secure link.</p>
+      <div style="display:flex;gap:8px;max-width:420px">
+        <input id="commEmail" type="email" placeholder="you@email.com" style="flex:1;padding:10px 14px;border:1px solid #E0E8F5;border-radius:8px;font-size:13px">
+        <button onclick="sendCommMagicLink()" id="btnCommLogin" style="background:#1B3A7A;color:#F5C842;border:none;padding:10px 18px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap">Send link</button>
+      </div>
+      <div id="commLoginStatus" style="font-size:12px;margin-top:8px"></div>
+    </div>
+
+    <div id="profileGate" style="display:none">
+      <p style="font-size:13px;color:#7A8BAE;margin-bottom:14px">Choose a display name — this is what other families will see. Your email is never shown publicly.</p>
+      <div style="display:flex;gap:8px;max-width:420px">
+        <input id="displayNameInput" type="text" placeholder="e.g. Dubai_Parent, MoveToSydney22" maxlength="30" style="flex:1;padding:10px 14px;border:1px solid #E0E8F5;border-radius:8px;font-size:13px">
+        <button onclick="saveDisplayName()" style="background:#1B3A7A;color:#F5C842;border:none;padding:10px 18px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer">Save</button>
+      </div>
+      <div id="profileStatus" style="font-size:12px;margin-top:8px"></div>
+    </div>
+
+    <div id="postingArea" style="display:none">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+        <span style="font-size:12px;color:#7A8BAE">Posting as <strong id="currentDisplayName" style="color:#0D1F4A"></strong></span>
+        <button onclick="toggleNewPostForm()" style="background:#F5C842;color:#0D1F4A;border:none;padding:8px 16px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer">+ New Post</button>
+      </div>
+
+      <div id="newPostForm" style="display:none;background:#F8F9FF;border-radius:10px;padding:16px;margin-bottom:20px">
+        <input id="postTitle" type="text" placeholder="Title" maxlength="120" style="width:100%;padding:10px 12px;border:1px solid #E0E8F5;border-radius:8px;font-size:13px;margin-bottom:8px">
+        <textarea id="postContent" placeholder="Share your question or experience..." rows="4" style="width:100%;padding:10px 12px;border:1px solid #E0E8F5;border-radius:8px;font-size:13px;font-family:inherit;resize:vertical"></textarea>
+        <div style="font-size:11px;color:#7A8BAE;margin:8px 0">Every post is reviewed before it appears publicly, per our <a href="community-guidelines.html" style="color:#1B3A7A">Community Guidelines</a>.</div>
+        <button onclick="submitPost()" id="btnSubmitPost" style="background:#1B3A7A;color:#F5C842;border:none;padding:9px 18px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer">Submit for review</button>
+        <span id="postSubmitStatus" style="font-size:12px;margin-left:10px"></span>
+      </div>
+
+      <div id="postsList"></div>
+    </div>
+  </div>
+
   <script>
     const params = new URLSearchParams(window.location.search);
     const tab = params.get('tab');
-    if (tab === 'student') { document.getElementById('studentCard').scrollIntoView({behavior:'smooth', block:'center'}); }
-    if (tab === 'parents') { document.getElementById('parentsCard').scrollIntoView({behavior:'smooth', block:'center'}); }
+    let currentCategory = null;
+    let currentForumUser = null;
+    let currentForumProfile = null;
+
+    const BANNED_WORDS = ['spam','scam','whatsapp me','contact me privately','viagra'];
+
+    function openCategory(cat){
+      currentCategory = cat;
+      document.getElementById('communityPanel').style.display = 'block';
+      document.getElementById('panelTitle').textContent = cat === 'student' ? 'Student Community' : 'Parents Community';
+      document.getElementById('communityPanel').scrollIntoView({behavior:'smooth', block:'start'});
+      checkForumSession();
+    }
+    if (tab === 'student') openCategory('student');
+    if (tab === 'parents') openCategory('parents');
+
+    async function checkForumSession(){
+      const { data: { session } } = await sb.auth.getSession();
+      if (session && session.user){
+        currentForumUser = session.user;
+        await checkForumProfile();
+      } else {
+        document.getElementById('loginGate').style.display = 'block';
+        document.getElementById('profileGate').style.display = 'none';
+        document.getElementById('postingArea').style.display = 'none';
+      }
+    }
+
+    async function sendCommMagicLink(){
+      const email = document.getElementById('commEmail').value.trim();
+      if(!email || !email.includes('@')){
+        document.getElementById('commLoginStatus').innerHTML = '<span style="color:#B3001B">Please enter a valid email.</span>';
+        return;
+      }
+      document.getElementById('btnCommLogin').disabled = true;
+      document.getElementById('btnCommLogin').textContent = 'Sending...';
+      const { error } = await sb.auth.signInWithOtp({ email: email, options: { emailRedirectTo: window.location.href } });
+      document.getElementById('btnCommLogin').disabled = false;
+      document.getElementById('btnCommLogin').textContent = 'Send link';
+      if(error){
+        document.getElementById('commLoginStatus').innerHTML = '<span style="color:#B3001B">'+error.message+'</span>';
+        return;
+      }
+      document.getElementById('commLoginStatus').innerHTML = '<span style="color:#1A7A3C">Check your email for the secure link.</span>';
+    }
+
+    async function checkForumProfile(){
+      const { data, error } = await sb.from('forum_profiles').select('*').eq('user_id', currentForumUser.id).maybeSingle();
+      if (data){
+        currentForumProfile = data;
+        document.getElementById('loginGate').style.display = 'none';
+        document.getElementById('profileGate').style.display = 'none';
+        document.getElementById('postingArea').style.display = 'block';
+        document.getElementById('currentDisplayName').textContent = data.display_name;
+        loadPosts();
+      } else {
+        document.getElementById('loginGate').style.display = 'none';
+        document.getElementById('profileGate').style.display = 'block';
+      }
+    }
+
+    async function saveDisplayName(){
+      const name = document.getElementById('displayNameInput').value.trim();
+      if(!name || name.length < 2){
+        document.getElementById('profileStatus').innerHTML = '<span style="color:#B3001B">Please enter a display name.</span>';
+        return;
+      }
+      const { error } = await sb.from('forum_profiles').insert({ user_id: currentForumUser.id, display_name: name });
+      if (error){
+        document.getElementById('profileStatus').innerHTML = '<span style="color:#B3001B">'+error.message+'</span>';
+        return;
+      }
+      await checkForumProfile();
+    }
+
+    function toggleNewPostForm(){
+      const f = document.getElementById('newPostForm');
+      f.style.display = f.style.display === 'none' ? 'block' : 'none';
+    }
+
+    async function submitPost(){
+      const title = document.getElementById('postTitle').value.trim();
+      const contentText = document.getElementById('postContent').value.trim();
+      if(!title || !contentText){
+        document.getElementById('postSubmitStatus').innerHTML = '<span style="color:#B3001B">Please fill in both fields.</span>';
+        return;
+      }
+      const lowerText = (title + ' ' + contentText).toLowerCase();
+      const matched = BANNED_WORDS.find(w => lowerText.includes(w));
+
+      document.getElementById('btnSubmitPost').disabled = true;
+      const { error } = await sb.from('forum_posts').insert({
+        user_id: currentForumUser.id,
+        category: currentCategory,
+        title: title,
+        content: contentText,
+        is_approved: false,
+        is_flagged: !!matched,
+        flag_reason: matched ? ('Contains flagged term: ' + matched) : null
+      });
+      document.getElementById('btnSubmitPost').disabled = false;
+      if (error){
+        document.getElementById('postSubmitStatus').innerHTML = '<span style="color:#B3001B">'+error.message+'</span>';
+        return;
+      }
+      document.getElementById('postTitle').value = '';
+      document.getElementById('postContent').value = '';
+      document.getElementById('postSubmitStatus').innerHTML = '<span style="color:#1A7A3C">Submitted — pending review before it goes live.</span>';
+      loadPosts();
+    }
+
+    async function loadPosts(){
+      const { data, error } = await sb.from('forum_posts')
+        .select('*, forum_profiles(display_name)')
+        .eq('category', currentCategory)
+        .order('created_at', { ascending: false });
+      const list = document.getElementById('postsList');
+      if (error || !data || data.length === 0){
+        list.innerHTML = '<div style="text-align:center;padding:30px;color:#7A8BAE;font-size:13px">No posts yet — be the first to share.</div>';
+        return;
+      }
+      list.innerHTML = data.map(p => {
+        const pending = !p.is_approved ? '<span style="font-size:10px;background:#FFF3D6;color:#8a6a14;padding:2px 8px;border-radius:99px;margin-left:8px">Pending review</span>' : '';
+        const name = p.forum_profiles ? p.forum_profiles.display_name : 'Member';
+        return '<div style="border-bottom:0.5px solid #F0F3FA;padding:14px 0"><div style="font-weight:600;font-size:14px;color:#0D1F4A">'+p.title+pending+'</div><div style="font-size:12px;color:#7A8BAE;margin:4px 0">'+name+' · '+new Date(p.created_at).toLocaleDateString()+'</div><div style="font-size:13px;color:#333">'+p.content+'</div></div>';
+      }).join('');
+    }
+
+    sb.auth.onAuthStateChange((event, session) => {
+      if(event === 'SIGNED_IN' && session && currentCategory){
+        currentForumUser = session.user;
+        checkForumProfile();
+      }
+    });
   </script>
 
 </div>
+<script>
+const sb = supabase.createClient("https://qginevdbqaodimcllevb.supabase.co", "sb_publishable_q3hvHIL8bl4oH49Qkyqkgg_w1G2Ud5w");
+</script>
 </body>
 </html>
