@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlobalCompass — Forum Moderation</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Inter,sans-serif;background:#F8F9FF;color:#0D1F4A;padding:40px 20px}
+  .wrap{max-width:760px;margin:0 auto}
+  h1{font-family:Montserrat,sans-serif;font-size:22px;margin-bottom:6px}
+  .sub{font-size:13px;color:#7A8BAE;margin-bottom:28px}
+  .card{background:#fff;border:1px solid #E0E8F5;border-radius:12px;padding:20px;margin-bottom:16px}
+  input{padding:10px 14px;border:1px solid #E0E8F5;border-radius:8px;font-size:13px;width:100%;max-width:300px;margin-right:8px}
+  button{background:#1B3A7A;color:#F5C842;border:none;padding:10px 18px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer}
+  button.reject{background:#F0F3FA;color:#B3001B}
+  button.approve{background:#1A7A3C;color:#fff}
+  .meta{font-size:12px;color:#7A8BAE;margin:6px 0}
+  .title{font-weight:700;font-size:15px}
+  .content{font-size:13px;margin:8px 0;color:#333}
+  .status{font-size:13px;margin-top:10px}
+  #postsList{margin-top:20px}
+  #loginBox{margin-bottom:20px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Forum Moderation</h1>
+  <div class="sub">Private admin view — approve or reject pending posts.</div>
+
+  <div id="loginBox" class="card">
+    <p style="font-size:13px;color:#7A8BAE;margin-bottom:14px">Sign in with your admin email.</p>
+    <div style="display:flex;gap:8px;max-width:420px;flex-wrap:wrap">
+      <input id="adminEmail" type="email" placeholder="you@email.com">
+      <button onclick="sendAdminCode()" id="btnAdminSend">Send code</button>
+    </div>
+    <div style="display:none;gap:8px;max-width:420px;margin-top:10px" id="adminCodeRow">
+      <input id="adminCode" type="text" inputmode="numeric" maxlength="8" placeholder="Enter your code" autocomplete="one-time-code">
+      <button onclick="verifyAdminCode()" id="btnAdminVerify">Verify</button>
+    </div>
+    <div class="status" id="adminLoginStatus"></div>
+  </div>
+
+  <div id="postsList"></div>
+</div>
+
+<script>
+  const sb = supabase.createClient(
+    'https://qginevdbqaodimcllevb.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFnaW5ldmRicWFvZGltY2xsZXZiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODExOTc1MjMsImV4cCI6MjA5Njc3MzUyM30.lIVdS5UJ-NfqN7WVyiyvGZZmbF_2RxmLObxlILyeSMQ'
+  );
+
+  async function sendAdminCode(){
+    const email = document.getElementById('adminEmail').value.trim();
+    if(!email || !email.includes('@')){
+      document.getElementById('adminLoginStatus').innerHTML = '<span style="color:#B3001B">Please enter a valid email.</span>';
+      return;
+    }
+    document.getElementById('btnAdminSend').disabled = true;
+    document.getElementById('btnAdminSend').textContent = 'Sending...';
+    const { error } = await sb.auth.signInWithOtp({ email: email });
+    document.getElementById('btnAdminSend').disabled = false;
+    document.getElementById('btnAdminSend').textContent = 'Send code';
+    if(error){
+      document.getElementById('adminLoginStatus').innerHTML = '<span style="color:#B3001B">'+error.message+'</span>';
+      return;
+    }
+    document.getElementById('adminLoginStatus').innerHTML = '<span style="color:#1A7A3C">Check your email for the code.</span>';
+    document.getElementById('adminCodeRow').style.display = 'flex';
+  }
+
+  async function verifyAdminCode(){
+    const email = document.getElementById('adminEmail').value.trim();
+    const code = document.getElementById('adminCode').value.trim();
+    if(!code){
+      document.getElementById('adminLoginStatus').innerHTML = '<span style="color:#B3001B">Please enter the code from your email.</span>';
+      return;
+    }
+    document.getElementById('btnAdminVerify').disabled = true;
+    document.getElementById('btnAdminVerify').textContent = 'Verifying...';
+    const { error } = await sb.auth.verifyOtp({ email: email, token: code, type: 'email' });
+    document.getElementById('btnAdminVerify').disabled = false;
+    document.getElementById('btnAdminVerify').textContent = 'Verify';
+    if(error){
+      document.getElementById('adminLoginStatus').innerHTML = '<span style="color:#B3001B">'+error.message+'</span>';
+      return;
+    }
+    document.getElementById('loginBox').style.display = 'none';
+    loadPendingPosts();
+  }
+
+  async function loadPendingPosts(){
+    const { data, error } = await sb.from('forum_posts')
+      .select('*, forum_profiles(display_name)')
+      .eq('is_approved', false)
+      .order('created_at', { ascending: false });
+    const list = document.getElementById('postsList');
+    if (error){
+      list.innerHTML = '<div class="card">Error loading posts: '+error.message+'</div>';
+      return;
+    }
+    if (!data || data.length === 0){
+      list.innerHTML = '<div class="card">No pending posts right now.</div>';
+      return;
+    }
+    list.innerHTML = data.map(p => {
+      const name = p.forum_profiles ? p.forum_profiles.display_name : 'Member';
+      return '<div class="card" id="post-'+p.id+'">'+
+        '<div class="title">'+p.title+'</div>'+
+        '<div class="meta">'+name+' · '+p.category+' · '+new Date(p.created_at).toLocaleString()+'</div>'+
+        '<div class="content">'+p.content+'</div>'+
+        '<div style="margin-top:12px;display:flex;gap:8px">'+
+          '<button class="approve" onclick="approvePost(\\''+p.id+'\\')">Approve</button>'+
+          '<button class="reject" onclick="rejectPost(\\''+p.id+'\\')">Reject</button>'+
+        '</div>'+
+      '</div>';
+    }).join('');
+  }
+
+  async function approvePost(id){
+    const { error } = await sb.from('forum_posts').update({ is_approved: true }).eq('id', id);
+    if(error){ alert('Error: '+error.message); return; }
+    document.getElementById('post-'+id).remove();
+  }
+
+  async function rejectPost(id){
+    if(!confirm('Delete this post permanently?')) return;
+    const { error } = await sb.from('forum_posts').delete().eq('id', id);
+    if(error){ alert('Error: '+error.message); return; }
+    document.getElementById('post-'+id).remove();
+  }
+</script>
+</body>
+</html>
