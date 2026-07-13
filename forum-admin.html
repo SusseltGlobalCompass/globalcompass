@@ -46,6 +46,9 @@
   </div>
 
   <div id="postsList"></div>
+
+  <h1 style="margin-top:36px">Pending Replies</h1>
+  <div id="repliesList"></div>
 </div>
 
 <script>
@@ -91,6 +94,7 @@
     }
     document.getElementById('loginBox').style.display = 'none';
     loadPendingPosts();
+    loadPendingReplies();
   }
 
   async function loadPendingPosts(){
@@ -132,6 +136,45 @@
     const { error } = await sb.from('forum_posts').delete().eq('id', id);
     if(error){ alert('Error: '+error.message); return; }
     document.getElementById('post-'+id).remove();
+  }
+
+  async function loadPendingReplies(){
+    const { data, error } = await sb.from('forum_replies')
+      .select('*')
+      .eq('is_approved', false)
+      .order('created_at', { ascending: false });
+    const list = document.getElementById('repliesList');
+    if (error){
+      list.innerHTML = '<div class="card">Error loading replies: '+error.message+'</div>';
+      return;
+    }
+    if (!data || data.length === 0){
+      list.innerHTML = '<div class="card">No pending replies right now.</div>';
+      return;
+    }
+    list.innerHTML = data.map(r => {
+      return '<div class="card" id="reply-'+r.id+'">'+
+        '<div class="meta">Reply to post '+r.post_id+' \u00b7 '+new Date(r.created_at).toLocaleString()+'</div>'+
+        '<div class="content">'+r.content+'</div>'+
+        '<div style="margin-top:12px;display:flex;gap:8px">'+
+          "<button class=\"approve\" onclick=\"approveReply(&#39;"+r.id+"&#39;)\">Approve</button>"+
+          "<button class=\"reject\" onclick=\"rejectReply(&#39;"+r.id+"&#39;)\">Reject</button>"+
+        '</div>'+
+      '</div>';
+    }).join('');
+  }
+
+  async function approveReply(id){
+    const { error } = await sb.from('forum_replies').update({ is_approved: true }).eq('id', id);
+    if(error){ alert('Error: '+error.message); return; }
+    document.getElementById('reply-'+id).remove();
+  }
+
+  async function rejectReply(id){
+    if(!confirm('Delete this reply permanently?')) return;
+    const { error } = await sb.from('forum_replies').delete().eq('id', id);
+    if(error){ alert('Error: '+error.message); return; }
+    document.getElementById('reply-'+id).remove();
   }
 </script>
 </body>
