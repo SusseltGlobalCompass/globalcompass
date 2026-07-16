@@ -146,8 +146,9 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
         <span id="postSubmitStatus" style="font-size:12px;margin-left:10px"></span>
       </div>
 
-      <div id="postsList"></div>
     </div>
+
+    <div id="postsList"></div>
   </div>
 
   <script>
@@ -179,6 +180,7 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
         document.getElementById('loginGate').style.display = 'block';
         document.getElementById('profileGate').style.display = 'none';
         document.getElementById('postingArea').style.display = 'none';
+        loadPosts();
       }
     }
 
