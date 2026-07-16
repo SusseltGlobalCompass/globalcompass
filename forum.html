@@ -139,6 +139,9 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
       </div>
 
       <div id="newPostForm" style="display:none;background:#F8F9FF;border-radius:10px;padding:16px;margin-bottom:20px">
+        <select id="postTopic" style="width:100%;padding:10px 12px;border:1px solid #E0E8F5;border-radius:8px;font-size:13px;margin-bottom:8px;background:#fff">
+          <option value="">Choose a topic...</option>
+        </select>
         <input id="postTitle" type="text" placeholder="Title" maxlength="120" style="width:100%;padding:10px 12px;border:1px solid #E0E8F5;border-radius:8px;font-size:13px;margin-bottom:8px">
         <textarea id="postContent" placeholder="Share your question or experience..." rows="4" style="width:100%;padding:10px 12px;border:1px solid #E0E8F5;border-radius:8px;font-size:13px;font-family:inherit;resize:vertical"></textarea>
         <div style="font-size:11px;color:#7A8BAE;margin:8px 0">Every post is reviewed before it appears publicly, per our <a href="community-guidelines.html" style="color:#1B3A7A">Community Guidelines</a>.</div>
@@ -148,7 +151,10 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
 
     </div>
 
-    <div id="postsList"></div>
+    <div style="display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap">
+      <div id="topicSidebar" style="width:180px;flex-shrink:0;display:flex;flex-direction:column;gap:4px"></div>
+      <div id="postsList" style="flex:1;min-width:240px"></div>
+    </div>
   </div>
 
   <script>
@@ -157,11 +163,14 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
     let currentCategory = null;
     let currentForumUser = null;
     let currentForumProfile = null;
+    let activeTopicId = null;
+    let allTopics = [];
 
     const BANNED_WORDS = ['spam','scam','whatsapp me','contact me privately','viagra'];
 
     function openCategory(cat){
       currentCategory = cat;
+      activeTopicId = null;
       document.getElementById('communityPanel').style.display = 'block';
       document.getElementById('panelTitle').textContent = cat === 'student' ? 'Student Community' : 'Parents Community';
       document.getElementById('communityPanel').scrollIntoView({behavior:'smooth', block:'start'});
@@ -269,9 +278,11 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
       const matched = BANNED_WORDS.find(w => lowerText.includes(w));
 
       document.getElementById('btnSubmitPost').disabled = true;
+      const topicId = document.getElementById('postTopic').value || null;
       const { error } = await sb.from('forum_posts').insert({
         user_id: currentForumUser.id,
         category: currentCategory,
+        topic_id: topicId,
         title: title,
         content: contentText,
         is_approved: false,
@@ -289,21 +300,61 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
       loadPosts();
     }
 
+    async function loadTopicsIntoDropdown(){
+      if (allTopics.length === 0){
+        const { data } = await sb.from('forum_topics').select('*').order('sort_order');
+        allTopics = data || [];
+      }
+      const sel = document.getElementById('postTopic');
+      if (!sel.dataset.loaded){
+        allTopics.forEach(t => {
+          const opt = document.createElement('option');
+          opt.value = t.id;
+          opt.textContent = t.name;
+          sel.appendChild(opt);
+        });
+        sel.dataset.loaded = 'true';
+      }
+    }
+
+    function selectTopicFilter(topicId){
+      activeTopicId = topicId;
+      loadPosts();
+    }
+
+    function renderTopicSidebar(posts){
+      const box = document.getElementById('topicSidebar');
+      const counts = {};
+      posts.forEach(p => { if (p.topic_id) counts[p.topic_id] = (counts[p.topic_id] || 0) + 1; });
+      const allActive = activeTopicId === null;
+      let html = '<div style="font-family:sans-serif;font-size:11px;letter-spacing:0.06em;color:#9AB0D0;text-transform:uppercase;margin-bottom:4px">Topics</div>';
+      html += '<div onclick="selectTopicFilter(null)" style="cursor:pointer;font-family:sans-serif;font-size:12.5px;font-weight:700;color:'+(allActive?'#1B3A7A':'#333')+';background:'+(allActive?'#EEF3FF':'transparent')+';border-radius:8px;padding:8px 10px;display:flex;justify-content:space-between">All topics<span style="color:#9AB0D0;font-weight:400">'+posts.length+'</span></div>';
+      allTopics.forEach(t => {
+        const active = activeTopicId === t.id;
+        html += '<div onclick="selectTopicFilter(\''+t.id+'\')" style="cursor:pointer;font-family:sans-serif;font-size:12.5px;font-weight:'+(active?'700':'400')+';color:'+(active?'#1B3A7A':'#333')+';background:'+(active?'#EEF3FF':'transparent')+';border-radius:8px;padding:8px 10px;display:flex;justify-content:space-between">'+t.name+'<span style="color:#9AB0D0">'+(counts[t.id]||0)+'</span></div>';
+      });
+      box.innerHTML = html;
+    }
+
     async function loadPosts(){
+      await loadTopicsIntoDropdown();
       const { data, error } = await sb.from('forum_posts')
         .select('*')
         .eq('category', currentCategory)
         .order('created_at', { ascending: false });
+      renderTopicSidebar(data || []);
+      const filteredData = activeTopicId ? (data || []).filter(p => p.topic_id === activeTopicId) : (data || []);
       const list = document.getElementById('postsList');
-      if (error || !data || data.length === 0){
+      if (error || !filteredData || filteredData.length === 0){
         list.innerHTML = '<div style="text-align:center;padding:30px;color:#7A8BAE;font-size:13px">No posts yet — be the first to share.</div>';
         return;
       }
-      const postUserIds = [...new Set(data.map(p => p.user_id))];
+      const data2 = filteredData;
+      const postUserIds = [...new Set(data2.map(p => p.user_id))];
       const { data: postProfiles } = await sb.from('forum_profiles').select('*').in('user_id', postUserIds);
       const postProfileMap = {};
       (postProfiles || []).forEach(pr => { postProfileMap[pr.user_id] = pr; });
-      list.innerHTML = data.map(p => {
+      list.innerHTML = data2.map(p => {
         const pending = !p.is_approved ? '<span style="font-size:10px;background:#FFF3D6;color:#8a6a14;padding:2px 8px;border-radius:99px;margin-left:8px">Pending review</span>' : '';
         const profile = postProfileMap[p.user_id];
         const name = profile && profile.display_name ? profile.display_name : 'Member';
