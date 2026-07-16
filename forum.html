@@ -299,10 +299,16 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
         list.innerHTML = '<div style="text-align:center;padding:30px;color:#7A8BAE;font-size:13px">No posts yet — be the first to share.</div>';
         return;
       }
+      const postUserIds = [...new Set(data.map(p => p.user_id))];
+      const { data: postProfiles } = await sb.from('forum_profiles').select('*').in('user_id', postUserIds);
+      const postProfileMap = {};
+      (postProfiles || []).forEach(pr => { postProfileMap[pr.user_id] = pr; });
       list.innerHTML = data.map(p => {
         const pending = !p.is_approved ? '<span style="font-size:10px;background:#FFF3D6;color:#8a6a14;padding:2px 8px;border-radius:99px;margin-left:8px">Pending review</span>' : '';
-        const name = 'Member';
-        return '<div id="post-'+p.id+'" style="border-bottom:0.5px solid #F0F3FA;padding:14px 0"><div style="font-weight:600;font-size:14px;color:#0D1F4A">'+p.title+pending+'</div><div style="font-size:12px;color:#7A8BAE;margin:4px 0">'+name+' · '+new Date(p.created_at).toLocaleDateString()+'</div><div style="font-size:13px;color:#333;margin-bottom:8px">'+p.content+'</div>'+
+        const profile = postProfileMap[p.user_id];
+        const name = profile && profile.display_name ? profile.display_name : 'Member';
+        const since = profile && profile.created_at ? ' · Member since ' + new Date(profile.created_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : '';
+        return '<div id="post-'+p.id+'" style="border-bottom:0.5px solid #F0F3FA;padding:14px 0"><div style="font-weight:600;font-size:14px;color:#0D1F4A">'+p.title+pending+'</div><div style="font-size:12px;color:#7A8BAE;margin:4px 0">'+name+since+' · '+new Date(p.created_at).toLocaleDateString()+'</div><div style="font-size:13px;color:#333;margin-bottom:8px">'+p.content+'</div>'+
           '<div id="repliesList-'+p.id+'" style="margin:8px 0 8px 16px"></div>'+
           '<a href="#" onclick="toggleReplyForm(\''+p.id+'\');return false;" style="font-size:12px;color:#1B3A7A;font-weight:600">Reply</a>'+
           '<div id="replyForm-'+p.id+'" style="display:none;margin-top:8px;max-width:520px">'+
@@ -362,9 +368,15 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
         box.innerHTML = '';
         return;
       }
+      const replyUserIds = [...new Set(data.map(r => r.user_id))];
+      const { data: replyProfiles } = await sb.from('forum_profiles').select('*').in('user_id', replyUserIds);
+      const replyProfileMap = {};
+      (replyProfiles || []).forEach(pr => { replyProfileMap[pr.user_id] = pr; });
       box.innerHTML = data.map(r => {
         const pending = !r.is_approved ? '<span style="font-size:9px;background:#FFF3D6;color:#8a6a14;padding:1px 7px;border-radius:99px;margin-left:6px">Pending review</span>' : '';
-        return '<div style="border-left:2px solid #EEF3FF;padding:6px 0 6px 10px;margin-bottom:4px"><div style="font-size:12px;color:#7A8BAE">Member'+pending+' · '+new Date(r.created_at).toLocaleDateString()+'</div><div style="font-size:13px;color:#333">'+r.content+'</div></div>';
+        const profile = replyProfileMap[r.user_id];
+        const name = profile && profile.display_name ? profile.display_name : 'Member';
+        return '<div style="border-left:2px solid #EEF3FF;padding:6px 0 6px 10px;margin-bottom:4px"><div style="font-size:12px;color:#7A8BAE">'+name+pending+' · '+new Date(r.created_at).toLocaleDateString()+'</div><div style="font-size:13px;color:#333">'+r.content+'</div></div>';
       }).join('');
     }
 
