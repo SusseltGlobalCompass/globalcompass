@@ -1037,6 +1037,30 @@ const gpaPoints = {'A+':4.0,'A':4.0,'A-':3.7,'B+':3.3,'B':3.0,'B-':2.7,'C+':2.3,
 const weightBonus = {'Regular':0,'Honors':0.5,'AP-IB':1.0};
 let americanSubjectRowCount = 0, apExamRowCount = 0, vceSubjectRowCount = 0;
 
+const vceSubjectGroups = {
+  'English': ['English', 'English as an Additional Language (EAL)', 'English Language', 'Literature'],
+  'Mathematics': ['Foundation Mathematics', 'General Mathematics', 'Mathematical Methods', 'Specialist Mathematics'],
+  'Sciences': ['Biology', 'Chemistry', 'Physics', 'Psychology', 'Environmental Science'],
+  'Humanities': ['Legal Studies', 'History', 'Geography', 'Australian Politics', 'Global Politics', 'Philosophy', 'Economics'],
+  'Business': ['Business Management', 'Accounting'],
+  'Arts': ['Art Creative Practice', 'Art Making and Exhibiting', 'Music', 'Drama', 'Theatre Studies', 'Media', 'Visual Communication Design', 'Dance'],
+  'Languages': ['Chinese Second Language', 'Chinese First Language', 'French', 'Italian', 'Japanese', 'German', 'Spanish', 'Auslan'],
+  'Health and Physical Education': ['Health and Human Development', 'Physical Education'],
+  'Technology': ['Product Design and Technologies', 'Food Studies', 'Applied Computing']
+};
+
+function buildVceSubjectOptions(selected){
+  let html = '<option value="">Select subject…</option>';
+  for(const group in vceSubjectGroups){
+    html += `<optgroup label="${group}">`;
+    vceSubjectGroups[group].forEach(subj => {
+      html += `<option value="${subj}" ${subj===selected?'selected':''}>${subj}</option>`;
+    });
+    html += '</optgroup>';
+  }
+  return html;
+}
+
 async function loadVceData(){
   const { data: subjects } = await sb.from('australian_subjects').select('*').eq('user_id', currentUser.id);
   document.getElementById('vceSubjectsContainer').innerHTML = '';
@@ -1056,7 +1080,7 @@ function addVceSubjectRow(existing){
   row.className = 'subj-row-multi';
   row.id = id;
   row.innerHTML = `
-    <input type="text" data-field="subject" placeholder="e.g. Specialist Mathematics" value="${existing && existing.subject ? existing.subject : ''}">
+    <select data-field="subject">${buildVceSubjectOptions(existing ? existing.subject : '')}</select>
     <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:#7A8BAE"><input type="checkbox" data-field="is_english" onchange="recalcVceFromInputs()" ${existing && existing.is_english ? 'checked' : ''}> English group</label>
     <input type="number" min="0" max="50" data-field="study_score" placeholder="0-50" value="${existing && existing.study_score !== null && existing.study_score !== undefined ? existing.study_score : ''}" onchange="recalcVceFromInputs()">
     <div></div>
