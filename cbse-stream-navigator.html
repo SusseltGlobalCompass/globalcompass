@@ -26,7 +26,7 @@ body{font-family:'Twemoji Country Flags','Inter',sans-serif;background:#F8F9FF;c
 .hero-p{font-size:12px;color:#A8C4F5;line-height:1.7;max-width:520px;margin:0 auto;font-weight:300}
 .in-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(245,200,66,0.15);border:1px solid rgba(245,200,66,0.4);border-radius:99px;padding:4px 14px;font-size:11px;font-weight:700;color:#F5C842;font-family:'Twemoji Country Flags','Montserrat',sans-serif;letter-spacing:0.06em;margin-bottom:14px}
 .main{max-width:700px;margin:0 auto;padding:24px}
-.step-indicator{display:flex;align-items:center;margin-bottom:24px}
+.step-indicator{display:flex;align-items:center;margin-bottom:24px;position:sticky;top:0;background:#F8F9FF;padding:12px 0;z-index:5}
 .step{display:flex;flex-direction:column;align-items:center;flex:1}
 .step-circle{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:'Twemoji Country Flags','Montserrat',sans-serif;transition:all 0.3s;z-index:1}
 .step-circle.done{background:#F5C842;color:#1B3A7A}
@@ -145,7 +145,7 @@ polyfillCountryFlagEmojis();
     <div class="step-line" id="sl2"></div>
     <div class="step"><div class="step-circle pending" id="sc3">3</div><div class="step-label">Destination</div></div>
     <div class="step-line" id="sl3"></div>
-    <div class="step"><div class="step-circle pending" id="sc4">4</div><div class="step-label">Context</div></div>
+    <div class="step"><div class="step-circle pending" id="sc4">4</div><div class="step-label">Roots</div></div>
     <div class="step-line" id="sl4"></div>
     <div class="step"><div class="step-circle pending" id="sc5">5</div><div class="step-label">Your Map</div></div>
   </div>
@@ -196,7 +196,7 @@ polyfillCountryFlagEmojis();
         <div class="opt-card" onclick="selectDest(this,'Open keeping all options India and international')"><span class="opt-emoji">🌍</span><div class="opt-title">Open — all options</div><div class="opt-sub">Keeping India and international open</div></div>
       </div>
     </div>
-    <div class="btn-row"><button class="btn-back" onclick="goStep(2)">← Back</button><button class="btn-next" id="btn3" onclick="goStep(4)" disabled>Next — Your context →</button></div>
+    <div class="btn-row"><button class="btn-back" onclick="goStep(2)">← Back</button><button class="btn-next" id="btn3" onclick="goStep(4)" disabled>Next — Your roots →</button></div>
   </div>
   <div id="s4" class="screen">
     <div class="card">
@@ -206,10 +206,10 @@ polyfillCountryFlagEmojis();
         <div class="opt-card" onclick="selectContext(this,'Based in UAE planning to stay in UAE after studies')"><span class="opt-emoji">🇦🇪</span><div class="opt-title">Based in UAE — staying</div><div class="opt-sub">Plan to remain in UAE after university</div></div>
         <div class="opt-card" onclick="selectContext(this,'Based in UAE planning to return to India after studies')"><span class="opt-emoji">🏠</span><div class="opt-title">Based in UAE — returning to India</div><div class="opt-sub">Plan to return to India for university</div></div>
         <div class="opt-card" onclick="selectContext(this,'Based in India applying to universities in India and abroad')"><span class="opt-emoji">🇮🇳</span><div class="opt-title">Based in India</div><div class="opt-sub">Studying CBSE in India</div></div>
-        <div class="opt-card" onclick="selectContext(this,'Family pressure towards Science stream but unsure if right choice')"><span class="opt-emoji">💭</span><div class="opt-title">Family pressure — Science stream</div><div class="opt-sub">Family wants Science but I am unsure</div></div>
+        <div class="opt-card" onclick="selectContext(this,'Honoring family hopes for Science or Medicine, while exploring what feels right for me too')"><span class="opt-emoji">💭</span><div class="opt-title">Honoring family, finding myself</div><div class="opt-sub">My family hopes for Science or Medicine, and I want to explore what's truly right for me too</div></div>
       </div>
     </div>
-    <div class="btn-row"><button class="btn-back" onclick="goStep(3)">← Back</button><button class="btn-next gold" id="btn4" onclick="generatePathway()" disabled>Generate my CBSE pathway ↗</button></div>
+    <div class="btn-row"><button class="btn-back" onclick="goStep(3)">← Back</button><button class="btn-next gold" id="btn4" onclick="generatePathway()" disabled>Draw my CBSE map ↗</button></div>
   </div>
   <div id="s5" class="screen">
     <div class="card">
