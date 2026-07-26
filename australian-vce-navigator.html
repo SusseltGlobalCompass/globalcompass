@@ -19,20 +19,20 @@ body{font-family:'Twemoji Country Flags','Inter',sans-serif;background:#F8F9FF;c
 .wm-compass{font-family:'Twemoji Country Flags','Montserrat',sans-serif;font-size:14px;font-weight:800;color:#fff;letter-spacing:0.07em;text-transform:uppercase;line-height:1}
 .wm-compass .o{color:#F5C842}
 .nav-tag{font-family:'Twemoji Country Flags','Montserrat',sans-serif;font-size:10px;font-weight:600;color:#F5C842;letter-spacing:0.12em;text-transform:uppercase;background:rgba(245,200,66,0.12);padding:4px 12px;border-radius:99px;border:0.5px solid rgba(245,200,66,0.3)}
-.hero-bar{background:linear-gradient(135deg,#00008B,#CC0000);padding:28px 24px;text-align:center;border-bottom:2px solid #F5C842}
+.hero-bar{background:linear-gradient(135deg,#8B6000,#8B6000);padding:28px 24px;text-align:center;border-bottom:2px solid #F5C842}
 .hero-h{font-family:'Twemoji Country Flags','Playfair Display',serif;font-size:24px;font-weight:500;color:#fff;line-height:1.3;margin-bottom:6px}
 .hero-h em{color:#F5C842;font-style:normal}
 .hero-p{font-size:12px;color:rgba(255,255,255,0.85);line-height:1.7;max-width:520px;margin:0 auto;font-weight:300}
 .au-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(245,200,66,0.15);border:1px solid rgba(245,200,66,0.4);border-radius:99px;padding:4px 14px;font-size:11px;font-weight:700;color:#F5C842;font-family:'Twemoji Country Flags','Montserrat',sans-serif;letter-spacing:0.06em;margin-bottom:14px}
 .main{max-width:700px;margin:0 auto;padding:24px}
-.step-indicator{display:flex;align-items:center;margin-bottom:24px}
+.step-indicator{display:flex;align-items:center;margin-bottom:24px;position:sticky;top:0;background:#F8F9FF;padding:12px 0;z-index:5}
 .step{display:flex;flex-direction:column;align-items:center;flex:1}
 .step-circle{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:'Twemoji Country Flags','Montserrat',sans-serif;transition:all 0.3s;z-index:1}
-.step-circle.done{background:#F5C842;color:#00008B}
-.step-circle.active{background:#CC0000;color:#fff;border:2px solid #F5C842}
+.step-circle.done{background:#F5C842;color:#8B6000}
+.step-circle.active{background:#8B6000;color:#fff;border:2px solid #F5C842}
 .step-circle.pending{background:#E0E8F5;color:#9AB0D0}
 .step-label{font-size:9px;color:#9AB0D0;margin-top:4px;text-align:center;font-weight:500;letter-spacing:0.04em;font-family:'Twemoji Country Flags','Montserrat',sans-serif;text-transform:uppercase;max-width:60px}
-.step-label.active{color:#CC0000;font-weight:700}
+.step-label.active{color:#8B6000;font-weight:700}
 .step-line{height:1px;background:#E0E8F5;flex:1;margin-top:-14px}
 .step-line.done{background:#F5C842}
 .card{background:#fff;border:0.5px solid #E0E8F5;border-radius:16px;padding:22px;margin-bottom:14px}
@@ -40,34 +40,34 @@ body{font-family:'Twemoji Country Flags','Inter',sans-serif;background:#F8F9FF;c
 .card-sub{font-size:13px;color:#4A6FA5;line-height:1.6;margin-bottom:18px;font-weight:300}
 .options-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .opt-card{border:1.5px solid #E0E8F5;border-radius:12px;padding:14px;cursor:pointer;transition:all 0.15s}
-.opt-card:hover{border-color:#CC0000;background:#FFF0F0}
-.opt-card.selected{border-color:#CC0000;background:#FFF0F0}
+.opt-card:hover{border-color:#8B6000;background:#FFF0F0}
+.opt-card.selected{border-color:#8B6000;background:#FFF0F0}
 .opt-emoji{font-size:24px;margin-bottom:8px;display:block;text-align:center}
 .opt-title{font-size:13px;font-weight:600;color:#0D1F4A;margin-bottom:3px;font-family:'Twemoji Country Flags','Montserrat',sans-serif}
 .opt-sub{font-size:11px;color:#4A6FA5;line-height:1.4}
 .dream-input{width:100%;border:1.5px solid #E0E8F5;border-radius:12px;padding:14px 16px;font-size:14px;color:#0D1F4A;font-family:'Twemoji Country Flags','Inter',sans-serif;outline:none;resize:none;min-height:90px;transition:border-color 0.15s;line-height:1.6}
-.dream-input:focus{border-color:#CC0000}
+.dream-input:focus{border-color:#8B6000}
 .dream-input::placeholder{color:#9AB0D0}
 .example-prompts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
 .ep{font-size:11px;padding:5px 12px;border-radius:99px;border:0.5px solid #C0D0E8;color:#2952A3;cursor:pointer;background:#EEF3FF;font-family:'Twemoji Country Flags','Inter',sans-serif;transition:all 0.15s;font-weight:500}
-.ep:hover{background:#CC0000;color:#fff;border-color:#CC0000}
+.ep:hover{background:#8B6000;color:#fff;border-color:#8B6000}
 .btn-row{display:flex;justify-content:space-between;align-items:center;margin-top:18px}
 .btn-back{font-size:13px;padding:9px 20px;border-radius:99px;border:1px solid #E0E8F5;background:transparent;color:#4A6FA5;cursor:pointer;font-family:'Twemoji Country Flags','Inter',sans-serif}
-.btn-next{font-size:13px;padding:9px 24px;border-radius:99px;border:none;background:#CC0000;color:#fff;cursor:pointer;font-family:'Twemoji Country Flags','Montserrat',sans-serif;font-weight:700}
+.btn-next{font-size:13px;padding:9px 24px;border-radius:99px;border:none;background:#8B6000;color:#fff;cursor:pointer;font-family:'Twemoji Country Flags','Montserrat',sans-serif;font-weight:700}
 .btn-next:disabled{opacity:0.4;cursor:not-allowed}
-.btn-next.gold{background:#F5C842;color:#00008B}
+.btn-next.gold{background:#F5C842;color:#8B6000}
 .loading-wrap{text-align:center;padding:40px 0}
 .loading-icon{font-size:36px;color:#F5C842;animation:spin 1s linear infinite;display:block;margin:0 auto 16px}
 @keyframes spin{to{transform:rotate(360deg)}}
 .loading-text{font-family:'Twemoji Country Flags','Playfair Display',serif;font-size:16px;color:#0D1F4A;margin-bottom:5px}
 .loading-sub{font-size:12px;color:#4A6FA5;font-weight:300}
 .result-hero{text-align:center;padding:16px 0 20px;border-bottom:1px solid #E0E8F5;margin-bottom:20px}
-.result-tag{display:inline-flex;align-items:center;gap:6px;font-size:10px;padding:4px 12px;border-radius:99px;background:#FFF0F0;color:#CC0000;margin-bottom:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;font-family:'Twemoji Country Flags','Montserrat',sans-serif}
+.result-tag{display:inline-flex;align-items:center;gap:6px;font-size:10px;padding:4px 12px;border-radius:99px;background:#FFF0F0;color:#8B6000;margin-bottom:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;font-family:'Twemoji Country Flags','Montserrat',sans-serif}
 .result-career{font-family:'Twemoji Country Flags','Playfair Display',serif;font-size:22px;color:#0D1F4A;margin-bottom:6px}
 .result-summary{font-size:13px;color:#4A6FA5;line-height:1.7;font-weight:300;max-width:520px;margin:0 auto}
 .subj-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
 .subj-card{border-radius:12px;padding:14px}
-.subj-card.essential{background:#00008B}
+.subj-card.essential{background:#8B6000}
 .subj-card.recommended{background:#EEF3FF;border:0.5px solid #C0D0E8}
 .subj-card.optional{background:#F8F9FF;border:0.5px solid #E0E8F5}
 .subj-badge{font-size:9px;padding:2px 8px;border-radius:99px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;font-family:'Twemoji Country Flags','Montserrat',sans-serif;margin-bottom:6px;display:inline-block}
@@ -78,13 +78,13 @@ body{font-family:'Twemoji Country Flags','Inter',sans-serif;background:#F8F9FF;c
 .subj-name-dark{font-size:13px;font-weight:700;color:#0D1F4A;margin-bottom:3px;font-family:'Twemoji Country Flags','Montserrat',sans-serif}
 .subj-why-light{font-size:11px;color:rgba(255,255,255,0.75);line-height:1.5}
 .subj-why-dark{font-size:11px;color:#4A6FA5;line-height:1.5}
-.scaling-box{background:linear-gradient(135deg,#00008B,#CC0000);border-radius:12px;padding:16px;margin-bottom:14px}
+.scaling-box{background:linear-gradient(135deg,#8B6000,#8B6000);border-radius:12px;padding:16px;margin-bottom:14px}
 .scaling-title{font-family:'Twemoji Country Flags','Montserrat',sans-serif;font-size:11px;font-weight:700;color:#F5C842;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px}
 .scaling-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .scaling-item{background:rgba(255,255,255,0.1);border-radius:8px;padding:10px}
 .scaling-subject{font-size:11px;font-weight:700;color:#F5C842;font-family:'Twemoji Country Flags','Montserrat',sans-serif;margin-bottom:3px}
 .scaling-detail{font-size:11px;color:rgba(255,255,255,0.85);line-height:1.5}
-.atar-box{background:#00008B;border-radius:12px;padding:16px;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.atar-box{background:#8B6000;border-radius:12px;padding:16px;display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .atar-text h4{font-family:'Twemoji Country Flags','Montserrat',sans-serif;font-size:12px;font-weight:700;color:#F5C842;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:3px}
 .atar-text p{font-size:11px;color:rgba(255,255,255,0.7);font-weight:300}
 .atar-score{font-family:'Twemoji Country Flags','Playfair Display',serif;font-size:32px;color:#F5C842;font-weight:500}
@@ -92,17 +92,17 @@ body{font-family:'Twemoji Country Flags','Inter',sans-serif;background:#F8F9FF;c
 .uni-title{font-family:'Twemoji Country Flags','Montserrat',sans-serif;font-size:11px;font-weight:700;color:#1B3A7A;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px}
 .uni-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .uni-item{background:#fff;border-radius:8px;padding:10px;border:0.5px solid #C0D0E8}
-.uni-name{font-size:11px;font-weight:700;color:#00008B;font-family:'Twemoji Country Flags','Montserrat',sans-serif;margin-bottom:3px}
+.uni-name{font-size:11px;font-weight:700;color:#8B6000;font-family:'Twemoji Country Flags','Montserrat',sans-serif;margin-bottom:3px}
 .uni-detail{font-size:11px;color:#4A6FA5;line-height:1.4}
 .hidden-box{background:#FFF8E6;border:1.5px solid #F5C842;border-radius:12px;padding:16px;margin-bottom:14px}
-.hidden-title{font-size:12px;font-weight:700;color:#CC0000;margin-bottom:8px;font-family:'Twemoji Country Flags','Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.06em}
+.hidden-title{font-size:12px;font-weight:700;color:#8B6000;margin-bottom:8px;font-family:'Twemoji Country Flags','Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.06em}
 .hidden-item{font-size:12px;color:#2C1800;display:flex;align-items:flex-start;gap:8px;line-height:1.5;margin-bottom:5px}
 .intl-box{background:#1B3A7A;border-radius:12px;padding:16px;margin-bottom:14px}
 .intl-title{font-family:'Twemoji Country Flags','Montserrat',sans-serif;font-size:11px;font-weight:700;color:#F5C842;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px}
 .intl-content{font-size:12px;color:rgba(255,255,255,0.85);line-height:1.7}
 .ai-bubble{background:#FFF0F0;border-radius:0 12px 12px 12px;padding:14px 16px;border:0.5px solid #FFAAAA}
 .ai-bubble p{font-size:13px;color:#0D1F4A;line-height:1.7}
-.ai-label{font-size:10px;font-weight:700;color:#CC0000;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;font-family:'Twemoji Country Flags','Montserrat',sans-serif}
+.ai-label{font-size:10px;font-weight:700;color:#8B6000;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;font-family:'Twemoji Country Flags','Montserrat',sans-serif}
 .action-row{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
 .action-btn{font-size:12px;padding:10px 20px;border-radius:99px;cursor:pointer;font-weight:700;font-family:'Twemoji Country Flags','Montserrat',sans-serif;border:none}
 </style>
@@ -192,7 +192,7 @@ polyfillCountryFlagEmojis();
         <div class="opt-card" onclick="selectDest(this,'Open keeping all options Australia and international')"><span class="opt-emoji">🌍</span><div class="opt-title">Open — all options</div><div class="opt-sub">Australia and international</div></div>
       </div>
     </div>
-    <div class="btn-row"><button class="btn-back" onclick="goStep(2)">← Back</button><button class="btn-next gold" id="btn3" onclick="generatePathway()" disabled>Generate my VCE pathway ↗</button></div>
+    <div class="btn-row"><button class="btn-back" onclick="goStep(2)">← Back</button><button class="btn-next gold" id="btn3" onclick="generatePathway()" disabled>Draw my VCE map ↗</button></div>
   </div>
   <div id="s4" class="screen">
     <div class="card">
@@ -218,8 +218,8 @@ polyfillCountryFlagEmojis();
     <div class="card"><div class="ai-label">GlobalCompass insight</div><div class="ai-bubble"><p id="aiInsight"></p></div></div>
     <div style="font-size:11px;color:#7A8BAE;background:#F8F9FF;border-radius:8px;padding:10px 14px;margin:10px 0">GlobalCompass provides general guidance to help you plan &mdash; always verify official requirements and deadlines directly with your target university before making any decisions. GlobalCompass is not responsible for outcomes based on information that changes after publication, or for decisions made using this tool alone.</div>
     <div class="action-row">
-      <button class="action-btn" style="background:#CC0000;color:#fff" onclick="goStep(1)">Start again</button>
-      <button class="action-btn" style="background:#F5C842;color:#00008B" onclick="window.location.href='schools.html?cur=Australian'">Find Australian schools ↗</button>
+      <button class="action-btn" style="background:#8B6000;color:#fff" onclick="goStep(1)">Start again</button>
+      <button class="action-btn" style="background:#F5C842;color:#8B6000" onclick="window.location.href='schools.html?cur=Australian'">Find Australian schools ↗</button>
       <button class="action-btn" style="background:#EEF3FF;color:#2952A3" onclick="window.location.href='index.html'">Back to GlobalCompass ↗</button>
     </div>
   </div>
@@ -251,7 +251,7 @@ function showResults(r){
   document.getElementById('subjOutput').innerHTML=r.subjects.map(s=>{const cls=s.level==='essential'||s.level==='compulsory'?'essential':s.level==='recommended'?'recommended':'optional';const nl=cls==='essential'?'subj-name-light':'subj-name-dark';const wl=cls==='essential'?'subj-why-light':'subj-why-dark';const sc=s.level==='essential'||s.level==='compulsory'?'rgba(245,200,66,1)':'#2952A3';return'<div class="subj-card '+cls+'"><span class="subj-badge badge-'+cls+'">'+s.level+'</span><div style="font-size:9px;color:'+sc+';margin-bottom:4px;font-family:Montserrat,sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:0.05em">'+s.scaling+'</div><div class="'+nl+'">'+s.name+'</div><div class="'+wl+'">'+s.why+'</div></div>';}).join('');
   document.getElementById('atarOutput').innerHTML='<div class="atar-box"><div class="atar-text"><h4>Target ATAR</h4><p>Percentile rank needed for your target universities</p></div><div class="atar-score">'+r.targetATAR+'</div></div>';
   document.getElementById('scalingOutput').innerHTML='<div class="scaling-box"><div class="scaling-title">ATAR Scaling strategy — maximise your rank</div><div class="scaling-grid">'+r.scalingAdvice.map(s=>'<div class="scaling-item"><div class="scaling-subject">'+s.subject+'</div><div class="scaling-detail">'+s.tip+'</div></div>').join('')+'</div></div>';
-  document.getElementById('uniOutput').innerHTML='<div class="uni-box"><div class="uni-title">Target universities for your pathway</div><div class="uni-grid">'+r.targetUniversities.map(u=>'<div class="uni-item"><div class="uni-name">'+u.name+'</div><div class="uni-detail">'+u.programme+'</div><div style="font-size:10px;color:#CC0000;font-weight:700;margin-top:3px">ATAR: '+u.atar+'</div></div>').join('')+'</div></div>';
+  document.getElementById('uniOutput').innerHTML='<div class="uni-box"><div class="uni-title">Target universities for your pathway</div><div class="uni-grid">'+r.targetUniversities.map(u=>'<div class="uni-item"><div class="uni-name">'+u.name+'</div><div class="uni-detail">'+u.programme+'</div><div style="font-size:10px;color:#8B6000;font-weight:700;margin-top:3px">ATAR: '+u.atar+'</div></div>').join('')+'</div></div>';
   document.getElementById('hiddenOutput').innerHTML='<div class="hidden-box"><div class="hidden-title">Hidden requirements — what nobody tells you</div>'+r.hiddenRequirements.map(h=>'<div class="hidden-item"><span>→</span><span>'+h+'</span></div>').join('')+'</div>';
   document.getElementById('intlOutput').innerHTML='<div class="intl-box"><div class="intl-title">International and UAE / Malaysia context</div><div class="intl-content">'+r.internationalContext+'</div></div>';
   goStep(5);updateSteps(4);
