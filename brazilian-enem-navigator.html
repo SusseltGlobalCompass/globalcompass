@@ -220,7 +220,7 @@ polyfillCountryFlagEmojis();
     <div id="hiddenOutput"></div>
     <div id="uaeOutput"></div>
     <div class="card"><div class="ai-label">GlobalCompass insight</div><div class="ai-bubble"><p id="aiInsight"></p></div></div>
-    <div style="font-size:11px;color:#7A8BAE;background:#F8F9FF;border-radius:8px;padding:10px 14px;margin:10px 0">GlobalCompass provides general guidance to help you plan &mdash; always verify official requirements and deadlines directly with your target university before making any decisions. GlobalCompass is not responsible for outcomes based on information that changes after publication, or for decisions made using this tool alone.</div>
+    <div id="disclaimerText" style="font-size:11px;color:#7A8BAE;background:#F8F9FF;border-radius:8px;padding:10px 14px;margin:10px 0">GlobalCompass provides general guidance to help you plan &mdash; always verify official requirements and deadlines directly with your target university before making any decisions. GlobalCompass is not responsible for outcomes based on information that changes after publication, or for decisions made using this tool alone.</div>
     <div class="action-row">
       <button class="action-btn" style="background:#009739;color:#fff" onclick="goStep(1)">Começar de novo</button>
       <button class="action-btn" style="background:#FEDD00;color:#002776" onclick="window.location.href='schools.html?cur=Brazilian'">Find Brazilian schools ↗</button>
@@ -249,7 +249,8 @@ const translations = {
     d6Title: 'Aberto — todas as opções', d6Sub: 'Brasil e internacional',
     areasTitle: 'Suas áreas de foco no ENEM',
     examplesLabel: ['Medicina','Direito','Engenharia','Negócios Internacionais','Psicologia','Arquitetura'],
-    dreamPlaceholder: 'ex. Quero estudar medicina e me tornar médico...'
+    dreamPlaceholder: 'ex. Quero estudar medicina e me tornar médico...',
+    disclaimerText: 'O GlobalCompass oferece orientação geral para ajudar no seu planejamento — sempre verifique os requisitos e prazos oficiais diretamente com a universidade de destino antes de tomar qualquer decisão. O GlobalCompass não se responsabiliza por resultados baseados em informações que mudem após a publicação, nem por decisões tomadas com base apenas nesta ferramenta.'
   },
   en: {
     navTag: '🇧🇷 ENEM Navigator',
@@ -267,7 +268,8 @@ const translations = {
     d6Title: 'Open — all options', d6Sub: 'Brazil and international',
     areasTitle: 'Your ENEM focus areas',
     examplesLabel: ['Medicine','Law','Engineering','International Business','Psychology','Architecture'],
-    dreamPlaceholder: 'e.g. I want to study medicine and become a doctor...'
+    dreamPlaceholder: 'e.g. I want to study medicine and become a doctor...',
+    disclaimerText: 'GlobalCompass provides general guidance to help you plan — always verify official requirements and deadlines directly with your target university before making any decisions. GlobalCompass is not responsible for outcomes based on information that changes after publication, or for decisions made using this tool alone.'
   }
 };
 
@@ -299,6 +301,7 @@ function setLang(lang){
   examples.forEach(ep => { ep.innerHTML = ep.getAttribute('data-emoji') + ' ' + (lang === 'en' ? ep.getAttribute('data-label-en') : ep.getAttribute('data-label-pt')); });
 
   const areasTitle = document.querySelector('#s5 .card-title'); if(areasTitle) areasTitle.textContent = t.areasTitle;
+  const disclaimerEl = document.getElementById('disclaimerText'); if(disclaimerEl) disclaimerEl.textContent = t.disclaimerText;
 }
 
 document.getElementById('dreamInput').addEventListener('input',function(){dream=this.value.trim();document.getElementById('btn1').disabled=dream.length<10;});
