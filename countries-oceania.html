@@ -70,10 +70,20 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
 
 <div class="main">
   <div class="country-list">
-  <div class="country-row"><span class="cn-name">Australia</span><span class="cn-right"><span class="cn-status soon">Coming soon</span></span></div>
+  <a class="country-row is-live" href="schools.html?q=Australia"><span class="cn-name">Australia</span><span class="cn-right"><span class="cn-status live" id="ausSchoolCount">10,915+ schools</span><i class="ti ti-chevron-right cn-arrow"></i></span></a>
   <div class="country-row"><span class="cn-name">New Zealand</span><span class="cn-right"><span class="cn-status soon">Coming soon</span></span></div>
   <div class="country-row"><span class="cn-name">Fiji</span><span class="cn-right"><span class="cn-status soon">Coming soon</span></span></div>
   </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const sb = supabase.createClient("https://qginevdbqaodimcllevb.supabase.co", "sb_publishable_q3hvHIL8bl4oH49Qkyqkgg_w1G2Ud5w");
+(async () => {
+  const { count } = await sb.from('schools').select('*', { count: 'exact', head: true }).eq('country_id', '149c862c-e23b-492d-b051-6f64556905cc');
+  if (count) {
+    document.getElementById('ausSchoolCount').textContent = count + '+ schools';
+  }
+})();
+</script>
 </body>
 </html>
