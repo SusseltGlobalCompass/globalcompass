@@ -377,10 +377,13 @@ polyfillCountryFlagEmojis();
     </div>
   </div>
   <div class="stats">
-    <div class="stat"><div class="stat-n" id="homeSchoolCount">260+</div><div class="stat-l">UAE Schools</div></div>
     <div class="stat"><div class="stat-n">190+</div><div class="stat-l">Countries</div></div>
     <div class="stat"><div class="stat-n">9</div><div class="stat-l">Curricula</div></div>
     <div class="stat"><div class="stat-n">Free</div><div class="stat-l">For every family</div></div>
+  </div>
+  <div class="region-chips" style="margin-top:16px">
+    <a class="region-chip" href="schools.html?q=United Arab Emirates" style="--rc:#F5C842;--rb:rgba(245,200,66,0.15);--rt:rgba(245,200,66,0.35)">🇦🇪&nbsp;<span id="chipUAE">756+</span>&nbsp;UAE</a>
+    <a class="region-chip" href="schools.html?q=Australia" style="--rc:#D4A840;--rb:rgba(139,96,0,0.2);--rt:rgba(180,130,0,0.35)">🇦🇺&nbsp;<span id="chipAUS">10,915+</span>&nbsp;Australia</a>
   </div>
 </section>
 
@@ -529,7 +532,11 @@ const sbHome = supabase.createClient("https://qginevdbqaodimcllevb.supabase.co",
 (async () => {
   const { count } = await sbHome.from('schools').select('*', { count: 'exact', head: true }).eq('country_id', '9beb50ee-a772-4b1a-b63a-d35a4b0e59e1');
   if (count) {
-    document.getElementById('homeSchoolCount').textContent = count + '+';
+    document.getElementById('chipUAE').textContent = count.toLocaleString() + '+';
+  }
+  const { count: ausCount } = await sbHome.from('schools').select('*', { count: 'exact', head: true }).eq('country_id', '149c862c-e23b-492d-b051-6f64556905cc');
+  if (ausCount) {
+    document.getElementById('chipAUS').textContent = ausCount.toLocaleString() + '+';
   }
 })();
 </script>
