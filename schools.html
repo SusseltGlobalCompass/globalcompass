@@ -106,6 +106,8 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
       <select id="curSel" class="f-sel" onchange="document.getElementById('curSel').dataset.userTouched='1'"><option value="">All curricula</option><option value="IB">IB</option><option value="British">British</option><option value="American">American</option><option value="CBSE">CBSE</option><option value="French">French</option><option value="German">German</option><option value="Singapore">Singapore</option><option value="Australian">Australian</option><option value="Brazilian">Brazilian</option><option value="SABIS (Choueifat)">SABIS (Choueifat)</option><option value="MoE">Ministry of Education (MoE)</option><option value="Japanese">Japanese</option><option value="Russian">Russian</option><option value="Pakistani/Bangladesh">Pakistani/Bangladesh</option><option value="Canadian">Canadian</option><option value="Italian/Spanish">Italian/Spanish</option><option value="Philippine">Philippine</option><option value="International">International Schools</option></select>
       <div class="f-div"></div>
       <select id="budgetSel" class="f-sel"><option value="">All budgets</option><option value="0-20000">Under AED 20,000/yr</option><option value="20000-45000">AED 20,000–45,000/yr</option><option value="45000-75000">AED 45,000–75,000/yr</option><option value="75000-999999">AED 75,000+/yr</option></select>
+      <div class="f-div"></div>
+      <select id="ownSel" class="f-sel"><option value="">Public &amp; Private</option><option value="Public">Public only</option><option value="Private">Private only</option></select>
       <button class="f-btn" onclick="runSearch()">Search</button>
     </div>
   </div>
@@ -191,6 +193,7 @@ function applyParamsToUI(params){
   setCurriculumOptionSet(isNursery, params.cur);
   if(params.age) document.getElementById("ageSel").value = params.age;
   if(params.budget) document.getElementById("budgetSel").value = params.budget;
+  if(params.own) document.getElementById("ownSel").value = params.own;
 }
 
 function stripAccents(str){
@@ -211,8 +214,9 @@ async function runSearch(){
   const age = document.getElementById("ageSel").value;
   const cur = document.getElementById("curSel").value;
   const budget = document.getElementById("budgetSel").value;
+  const own = document.getElementById("ownSel").value;
 
-  const newUrl = window.location.pathname + "?q=" + encodeURIComponent(q) + "&age=" + age + "&cur=" + cur + "&budget=" + budget;
+  const newUrl = window.location.pathname + "?q=" + encodeURIComponent(q) + "&age=" + age + "&cur=" + cur + "&budget=" + budget + "&own=" + own;
   window.history.replaceState({}, "", newUrl);
 
   document.getElementById("resultsArea").innerHTML = '<div class="loading-state">Searching...</div>';
@@ -238,6 +242,9 @@ async function runSearch(){
   if(budget){
     const [bMin,bMax] = budget.split("-").map(Number);
     query = query.lte("fee_min", bMax).gte("fee_max", bMin);
+  }
+  if(own){
+    query = query.eq("school_type", own);
   }
   const typeParam = getParams().type;
   if(typeParam){
