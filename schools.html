@@ -193,6 +193,10 @@ function applyParamsToUI(params){
   if(params.budget) document.getElementById("budgetSel").value = params.budget;
 }
 
+function stripAccents(str){
+  return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
 async function resolveCountryIds(q){
   if(!q) return [];
   const synonyms = {"uae":"United Arab Emirates","u.a.e":"United Arab Emirates","usa":"United States","us":"United States","u.s.a":"United States","u.s":"United States","uk":"United Kingdom","u.k":"United Kingdom"};
@@ -217,7 +221,8 @@ async function runSearch(){
 
   if(q){
     const countryIds = await resolveCountryIds(q);
-    let orParts = ["name.ilike.%"+q+"%","city.ilike.%"+q+"%"];
+    const qUnaccented = stripAccents(q);
+    let orParts = ["name.ilike.%"+q+"%","city.ilike.%"+q+"%","city_unaccented.ilike.%"+qUnaccented+"%"];
     if(countryIds.length){
       orParts.push("country_id.in.("+countryIds.join(",")+")");
     }
