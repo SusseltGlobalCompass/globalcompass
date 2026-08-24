@@ -112,6 +112,7 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
     </div>
   </div>
 
+  <div id="cityHint" style="display:none;text-align:center;font-size:12px;color:#7A8BAE;margin-bottom:10px;font-family:'Inter',sans-serif"></div>
   <div id="resultsMeta" class="results-meta"></div>
   <div id="resultsArea"><div class="loading-state">Loading schools...</div></div>
 </div>
@@ -223,14 +224,20 @@ async function runSearch(){
 
   let query = sb.from("schools").select("*, countries(name)");
 
+  const hintEl = document.getElementById("cityHint");
+  hintEl.style.display = "none";
   if(q){
     const countryIds = await resolveCountryIds(q);
-    const qUnaccented = stripAccents(q);
-    let orParts = ["name.ilike.%"+q+"%","city.ilike.%"+q+"%","city_unaccented.ilike.%"+qUnaccented+"%"];
     if(countryIds.length){
-      orParts.push("country_id.in.("+countryIds.join(",")+")");
+      // The search term matched a real country name exactly - filter by
+      // country only, skip the expensive name/city fuzzy search entirely.
+      query = query.in("country_id", countryIds);
+      hintEl.textContent = 'Tip: for more specific results, replace "' + q + '" above with a city name instead, e.g. Sao Paulo or Rio de Janeiro';
+      hintEl.style.display = "block";
+    } else {
+      const qUnaccented = stripAccents(q);
+      query = query.or(["name.ilike.%"+q+"%","city.ilike.%"+q+"%","city_unaccented.ilike.%"+qUnaccented+"%"].join(","));
     }
-    query = query.or(orParts.join(","));
   }
   if(cur){
     query = query.ilike("curriculum", "%"+cur+"%");
