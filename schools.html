@@ -290,7 +290,7 @@ function renderResults(schools){
     const country = s.countries ? s.countries.name : "";
     const loc = [s.city, country].filter(Boolean).join(", ");
     const ageRange = (s.age_min!=null && s.age_max!=null) ? ("Ages "+s.age_min+"-"+s.age_max) : "";
-    const feeRange = (s.fee_min!=null && s.fee_max!=null) ? (s.fee_currency||"AED")+" "+s.fee_min.toLocaleString()+"-"+s.fee_max.toLocaleString()+(s.fee_label?(" "+s.fee_label):"/month") : "";
+    const feeRange = (s.fee_min!=null && s.fee_max!=null) ? (s.fee_currency||"AED")+" "+s.fee_min.toLocaleString()+"-"+s.fee_max.toLocaleString()+(s.fee_label?(" "+s.fee_label):"/month") : (s.fee_label || "");
     const badge = s.school_type || "School";
     const khda = s.khda_rating || "";
     const khdaColour = khda === "Outstanding" ? "#1A4D1A" : khda === "Very Good" ? "#2D1B6E" : khda === "Good" ? "#8B6000" : khda === "Acceptable" ? "#8B3A00" : "#555";
