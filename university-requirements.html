@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlobalCompass — University Requirements Checker</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/dist/tabler-icons.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Montserrat:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:#1B3A7A}
+.nav-back{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;color:#A8C4F5;text-decoration:none;display:flex;align-items:center;gap:4px}
+.nav-tag{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;color:#F5C842;letter-spacing:0.12em;text-transform:uppercase;background:rgba(245,200,66,0.12);padding:4px 12px;border-radius:99px;border:0.5px solid rgba(245,200,66,0.3)}
+.hero-bar{background:linear-gradient(135deg,#1B3A7A,#2952A3);padding:28px 24px;text-align:center;border-bottom:2px solid #F5C842}
+.hero-eyebrow{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:#F5C842;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:10px}
+.hero-h{font-family:'Playfair Display',serif;font-size:26px;font-weight:500;color:#fff;line-height:1.3;margin-bottom:8px}
+.hero-p{font-size:13px;color:#A8C4F5;line-height:1.7;max-width:480px;margin:0 auto;font-weight:300}
+.steps{display:flex;align-items:center;justify-content:center;gap:8px;padding:20px 16px;max-width:500px;margin:0 auto}
+.step{display:flex;flex-direction:column;align-items:center;gap:6px}
+.step-circle{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;font-family:'Montserrat',sans-serif;transition:all 0.3s}
+.step-circle.done{background:#F5C842;color:#1B3A7A}
+.step-circle.active{background:#1B3A7A;color:#F5C842;border:2px solid #F5C842}
+.step-circle.pending{background:#E0E8F5;color:#9AB0D0}
+.step-label{font-size:10px;font-family:'Montserrat',sans-serif;font-weight:600;color:#9AB0D0}
+.step-label.active{color:#1B3A7A;font-weight:700}
+.step-line{width:40px;height:1.5px;background:#E0E8F5}
+.wrap{max-width:600px;margin:0 auto;padding:24px 20px 60px}
+.card{background:#fff;border:0.5px solid #E0E8F5;border-radius:14px;padding:24px}
+.card-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:500;color:#0D1F4A;margin-bottom:6px}
+.card-sub{font-size:13px;color:#7A8BAE;line-height:1.6;margin-bottom:20px}
+.field{margin-bottom:20px}
+.field-label{font-size:12px;font-weight:700;font-family:'Montserrat',sans-serif;color:#0D1F4A;margin-bottom:8px;display:block}
+.f-sel{width:100%;padding:12px 14px;border:1.5px solid #E0E8F5;border-radius:10px;font-size:14px;color:#0D1F4A;font-family:'Inter',sans-serif;background:#fff;cursor:pointer;box-sizing:border-box}
+.yn-group{display:flex;gap:10px}
+.yn-btn{flex:1;padding:12px;border:1.5px solid #E0E8F5;border-radius:10px;background:#fff;font-size:13px;font-weight:600;font-family:'Inter',sans-serif;color:#4A6FA5;cursor:pointer;text-align:center;transition:all 0.15s}
+.yn-btn.selected{border-color:#1B3A7A;background:#1B3A7A;color:#F5C842}
+.help-text{font-size:11px;color:#9AB0D0;line-height:1.5;margin-top:6px}
+.btn-next{width:100%;font-size:14px;padding:13px 24px;border-radius:99px;border:none;background:#1B3A7A;color:#F5C842;cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:700;margin-top:8px}
+.btn-next:disabled{background:#E0E8F5;color:#9AB0D0;cursor:not-allowed}
+.uni-card{border:1.5px solid #E0E8F5;border-radius:12px;padding:16px 18px;margin-bottom:10px;cursor:pointer;transition:all 0.15s}
+.uni-card:hover{border-color:#1B3A7A;background:#F8F9FF}
+.uni-name{font-size:15px;font-weight:700;font-family:'Montserrat',sans-serif;color:#0D1F4A}
+.uni-country{font-size:12px;color:#7A8BAE;margin-top:2px}
+.report-header{text-align:center;padding-bottom:20px;border-bottom:1px solid #E0E8F5;margin-bottom:20px}
+.report-uni{font-family:'Playfair Display',serif;font-size:20px;color:#0D1F4A}
+.req-item{border-radius:10px;padding:14px 16px;margin-bottom:10px;border-left:4px solid}
+.req-item.met{background:#F0FAF3;border-color:#1A7A3A}
+.req-item.action{background:#FFF8E6;border-color:#B48200}
+.req-item.verify{background:#EEF3FF;border-color:#2952A3}
+.req-status{font-size:10px;font-weight:700;font-family:'Montserrat',sans-serif;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px}
+.req-item.met .req-status{color:#1A7A3A}
+.req-item.action .req-status{color:#8a6a14}
+.req-item.verify .req-status{color:#2952A3}
+.req-name{font-size:14px;font-weight:700;color:#0D1F4A;margin-bottom:3px}
+.req-note{font-size:12px;color:#4A6FA5;line-height:1.5}
+.disclaimer{font-size:11px;color:#9AB0D0;text-align:center;margin-top:20px;line-height:1.6;padding:0 10px}
+.btn-secondary{width:100%;font-size:13px;padding:11px 24px;border-radius:99px;border:1.5px solid #E0E8F5;background:#fff;color:#1B3A7A;cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:700;margin-top:10px}
+.loading-state{text-align:center;padding:40px;color:#9AB0D0;font-size:13px}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a class="nav-back" href="index.html"><i class="ti ti-arrow-left"></i> All regions</a>
+  <div class="nav-tag">University Pathways</div>
+</nav>
+
+<div class="hero-bar">
+  <div class="hero-eyebrow">University Pathways</div>
+  <h1 class="hero-h">University Requirements Checker</h1>
+  <p class="hero-p">Real, sourced answers about what you actually need — no guessing, no unnecessary exam fees.</p>
+</div>
+
+<div class="steps">
+  <div class="step"><div class="step-circle active" id="sc1">1</div><div class="step-label active" id="sl1">Your Background</div></div>
+  <div class="step-line"></div>
+  <div class="step"><div class="step-circle pending" id="sc2">2</div><div class="step-label" id="sl2">University</div></div>
+  <div class="step-line"></div>
+  <div class="step"><div class="step-circle pending" id="sc3">3</div><div class="step-label" id="sl3">Your Report</div></div>
+</div>
+
+<div class="wrap">
+
+  <!-- STEP 1: Background -->
+  <div id="step1" class="card">
+    <div class="card-title">Tell us about your schooling</div>
+    <div class="card-sub">This stays in your browser only — we don't save or store any of this information.</div>
+
+    <div class="field">
+      <label class="field-label">Your curriculum</label>
+      <select class="f-sel" id="curSel">
+        <option value="">Select your curriculum</option>
+        <option value="IB">IB</option>
+        <option value="British">British</option>
+        <option value="American">American</option>
+        <option value="CBSE">CBSE</option>
+        <option value="French">French</option>
+        <option value="German">German</option>
+        <option value="Singapore">Singapore</option>
+        <option value="Australian">Australian</option>
+        <option value="SABIS (Choueifat)">SABIS (Choueifat)</option>
+        <option value="MoE">Ministry of Education (MoE)</option>
+        <option value="Brazilian">Brazilian</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label class="field-label">What language was most of your schooling taught in?</label>
+      <select class="f-sel" id="langSel">
+        <option value="">Select a language</option>
+        <option value="English">English</option>
+        <option value="French">French</option>
+        <option value="Spanish">Spanish</option>
+        <option value="Other">Other</option>
+      </select>
+      <div class="help-text">Some curricula (like IB) are offered in more than one language — this helps us check requirements accurately regardless of which one your school used.</div>
+    </div>
+
+    <div class="field">
+      <label class="field-label">Is English your native/first language?</label>
+      <div class="yn-group">
+        <button class="yn-btn" id="nativeYes" onclick="setYN('native', true)">Yes</button>
+        <button class="yn-btn" id="nativeNo" onclick="setYN('native', false)">No</button>
+      </div>
+    </div>
+
+    <div class="field">
+      <label class="field-label">Have you lived for the last 3+ consecutive years in a country where English is the sole official language? (e.g. US, UK, Canada, Australia)</label>
+      <div class="yn-group">
+        <button class="yn-btn" id="residentYes" onclick="setYN('resident', true)">Yes</button>
+        <button class="yn-btn" id="residentNo" onclick="setYN('resident', false)">No</button>
+      </div>
+      <div class="help-text">Some universities waive English proficiency exams based on this, separately from your curriculum.</div>
+    </div>
+
+    <button class="btn-next" id="step1Next" onclick="goStep(2)" disabled>Continue</button>
+  </div>
+
+  <!-- STEP 2: University -->
+  <div id="step2" class="card" style="display:none">
+    <div class="card-title">Choose your target university</div>
+    <div class="card-sub">Select the university you'd like to check requirements for.</div>
+    <input type="text" class="f-sel" id="uniSearch" placeholder="Search by name or country..." style="margin-bottom:14px" oninput="filterUniversities()">
+    <div id="uniList"><div class="loading-state">Loading universities...</div></div>
+    <button class="btn-secondary" onclick="goStep(1)">← Change my background</button>
+  </div>
+
+  <!-- STEP 3: Report -->
+  <div id="step3" class="card" style="display:none">
+    <div class="report-header">
+      <div class="report-uni" id="reportUniName"></div>
+    </div>
+    <div id="reportBody"><div class="loading-state">Building your report...</div></div>
+    <button class="btn-secondary" onclick="goStep(2)">Check a different university</button>
+    <div class="disclaimer">This report is based on publicly available admissions information and is meant to help you plan — it is not a guarantee of admission or a substitute for the university's own official requirements. Always confirm final details directly with the university before applying.</div>
+  </div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const sb = supabase.createClient("https://qginevdbqaodimcllevb.supabase.co", "sb_publishable_q3hvHIL8bl4oH49Qkyqkgg_w1G2Ud5w");
+
+let student = { curriculum: "", language: "", native: null, resident: null };
+let selectedUniversity = null;
+let allUniversities = [];
+
+function setYN(field, value){
+  student[field] = value;
+  document.getElementById(field + 'Yes').classList.toggle('selected', value === true);
+  document.getElementById(field + 'No').classList.toggle('selected', value === false);
+  checkStep1Complete();
+}
+
+document.getElementById('curSel').addEventListener('change', function(){
+  student.curriculum = this.value;
+  checkStep1Complete();
+});
+
+document.getElementById('langSel').addEventListener('change', function(){
+  student.language = this.value;
+  checkStep1Complete();
+});
+
+function checkStep1Complete(){
+  const complete = student.curriculum && student.language && student.native !== null && student.resident !== null;
+  document.getElementById('step1Next').disabled = !complete;
+}
+
+function goStep(n){
+  for(let i = 1; i <= 3; i++){
+    document.getElementById('step' + i).style.display = i === n ? 'block' : 'none';
+    const circle = document.getElementById('sc' + i);
+    const label = document.getElementById('sl' + i);
+    circle.className = 'step-circle ' + (i < n ? 'done' : i === n ? 'active' : 'pending');
+    circle.textContent = i < n ? '✓' : i;
+    label.className = 'step-label' + (i === n ? ' active' : '');
+  }
+  if(n === 2 && allUniversities.length === 0) loadUniversities();
+}
+
+async function loadUniversities(){
+  const { data, error } = await sb.from('target_universities').select('*').order('name');
+  const listEl = document.getElementById('uniList');
+  if(error || !data || data.length === 0){
+    listEl.innerHTML = '<div class="loading-state">No universities available right now — please try again shortly.</div>';
+    return;
+  }
+  allUniversities = data;
+  renderUniversityList(allUniversities);
+}
+
+function renderUniversityList(list){
+  const listEl = document.getElementById('uniList');
+  if(list.length === 0){
+    listEl.innerHTML = '<div class="loading-state">No universities match your search.</div>';
+    return;
+  }
+  listEl.innerHTML = list.map(u =>
+    '<div class="uni-card" onclick="selectUniversity(\'' + u.id + '\')"><div class="uni-name">' + u.name + '</div><div class="uni-country">' + u.country + '</div></div>'
+  ).join('');
+}
+
+function filterUniversities(){
+  const q = document.getElementById('uniSearch').value.trim().toLowerCase();
+  if(!q){
+    renderUniversityList(allUniversities);
+    return;
+  }
+  const filtered = allUniversities.filter(u =>
+    u.name.toLowerCase().includes(q) || u.country.toLowerCase().includes(q)
+  );
+  renderUniversityList(filtered);
+}
+
+async function selectUniversity(id){
+  selectedUniversity = allUniversities.find(u => u.id === id);
+  goStep(3);
+  await buildReport(id);
+}
+
+async function buildReport(universityId){
+  document.getElementById('reportUniName').textContent = selectedUniversity.name;
+  const bodyEl = document.getElementById('reportBody');
+  bodyEl.innerHTML = '<div class="loading-state">Building your report...</div>';
+
+  const { data, error } = await sb.from('university_requirements').select('*').eq('university_id', universityId);
+  if(error || !data){
+    bodyEl.innerHTML = '<div class="loading-state">Could not load requirements — please try again.</div>';
+    return;
+  }
+
+  const items = data.map(r => evaluateRequirement(r));
+  bodyEl.innerHTML = items.map(renderReqItem).join('');
+}
+
+function evaluateRequirement(r){
+  let status, note;
+
+  if(r.condition_type === 'required_if_curriculum_in'){
+    const triggerList = (r.condition_value || '').split(',').map(s => s.trim());
+    if(triggerList.includes(student.curriculum)){
+      status = 'action';
+      note = 'Required specifically for your curriculum (' + student.curriculum + '). ' + (r.notes || '');
+    } else {
+      status = r.required ? 'action' : 'met';
+      note = r.required ? (r.notes || 'Required.') : 'Not required based on your curriculum. ' + (r.notes || '');
+    }
+  } else if(r.condition_type === 'waived_if_instruction_language_in'){
+    const langList = (r.condition_value || '').split(',').map(s => s.trim());
+    if(langList.includes(student.language)){
+      status = 'verify';
+      note = 'Likely waived — your schooling was taught in ' + student.language + '. Confirm exact eligibility (years of schooling, course grades) directly with ' + selectedUniversity.name + '.';
+    } else {
+      status = 'action';
+      note = r.notes || 'Required based on your schooling language.';
+    }
+  } else if(r.condition_type === 'waived_if_native_or_3yr_resident'){
+    if(student.native === true || student.resident === true){
+      status = 'verify';
+      note = 'Likely waived, based on your background — confirm directly with ' + selectedUniversity.name + '.';
+    } else {
+      status = 'action';
+      note = r.notes || 'Required based on your background.';
+    }
+  } else {
+    status = r.required ? 'action' : 'met';
+    note = r.notes || '';
+  }
+
+  return { name: r.document_type, status, note, deadline: r.deadline };
+}
+
+function renderReqItem(item){
+  const statusLabel = item.status === 'met' ? 'Not needed for you' : item.status === 'action' ? 'Required' : 'Confirm with university';
+  const deadlineText = item.deadline ? ' · Deadline: ' + item.deadline : '';
+  return '<div class="req-item ' + item.status + '">'
+    + '<div class="req-status">' + statusLabel + '</div>'
+    + '<div class="req-name">' + item.name + deadlineText + '</div>'
+    + (item.note ? '<div class="req-note">' + item.note + '</div>' : '')
+    + '</div>';
+}
+</script>
+</body>
+</html>
