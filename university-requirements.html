@@ -53,6 +53,12 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
 .req-item.met .req-status{color:#1A7A3A}
 .req-item.action .req-status{color:#8a6a14}
 .req-item.verify .req-status{color:#2952A3}
+.req-item.optional{background:#F5F7FB;border-color:#9AB0D0}
+.req-item.depends{background:#EEF3FF;border-color:#2952A3}
+.req-item.optional .req-status{color:#5A6F95}
+.req-item.depends .req-status{color:#2952A3}
+.req-source{font-size:11px;color:#9AB0D0;margin-top:6px}
+.req-source a{color:#7A8BAE}
 .req-name{font-size:14px;font-weight:700;color:#0D1F4A;margin-bottom:3px}
 .req-note{font-size:12px;color:#4A6FA5;line-height:1.5}
 .disclaimer{font-size:11px;color:#9AB0D0;text-align:center;margin-top:20px;line-height:1.6;padding:0 10px}
@@ -290,16 +296,44 @@ function evaluateRequirement(r){
     note = r.notes || '';
   }
 
-  return { name: r.document_type, status, note, deadline: r.deadline };
+  if((r.condition_type === 'none' || !r.condition_type) && (r.requirement_level === 'optional' || r.requirement_level === 'depends')){
+    status = r.requirement_level;
+  }
+  return { name: r.document_type, status, note, deadline: r.deadline, verified: r.verified_on, source: r.source_url, cycle: r.cycle };
+}
+
+function formatDate(d){
+  if(!d) return '';
+  const p = String(d).split('-');
+  if(p.length !== 3) return d;
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const m = parseInt(p[1], 10) - 1;
+  if(isNaN(m) || m < 0 || m > 11) return d;
+  return parseInt(p[2], 10) + ' ' + months[m] + ' ' + p[0];
+}
+
+function freshnessLine(item){
+  let txt;
+  if(item.verified){
+    txt = 'Last checked ' + formatDate(item.verified) + (item.cycle ? ' · ' + item.cycle + ' cycle' : '');
+    if(item.source && String(item.source).indexOf('http') === 0){
+      txt += ' · <a href="' + item.source + '" target="_blank" rel="noopener">Source</a>';
+    }
+  } else {
+    txt = 'Not yet re-verified — confirm on the university website';
+  }
+  return '<div class="req-source">' + txt + '</div>';
 }
 
 function renderReqItem(item){
-  const statusLabel = item.status === 'met' ? 'Not needed for you' : item.status === 'action' ? 'Required' : 'Confirm with university';
-  const deadlineText = item.deadline ? ' · Deadline: ' + item.deadline : '';
+  const labels = { met: 'Not needed for you', action: 'Required', optional: 'Optional', depends: 'Depends on your course', verify: 'Confirm with university' };
+  const statusLabel = labels[item.status] || 'Confirm with university';
+  const deadlineText = item.deadline ? ' · Deadline: ' + formatDate(item.deadline) : '';
   return '<div class="req-item ' + item.status + '">'
     + '<div class="req-status">' + statusLabel + '</div>'
     + '<div class="req-name">' + item.name + deadlineText + '</div>'
     + (item.note ? '<div class="req-note">' + item.note + '</div>' : '')
+    + freshnessLine(item)
     + '</div>';
 }
 </script>
