@@ -61,6 +61,9 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
 .req-item.later .req-status{color:#2952A3}
 .req-source{font-size:11px;color:#9AB0D0;margin-top:6px}
 .req-source a{color:#7A8BAE}
+.cov-banner{background:#FFF8E6;border:1.5px solid #B48200;border-radius:10px;padding:14px 16px;margin-bottom:14px;font-size:13px;color:#0D1F4A;line-height:1.5}
+.cov-banner b{display:block;margin-bottom:4px}
+.cov-banner a{color:#1B3A7A;font-weight:700}
 .req-name{font-size:14px;font-weight:700;color:#0D1F4A;margin-bottom:3px}
 .req-note{font-size:12px;color:#4A6FA5;line-height:1.5}
 .disclaimer{font-size:11px;color:#9AB0D0;text-align:center;margin-top:20px;line-height:1.6;padding:0 10px}
@@ -111,6 +114,7 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
         <option value="SABIS (Choueifat)">SABIS (Choueifat)</option>
         <option value="MoE">Ministry of Education (MoE)</option>
         <option value="Brazilian">Brazilian</option>
+        <option value="Other">Other curriculum</option>
       </select>
     </div>
 
@@ -261,7 +265,15 @@ async function buildReport(universityId){
   }
 
   const items = data.map(r => evaluateRequirement(r));
-  bodyEl.innerHTML = items.map(renderReqItem).join('');
+  bodyEl.innerHTML = coverageBanner() + items.map(renderReqItem).join('');
+}
+
+function coverageBanner(){
+  const covered = (selectedUniversity.covered_curricula || '').split(',').map(s => s.trim()).filter(Boolean);
+  if(!covered.length || covered.includes(student.curriculum)) return '';
+  const link = selectedUniversity.international_url || selectedUniversity.admissions_url;
+  const linkHtml = (link && String(link).indexOf('http') === 0) ? ' <a href="' + link + '" target="_blank" rel="noopener">Open the university page for your country</a>' : '';
+  return '<div class="cov-banner"><b>We have not added ' + selectedUniversity.name + ' grade requirements for your curriculum (' + student.curriculum + ') yet.</b>Please check the university page before relying on this report.' + linkHtml + '</div>';
 }
 
 function evaluateRequirement(r){
@@ -274,7 +286,7 @@ function evaluateRequirement(r){
       note = 'Required specifically for your curriculum (' + student.curriculum + '). ' + (r.notes || '');
     } else {
       status = r.required ? 'action' : 'met';
-      note = r.required ? (r.notes || 'Required.') : 'Not required based on your curriculum. ' + (r.notes || '');
+      note = r.required ? (r.notes || 'Required.') : 'Not required based on your curriculum.';
     }
   } else if(r.condition_type === 'waived_if_instruction_language_in'){
     const langList = (r.condition_value || '').split(',').map(s => s.trim());
