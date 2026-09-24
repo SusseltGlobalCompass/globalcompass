@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlobalCompass — Universities</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#1a1a1a}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:#1B3A7A;flex-wrap:wrap;gap:10px}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.wm-wrap{display:flex;flex-direction:column}
+.wm-global-row{display:flex;align-items:center;gap:5px;margin-bottom:2px}
+.wm-rule{height:0.7px;background:rgba(245,200,66,0.5);flex:1}
+.wm-global{font-family:'Montserrat',sans-serif;font-size:7px;font-weight:300;color:#fff;letter-spacing:0.3em;text-transform:uppercase}
+.wm-compass{font-family:'Montserrat',sans-serif;font-size:15px;font-weight:800;color:#fff;letter-spacing:0.02em}
+.wm-compass .o{color:#F5C842}
+.nav-right{display:flex;align-items:center;gap:14px}
+.nav-back{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;color:#A8C4F5;text-decoration:none;display:flex;align-items:center;gap:4px}
+.nav-tag{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;color:#F5C842;letter-spacing:0.12em;text-transform:uppercase;background:rgba(245,200,66,0.12);padding:4px 12px;border-radius:99px;border:0.5px solid rgba(245,200,66,0.3)}
+
+.hero-bar{background:linear-gradient(135deg,#0D1F4A,#1B3A7A);padding:36px 24px 44px;text-align:center}
+.hero-eyebrow{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:700;color:#F5C842;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:10px}
+.hero-h{font-family:'Playfair Display',serif;font-size:32px;font-weight:500;color:#fff;margin-bottom:8px}
+.hero-p{font-size:13.5px;color:#A8C4F5;max-width:600px;margin:0 auto;font-weight:300;line-height:1.7}
+
+.main{max-width:900px;margin:0 auto;padding:0 24px 60px}
+
+.feature-card{background:#fff;border:1.5px solid #1B3A7A;border-radius:16px;padding:28px;margin-top:-24px;position:relative;z-index:2;box-shadow:0 8px 24px rgba(13,31,74,0.08)}
+.feature-top{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.beta-badge{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;color:#8A6A14;letter-spacing:0.1em;text-transform:uppercase;background:#FFF8E6;border:0.5px solid rgba(180,130,0,0.3);padding:3px 10px;border-radius:99px}
+.feature-h{font-family:'Playfair Display',serif;font-size:21px;color:#0D1F4A}
+.feature-p{font-size:13.5px;color:#4A6FA5;line-height:1.65;margin-bottom:18px}
+.feature-p b{color:#0D1F4A}
+.btn-start{display:inline-flex;align-items:center;gap:6px;font-family:'Montserrat',sans-serif;font-size:13.5px;font-weight:700;color:#F5C842;background:#1B3A7A;text-decoration:none;padding:12px 22px;border-radius:99px}
+.btn-start:hover{background:#152e61}
+
+.section-label{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:700;color:#9AB0D0;letter-spacing:0.12em;text-transform:uppercase;margin:36px 0 14px}
+
+.soon-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){.soon-grid{grid-template-columns:1fr}}
+.soon-card{background:#fff;border:1px dashed #C7D2E8;border-radius:14px;padding:20px}
+.soon-top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.soon-icon{font-size:17px;color:#9AB0D0}
+.soon-tag{font-family:'Montserrat',sans-serif;font-size:9px;font-weight:700;color:#7A8BAE;letter-spacing:0.08em;text-transform:uppercase;background:#F0F3FA;padding:3px 9px;border-radius:99px;margin-left:auto}
+.soon-h{font-family:'Playfair Display',serif;font-size:16px;color:#0D1F4A;margin-bottom:6px}
+.soon-p{font-size:12.5px;color:#7A8BAE;line-height:1.6}
+
+.note-bar{margin-top:32px;background:#EEF3FF;border-radius:12px;padding:14px 18px;font-size:12px;color:#2952A3;line-height:1.6}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo">
+    <svg width="26" height="26" viewBox="0 0 64 64" fill="none">
+      <circle cx="32" cy="32" r="29" stroke="#F5C842" stroke-width="1.4" fill="none"/>
+      <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <circle cx="32" cy="32" r="3" fill="#F5C842"/>
+      <polygon points="32,4 35,25 32,26.5 29,25" fill="#F5C842"/>
+    </svg>
+    <div class="wm-wrap">
+      <div class="wm-global-row"><div class="wm-rule"></div><div class="wm-global">GLOBAL</div><div class="wm-rule"></div></div>
+      <div class="wm-compass">C<span class="o">O</span>MPASS</div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <a class="nav-back" href="index.html"><i class="ti ti-arrow-left"></i> Back to GlobalCompass</a>
+    <div class="nav-tag">Universities</div>
+  </div>
+</nav>
+
+<div class="hero-bar">
+  <div class="hero-eyebrow">Universities</div>
+  <div class="hero-h">Where your Pathway leads</div>
+  <div class="hero-p">University Pathways helps you plan what to study now. Universities is about where that leads — what each university actually needs from you, and, as this section grows, how to search and compare them.</div>
+</div>
+
+<div class="main">
+  <div class="feature-card">
+    <div class="feature-top">
+      <div class="feature-h">University Requirements Checker</div>
+      <div class="beta-badge">Beta</div>
+    </div>
+    <div class="feature-p">Answer a few questions about your schooling, then see real, sourced requirements for a growing list of universities — what's required, what depends on your course, and what's likely waived for you. Every answer links to where it came from and when it was last checked. <b>This is a planning tool, not an application service</b> — always confirm final details with the university.</div>
+    <a class="btn-start" href="university-requirements.html">Start the checker <i class="ti ti-arrow-right"></i></a>
+  </div>
+
+  <div class="section-label">Coming to this section</div>
+  <div class="soon-grid">
+    <div class="soon-card">
+      <div class="soon-top"><i class="ti ti-building-arch soon-icon"></i><div class="soon-tag">Coming soon</div></div>
+      <div class="soon-h">University Search</div>
+      <div class="soon-p">Browse real universities by region and country, the same honest, verified-data approach used across GlobalCompass's school search.</div>
+    </div>
+    <div class="soon-card">
+      <div class="soon-top"><i class="ti ti-wallet soon-icon"></i><div class="soon-tag">Coming soon</div></div>
+      <div class="soon-h">Study for Less</div>
+      <div class="soon-p">A guide to studying well on a limited budget — scholarships, lower-cost destinations, and routes worth knowing about, each with its own source.</div>
+    </div>
+  </div>
+
+  <div class="note-bar"><i class="ti ti-info-circle"></i>&nbsp; This section is new and growing. Real universities and real requirements are added one at a time, the same way GlobalCompass builds everything else.</div>
+</div>
+
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-3NTW0BH2C0');
+</script>
+</body>
+</html>
