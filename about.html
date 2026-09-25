@@ -75,6 +75,7 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#1a1a1a}
   <div class="hero-badge">Our story</div>
   <div class="hero-h">One home for every step of a child's education journey, worldwide.</div>
   <div class="hero-p">GlobalCompass exists to give expat and internationally mobile families a single, trustworthy guide — from the first nursery search to the final university pathway.</div>
+  <div class="hero-p" style="margin-top:14px;font-size:12.5px">Over 281 million people live outside the country they were born in (IOM World Migration Report, 2024). GlobalCompass exists for their children.</div>
 </div>
 
 <div class="main">
@@ -89,23 +90,33 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#1a1a1a}
   <div class="section">
     <div class="section-label">Our founder</div>
     <div class="section-h">Built from lived experience, not assumption</div>
-    <p class="section-p">GlobalCompass is built by Susselt, a former IB teacher and mother, based in Dubai. It's a genuinely personal project — developed hands-on, with AI assistance, despite no formal technical background.</p>
+    <p class="section-p">GlobalCompass is built by Susselt Iris Alvarez, a former IB teacher and mother, based in Dubai for over 30 years. GlobalCompass was founded and is based in the UAE — the country Susselt calls home, and the place where this platform first took shape. It's a genuinely personal project — developed hands-on, with AI assistance, despite no formal technical background.</p>
     <div class="founder-quote">"I saw, as a teacher and as a mother, how much confusion expat families carry — not because they don't care, but because no single place ever explained it all clearly. GlobalCompass is the resource I wished existed."</div>
   </div>
 
   <div class="section">
     <div class="section-label">What makes us different</div>
     <div class="section-h">A real bridge, not just a directory</div>
-    <p class="section-p">GlobalCompass isn't only a school-search engine. Its Curriculum Guides, Curriculum Quiz, and Track My Scores work together to form something genuinely rare: a real bridge from choosing a curriculum, all the way through to understanding the right university and career pathway — built specifically for internationally mobile families navigating final years across different systems.</p>
+    <p class="section-p">GlobalCompass isn't only a school-search engine. Its heart is the bridge most families don't know they need until it's too late — the transition from choosing a curriculum in the early years to understanding, years later, exactly what a target university actually requires.</p><p class="section-p">This gap costs real families real money. Every year, parents spend on exams their child never needed to sit, and on placement agencies charging steep fees for guidance that should be freely available. GlobalCompass's University Pathways and University Requirements Checker exist to close that gap — with real, sourced answers, not guesswork or upsells.</p><p class="section-p">This is a genuinely underserved space globally, and it's the reason GlobalCompass exists at all.</p>
     <div class="journey-grid">
       <div class="journey-card"><div class="journey-name">Early Years</div><div class="journey-desc">Nursery directories by educational philosophy — Montessori, British EYFS, Reggio Emilia, Forest School</div></div>
-      <div class="journey-card"><div class="journey-name">Schools</div><div class="journey-desc">Real, verified search and comparison — 756+ UAE schools and growing</div></div>
+      <div class="journey-card"><div class="journey-name">Schools</div><div class="journey-desc">Real, verified search and comparison across the UAE, Australia and Brazil — <span id="aboutSchoolCount">real schools</span> and growing</div></div>
       <div class="journey-card"><div class="journey-name">Curricula</div><div class="journey-desc">Full guides to all 9 major world curricula, plus a quiz to help families choose</div></div>
       <div class="journey-card"><div class="journey-name">Track My Scores</div><div class="journey-desc">Real curriculum performance, mapped to real university pathway clarity</div></div>
       <div class="journey-card"><div class="journey-name">SEND Compass</div><div class="journey-desc">A need-based, warmly designed guide to support for children with additional needs</div></div>
       <div class="journey-card"><div class="journey-name">Community Action Board</div><div class="journey-desc">Real education projects worldwide, and how families can help</div></div>
       <div class="journey-card"><div class="journey-name">Countries &amp; Forum</div><div class="journey-desc">Explore by region, and connect with other expat and mobile families</div></div>
-      <div class="journey-card"><div class="journey-name">Universities</div><div class="journey-desc">Coming soon — closing the loop from curriculum to career</div></div>
+      <div class="journey-card"><div class="journey-name">Universities</div><div class="journey-desc">University Requirements Checker (Beta) — real, sourced answers on what each university needs, growing one institution at a time</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Why families choose us</div>
+    <div class="section-h">What you actually get</div>
+    <div class="values-grid">
+      <div class="value-card"><div class="value-name">One trustworthy source, not a dozen tabs</div><div class="value-desc">Real, verified data — sourced directly from KHDA, ADEK, ACARA and INEP, never scraped or guessed — so you're comparing facts, not marketing.</div></div>
+      <div class="value-card"><div class="value-name">See the whole journey, not just the next step</div><div class="value-desc">From choosing a curriculum to knowing what a target university actually requires, GlobalCompass connects decisions that usually get made in isolation.</div></div>
+      <div class="value-card"><div class="value-name">Free, because that's the point</div><div class="value-desc">Every core tool — school search, curriculum guides, Track My Scores, the University Requirements Checker — stays free for families, always.</div></div>
     </div>
   </div>
 
@@ -126,5 +137,15 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#1a1a1a}
   <div class="closing-quote">"Every child deserves the right start, wherever in the world they are."</div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const sb = supabase.createClient("https://qginevdbqaodimcllevb.supabase.co", "sb_publishable_q3hvHIL8bl4oH49Qkyqkgg_w1G2Ud5w");
+(async () => {
+  const { count } = await sb.from('schools').select('*', { count: 'exact', head: true });
+  if (count) {
+    document.getElementById('aboutSchoolCount').textContent = count.toLocaleString() + '+ real schools';
+  }
+})();
+</script>
 </body>
 </html>
