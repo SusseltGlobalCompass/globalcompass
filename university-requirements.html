@@ -259,7 +259,19 @@ async function buildReport(universityId){
   const bodyEl = document.getElementById('reportBody');
   bodyEl.innerHTML = '<div class="loading-state">Building your report...</div>';
 
-  const { data, error } = await sb.from('university_requirements').select('*').eq('university_id', universityId);
+  const res = await sb.from('university_requirements').select('*').eq('university_id', universityId);
+  let data = res.data;
+  const error = res.error;
+  let sharedNotice = '';
+  if(!error && data && selectedUniversity.application_system){
+    const shared = await sb.from('system_requirements').select('*').eq('application_system', selectedUniversity.application_system);
+    if(shared.error || !shared.data){
+      sharedNotice = '<div class="cov-banner"><b>Some shared application details could not be loaded.</b>Please check the university website for the application fee and statement requirements.</div>';
+    } else {
+      const ownNames = data.map(r => r.document_type);
+      data = data.concat(shared.data.filter(s => !ownNames.includes(s.document_type)));
+    }
+  }
   if(error || !data){
     bodyEl.innerHTML = '<div class="loading-state">Could not load requirements — please try again.</div>';
     return;
@@ -270,7 +282,7 @@ async function buildReport(universityId){
     return;
   }
   const items = data.filter(r => !isHiddenRow(r)).map(r => evaluateRequirement(r));
-  bodyEl.innerHTML = coverageBanner() + items.map(renderReqItem).join('');
+  bodyEl.innerHTML = coverageBanner() + sharedNotice + items.map(renderReqItem).join('');
 }
 
 function isPastDate(d){
