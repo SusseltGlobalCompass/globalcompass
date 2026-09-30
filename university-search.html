@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlobalCompass — Search Universities</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#0D1F4A}
+.nav{display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:#1B3A7A;flex-wrap:wrap;gap:10px}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.wm-wrap{display:flex;flex-direction:column}
+.wm-global-row{display:flex;align-items:center;gap:5px;margin-bottom:2px}
+.wm-rule{height:0.7px;background:rgba(245,200,66,0.5);flex:1}
+.wm-global{font-family:'Montserrat',sans-serif;font-size:7px;font-weight:300;color:#fff;letter-spacing:0.3em;text-transform:uppercase}
+.wm-compass{font-family:'Montserrat',sans-serif;font-size:14px;font-weight:800;color:#fff;letter-spacing:0.07em;text-transform:uppercase;line-height:1}
+.wm-compass .o{color:#F5C842}
+.nav-right{display:flex;align-items:center;gap:14px}
+.nav-back{font-family:'Montserrat',sans-serif;font-size:11px;font-weight:600;color:#A8C4F5;text-decoration:none;display:flex;align-items:center;gap:4px}
+.nav-tag{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;color:#F5C842;letter-spacing:0.12em;text-transform:uppercase;background:rgba(245,200,66,0.12);padding:4px 12px;border-radius:99px;border:0.5px solid rgba(245,200,66,0.3)}
+.hero-bar{background:linear-gradient(135deg,#0D1F4A,#1B3A7A);padding:32px 24px;text-align:center}
+.hero-h{font-family:'Playfair Display',serif;font-size:28px;font-weight:500;color:#fff;margin-bottom:8px}
+.hero-p{font-size:13px;color:#A8C4F5;max-width:560px;margin:0 auto;font-weight:300;line-height:1.6}
+.main{max-width:1100px;margin:0 auto;padding:0 24px 60px}
+.filter-card{max-width:100%;margin:-26px auto 20px;background:#fff;border:2px solid #F5C842;border-radius:18px;padding:18px 22px;box-shadow:0 0 28px rgba(245,200,66,0.25);position:relative;z-index:2}
+.f-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.f-row input{flex:1 1 200px;min-width:160px;border:none;background:transparent;font-size:14px;color:#0D1F4A;outline:none;font-family:'Inter',sans-serif}
+.f-row input::placeholder{color:#9AB0D0}
+.f-div{width:1px;height:20px;background:#C0D0E8;flex-shrink:0}
+.f-sel{background:transparent;border:none;font-size:12px;color:#1B3A7A;outline:none;cursor:pointer;font-family:'Inter',sans-serif;font-weight:600}
+.f-btn{background:#1B3A7A;color:#F5C842;border:none;padding:10px 24px;border-radius:99px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;font-family:'Montserrat',sans-serif;flex-shrink:0}
+.note-bar{max-width:100%;margin:0 auto 24px;background:#EEF3FF;border-radius:12px;padding:12px 18px;font-size:12px;color:#2952A3;line-height:1.6;text-align:center}
+.results-meta{font-size:12.5px;color:#7A8BAE;margin-bottom:16px;font-weight:600}
+.results-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:760px){.results-grid{grid-template-columns:1fr}}
+.uni-card{background:#fff;border:0.5px solid #E0E8F5;border-radius:14px;padding:20px;display:flex;flex-direction:column}
+.uc-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;gap:10px}
+.uc-name{font-family:'Playfair Display',serif;font-size:17px;color:#0D1F4A}
+.uc-loc{font-size:11.5px;color:#7A8BAE;margin-top:2px}
+.uc-badge{font-size:9px;font-weight:700;color:#fff;padding:3px 9px;border-radius:99px;letter-spacing:0.03em;white-space:nowrap;text-transform:uppercase;flex-shrink:0}
+.uc-badge.verified{background:#1A7A3A}
+.uc-badge.basic{background:#B48200}
+.uc-tags{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+.uc-tag{font-size:10.5px;padding:4px 10px;border-radius:99px;background:#F8F9FF;border:0.5px solid #E0E8F5;color:#3A4A6B;font-weight:600}
+.uc-desc{font-size:12.5px;line-height:1.6;color:#3A4A6B;margin-bottom:14px;flex:1}
+.uc-actions{display:flex;gap:10px;flex-wrap:wrap;padding-top:12px;border-top:0.5px solid #E0E8F5}
+.uc-link{font-size:11.5px;color:#1B3A7A;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:4px}
+.uc-check{font-size:11.5px;background:#1B3A7A;color:#F5C842;font-weight:700;text-decoration:none;padding:7px 14px;border-radius:99px;display:inline-flex;align-items:center;gap:4px}
+.empty-state{text-align:center;padding:60px 20px;color:#7A8BAE}
+.empty-state i{font-size:36px;color:#C0D0E8;margin-bottom:12px;display:block}
+.loading-state{text-align:center;padding:60px 20px;color:#7A8BAE;font-size:13px}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-3NTW0BH2C0"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-3NTW0BH2C0');
+</script>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo">
+    <svg width="26" height="26" viewBox="0 0 64 64" fill="none">
+      <circle cx="32" cy="32" r="29" stroke="#F5C842" stroke-width="1.4" fill="none"/>
+      <ellipse cx="32" cy="32" rx="16" ry="29" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <ellipse cx="32" cy="32" rx="29" ry="12" stroke="#F5C842" stroke-width="0.8" fill="none" opacity="0.45"/>
+      <circle cx="32" cy="32" r="3" fill="#F5C842"/>
+      <polygon points="32,4 35,25 32,26.5 29,25" fill="#F5C842"/>
+    </svg>
+    <div class="wm-wrap">
+      <div class="wm-global-row"><div class="wm-rule"></div><div class="wm-global">GLOBAL</div><div class="wm-rule"></div></div>
+      <div class="wm-compass">C<span class="o">O</span>MPASS</div>
+    </div>
+  </div>
+  <div class="nav-right">
+    <a class="nav-back" href="universities.html"><i class="ti ti-arrow-left"></i> Back to Universities</a>
+    <div class="nav-tag">University Search</div>
+  </div>
+</nav>
+
+<div class="hero-bar">
+  <h1 class="hero-h">Find your university</h1>
+  <p class="hero-p">Browse real universities by country and how they take applications — no rankings, no sponsored placements, just facts to help you decide.</p>
+</div>
+
+<div class="main">
+  <div class="filter-card">
+    <div class="f-row">
+      <i class="ti ti-search" style="color:#1B3A7A;font-size:16px;flex-shrink:0"></i>
+      <input id="qInput" placeholder="University or country...">
+      <div class="f-div"></div>
+      <select id="countrySel" class="f-sel"><option value="">All countries</option></select>
+      <div class="f-div"></div>
+      <select id="systemSel" class="f-sel">
+        <option value="">All application systems</option>
+        <option value="UCAS">UCAS (UK)</option>
+        <option value="Common Application">Common Application (USA)</option>
+        <option value="__direct">Applies directly</option>
+      </select>
+      <button class="f-btn" onclick="runSearch()">Search</button>
+    </div>
+  </div>
+
+  <div class="note-bar"><i class="ti ti-info-circle"></i>&nbsp; This is a growing list, not a ranking. Every university with a green <b>Verified details</b> badge has requirement rows sourced from its own official pages in the University Requirements Checker — try it before you rely on anything here.</div>
+
+  <div id="resultsMeta" class="results-meta"></div>
+  <div id="resultsArea"><div class="loading-state">Loading universities...</div></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "https://qginevdbqaodimcllevb.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_q3hvHIL8bl4oH49Qkyqkgg_w1G2Ud5w";
+const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let allUnis = [];
+
+function systemLabel(u){
+  if(u.application_system === 'UCAS') return 'UCAS';
+  if(u.application_system === 'Common Application') return 'Common Application';
+  return 'Applies directly';
+}
+
+function escapeHtml(s){
+  return String(s || '').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+}
+
+function renderCard(u){
+  const verified = u._verifiedCount > 0;
+  const badgeClass = verified ? 'verified' : 'basic';
+  const badgeText = verified ? 'Verified details' : 'Basic listing';
+  const link = u.admissions_url || u.international_url;
+  const linkHtml = link ? `<a class="uc-link" href="${escapeHtml(link)}" target="_blank" rel="noopener"><i class="ti ti-external-link"></i> Official page</a>` : '';
+  const checkerUrl = `university-requirements.html?university=${encodeURIComponent(u.name)}`;
+  return `<div class="uni-card">
+    <div class="uc-top">
+      <div><div class="uc-name">${escapeHtml(u.name)}</div><div class="uc-loc">${escapeHtml(u.country || '')}</div></div>
+      <div class="uc-badge ${badgeClass}">${badgeText}</div>
+    </div>
+    <div class="uc-tags"><div class="uc-tag">${escapeHtml(systemLabel(u))}</div>${u.covered_curricula ? `<div class="uc-tag">Curriculum grades: ${escapeHtml(u.covered_curricula)}</div>` : ''}</div>
+    <div class="uc-desc">${escapeHtml(u.notes || '')}</div>
+    <div class="uc-actions">${linkHtml}<a class="uc-check" href="${checkerUrl}"><i class="ti ti-clipboard-check"></i> Check requirements</a></div>
+  </div>`;
+}
+
+function populateCountryFilter(){
+  const countries = [...new Set(allUnis.map(u => u.country).filter(Boolean))].sort();
+  const sel = document.getElementById('countrySel');
+  countries.forEach(c => {
+    const opt = document.createElement('option');
+    opt.value = c; opt.textContent = c;
+    sel.appendChild(opt);
+  });
+}
+
+function runSearch(){
+  const q = document.getElementById('qInput').value.trim().toLowerCase();
+  const country = document.getElementById('countrySel').value;
+  const system = document.getElementById('systemSel').value;
+
+  let results = allUnis.filter(u => {
+    if(q && !(u.name.toLowerCase().includes(q) || (u.country || '').toLowerCase().includes(q))) return false;
+    if(country && u.country !== country) return false;
+    if(system === '__direct' && u.application_system) return false;
+    if(system && system !== '__direct' && u.application_system !== system) return false;
+    return true;
+  });
+
+  results.sort((a, b) => (b._verifiedCount - a._verifiedCount) || a.name.localeCompare(b.name));
+
+  const meta = document.getElementById('resultsMeta');
+  const area = document.getElementById('resultsArea');
+  meta.textContent = `${results.length} universit${results.length === 1 ? 'y' : 'ies'} found`;
+
+  if(!results.length){
+    area.innerHTML = '<div class="empty-state"><i class="ti ti-search-off"></i>No universities match those filters yet. We are adding more all the time.</div>';
+    return;
+  }
+  area.innerHTML = `<div class="results-grid">${results.map(renderCard).join('')}</div>`;
+}
+
+async function loadUniversities(){
+  const { data: unis, error } = await sb.from('target_universities').select('*').order('name');
+  if(error || !unis){
+    document.getElementById('resultsArea').innerHTML = '<div class="empty-state"><i class="ti ti-alert-circle"></i>We could not load universities right now. Please try again shortly.</div>';
+    return;
+  }
+  const { data: reqs } = await sb.from('university_requirements').select('university_id, verified_on');
+  const verifiedCounts = {};
+  (reqs || []).forEach(r => {
+    if(r.verified_on){
+      verifiedCounts[r.university_id] = (verifiedCounts[r.university_id] || 0) + 1;
+    }
+  });
+  allUnis = unis.map(u => ({ ...u, _verifiedCount: verifiedCounts[u.id] || 0 }));
+  populateCountryFilter();
+  runSearch();
+}
+
+document.getElementById('qInput').addEventListener('keydown', e => { if(e.key === 'Enter') runSearch(); });
+loadUniversities();
+</script>
+</body>
+</html>
