@@ -223,6 +223,12 @@ async function loadUniversities(){
   }
   allUniversities = data;
   renderUniversityList(allUniversities);
+  const params = new URLSearchParams(window.location.search);
+  const preselected = params.get('university');
+  if(preselected){
+    const match = allUniversities.find(u => u.name.toLowerCase() === preselected.toLowerCase());
+    if(match) selectUniversity(match.id);
+  }
 }
 
 function renderUniversityList(list){
