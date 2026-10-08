@@ -167,285 +167,12 @@ body{font-family:'Twemoji Country Flags','Inter',sans-serif;background:#F8F9FF;c
 
 <div class="main">
 
-  <!-- FEATURED PROJECT -->
-  <div class="featured-label">&#9733; This edition's spotlight project</div>
-  <div class="featured-card" onclick="openModal('build-classroom')">
-    <div class="featured-img" style="background:linear-gradient(135deg,#C17A52 0%,#8B4A2A 100%);overflow:hidden">
-      <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.18" viewBox="0 0 400 500" fill="none" preserveAspectRatio="xMidYMid slice">
-        <path d="M200,30 C240,28 280,35 310,55 C340,75 355,105 365,135 C375,165 378,200 370,235 C362,270 345,295 340,325 C335,355 345,380 340,405 C335,430 315,455 295,465 C275,475 250,470 230,460 C210,450 195,430 180,415 C165,400 150,390 140,375 C130,360 125,340 120,318 C115,296 112,272 105,250 C98,228 85,210 80,188 C75,166 78,140 88,118 C98,96 118,78 142,62 C166,46 180,32 200,30 Z" fill="#F5C842"/>
-        <path d="M250,380 C265,390 270,410 260,425 C250,440 230,445 218,435 C206,425 205,405 215,393 C225,381 240,375 250,380 Z" fill="#F5C842" opacity="0.6"/>
-      </svg>
-      <div class="featured-img-placeholder" style="opacity:0.08"><i class="ti ti-building"></i></div>
-      <div class="featured-region">🇰🇪 Rural Kenya &mdash; Africa</div>
-    </div>
-    <div class="featured-body">
-      <div>
-        <div class="featured-title">Build a Classroom &mdash; Rift Valley Schools Project</div>
-        <div class="featured-org">Organised by: Bridges of Hope Kenya</div>
-        <div class="featured-desc">A two-week residential programme helping build and paint classrooms for primary schools in the Rift Valley region. Students work alongside local builders, contribute to fundraising before travel, and run a one-day reading event for local children on the final day. One of the most complete CAS project experiences available globally &mdash; covering Action, Creativity, and Service in a single project.</div>
-        <div class="featured-tags">
-          <span class="card-tag tag-type"><i class="ti ti-building" style="font-size:10px;margin-right:3px"></i> Construction</span>
-          <span class="card-tag tag-hours">80+ hours</span>
-          <span class="card-tag tag-curricula">IB CAS &middot; DofE Gold &middot; VCE</span>
-        </div>
-      </div>
-      <div class="featured-footer"><i class="ti ti-calendar" style="font-size:13px"></i> July and December cohorts &mdash; contact info@globalcompass.education to express interest</div>
-    </div>
-  </div>
+  <!-- FEATURED PROJECT (loaded live from Supabase) -->
+  <div id="featuredWrap"></div>
 
-  <!-- GULF & MIDDLE EAST -->
-  <div class="section-divider">
-    <div class="sd-line"></div>
-    <div class="sd-label" style="background:#C17A52">Gulf and Middle East</div>
-    <div class="sd-line"></div>
-  </div>
-  <div class="cards-grid">
-    <div class="project-card" onclick="openModal('beach-clean')">
-      <div class="card-color-bar" style="background:#C17A52"></div>
-      <div class="card-inner">
-        <div class="card-region" style="color:#C17A52">Dubai, UAE</div>
-        <div class="card-title">Beach Clean and Marine Awareness Day</div>
-        <div class="card-org">EcoSchools UAE Network</div>
-        <div class="card-desc">Monthly beach clean along Jumeirah Beach followed by a short session on marine plastic pollution and its effect on the Gulf's coral reefs. Students help create bilingual awareness materials for local families.</div>
-        <div class="card-tags"><span class="card-tag tag-type">Environment</span><span class="card-tag tag-hours">3-5 hrs</span><span class="card-tag tag-curricula">IB CAS · DofE</span></div>
-        <div class="card-footer"><i class="ti ti-calendar" style="font-size:12px"></i> Monthly — last Saturday</div>
-      </div>
-    </div>
-    <div class="project-card" onclick="openModal('literacy-tutoring')">
-      <div class="card-color-bar" style="background:#C17A52"></div>
-      <div class="card-inner">
-        <div class="card-region" style="color:#C17A52">Abu Dhabi, UAE</div>
-        <div class="card-title">Literacy Tutoring for Migrant Children</div>
-        <div class="card-org">Gulf Education Volunteers</div>
-        <div class="card-desc">Volunteer tutors help children of migrant workers (ages 6-12) with basic English and mathematics in weekend sessions. Training provided. One of the most meaningful CAS projects available in the UAE.</div>
-        <div class="card-tags"><span class="card-tag tag-type">Education</span><span class="card-tag tag-hours">4 hrs/week</span><span class="card-tag tag-curricula">IB CAS · A-Levels</span></div>
-        <div class="card-footer"><i class="ti ti-calendar" style="font-size:12px"></i> Weekends year-round</div>
-      </div>
-    </div>
-    <div class="project-card" onclick="openModal('refugee-art')">
-      <div class="card-color-bar" style="background:#C17A52"></div>
-      <div class="card-inner">
-        <div class="card-region" style="color:#C17A52">Amman, Jordan</div>
-        <div class="card-title">Refugee Children's Art and Expression Programme</div>
-        <div class="card-org">Collateral Repair Project</div>
-        <div class="card-desc">Weekly art and creative writing sessions for refugee children in Amman's Hashmi Shamali neighbourhood. Students plan and lead sessions independently, documenting outcomes through a reflective portfolio.</div>
-        <div class="card-tags"><span class="card-tag tag-type">Arts</span><span class="card-tag tag-hours">15-40 hrs</span><span class="card-tag tag-curricula">IB CAS · DofE · French Bac</span></div>
-        <div class="card-footer"><i class="ti ti-calendar" style="font-size:12px"></i> Term-time weekly</div>
-      </div>
-    </div>
-  </div>
+  <!-- REGION GROUPS (loaded live from Supabase) -->
+  <div id="regionsWrap"><div class="loading-state">Loading verified community projects&hellip;</div></div>
 
-  <!-- AFRICA -->
-  <div class="section-divider">
-    <div class="sd-line"></div>
-    <div class="sd-label" style="background:#C29A3D">Africa</div>
-    <div class="sd-line"></div>
-  </div>
-  <div class="cards-grid">
-    <div class="project-card" onclick="openModal('girls-education')">
-      <div class="card-color-bar" style="background:#C29A3D"></div>
-      <div class="card-inner">
-        <div class="card-region" style="color:#C29A3D">Cape Town, South Africa</div>
-        <div class="card-title">Girls' Education Campaign — Township Schools</div>
-        <div class="card-org">She Leads Africa Foundation</div>
-        <div class="card-desc">Create and deliver workshops on career pathways and digital literacy for girls aged 12-16 in Cape Town township schools. Students design their own session with support from the foundation's education team.</div>
-        <div class="card-tags"><span class="card-tag tag-type">Education</span><span class="card-tag tag-hours">20-40 hrs</span><span class="card-tag tag-curricula">IB CAS · CBSE</span></div>
-        <div class="card-footer"><i class="ti ti-calendar" style="font-size:12px"></i> Term-time and holidays</div>
-      </div>
-    </div>
-    <div class="project-card" onclick="openModal('beekeeping')">
-      <div class="card-color-bar" style="background:#C29A3D"></div>
-      <div class="card-inner">
-        <div class="card-region" style="color:#C29A3D">Nairobi, Kenya</div>
-        <div class="card-title">Urban Beekeeping and Food Security</div>
-        <div class="card-org">Green Belt Movement Kenya</div>
-        <div class="card-desc">Train urban community members in sustainable beekeeping practices, helping create supplementary income for low-income families. Students research local plant species and build educational signage for the community garden.</div>
-        <div class="card-tags"><span class="card-tag tag-type">Environment</span><span class="card-tag tag-hours">25-50 hrs</span><span class="card-tag tag-curricula">IB CAS · DofE · VCE</span></div>
-        <div class="card-footer"><i class="ti ti-calendar" style="font-size:12px"></i> Flexible — ongoing</div>
-      </div>
-    </div>
-    <div class="project-card" onclick="openModal('solar-lantern')">
-      <div class="card-color-bar" style="background:#C29A3D"></div>
-      <div class="card-inner">
-        <div class="card-region" style="color:#C29A3D">Rural Morocco</div>
-        <div class="card-title">Solar Lantern Assembly for Off-Grid Villages</div>
-        <div class="card-org">SolarAid Morocco</div>
-        <div class="card-desc">Assemble and distribute solar lanterns to families in rural High Atlas villages without reliable electricity, replacing kerosene lamps. Students also run basic solar energy literacy sessions for local school children.</div>
-        <div class="card-tags"><span class="card-tag tag-type">Technology</span><span class="card-tag tag-hours">30-60 hrs</span><span class="card-tag tag-curricula">IB CAS · French Bac · DofE</span></div>
-        <div class="card-footer"><i class="ti ti-calendar" style="font-size:12px"></i> Summer cohorts</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- EUROPE -->
-  <div class="section-divider">
-    <div class="sd-line"></div>
-    <div class="sd-label" style="background:#4A6FA5">Europe</div>
-    <div class="sd-line"></div>
-  </div>
-  <div class="cards-grid">
-    <div class="project-card" onclick="openModal('digital-berlin')">
-      <div class="card-color-bar" style="background:#4A6FA5"></div>
-      <div class="card-inner">
-        <div class="card-region" style="color:#4A6FA5">Berlin, Germany</div>
-        <div class="card-title">Intergenerational Digital Skills Programme</div>
-        <div class="card-org">Digitale Nachbarschaft Berlin</div>
-        <div class="card-desc">Teach older residents (65+) basic smartphone, internet safety, and video call skills at community centres across Berlin. Sessions are self-designed by students and adapted week by week based on participant feedback.</div>
-        <div class="card-tags"><span class="card-tag tag-type">Education</span><span class="card-tag tag-hours">20-40 hrs</span><span class="card-tag tag-curricula">IB CAS · German Abitur · DofE</span></div>
-        <div class="card-footer"><i class="ti ti-calendar" style="font-size:12px"></i> Weekends year-round</div>
-      </div>
-    </div>
-    <div class="project-card" onclick="openModal('paris-reading')">
-      <div class="card-color-bar" style="background:#4A6FA5"></div>
-      <div class="card-inner">
-        <div class="card-region" style="color:#4A6FA5">Paris, France</div>
-        <div class="card-title">Reading Mentorship in Priority Schools</div>
-        <div class="card-org">Coup de Pouce — Lire et Écrire</div>
-        <div class="card-desc">Volunteer reading mentors support primary school children in Paris's priority education zones (REP+) with weekly one-to-one sessions. Students receive training and keep a reflective journal for their Grand Oral preparation.</div>
-        <div class="card-tags"><span class="card-tag tag-type">Education</span><span class="card-tag tag-hours">30+ hrs</span><span class="card-tag tag-curricula">IB CAS · French Bac · DofE</span></div>
-        <div class="card-footer"><i class="ti ti-calendar" style="font-size:12px"></i> October — June</div>
-      </div>
-    </div>
-    <div class="project-card" onclick="openModal('food-bank')">
-      <div class="card-color-bar" style="background:#4A6FA5"></div>
-      <div class="card-inner">
-        <div class="card-region" style="color:#4A6FA5">London, UK</div>
-        <div class="card-title">Food Bank Coordination and Community Kitchen</div>
-        <div class="card-org">The Trussell Trust</div>
-        <div class="card-desc">Sort and pack food donations, assist with client coordination, and help run community cooking sessions teaching budget-friendly nutrition at food banks across London. One of the most flexible and widely recognised UK service projects for A-Level and DofE students.</div>
-        <div class="card-tags"><span class="card-tag tag-type">Community</span><span class="card-tag tag-hours">15-60 hrs</span><span class="card-tag tag-curricula">IB CAS · A-Levels · DofE Silver/Gold</span></div>
-        <div class="card-footer"><i class="ti ti-calendar" style="font-size:12px"></i> Flexible — self-schedule</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ASIA PACIFIC -->
-  <div class="section-divider">
-    <div class="sd-line"></div>
-    <div class="sd-label" style="background:#2D7D6E">Asia Pacific</div>
-    <div class="sd-line"></div>
-  </div>
-  <div class="cards-grid">
-    <div class="project-card" onclick="openModal('reef-bali')">
-      <div class="card-color-bar" style="background:#2D7D6E"></div>
-      <div class="card-inner">
-        <div class="card-region" style="color:#2D7D6E">Bali, Indonesia</div>
-        <div class="card-title">Reef Restoration and Ocean Education</div>
-        <div class="card-org">Coral Triangle Initiative</div>
-        <div class="card-desc">Plant coral fragments on degraded reef sections off Bali's north coast. Students create illustrated guides explaining reef ecology, distributed to local fishing communities in Indonesian and English.</div>
-        <div class="card-tags"><span class="card-tag tag-type">Environment</span><span class="card-tag tag-hours">30-60 hrs</span><span class="card-tag tag-curricula">IB CAS · Singapore · VCE</span></div>
-        <div class="card-footer"><i class="ti ti-calendar" style="font-size:12px"></i> June and November cohorts</div>
-      </div>
-    </div>
-    <div class="project-card" onclick="openModal('digital-india')">
-      <div class="card-color-bar" style="background:#2D7D6E"></div>
-      <div class="card-inner">
-        <div class="card-region" style="color:#2D7D6E">Rural India</div>
-        <div class="card-title">Digital Literacy for Village Schools</div>
-        <div class="card-org">Teach for Rural India</div>
-        <div class="card-desc">Train primary school teachers in rural Rajasthan to use basic tablet technology in their classrooms. Students develop short training sessions, deliver them in person or remotely, and follow up with resource packs.</div>
-        <div class="card-tags"><span class="card-tag tag-type">Education</span><span class="card-tag tag-hours">40+ hrs</span><span class="card-tag tag-curricula">IB CAS · CBSE · DofE</span></div>
-        <div class="card-footer"><i class="ti ti-calendar" style="font-size:12px"></i> Year-round, remote option</div>
-      </div>
-    </div>
-    <div class="project-card" onclick="openModal('eldercare-sg')">
-      <div class="card-color-bar" style="background:#2D7D6E"></div>
-      <div class="card-inner">
-        <div class="card-region" style="color:#2D7D6E">Singapore</div>
-        <div class="card-title">Eldercare Companionship and Life Stories Project</div>
-        <div class="card-org">Agency for Integrated Care Singapore</div>
-        <div class="card-desc">Visit elderly residents in care homes weekly for conversation and companionship sessions. Students document life stories into illustrated booklets given to families — a widely recognised Singapore CIP (Community Involvement Programme) activity.</div>
-        <div class="card-tags"><span class="card-tag tag-type">Community</span><span class="card-tag tag-hours">20-40 hrs</span><span class="card-tag tag-curricula">IB CAS · Singapore CIP · DofE</span></div>
-        <div class="card-footer"><i class="ti ti-calendar" style="font-size:12px"></i> Weekly, flexible scheduling</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- AMERICAS -->
-  <div class="section-divider">
-    <div class="sd-line"></div>
-    <div class="sd-label" style="background:#B5563C">Americas</div>
-    <div class="sd-line"></div>
-  </div>
-  <div class="cards-grid">
-    <div class="project-card" onclick="openModal('reading-sao-paulo')">
-      <div class="card-color-bar" style="background:#B5563C"></div>
-      <div class="card-inner">
-        <div class="card-region" style="color:#B5563C">São Paulo, Brazil</div>
-        <div class="card-title">Reading Circles in Favela Communities</div>
-        <div class="card-org">Leitura Viva Brasil</div>
-        <div class="card-desc">Run weekly reading sessions for children aged 5-10 in community centres across São Paulo's peripheral neighbourhoods. Students choose and adapt books, create simple activities, and keep a reflective journal.</div>
-        <div class="card-tags"><span class="card-tag tag-type">Education</span><span class="card-tag tag-hours">3 hrs/week</span><span class="card-tag tag-curricula">IB CAS · ENEM · French Bac</span></div>
-        <div class="card-footer"><i class="ti ti-calendar" style="font-size:12px"></i> School term weeks</div>
-      </div>
-    </div>
-    <div class="project-card" onclick="openModal('urban-garden')">
-      <div class="card-color-bar" style="background:#B5563C"></div>
-      <div class="card-inner">
-        <div class="card-region" style="color:#B5563C">Medellín, Colombia</div>
-        <div class="card-title">Urban Garden and Food Security Project</div>
-        <div class="card-org">Huerta Comunitaria Medellín</div>
-        <div class="card-desc">Help design and maintain rooftop vegetable gardens in low-income neighbourhoods, with harvests donated to local families. Students also run nutrition workshops and document the project through photography and written reports.</div>
-        <div class="card-tags"><span class="card-tag tag-type">Environment</span><span class="card-tag tag-hours">20-50 hrs</span><span class="card-tag tag-curricula">IB CAS · DofE · ENEM</span></div>
-        <div class="card-footer"><i class="ti ti-calendar" style="font-size:12px"></i> Ongoing — flexible</div>
-      </div>
-    </div>
-    <div class="project-card" onclick="openModal('immigrant-ny')">
-      <div class="card-color-bar" style="background:#B5563C"></div>
-      <div class="card-inner">
-        <div class="card-region" style="color:#B5563C">New York, USA</div>
-        <div class="card-title">Immigrant Family Language Access Project</div>
-        <div class="card-org">International Rescue Committee NY</div>
-        <div class="card-desc">Provide basic interpretation support and English conversation practice for recently arrived immigrant families navigating school enrolment, medical appointments, and community services in New York City.</div>
-        <div class="card-tags"><span class="card-tag tag-type">Community</span><span class="card-tag tag-hours">20-60 hrs</span><span class="card-tag tag-curricula">IB CAS · American AP · DofE</span></div>
-        <div class="card-footer"><i class="ti ti-calendar" style="font-size:12px"></i> Flexible weekly slots</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- OCEANIA -->
-  <div class="section-divider">
-    <div class="sd-line"></div>
-    <div class="sd-label" style="background:#1F7A8C">Oceania</div>
-    <div class="sd-line"></div>
-  </div>
-  <div class="cards-grid">
-    <div class="project-card" onclick="openModal('indigenous-language')">
-      <div class="card-color-bar" style="background:#1F7A8C"></div>
-      <div class="card-inner">
-        <div class="card-region" style="color:#1F7A8C">Melbourne, Australia</div>
-        <div class="card-title">Indigenous Language and Culture Documentation</div>
-        <div class="card-org">First Languages Australia</div>
-        <div class="card-desc">Work alongside Elders and community linguists to help document and digitise materials in Australian Indigenous languages at risk of being lost. Students contribute to recording sessions, transcription, and creating illustrated vocabulary resources for local schools.</div>
-        <div class="card-tags"><span class="card-tag tag-type">Culture</span><span class="card-tag tag-hours">30-60 hrs</span><span class="card-tag tag-curricula">IB CAS · VCE · DofE</span></div>
-        <div class="card-footer"><i class="ti ti-calendar" style="font-size:12px"></i> Year-round — apply in advance</div>
-      </div>
-    </div>
-    <div class="project-card" onclick="openModal('wetland-nz')">
-      <div class="card-color-bar" style="background:#1F7A8C"></div>
-      <div class="card-inner">
-        <div class="card-region" style="color:#1F7A8C">Auckland, New Zealand</div>
-        <div class="card-title">Kaitiakitanga — Coastal Wetland Restoration</div>
-        <div class="card-org">Te Whānau-ā-Apanui Environment Trust</div>
-        <div class="card-desc">Remove invasive plant species and replant native vegetation along Auckland coastal wetlands under the guidance of local iwi (tribal) environmental guardians. Students learn about Māori concepts of environmental stewardship alongside practical conservation work.</div>
-        <div class="card-tags"><span class="card-tag tag-type">Environment</span><span class="card-tag tag-hours">15-40 hrs</span><span class="card-tag tag-curricula">IB CAS · VCE · DofE Silver</span></div>
-        <div class="card-footer"><i class="ti ti-calendar" style="font-size:12px"></i> Monthly restoration days</div>
-      </div>
-    </div>
-    <div class="project-card" onclick="openModal('solar-fiji')">
-      <div class="card-color-bar" style="background:#1F7A8C"></div>
-      <div class="card-inner">
-        <div class="card-region" style="color:#1F7A8C">Fiji</div>
-        <div class="card-title">Solar Water Purification for Rural Communities</div>
-        <div class="card-org">Engineers Without Borders Pacific</div>
-        <div class="card-desc">Help install and maintain low-cost solar water purification systems for rural Fijian villages without clean water access. Students also run community health education sessions on waterborne disease prevention.</div>
-        <div class="card-tags"><span class="card-tag tag-type">Technology</span><span class="card-tag tag-hours">40-80 hrs</span><span class="card-tag tag-curricula">IB CAS · VCE · DofE Gold</span></div>
-        <div class="card-footer"><i class="ti ti-calendar" style="font-size:12px"></i> July residential cohort</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- SUBMIT BANNER -->
   <div class="submit-banner">
     <div>
       <div class="sb-eyebrow">Know a project worth sharing?</div>
@@ -474,6 +201,7 @@ body{font-family:'Twemoji Country Flags','Inter',sans-serif;background:#F8F9FF;c
       <div class="modal-detail-row"><div class="modal-detail-label">Hours</div><div id="modalHours"></div></div>
       <div class="modal-detail-row"><div class="modal-detail-label">Counts toward</div><div id="modalCurricula"></div></div>
       <div class="modal-detail-row"><div class="modal-detail-label">When</div><div id="modalWhen"></div></div>
+      <div id="modalTrust"></div>
     </div>
     <div class="modal-footer">
       <div class="modal-cal"><i class="ti ti-mail"></i><span id="modalContact">Contact info@globalcompass.education to express interest</span></div>
@@ -482,184 +210,13 @@ body{font-family:'Twemoji Country Flags','Inter',sans-serif;background:#F8F9FF;c
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+const sb = supabase.createClient('https://qginevdbqaodimcllevb.supabase.co', 'sb_publishable_q3hvHIL8bl4oH49Qkyqkgg_w1G2Ud5w');
 document.addEventListener('DOMContentLoaded', function(){
   twemoji.parse(document.body, { folder: 'svg', ext: '.svg' });
 });
-const projects = {
-  "build-classroom": {
-    title: "Build a Classroom — Rift Valley Schools Project",
-    org: "Organised by: Bridges of Hope Kenya",
-    region: "🇰🇪 Rural Kenya — Africa",
-    color: "linear-gradient(135deg,#C17A52,#8B4A2A)",
-    icon: "ti-building",
-    desc: "A two-week residential programme helping build and paint classrooms for primary schools in the Rift Valley region. Students work alongside local builders, contribute to fundraising before travel, and run a one-day reading event for local children on the final day. One of the most complete CAS project experiences available globally — covering Action, Creativity, and Service in a single project.",
-    type: "Construction", hours: "80+ hours", curricula: "IB CAS · DofE Gold · VCE", when: "July and December cohorts"
-  },
-  "beach-clean": {
-    title: "Beach Clean and Marine Awareness Day",
-    org: "EcoSchools UAE Network",
-    region: "🇦🇪 Dubai, UAE",
-    color: "linear-gradient(135deg,#C17A52,#8B4A2A)",
-    icon: "ti-wave-sine",
-    desc: "Monthly beach clean along Jumeirah Beach followed by a short session on marine plastic pollution and its effect on the Gulf's coral reefs. Students help create bilingual awareness materials distributed to local families. Sessions are welcoming to all levels of physical fitness and prior environmental knowledge.",
-    type: "Environment", hours: "3–5 hours per session", curricula: "IB CAS · DofE", when: "Monthly — last Saturday of each month"
-  },
-  "literacy-tutoring": {
-    title: "Literacy Tutoring for Migrant Children",
-    org: "Gulf Education Volunteers",
-    region: "🇦🇪 Abu Dhabi, UAE",
-    color: "linear-gradient(135deg,#C17A52,#8B4A2A)",
-    icon: "ti-book",
-    desc: "Volunteer tutors help children of migrant workers (ages 6–12) with basic English and mathematics literacy in weekend sessions. No teaching experience needed — a full training session is provided before you start. Widely regarded as one of the most meaningful and personally rewarding CAS projects available in the UAE.",
-    type: "Education", hours: "4 hours per week", curricula: "IB CAS · A-Levels", when: "Weekends year-round"
-  },
-  "refugee-art": {
-    title: "Refugee Children's Art and Expression Programme",
-    org: "Collateral Repair Project",
-    region: "🇯🇴 Amman, Jordan",
-    color: "linear-gradient(135deg,#C17A52,#8B4A2A)",
-    icon: "ti-palette",
-    desc: "Weekly art and creative writing sessions for refugee children in Amman's Hashmi Shamali neighbourhood. Students plan and lead sessions independently, documenting outcomes through a reflective portfolio that serves as strong CAS evidence.",
-    type: "Arts", hours: "15–40 hours", curricula: "IB CAS · DofE · French Bac", when: "Term-time weekly"
-  },
-  "girls-education": {
-    title: "Girls' Education Campaign — Township Schools",
-    org: "She Leads Africa Foundation",
-    region: "🇿🇦 Cape Town, South Africa",
-    color: "linear-gradient(135deg,#C29A3D,#8A6A1A)",
-    icon: "ti-users",
-    desc: "Create and deliver age-appropriate workshops on career pathways and digital literacy for girls aged 12–16 in Cape Town township schools. Students design their own session with support from the foundation's education team — a real experience of curriculum design and facilitation.",
-    type: "Education", hours: "20–40 hours", curricula: "IB CAS · CBSE", when: "Term-time and holidays"
-  },
-  "beekeeping": {
-    title: "Urban Beekeeping and Food Security",
-    org: "Green Belt Movement Kenya",
-    region: "🇰🇪 Nairobi, Kenya",
-    color: "linear-gradient(135deg,#C29A3D,#8A6A1A)",
-    icon: "ti-leaf",
-    desc: "Train urban community members in sustainable beekeeping practices, helping create supplementary income for low-income families. Students research local plant species and build educational signage for the community garden.",
-    type: "Environment", hours: "25–50 hours", curricula: "IB CAS · DofE · VCE", when: "Flexible — ongoing commitment"
-  },
-  "solar-lantern": {
-    title: "Solar Lantern Assembly for Off-Grid Villages",
-    org: "SolarAid Morocco",
-    region: "🇲🇦 Rural Morocco",
-    color: "linear-gradient(135deg,#C29A3D,#8A6A1A)",
-    icon: "ti-sun",
-    desc: "Assemble and distribute solar lanterns to families in rural High Atlas villages without reliable electricity, replacing kerosene lamps. Students also run basic solar energy literacy sessions for local school children — no technical background required.",
-    type: "Technology", hours: "30–60 hours", curricula: "IB CAS · French Bac · DofE", when: "Summer cohorts"
-  },
-  "digital-berlin": {
-    title: "Intergenerational Digital Skills Programme",
-    org: "Digitale Nachbarschaft Berlin",
-    region: "🇩🇪 Berlin, Germany",
-    color: "linear-gradient(135deg,#4A6FA5,#1B3A7A)",
-    icon: "ti-device-laptop",
-    desc: "Teach older residents (65+) basic smartphone, internet safety, and video call skills at community centres across Berlin. Sessions are self-designed by students and adapted week by week based on participant feedback — a genuine exercise in communication and adaptability.",
-    type: "Education", hours: "20–40 hours", curricula: "IB CAS · German Abitur · DofE", when: "Weekends year-round"
-  },
-  "paris-reading": {
-    title: "Reading Mentorship in Priority Schools",
-    org: "Coup de Pouce — Lire et Écrire",
-    region: "🇫🇷 Paris, France",
-    color: "linear-gradient(135deg,#4A6FA5,#1B3A7A)",
-    icon: "ti-book",
-    desc: "Volunteer reading mentors support primary school children in Paris's priority education zones (REP+) with weekly one-to-one sessions. Students receive training and keep a reflective journal that serves as preparation for the French Bac's Grand Oral.",
-    type: "Education", hours: "30+ hours", curricula: "IB CAS · French Bac · DofE", when: "October through June"
-  },
-  "food-bank": {
-    title: "Food Bank Coordination and Community Kitchen",
-    org: "The Trussell Trust",
-    region: "🇬🇧 London, UK",
-    color: "linear-gradient(135deg,#4A6FA5,#1B3A7A)",
-    icon: "ti-building-store",
-    desc: "Sort and pack food donations, assist with client coordination, and help run community cooking sessions teaching budget-friendly nutrition at food banks across London. One of the most flexible and widely recognised UK service projects for A-Level and DofE students.",
-    type: "Community", hours: "15–60 hours", curricula: "IB CAS · A-Levels · DofE Silver/Gold", when: "Flexible — self-schedule"
-  },
-  "reef-bali": {
-    title: "Reef Restoration and Ocean Education",
-    org: "Coral Triangle Initiative",
-    region: "🇮🇩 Bali, Indonesia",
-    color: "linear-gradient(135deg,#2D7D6E,#1A4A40)",
-    icon: "ti-wave-sine",
-    desc: "Plant coral fragments on degraded reef sections off Bali's north coast. Students create illustrated guides explaining reef ecology, distributed to local fishing communities in Indonesian and English. Diving certification is not required for the reef planting component.",
-    type: "Environment", hours: "30–60 hours", curricula: "IB CAS · Singapore · VCE", when: "June and November cohorts"
-  },
-  "digital-india": {
-    title: "Digital Literacy for Village Schools",
-    org: "Teach for Rural India",
-    region: "🇮🇳 Rural India",
-    color: "linear-gradient(135deg,#2D7D6E,#1A4A40)",
-    icon: "ti-device-tablet",
-    desc: "Train primary school teachers in rural Rajasthan to use basic tablet technology in their classrooms. Students develop short training sessions, deliver them in person or remotely, and follow up with resource packs tailored to each school's needs.",
-    type: "Education", hours: "40+ hours", curricula: "IB CAS · CBSE · DofE", when: "Year-round — remote option available"
-  },
-  "eldercare-sg": {
-    title: "Eldercare Companionship and Life Stories Project",
-    org: "Agency for Integrated Care Singapore",
-    region: "🇸🇬 Singapore",
-    color: "linear-gradient(135deg,#2D7D6E,#1A4A40)",
-    icon: "ti-heart",
-    desc: "Visit elderly residents in care homes weekly for conversation and companionship sessions. Students document life stories into illustrated booklets given to families — a widely recognised Singapore CIP (Community Involvement Programme) activity that also produces powerful CAS reflection material.",
-    type: "Community", hours: "20–40 hours", curricula: "IB CAS · Singapore CIP · DofE", when: "Weekly — flexible scheduling"
-  },
-  "reading-sao-paulo": {
-    title: "Reading Circles in Favela Communities",
-    org: "Leitura Viva Brasil",
-    region: "🇧🇷 São Paulo, Brazil",
-    color: "linear-gradient(135deg,#B5563C,#7A2A1A)",
-    icon: "ti-book-2",
-    desc: "Run weekly reading sessions for children aged 5–10 in community centres across São Paulo's peripheral neighbourhoods. Students choose and adapt books, create simple activities, and keep a reflective journal — a natural fit for ENEM students seeking structured service hours.",
-    type: "Education", hours: "3 hours per week", curricula: "IB CAS · ENEM · French Bac", when: "School term weeks"
-  },
-  "urban-garden": {
-    title: "Urban Garden and Food Security Project",
-    org: "Huerta Comunitaria Medellín",
-    region: "🇨🇴 Medellín, Colombia",
-    color: "linear-gradient(135deg,#B5563C,#7A2A1A)",
-    icon: "ti-plant",
-    desc: "Help design and maintain rooftop vegetable gardens in low-income neighbourhoods, with harvests donated to local families. Students also run nutrition workshops and document the project through photography and written reports.",
-    type: "Environment", hours: "20–50 hours", curricula: "IB CAS · DofE · ENEM", when: "Ongoing — flexible commitment"
-  },
-  "immigrant-ny": {
-    title: "Immigrant Family Language Access Project",
-    org: "International Rescue Committee NY",
-    region: "🇺🇸 New York, USA",
-    color: "linear-gradient(135deg,#B5563C,#7A2A1A)",
-    icon: "ti-world",
-    desc: "Provide basic interpretation support and English conversation practice for recently arrived immigrant families navigating school enrolment, medical appointments, and community services in New York City. Bilingual students especially valued.",
-    type: "Community", hours: "20–60 hours", curricula: "IB CAS · American AP · DofE", when: "Flexible weekly slots"
-  },
-  "indigenous-language": {
-    title: "Indigenous Language and Culture Documentation",
-    org: "First Languages Australia",
-    region: "🇦🇺 Melbourne, Australia",
-    color: "linear-gradient(135deg,#1F7A8C,#0D4A5A)",
-    icon: "ti-writing",
-    desc: "Work alongside Elders and community linguists to help document and digitise materials in Australian Indigenous languages at risk of being lost. Students contribute to recording sessions, transcription, and creating illustrated vocabulary resources for local schools.",
-    type: "Culture", hours: "30–60 hours", curricula: "IB CAS · VCE · DofE", when: "Year-round — apply in advance"
-  },
-  "wetland-nz": {
-    title: "Kaitiakitanga — Coastal Wetland Restoration",
-    org: "Te Whānau-ā-Apanui Environment Trust",
-    region: "🇳🇿 Auckland, New Zealand",
-    color: "linear-gradient(135deg,#1F7A8C,#0D4A5A)",
-    icon: "ti-leaf",
-    desc: "Remove invasive plant species and replant native vegetation along Auckland coastal wetlands under the guidance of local iwi environmental guardians. Students learn about Māori concepts of environmental stewardship alongside practical conservation work.",
-    type: "Environment", hours: "15–40 hours", curricula: "IB CAS · VCE · DofE Silver", when: "Monthly restoration days"
-  },
-  "solar-fiji": {
-    title: "Solar Water Purification for Rural Communities",
-    org: "Engineers Without Borders Pacific",
-    region: "🇫🇯 Fiji",
-    color: "linear-gradient(135deg,#1F7A8C,#0D4A5A)",
-    icon: "ti-droplet",
-    desc: "Help install and maintain low-cost solar water purification systems for rural Fijian villages without clean water access. Students also run community health education sessions on waterborne disease prevention. No engineering background required.",
-    type: "Technology", hours: "40–80 hours", curricula: "IB CAS · VCE · DofE Gold", when: "July residential cohort"
-  }
-};
-
+let allProjects = [];
 const regionSVGs = {
   "africa": '<svg viewBox="0 0 400 500" width="300" fill="#fff"><path d="M200,30 C240,28 280,35 310,55 C340,75 355,105 365,135 C375,165 378,200 370,235 C362,270 345,295 340,325 C335,355 345,380 340,405 C335,430 315,455 295,465 C275,475 250,470 230,460 C210,450 195,430 180,415 C165,400 150,390 140,375 C130,360 125,340 120,318 C115,296 112,272 105,250 C98,228 85,210 80,188 C75,166 78,140 88,118 C98,96 118,78 142,62 C166,46 180,32 200,30 Z"/></svg>',
   "europe": '<svg viewBox="0 0 400 400" width="300" fill="#fff"><path d="M180,40 C210,38 245,45 265,65 C285,85 288,115 285,145 C282,175 270,198 265,225 C260,252 268,275 260,295 C252,315 232,328 212,325 C192,322 175,308 162,292 C149,276 142,256 138,235 C134,214 135,190 130,168 C125,146 112,128 115,105 C118,82 135,62 158,50 C168,44 175,41 180,40 Z"/></svg>',
@@ -668,36 +225,134 @@ const regionSVGs = {
   "oceania": '<svg viewBox="0 0 500 350" width="340" fill="#fff"><ellipse cx="180" cy="175" rx="140" ry="90"/><ellipse cx="360" cy="140" rx="80" ry="55"/></svg>',
   "gulf": '<svg viewBox="0 0 400 350" width="300" fill="#fff"><path d="M200,40 C235,36 272,48 295,75 C318,102 320,142 310,175 C300,208 278,230 272,258 C266,286 278,312 265,332 C252,352 224,358 200,348 C176,338 160,314 150,288 C140,262 142,232 138,204 C134,176 122,152 122,124 C122,96 136,68 158,52 C170,44 185,42 200,40 Z"/></svg>'
 };
-
-const projectRegions = {
-  "build-classroom": "africa", "beach-clean": "gulf", "literacy-tutoring": "gulf",
-  "refugee-art": "gulf", "girls-education": "africa", "beekeeping": "africa",
-  "solar-lantern": "africa", "digital-berlin": "europe", "paris-reading": "europe",
-  "food-bank": "europe", "reef-bali": "asia", "digital-india": "asia",
-  "eldercare-sg": "asia", "reading-sao-paulo": "americas", "urban-garden": "americas",
-  "immigrant-ny": "americas", "indigenous-language": "oceania", "wetland-nz": "oceania",
-  "solar-fiji": "oceania"
+const regionMeta = {
+  "Gulf & Middle East": { svg: "gulf", color: "#C17A52" },
+  "Africa": { svg: "africa", color: "#C29A3D" },
+  "Europe": { svg: "europe", color: "#4A6FA5" },
+  "Asia": { svg: "asia", color: "#2D7D6E" },
+  "Americas": { svg: "americas", color: "#B5563C" },
+  "Oceania": { svg: "oceania", color: "#1F7A8C" }
 };
+const countryFlags = {
+  "UAE": "🇦🇪", "Jordan": "🇯🇴", "Kenya": "🇰🇪", "Morocco": "🇲🇦", "Germany": "🇩🇪",
+  "UK": "🇬🇧", "Indonesia": "🇮🇩", "India": "🇮🇳", "Singapore": "🇸🇬", "Colombia": "🇨🇴",
+  "USA": "🇺🇸", "Australia": "🇦🇺", "New Zealand": "🇳🇿"
+};
+const typeIcons = {
+  "Environment": "ti-leaf", "Education": "ti-book", "Community": "ti-heart",
+  "Arts": "ti-palette", "Construction": "ti-building", "Culture": "ti-writing"
+};
+function iconFor(type){
+  if(!type) return "ti-world";
+  const first = type.split(",")[0].trim();
+  return typeIcons[first] || "ti-world";
+}
+function flagFor(country){ return countryFlags[country] || ""; }
+
+async function loadProjects(){
+  const { data, error } = await sb.from('community_projects').select('*').eq('status', 'published').order('display_order');
+  const wrap = document.getElementById('regionsWrap');
+  if(error || !data || data.length === 0){
+    wrap.innerHTML = '<div class="loading-state">No verified projects available right now — please check back soon.</div>';
+    return;
+  }
+  allProjects = data;
+  renderFeatured(data.find(p => p.is_featured));
+  renderRegions(data);
+  setTimeout(function(){ if(window.twemoji) twemoji.parse(document.body, { folder: 'svg', ext: '.svg' }); }, 50);
+}
+
+function renderFeatured(p){
+  const el = document.getElementById('featuredWrap');
+  if(!p){ el.innerHTML = ''; return; }
+  const meta = regionMeta[p.region] || regionMeta["Africa"];
+  el.innerHTML =
+    '<div class="featured-label">&#9733; This edition\'s spotlight project</div>' +
+    '<div class="featured-card" onclick="openModal(\'' + p.id + '\')">' +
+      '<div class="featured-img" style="background:' + meta.color + ';overflow:hidden">' +
+        '<div class="featured-img-placeholder" style="opacity:0.15"><i class="ti ' + iconFor(p.project_type) + '"></i></div>' +
+        '<div class="featured-region">' + flagFor(p.country) + ' ' + (p.location_detail||'') + ' &mdash; ' + p.region + '</div>' +
+      '</div>' +
+      '<div class="featured-body">' +
+        '<div>' +
+          '<div class="featured-title">' + p.title + '</div>' +
+          '<div class="featured-org">' + p.organization + '</div>' +
+          '<div class="featured-desc">' + p.description + '</div>' +
+          '<div class="featured-tags">' +
+            '<span class="card-tag tag-type">' + (p.project_type||'') + '</span>' +
+            '<span class="card-tag tag-hours">' + (p.hours||'') + '</span>' +
+            '<span class="card-tag tag-curricula">' + (p.curricula||'') + '</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="featured-footer"><i class="ti ti-calendar" style="font-size:13px"></i> ' + (p.timing||'') + '</div>' +
+      '</div>' +
+    '</div>';
+}
+
+function renderRegions(data){
+  const order = ["Gulf & Middle East","Africa","Europe","Asia","Americas","Oceania"];
+  const wrap = document.getElementById('regionsWrap');
+  let html = '';
+  order.forEach(function(region){
+    const items = data.filter(function(p){ return p.region === region && !p.is_featured; });
+    if(items.length === 0) return;
+    const meta = regionMeta[region];
+    html += '<div class="section-divider"><div class="sd-line"></div><div class="sd-label" style="background:' + meta.color + '">' + region + '</div><div class="sd-line"></div></div>';
+    html += '<div class="cards-grid">';
+    items.forEach(function(p){
+      html +=
+        '<div class="project-card" onclick="openModal(\'' + p.id + '\')">' +
+          '<div class="card-color-bar" style="background:' + meta.color + '"></div>' +
+          '<div class="card-inner">' +
+            '<div class="card-region" style="color:' + meta.color + '">' + flagFor(p.country) + ' ' + (p.location_detail||'') + '</div>' +
+            '<div class="card-title">' + p.title + '</div>' +
+            '<div class="card-org">' + p.organization + '</div>' +
+            '<div class="card-desc">' + p.description + '</div>' +
+            '<div class="card-tags"><span class="card-tag tag-type">' + (p.project_type||'') + '</span><span class="card-tag tag-hours">' + (p.hours||'') + '</span><span class="card-tag tag-curricula">' + (p.curricula||'') + '</span></div>' +
+            '<div class="card-footer"><i class="ti ti-calendar" style="font-size:12px"></i> ' + (p.timing||'') + '</div>' +
+          '</div>' +
+        '</div>';
+    });
+    html += '</div>';
+  });
+  wrap.innerHTML = html || '<div class="loading-state">No verified projects available right now — please check back soon.</div>';
+}
 
 function openModal(id){
-  const p = projects[id];
+  const p = allProjects.find(function(x){ return x.id === id; });
   if(!p) return;
-  document.getElementById('modalImg').style.background = p.color;
-  const svgKey = projectRegions[id] || 'africa';
-  document.getElementById('modalSvg').innerHTML = regionSVGs[svgKey] || '';
-  document.getElementById('modalIcon').className = 'ti ' + p.icon;
-  document.getElementById('modalRegion').textContent = p.region;
+  const meta = regionMeta[p.region] || regionMeta["Africa"];
+  document.getElementById('modalImg').style.background = meta.color;
+  document.getElementById('modalSvg').innerHTML = regionSVGs[meta.svg] || '';
+  document.getElementById('modalIcon').className = 'ti ' + iconFor(p.project_type);
+  document.getElementById('modalRegion').textContent = flagFor(p.country) + ' ' + (p.location_detail||'');
   document.getElementById('modalTitle').textContent = p.title;
-  document.getElementById('modalOrg').textContent = p.org;
-  document.getElementById('modalDesc').textContent = p.desc;
-  document.getElementById('modalHours').textContent = p.hours;
-  document.getElementById('modalCurricula').textContent = p.curricula;
-  document.getElementById('modalWhen').textContent = p.when;
-  document.getElementById('modalTags').innerHTML = '<span class="card-tag tag-type">' + p.type + '</span><span class="card-tag tag-hours">' + p.hours + '</span><span class="card-tag tag-curricula">' + p.curricula + '</span>';
-  document.getElementById('modalBtn').href = 'mailto:info@globalcompass.education?subject=Community%20Action%20Board%20%E2%80%94%20Interest%20in%20' + encodeURIComponent(p.title);
+  document.getElementById('modalOrg').textContent = p.organization;
+  document.getElementById('modalDesc').textContent = p.description;
+  document.getElementById('modalHours').textContent = p.hours || '';
+  document.getElementById('modalCurricula').textContent = p.curricula || '';
+  document.getElementById('modalWhen').textContent = p.timing || '';
+  document.getElementById('modalTags').innerHTML = '<span class="card-tag tag-type">' + (p.project_type||'') + '</span><span class="card-tag tag-hours">' + (p.hours||'') + '</span><span class="card-tag tag-curricula">' + (p.curricula||'') + '</span>';
+  const trustEl = document.getElementById('modalTrust');
+  if(trustEl){
+    let trustHtml = '';
+    if(p.trust_note) trustHtml = '<div class="modal-detail-row"><div class="modal-detail-label">Verified</div><div>' + p.trust_note + (p.verified_on ? ' &middot; checked ' + p.verified_on : '') + '</div></div>';
+    trustEl.innerHTML = trustHtml;
+  }
+  const btn = document.getElementById('modalBtn');
+  if(p.official_url){
+    btn.href = p.official_url;
+    btn.target = '_blank';
+    btn.rel = 'noopener';
+    btn.textContent = 'Visit official site \u2192';
+  } else {
+    btn.removeAttribute('target');
+    btn.href = 'mailto:info@globalcompass.education?subject=Community%20Action%20Board%20%E2%80%94%20Interest%20in%20' + encodeURIComponent(p.title);
+    btn.textContent = 'Express interest \u2192';
+  }
   document.getElementById('modalOverlay').classList.add('open');
   document.body.style.overflow = 'hidden';
-  setTimeout(()=>{ if(window.twemoji) twemoji.parse(document.getElementById('modalBox'), { folder: 'svg', ext: '.svg' }); }, 50);
+  setTimeout(function(){ if(window.twemoji) twemoji.parse(document.getElementById('modalBox'), { folder: 'svg', ext: '.svg' }); }, 50);
 }
 
 function closeModal(e){
@@ -712,6 +367,7 @@ function closeModalDirect(){
 }
 
 document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModalDirect(); });
+document.addEventListener('DOMContentLoaded', function(){ loadProjects(); });
 </script>
 </body>
 </html>
