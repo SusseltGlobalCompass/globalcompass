@@ -233,7 +233,7 @@ async function runSendSearch(){
   }
 
   if(selectedType === "Inclusion support" || !selectedType){
-    let q2 = sb.from("schools").select("*, countries(name)").not("determination_provision_rating","is",null);
+    let q2 = sb.from("schools").select("*, countries(name)").not("determination_provision_note","is",null);
     if(selectedCats.length) q2 = q2.overlaps("need_categories", selectedCats);
     const { data } = await q2;
     schoolsWithInclusion = data || [];
