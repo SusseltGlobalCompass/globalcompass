@@ -152,6 +152,7 @@ body{font-family:'Inter',sans-serif;background:#F8F9FF;color:#1a1a1a}
       <div class="chip" data-type="Dedicated centre" onclick="selectType(this)">Dedicated centre</div>
       <div class="chip" data-type="Inclusion support" onclick="selectType(this)">Inclusion support in mainstream school</div>
       <div class="chip" data-type="Therapy only" onclick="selectType(this)">Therapy only</div>
+      <div class="chip" data-type="Diagnosis & Assessment" onclick="selectType(this)">Diagnosis &amp; Assessment</div>
     </div>
   </div>
 
@@ -246,7 +247,11 @@ async function runSendSearch(){
 
   let html = '<div class="results-grid">';
   centres.forEach(c => {
-    html += '<div class="centre-card"><div class="centre-name">'+c.name+'</div><div style="font-size:12px;color:#7A8BAE;margin-top:4px">'+(c.service_type||'')+' · Ages '+c.age_min+'-'+c.age_max+' · '+(c.city||'')+'</div></div>';
+    var elig = c.eligibility_note || '';
+    var eLow = elig.toLowerCase();
+    var badgeColor = eLow.indexOf('nationals only') > -1 ? '#B3001B' : (eLow.indexOf('referral required') > -1 ? '#1B3A7A' : '#1A7A3A');
+    var badgeBg = eLow.indexOf('nationals only') > -1 ? '#FBEAEC' : (eLow.indexOf('referral required') > -1 ? '#F0F4FF' : '#EAF6EC');
+    html += '<div class="centre-card"><div class="centre-name">'+c.name+'</div><div style="font-size:12px;color:#7A8BAE;margin-top:4px">'+(c.service_type||'')+' · Ages '+c.age_min+'-'+c.age_max+' · '+(c.city||'')+'</div>'+(elig ? '<div style="display:inline-block;margin-top:8px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px;background:'+badgeBg+';color:'+badgeColor+'">'+elig+'</div>' : '')+'</div>';
   });
   schoolsWithInclusion.forEach(s => {
     html += '<div class="centre-card"><div class="centre-name">'+s.name+'</div><div style="font-size:12px;color:#7A8BAE;margin-top:4px">Inclusion support · '+(s.determination_provision_rating||'')+'</div></div>';
