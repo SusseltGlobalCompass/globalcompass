@@ -1,27 +1,38 @@
+const ALLOWED_ORIGINS = [
+  "https://globalcompass.education",
+  "https://www.globalcompass.education"
+];
+const MAX_PROMPT_CHARS = 8000;
+const MAX_TOKENS_CAP = 3500;
+
 export default async function handler(req, res) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-
-  if (req.method === "OPTIONS") {
-    res.status(200).end();
-    return;
-  }
-
   if (req.method !== "POST") {
     res.status(405).json({ error: "Method not allowed" });
     return;
   }
 
-  try {
-    const body = req.body;
-    const prompt = body.prompt;
-    const max_tokens = body.max_tokens;
+  // Only accept requests that come from the GlobalCompass website itself
+  const origin = req.headers.origin || "";
+  if (!ALLOWED_ORIGINS.includes(origin)) {
+    res.status(403).json({ error: "Forbidden" });
+    return;
+  }
 
-    if (!prompt) {
+  try {
+    const body = req.body || {};
+    const prompt = body.prompt;
+
+    if (typeof prompt !== "string" || prompt.length === 0) {
       res.status(400).json({ error: "Missing prompt" });
       return;
     }
+    if (prompt.length > MAX_PROMPT_CHARS) {
+      res.status(413).json({ error: "Prompt too long" });
+      return;
+    }
+
+    const requested = Number(body.max_tokens) || 1400;
+    const max_tokens = Math.min(Math.max(requested, 100), MAX_TOKENS_CAP);
 
     const response = await fetch("https://api.anthropic.com/v1/messages", {
       method: "POST",
@@ -32,7 +43,7 @@ export default async function handler(req, res) {
       },
       body: JSON.stringify({
         model: "claude-sonnet-4-6",
-        max_tokens: max_tokens || 1400,
+        max_tokens,
         messages: [{ role: "user", content: prompt }]
       })
     });
