@@ -222,34 +222,58 @@ function goStep(n){document.querySelectorAll('.screen').forEach(s=>s.classList.r
 function goStep2(){if(dream.length>=10)goStep(2);}
 function goStep3(){if(university)goStep(3);}
 function updateSteps(active){for(let i=1;i<=4;i++){const circle=document.getElementById('sc'+i);const label=circle?.nextElementSibling;if(!circle)continue;if(i<active){circle.className='step-circle done';circle.innerHTML='✓';}else if(i===active){circle.className='step-circle active';circle.innerHTML=i;if(label)label.className='step-label active';}else{circle.className='step-circle pending';circle.innerHTML=i;if(label)label.className='step-label';}const line=document.getElementById('sl'+i);if(line)line.className=i<active?'step-line done':'step-line';}}
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 async function generateMap(){
   goStep(4);
-  const msgs=['Mapping your dream to A-Level subjects…','Analysing university hidden requirements…','Calculating workload balance…','Building your personalised career map…'];
+  const msgs=['Mapping your dream to A-Level subjects…','Thinking about what to check with universities…','Calculating workload balance…','Building your personalised career map…'];
   let mi=0;
   const iv=setInterval(()=>{mi=(mi+1)%msgs.length;document.getElementById('loadingText').textContent=msgs[mi];},1800);
-  const prompt='You are GlobalCompass Career Simulator for sixth form students, an expert on UK A-Level requirements across all university tiers.\nDREAM: "'+dream+'"\nUNIVERSITY: "'+university+'"\nSTRENGTHS: '+strengths.join(', ')+'\n\nIMPORTANT CONTEXT: A-Level grade requirements vary significantly by tier. Oxbridge and Imperial typically require A* A* A to A* A A. Other top Russell Group universities like UCL, Edinburgh, Manchester, Bristol and Warwick typically require A A A to A* A A. Other strong universities like Bath, Loughborough, Surrey and York are often more flexible, sometimes A A B or B B B depending on the course, and can be excellent choices for specific subjects such as Sports Science at Loughborough or Architecture at Bath. Adjust your subject recommendations, hidden requirements, and the ucasPoints target realistically to match the UNIVERSITY tier selected — do not default to Oxbridge-level demands if a less competitive tier was chosen.\n\nRespond ONLY with valid JSON:\n{"career":"specific career title","summary":"2 sentence summary","subjects":[{"name":"Subject","level":"essential","why":"one sentence"},{"name":"Subject","level":"essential","why":"one sentence"},{"name":"Subject","level":"recommended","why":"one sentence"},{"name":"Subject","level":"optional","why":"one sentence"}],"hiddenRequirements":["requirement 1","requirement 2","requirement 3"],"workload":[{"subject":"Subject 1","intensity":75},{"subject":"Subject 2","intensity":60},{"subject":"Subject 3","intensity":50}],"ucasPoints":128,"aiInsight":"2-3 sentence personalised insight"}';
+  const prompt=`You are GlobalCompass Career Simulator, a careful guide for sixth form students choosing A-Level subjects.
+DREAM: "${dream}"
+UNIVERSITY: "${university}"
+STRENGTHS: ${strengths.join(', ')}
+
+STRICT RULES:
+1. Never state specific entry grades, offers, UCAS points, admissions test scores or deadlines as facts, because universities change them every year. Ignore any grades that appear in the UNIVERSITY text above. You may describe a tier as usually more competitive or often more flexible.
+2. You may name an admissions test (for example LNAT, UCAT, TMUA, STEP, TSA) only when you are certain it is widely used for that type of course, and you must never state a score. Never say that a specific named university requires something unless you are certain; otherwise describe the general pattern.
+3. For subjects, say commonly required or commonly preferred, never just required.
+4. If the destination is not the UK, do not mention UCAS or UK grade offers. Keep the advice general for that destination and say it varies by university.
+5. hiddenRequirements must be 3 short things to check, written as actions, for example: Check whether your target courses ask for an admissions test and when registration closes. Each under 30 words.
+6. Do not make claims about how many students are accepted or rejected, and do not compare students by region.
+7. Be encouraging, specific and concise.
+
+Respond ONLY with valid JSON:
+{"career":"specific career title","summary":"2 sentence summary","subjects":[{"name":"Subject","level":"essential","why":"one sentence"},{"name":"Subject","level":"essential","why":"one sentence"},{"name":"Subject","level":"recommended","why":"one sentence"},{"name":"Subject","level":"optional","why":"one sentence"}],"hiddenRequirements":["thing to check 1","thing to check 2","thing to check 3"],"workload":[{"subject":"Subject 1","intensity":75},{"subject":"Subject 2","intensity":60},{"subject":"Subject 3","intensity":50}],"aiInsight":"2-3 sentence personalised insight"}`;
   try{
     const res=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:prompt,max_tokens:3000})});
     const data=await res.json();
     clearInterval(iv);
+    if(!res.ok||!data.content)throw new Error((data&&data.error)||'No content');
     const text=data.content[0].text.replace(/```json|```/g,'').trim();
     showResults(JSON.parse(text));
-  }catch(e){console.error('Sixth Form Navigator error:',e);clearInterval(iv);showFallback();}
+  }catch(e){console.error('Sixth Form Navigator error:',e);clearInterval(iv);showError();}
 }
 function showResults(r){
-  document.getElementById('resultCareer').textContent=r.career;
-  document.getElementById('resultSummary').textContent=r.summary;
-  document.getElementById('ucasPoints').textContent=r.ucasPoints;
-  document.getElementById('aiInsight').textContent=r.aiInsight;
-  const sg=document.getElementById('subjectsGrid');sg.innerHTML='';
-  r.subjects.forEach(s=>{const cls=s.level==='essential'?'essential':s.level==='recommended'?'recommended':'optional';const bc='badge-'+cls;const nc=s.level==='essential'?'s-name':'s-name-dk';const wc=s.level==='essential'?'s-why':'s-why-dk';sg.innerHTML+='<div class="subject-card '+cls+'"><span class="s-badge '+bc+'">'+s.level+'</span><div class="'+nc+'">'+s.name+'</div><div class="'+wc+'">'+s.why+'</div></div>';});
-  const hr=document.getElementById('hiddenReqs');hr.innerHTML='<div class="hidden-req-title">Hidden requirements discovered</div><div class="hidden-req-list">';
-  r.hiddenRequirements.forEach(req=>{hr.innerHTML+='<div class="hidden-req-item"><span>→</span><span>'+req+'</span></div>';});hr.innerHTML+='</div>';
-  const wb=document.getElementById('workloadBars');wb.innerHTML='';
-  r.workload.forEach(w=>{wb.innerHTML+='<div class="workload-bar"><div class="workload-label"><span class="workload-name">'+w.subject+'</span><span class="workload-pct">'+w.intensity+'% intensity</span></div><div class="bar-track"><div class="bar-fill" style="width:'+w.intensity+'%"></div></div></div>';});
+  document.getElementById('resultCareer').textContent=r.career||'';
+  document.getElementById('resultSummary').textContent=r.summary||'';
+  document.getElementById('aiInsight').textContent=r.aiInsight||'';
+  const box=document.getElementById('ucasPoints').closest('.ucas-box');
+  if(box)box.style.display='none';
+  let sgh='';
+  (r.subjects||[]).forEach(s=>{const cls=s.level==='essential'?'essential':s.level==='recommended'?'recommended':'optional';const nc=s.level==='essential'?'s-name':'s-name-dk';const wc=s.level==='essential'?'s-why':'s-why-dk';sgh+='<div class="subject-card '+cls+'"><span class="s-badge badge-'+cls+'">'+esc(s.level)+'</span><div class="'+nc+'">'+esc(s.name)+'</div><div class="'+wc+'">'+esc(s.why)+'</div></div>';});
+  document.getElementById('subjectsGrid').innerHTML=sgh;
+  let hh='<div class="hidden-req-title">Things to check with each university</div><div class="hidden-req-list">';
+  (r.hiddenRequirements||[]).forEach(req=>{hh+='<div class="hidden-req-item"><span>→</span><span>'+esc(req)+'</span></div>';});
+  document.getElementById('hiddenReqs').innerHTML=hh+'</div>';
+  let wbh='';
+  (r.workload||[]).forEach(w=>{const n=Math.max(0,Math.min(100,Number(w.intensity)||0));wbh+='<div class="workload-bar"><div class="workload-label"><span class="workload-name">'+esc(w.subject)+'</span><span class="workload-pct">'+n+'% intensity</span></div><div class="bar-track"><div class="bar-fill" style="width:'+n+'%"></div></div></div>';});
+  document.getElementById('workloadBars').innerHTML=wbh;
+  if(!document.getElementById('verifyNote')){const note=document.createElement('div');note.id='verifyNote';note.style.cssText='font-size:11px;color:#7A8BAE;background:#F8F9FF;border-radius:8px;padding:10px 14px;margin:10px 0';note.textContent='GlobalCompass gives general guidance to help you plan. Entry grades, admissions tests and deadlines change every year, so always confirm them on each university course page and on ucas.com before making decisions.';document.querySelector('#s5 .action-row').before(note);}
   goStep(5);updateSteps(4);
 }
-function showFallback(){showResults({career:"Your Career Path",summary:"Based on your dream and strengths, GlobalCompass has identified a powerful A-Level pathway that opens doors to your chosen universities and field.",subjects:[{name:"Mathematics",level:"essential",why:"Core analytical foundation required by most top universities for your field"},{name:"Core Science or Humanities",level:"essential",why:"Essential subject combination for your chosen career pathway"},{name:"Extended Project EPQ",level:"recommended",why:"Adds up to 28 UCAS points and strengthens your personal statement significantly"},{name:"Additional elective",level:"optional",why:"Broadens your profile and demonstrates intellectual curiosity to admissions teams"}],hiddenRequirements:["Top universities often require specific grade thresholds beyond published entry requirements","Work experience and extracurriculars are increasingly weighted alongside grades","Personal statement evidence of genuine passion for the subject is essential"],workload:[{subject:"Core subject 1",intensity:75},{subject:"Core subject 2",intensity:60},{subject:"Core subject 3",intensity:50}],ucasPoints:128,aiInsight:"Your combination of strengths and dream creates a compelling university application profile. Focus on building genuine experience in your chosen field alongside your A-Level studies."});}
+function showError(){
+  document.getElementById('s4').innerHTML='<div class="card"><div class="loading-wrap"><div class="loading-text">We could not build your map just now.</div><div class="loading-sub">Please try again in a moment.</div><div class="action-row" style="justify-content:center"><button class="action-btn" style="background:#6B1E3A;color:#F5C842" onclick="location.reload()">Start again</button></div></div></div>';
+}
 </script>
 </body>
 </html>
