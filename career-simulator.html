@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GlobalCompass — A-Levels and Sixth Form Navigator</title>
+<title>GlobalCompass — A-Levels and Sixth Form Navigator</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -161,8 +161,8 @@ polyfillCountryFlagEmojis();
       <div class="card-title">Where do you want to study?</div>
       <div class="card-sub">This shapes which A-Level combinations and grade requirements GlobalCompass maps for you.</div>
       <div class="options-grid">
-        <div class="opt-card" onclick="selectUni(this,'UK Oxbridge and top tier Russell Group requiring A asterisk AA to AAA — Oxford, Cambridge, Imperial')"><div class="opt-icon">🇬🇧</div><div><div class="opt-title">UK — Oxbridge & top tier</div><div class="opt-sub">Oxford, Cambridge, Imperial</div></div></div>
-        <div class="opt-card" onclick="selectUni(this,'UK Russell Group second and third tier requiring AAA to A*AA — UCL, Edinburgh, Manchester, Bristol, Warwick, Kings College London')"><div class="opt-icon">🇬🇧</div><div><div class="opt-title">UK — Russell Group</div><div class="opt-sub">UCL, Edinburgh, Manchester, Bristol</div></div></div>
+        <div class="opt-card" onclick="selectUni(this,'UK Oxbridge and other most competitive universities — Oxford, Cambridge, Imperial')"><div class="opt-icon">🇬🇧</div><div><div class="opt-title">UK — Oxbridge & top tier</div><div class="opt-sub">Oxford, Cambridge, Imperial</div></div></div>
+        <div class="opt-card" onclick="selectUni(this,'UK Russell Group universities — UCL, Edinburgh, Manchester, Bristol, Warwick, Kings College London')"><div class="opt-icon">🇬🇧</div><div><div class="opt-title">UK — Russell Group</div><div class="opt-sub">UCL, Edinburgh, Manchester, Bristol</div></div></div>
         <div class="opt-card" onclick="selectUni(this,'UK other strong universities outside Russell Group offering excellent subject specific programmes — Bath, Loughborough, Surrey, Exeter, York, Leeds')"><div class="opt-icon">🇬🇧</div><div><div class="opt-title">UK — Other strong universities</div><div class="opt-sub">Bath, Loughborough, Surrey, York</div></div></div>
         <div class="opt-card" onclick="selectUni(this,'UK open keeping all UK options across Russell Group and beyond')"><div class="opt-icon">🇬🇧</div><div><div class="opt-title">UK — Open across all tiers</div><div class="opt-sub">Best fit across all UK universities</div></div></div>
         <div class="opt-card" onclick="selectUni(this,'USA Ivy League and top US universities')"><div class="opt-icon">🇺🇸</div><div><div class="opt-title">USA Top Universities</div><div class="opt-sub">Harvard, MIT, Stanford, Ivy League</div></div></div>
@@ -205,11 +205,15 @@ polyfillCountryFlagEmojis();
       <p class="result-summary" id="resultSummary"></p>
     </div>
     <div class="card"><div class="card-title" style="margin-bottom:16px">Your recommended A-Level subjects</div><div class="subjects-grid" id="subjectsGrid"></div></div>
-    <div class="card"><div class="card-title" style="margin-bottom:12px">What to check before you apply</div><div class="hidden-req" id="hiddenReqs"></div></div>    <div class="card"><div class="card-title" style="margin-bottom:16px">Workload balance</div><div id="workloadBars"></div><div class="ucas-box"><div class="ucas-text"><h4>Estimated UCAS points</h4><p>Based on AAB — realistic target grades</p></div><div class="ucas-points" id="ucasPoints">128</div></div></div>
+    <div class="card"><div class="card-title" style="margin-bottom:12px">What to check before you apply</div><div class="hidden-req" id="hiddenReqs"></div></div>
+    <div class="card"><div class="card-title" style="margin-bottom:16px">Workload balance (indicative)</div><div id="workloadBars"></div></div>
     <div class="card"><div class="ai-label">🤖 GlobalCompass AI insight</div><div class="ai-bubble"><p id="aiInsight"></p></div></div>
     <div class="action-row">
       <button class="action-btn" style="background:#6B1E3A;color:#F5C842" onclick="goStep(1)">Start again</button>
-      <button class="action-btn" style="background:#EEF3FF;color:#6B1E3A" onclick="window.location.href='index.html'">Back to GlobalCompass ↗</button>  </div>
+      <button class="action-btn" style="background:#F5C842;color:#6B1E3A" onclick="window.location.href='schools.html?cur=British&age=16-18'">Find British schools for ages 16–18 ↗</button>
+      <button class="action-btn" style="background:#EEF3FF;color:#6B1E3A" onclick="window.location.href='index.html'">Back to GlobalCompass ↗</button>
+    </div>
+  </div>
 </div>
 <script>
 let dream='',university='',strengths=[];
@@ -231,16 +235,16 @@ async function generateMap(){
 DREAM: "${dream}"
 UNIVERSITY: "${university}"
 STRENGTHS: ${strengths.join(', ')}
-
+ 
 STRICT RULES:
 1. Never state specific entry grades, offers, UCAS points, admissions test scores or deadlines as facts, because universities change them every year. Ignore any grades that appear in the UNIVERSITY text above. You may describe a tier as usually more competitive or often more flexible.
 2. You may name an admissions test (for example LNAT, UCAT, TMUA, STEP, TSA) only when you are certain it is widely used for that type of course, and you must never state a score. Never say that a specific named university requires something unless you are certain; otherwise describe the general pattern.
 3. For subjects, say commonly required or commonly preferred, never just required.
 4. If the destination is not the UK, do not mention UCAS or UK grade offers. Keep the advice general for that destination and say it varies by university.
 5. hiddenRequirements must be 3 short things to check, written as actions, for example: Check whether your target courses ask for an admissions test and when registration closes. Each under 30 words.
-6. Do not make claims about how many students are accepted or rejected, and do not compare students by region.
+6. Do not make claims about how many students are accepted or rejected, do not compare students by region, and never promise or imply an outcome (for example that a goal is highly achievable or that a university will be impressed).
 7. Be encouraging, specific and concise.
-
+ 
 Respond ONLY with valid JSON:
 {"career":"specific career title","summary":"2 sentence summary","subjects":[{"name":"Subject","level":"essential","why":"one sentence"},{"name":"Subject","level":"essential","why":"one sentence"},{"name":"Subject","level":"recommended","why":"one sentence"},{"name":"Subject","level":"optional","why":"one sentence"}],"hiddenRequirements":["thing to check 1","thing to check 2","thing to check 3"],"workload":[{"subject":"Subject 1","intensity":75},{"subject":"Subject 2","intensity":60},{"subject":"Subject 3","intensity":50}],"aiInsight":"2-3 sentence personalised insight"}`;
   try{
@@ -256,8 +260,6 @@ function showResults(r){
   document.getElementById('resultCareer').textContent=r.career||'';
   document.getElementById('resultSummary').textContent=r.summary||'';
   document.getElementById('aiInsight').textContent=r.aiInsight||'';
-  const box=document.getElementById('ucasPoints').closest('.ucas-box');
-  if(box)box.style.display='none';
   let sgh='';
   (r.subjects||[]).forEach(s=>{const cls=s.level==='essential'?'essential':s.level==='recommended'?'recommended':'optional';const nc=s.level==='essential'?'s-name':'s-name-dk';const wc=s.level==='essential'?'s-why':'s-why-dk';sgh+='<div class="subject-card '+cls+'"><span class="s-badge badge-'+cls+'">'+esc(s.level)+'</span><div class="'+nc+'">'+esc(s.name)+'</div><div class="'+wc+'">'+esc(s.why)+'</div></div>';});
   document.getElementById('subjectsGrid').innerHTML=sgh;
@@ -276,3 +278,4 @@ function showError(){
 </script>
 </body>
 </html>
+ 
