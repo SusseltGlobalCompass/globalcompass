@@ -145,7 +145,7 @@ polyfillCountryFlagEmojis();
 <div class="hero-bar">
   <div class="us-badge">🇺🇸 American Curriculum · AP Exams · SAT Strategy · All Curricula Welcome</div>
   <h1 class="hero-h">Your personalised<br><em>AP & SAT pathway</em></h1>
-  <p class="hero-p">Whether you study American, IB, British or any curriculum — GlobalCompass maps your optimal AP subjects, target SAT score, university credit savings and complete US admissions strategy.</p>
+  <p class="hero-p">Whether you study American, IB, British or any curriculum — GlobalCompass suggests AP subjects to consider, an indicative SAT/ACT target and the things to check with each university.</p>
 </div>
 <div class="main">
   <div class="module-tabs">
@@ -165,7 +165,7 @@ polyfillCountryFlagEmojis();
     <div id="ap-s1" class="screen active">
       <div class="card">
         <div class="card-title">What is your career dream?</div>
-        <div class="card-sub">GlobalCompass maps backwards from your dream to the optimal AP subjects — and calculates how much university tuition you can save.</div>
+        <div class="card-sub">GlobalCompass maps backwards from your dream to AP subjects worth considering, and lists what to check with each university.</div>
         <textarea class="dream-input" id="apDreamInput" placeholder="e.g. I want to study computer science and build AI products at a top US tech company…"></textarea>
         <div class="example-prompts">
           <span class="ep" onclick="setApDream('I want to study medicine and become a doctor')">🩺 Medicine</span>
@@ -196,7 +196,7 @@ polyfillCountryFlagEmojis();
     <div id="ap-s3" class="screen">
       <div class="card">
         <div class="card-title">Where do you want to study?</div>
-        <div class="card-sub">Different US universities have very different AP credit policies — some give full credit for a 3, others require a 5.</div>
+        <div class="card-sub">Universities have very different AP credit policies, and they change over time. Pick the group closest to your plans.</div>
         <div class="options-grid">
           <div class="opt-card" onclick="selectApUni(this,'Ivy League Harvard Yale Princeton Columbia Penn Cornell Dartmouth Brown')"><span class="opt-emoji">🏛️</span><div class="opt-title">Ivy League</div><div class="opt-sub">Harvard, Yale, Princeton, Columbia</div></div>
           <div class="opt-card" onclick="selectApUni(this,'MIT Caltech Stanford top STEM universities')"><span class="opt-emoji">⚡</span><div class="opt-title">MIT / Caltech / Stanford</div><div class="opt-sub">Top STEM and research universities</div></div>
@@ -217,7 +217,7 @@ polyfillCountryFlagEmojis();
         <div class="loading-wrap">
           <i class="ti ti-loader-2 loading-icon"></i>
           <div class="loading-text" id="ap-loadingText">Mapping your dream to AP subjects…</div>
-          <div class="loading-sub">Calculating credit savings and building your complete AP strategy</div>
+          <div class="loading-sub">Building your AP strategy</div>
         </div>
       </div>
     </div>
@@ -227,13 +227,13 @@ polyfillCountryFlagEmojis();
         <div class="result-career" id="ap-resultCareer"></div>
         <p class="result-summary" id="ap-resultSummary"></p>
       </div>
-      <div class="card"><div class="card-title" style="margin-bottom:14px">Your recommended AP subjects</div><div class="ap-grid" id="ap-subjectsOutput"></div></div>
+      <div class="card" id="ap-subjectsCard"><div class="card-title" style="margin-bottom:14px">Your recommended AP subjects</div><div class="ap-grid" id="ap-subjectsOutput"></div></div>
       <div id="ap-savingsOutput"></div>
       <div id="ap-satOutput"></div>
       <div id="ap-timelineOutput"></div>
       <div id="ap-hiddenOutput"></div>
       <div class="card"><div class="ai-label">GlobalCompass insight</div><div class="ai-bubble"><p id="ap-aiInsight"></p></div></div>
-      <div style="font-size:11px;color:#7A8BAE;background:#F8F9FF;border-radius:8px;padding:10px 14px;margin:10px 0">GlobalCompass provides general guidance to help you plan &mdash; always verify official requirements and deadlines directly with your target university before making any decisions. GlobalCompass is not responsible for outcomes based on information that changes after publication, or for decisions made using this tool alone.</div>
+      <div style="font-size:11px;color:#7A8BAE;background:#F8F9FF;border-radius:8px;padding:10px 14px;margin:10px 0">GlobalCompass provides general guidance to help you plan &mdash; the AP subjects, scores and credit policies shown here are indicative. Always confirm them on each university's own admissions pages and on collegeboard.org before you decide. GlobalCompass is not responsible for outcomes based on information that changes after publication, or for decisions made using this tool alone.</div>
       <div class="action-row">
         <button class="action-btn" style="background:#2D1B6E;color:#F5C842" onclick="apGoStep(1)">Start again</button>
         <button class="action-btn" style="background:#F5C842;color:#2D1B6E" onclick="switchModule('sat')">Plan my SAT strategy ↗</button>
@@ -245,7 +245,7 @@ polyfillCountryFlagEmojis();
   <div id="module-sat" style="display:none">
     <div class="card">
       <div class="card-title">SAT Strategy Guide</div>
-      <div class="card-sub">The SAT is used by students worldwide regardless of curriculum. Tell us about yourself and GlobalCompass builds your personalised SAT strategy.</div>
+      <div class="card-sub">The SAT is used by students worldwide regardless of curriculum, but many universities no longer require it. Tell us about yourself and GlobalCompass suggests an indicative SAT strategy.</div>
       <div style="margin-bottom:16px">
         <label style="font-size:12px;font-weight:600;color:#0D1F4A;font-family:Montserrat,sans-serif;display:block;margin-bottom:8px">Your dream major or field:</label>
         <input id="satMajor" type="text" placeholder="e.g. Computer Science, Medicine, Business, Law…" style="width:100%;border:1.5px solid #E0E8F5;border-radius:10px;padding:10px 14px;font-size:13px;color:#0D1F4A;font-family:Inter,sans-serif;outline:none">
@@ -276,7 +276,7 @@ polyfillCountryFlagEmojis();
       <div id="sat-scoreOutput"></div>
       <div id="sat-strategyOutput"></div>
       <div class="card"><div class="ai-label">GlobalCompass SAT insight</div><div class="ai-bubble"><p id="sat-aiInsight"></p></div></div>
-      <div style="font-size:11px;color:#7A8BAE;background:#F8F9FF;border-radius:8px;padding:10px 14px;margin:10px 0">GlobalCompass provides general guidance to help you plan &mdash; always verify official requirements and deadlines directly with your target university before making any decisions. GlobalCompass is not responsible for outcomes based on information that changes after publication, or for decisions made using this tool alone.</div>
+      <div style="font-size:11px;color:#7A8BAE;background:#F8F9FF;border-radius:8px;padding:10px 14px;margin:10px 0">GlobalCompass provides general guidance to help you plan &mdash; the AP subjects, scores and credit policies shown here are indicative. Always confirm them on each university's own admissions pages and on collegeboard.org before you decide. GlobalCompass is not responsible for outcomes based on information that changes after publication, or for decisions made using this tool alone.</div>
       <div class="action-row">
         <button class="action-btn" style="background:#2D1B6E;color:#F5C842" onclick="resetSat()">Start again</button>
         <button class="action-btn" style="background:#F5C842;color:#2D1B6E" onclick="switchModule('ap')">Plan my AP subjects ↗</button>
@@ -287,6 +287,8 @@ polyfillCountryFlagEmojis();
 </div>
 <script>
 let apDream='',apCurr='',apUni='',satTier='',satCurr='';
+function esc(v){return String(v==null?'':v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function numOrDash(v){const n=Number(v);return isFinite(n)&&n>0?Math.round(n):'–';}
 document.getElementById('apDreamInput').addEventListener('input',function(){apDream=this.value.trim();document.getElementById('ap-btn1').disabled=apDream.length<10;});
 function setApDream(t){document.getElementById('apDreamInput').value=t;apDream=t;document.getElementById('ap-btn1').disabled=false;}
 function selectApCurr(el,v){apCurr=v;document.querySelectorAll('#ap-s2 .opt-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');document.getElementById('ap-btn2').disabled=false;}
@@ -299,48 +301,69 @@ function checkSatReady(){const m=document.getElementById('satMajor').value.trim(
 document.getElementById('satMajor').addEventListener('input',checkSatReady);
 async function generateApPlan(){
   apGoStep(4);
-  const msgs=['Mapping your dream to AP subjects…','Calculating university credit savings…','Checking AP credit policies…','Building your complete AP strategy…'];
+  const msgs=['Mapping your dream to AP subjects…','Choosing AP subjects to consider…','Building your complete AP strategy…'];
   let mi=0;const iv=setInterval(()=>{mi=(mi+1)%msgs.length;document.getElementById('ap-loadingText').textContent=msgs[mi];},1800);
-  const prompt='You are GlobalCompass American Pathway Navigator, an expert on AP exams and their international recognition.\nDREAM: "'+apDream+'"\nCURRICULUM: "'+apCurr+'"\nUNIVERSITY: "'+apUni+'"\n\nIMPORTANT CONTEXT: AP scores are accepted well beyond the USA. Most UK universities (including Oxford and Cambridge) do not require the SAT and treat strong AP scores (especially 5s) as equivalent to A-Levels. UK Law programmes also require the LNAT admissions test. UK Medicine requires UCAT. Many Russell Group STEM courses now require the ESAT or TMUA admissions tests in addition to AP scores. Singapore (NUS, NTU) and several European universities also accept AP scores for international admission. If the selected UNIVERSITY is UK, European, or Singapore-based, the hiddenRequirements field MUST mention the relevant admissions test (LNAT for Law, UCAT for Medicine, ESAT or TMUA for STEM at Oxford, Cambridge, Imperial, LSE) and clarify that a score of 5 is the expected standard, not 4.\n\nRespond ONLY with valid JSON:\n{"career":"career title","summary":"2 sentence summary","apSubjects":[{"name":"AP Subject","level":"essential","targetScore":5,"credits":3,"why":"one sentence"},{"name":"AP Subject","level":"essential","targetScore":5,"credits":3,"why":"one sentence"},{"name":"AP Subject","level":"recommended","targetScore":4,"credits":3,"why":"one sentence"},{"name":"AP Subject","level":"optional","targetScore":4,"credits":3,"why":"one sentence"}],"totalCredits":12,"semestersSaved":1,"tuitionSaved":15000,"satTarget":1480,"actTarget":33,"satStrategy":"2 sentences on SAT strategy","timeline":[{"year":"Grade 10","action":"action"},{"year":"Grade 11","action":"action"},{"year":"Grade 12 Fall","action":"action"},{"year":"Grade 12 Spring","action":"action"}],"hiddenRequirements":["requirement 1","requirement 2","requirement 3"],"aiInsight":"2-3 sentence personalised insight"}';
+  const prompt='You are GlobalCompass American Pathway Navigator, a careful guide to AP exams for students from any curriculum.\nDREAM: "'+apDream+'"\nCURRICULUM: "'+apCurr+'"\nUNIVERSITY GROUP: "'+apUni+'"\n\nRULES: Suggest AP subjects that commonly fit the dream. Do not state how many credits, semesters or dollars a student will save, because AP credit policies differ between universities and change. Do not state that a named university requires a particular AP score or gives credit for it. If the university group is outside the USA (UK, Canada, Europe, Singapore), say that AP is only one of several accepted qualifications there and that the student must check each university; you may name an admissions test only when it is widely known for that course type (for example LNAT for law or UCAT for medicine in the UK) and never state a score for it. targetScore means the usual aim for that subject (1 to 5), not a requirement. satTarget and actTarget are rounded indicative figures for the type of university chosen.\n\nRespond ONLY with valid JSON:\n{"career":"career title","summary":"2 sentence summary","apSubjects":[{"name":"AP Subject","level":"essential","targetScore":5,"why":"one sentence"},{"name":"AP Subject","level":"essential","targetScore":5,"why":"one sentence"},{"name":"AP Subject","level":"recommended","targetScore":4,"why":"one sentence"},{"name":"AP Subject","level":"optional","targetScore":4,"why":"one sentence"}],"satTarget":1450,"actTarget":32,"satStrategy":"2 sentences on SAT strategy","timeline":[{"year":"Grade 10","action":"action"},{"year":"Grade 11","action":"action"},{"year":"Grade 12 Fall","action":"action"},{"year":"Grade 12 Spring","action":"action"}],"hiddenRequirements":["thing to check 1","thing to check 2","thing to check 3"],"aiInsight":"2-3 sentence personalised insight"}';
   try{
     const res=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:prompt,max_tokens:3000})});
     const data=await res.json();clearInterval(iv);
+    if(!res.ok||!data.content||!data.content[0])throw new Error('bad response');
     const text=data.content[0].text.replace(/```json|```/g,'').trim();
     showApResults(JSON.parse(text));
-  }catch(e){console.error('AP Navigator error:',e);clearInterval(iv);showApFallback();}
+  }catch(e){console.error('AP Navigator error:',e);clearInterval(iv);showApError();}
 }
 function showApResults(r){
-  document.getElementById('ap-resultCareer').textContent=r.career;
-  document.getElementById('ap-resultSummary').textContent=r.summary;
-  document.getElementById('ap-aiInsight').textContent=r.aiInsight;
-  document.getElementById('ap-subjectsOutput').innerHTML=r.apSubjects.map(s=>{const cls=s.level==='essential'?'essential':s.level==='recommended'?'recommended':'optional';const bc='badge-'+cls;const nl=s.level==='essential'?'ap-name-light':'ap-name-dark';const wl=s.level==='essential'?'ap-why-light':'ap-why-dark';const sl=s.level==='essential'?'ap-score-light':'ap-score-dark';return'<div class="ap-card '+cls+'"><span class="ap-badge '+bc+'">'+s.level+'</span><div class="'+nl+'">'+s.name+'</div><div class="'+sl+'">Target: '+s.targetScore+'/5 · '+s.credits+' credits</div><div class="'+wl+'">'+s.why+'</div></div>';}).join('');
-  document.getElementById('ap-savingsOutput').innerHTML='<div class="savings-box"><div class="savings-title">University tuition you could save</div><div class="savings-amount">$'+r.tuitionSaved.toLocaleString()+'</div><div class="savings-sub">Based on '+r.totalCredits+' AP credits at target universities</div><div class="savings-breakdown"><div class="savings-item"><div class="savings-label">AP Credits</div><div class="savings-value">'+r.totalCredits+'</div></div><div class="savings-item"><div class="savings-label">Semesters saved</div><div class="savings-value">'+r.semestersSaved+'</div></div><div class="savings-item"><div class="savings-label">Est. saving</div><div class="savings-value">$'+(r.tuitionSaved/1000).toFixed(0)+'k</div></div></div></div>';
-  document.getElementById('ap-satOutput').innerHTML='<div class="sat-box"><div class="sat-title">SAT & ACT targets</div><div class="sat-grid"><div class="sat-item"><div class="sat-label">SAT target</div><div class="sat-score">'+r.satTarget+'</div><div class="sat-sub">'+r.satStrategy+'</div></div><div class="sat-item"><div class="sat-label">ACT equivalent</div><div class="sat-score">'+r.actTarget+'</div><div class="sat-sub">Both accepted equally. Choose the test that suits your strengths.</div></div></div></div>';
-  document.getElementById('ap-timelineOutput').innerHTML='<div class="timeline-box"><div class="timeline-title">Your AP & SAT timeline</div><div class="timeline-grid">'+r.timeline.map(t=>'<div class="timeline-item"><div class="timeline-year">'+t.year+'</div><div class="timeline-action">'+t.action+'</div></div>').join('')+'</div></div>';
-  document.getElementById('ap-hiddenOutput').innerHTML='<div class="hidden-box"><div class="hidden-title">Hidden AP & admissions requirements</div>'+r.hiddenRequirements.map(h=>'<div class="hidden-item"><span>→</span><span>'+h+'</span></div>').join('')+'</div>';
+  document.getElementById('ap-subjectsCard').style.display='';
+  const subs=Array.isArray(r.apSubjects)?r.apSubjects:[];
+  const tl=Array.isArray(r.timeline)?r.timeline:[];
+  const hid=Array.isArray(r.hiddenRequirements)?r.hiddenRequirements:[];
+  document.getElementById('ap-resultCareer').textContent=r.career||'';
+  document.getElementById('ap-resultSummary').textContent=r.summary||'';
+  document.getElementById('ap-aiInsight').textContent=r.aiInsight||'';
+  document.getElementById('ap-subjectsOutput').innerHTML=subs.map(s=>{const lv=['essential','recommended','optional'].includes(s.level)?s.level:'optional';const bc='badge-'+lv;const nl=lv==='essential'?'ap-name-light':'ap-name-dark';const wl=lv==='essential'?'ap-why-light':'ap-why-dark';const sl=lv==='essential'?'ap-score-light':'ap-score-dark';const lab=lv==='essential'?'Core to consider':lv==='recommended'?'Worth considering':'Optional';return'<div class="ap-card '+lv+'"><span class="ap-badge '+bc+'">'+lab+'</span><div class="'+nl+'">'+esc(s.name)+'</div><div class="'+sl+'">Usual aim: '+esc(s.targetScore)+'/5 (indicative)</div><div class="'+wl+'">'+esc(s.why)+'</div></div>';}).join('');
+  document.getElementById('ap-savingsOutput').innerHTML='<div class="hidden-box" style="background:#EEF3FF;border-color:#C0D0E8"><div class="hidden-title">About AP credit</div><div class="hidden-item"><span>→</span><span>Whether AP scores earn university credit, placement or nothing at all depends on each university and each subject, and the policies change. GlobalCompass does not estimate savings. Check the AP credit policy on every university you are considering.</span></div></div>';
+  document.getElementById('ap-satOutput').innerHTML='<div class="sat-box"><div class="sat-title">SAT & ACT: indicative targets</div><div class="sat-grid"><div class="sat-item"><div class="sat-label">SAT guide</div><div class="sat-score">'+numOrDash(r.satTarget)+'</div><div class="sat-sub">'+esc(r.satStrategy)+'</div></div><div class="sat-item"><div class="sat-label">ACT guide</div><div class="sat-score">'+numOrDash(r.actTarget)+'</div><div class="sat-sub">These are rounded guide figures, not requirements. Many universities are test-optional or have their own policy, so check each one.</div></div></div></div>';
+  document.getElementById('ap-timelineOutput').innerHTML='<div class="timeline-box"><div class="timeline-title">Your AP & SAT timeline</div><div class="timeline-grid">'+tl.map(t=>'<div class="timeline-item"><div class="timeline-year">'+esc(t.year)+'</div><div class="timeline-action">'+esc(t.action)+'</div></div>').join('')+'</div></div>';
+  document.getElementById('ap-hiddenOutput').innerHTML='<div class="hidden-box"><div class="hidden-title">Things to check with each university</div>'+hid.map(h=>'<div class="hidden-item"><span>→</span><span>'+esc(h)+'</span></div>').join('')+'</div>';
   apGoStep(5);
 }
-function showApFallback(){showApResults({career:"Computer Scientist",summary:"Your pathway to computer science requires a strategic combination of Mathematics and Science APs that demonstrate rigour while AP Computer Science directly signals your interest to admissions committees.",apSubjects:[{name:"AP Calculus BC",level:"essential",targetScore:5,credits:6,why:"Mathematics foundation required by every top CS programme — BC gives double credits"},{name:"AP Computer Science A",level:"essential",targetScore:5,credits:3,why:"Directly demonstrates programming ability and CS readiness to admissions committees"},{name:"AP Physics C Mechanics",level:"recommended",targetScore:5,credits:3,why:"Physics C is the most rigorous science AP and strongly preferred for CS and engineering"},{name:"AP Statistics",level:"optional",targetScore:4,credits:3,why:"Statistics is increasingly core to AI and data science careers"}],totalCredits:15,semestersSaved:1,tuitionSaved:18000,satTarget:1520,actTarget:34,satStrategy:"Aim for 780+ in SAT Math. The Reading section matters more than most CS students expect — top programmes want well-rounded thinkers.",timeline:[{year:"Grade 10",action:"Take AP Computer Science Principles and begin SAT prep"},{year:"Grade 11",action:"Sit AP Calculus BC and AP Physics C — take first SAT attempt"},{year:"Grade 12 Fall",action:"Take AP Statistics — submit university applications"},{year:"Grade 12 Spring",action:"Final SAT attempt if needed — AP exams in May"}],hiddenRequirements:["MIT and Caltech do not grant AP credit for Calculus — they require their own placement tests","Harvard grants AP credit only for scores of 5 — a score of 4 earns no credit","Stanford does not grant credit for AP Computer Science A — it is for placement only"],aiInsight:"Many CS applicants take AP Computer Science A and skip Calculus BC — a strategic mistake. Top CS programmes care far more about mathematical depth than coding proficiency at age 17. A 5 in Calculus BC signals more to Harvard than a 5 in CS A."});}
+function showApError(){
+  document.getElementById('ap-subjectsCard').style.display='none';
+  document.getElementById('ap-resultCareer').textContent='We could not build your plan';
+  document.getElementById('ap-resultSummary').textContent='Something went wrong while preparing your AP plan, and we would rather show nothing than something made up. Please press Start again and try once more in a minute.';
+  ['ap-subjectsOutput','ap-savingsOutput','ap-satOutput','ap-timelineOutput','ap-hiddenOutput'].forEach(id=>document.getElementById(id).innerHTML='');
+  document.getElementById('ap-aiInsight').textContent='If this keeps happening, check the AP subjects and credit policy on the websites of the universities you are interested in.';
+  apGoStep(5);
+}
 async function generateSatPlan(){
   const major=document.getElementById('satMajor').value.trim();
   document.getElementById('sat-btn').disabled=true;
   document.getElementById('sat-btn').textContent='Generating…';
-  const prompt='You are GlobalCompass SAT Strategy Guide, an expert on how the SAT is used internationally.\nMAJOR: "'+major+'"\nTARGET: "'+satTier+'"\nCURRICULUM: "'+satCurr+'"\n\nIMPORTANT CONTEXT: If TARGET is UK universities, be honest that most UK universities including Oxford and Cambridge do NOT require the SAT at all and instead focus on A-Level or AP grades plus admissions tests like LNAT for Law or UCAT for Medicine - in this case explain the SAT is optional and only worth taking if applying to US universities as well. If TARGET is Europe or Singapore, note the SAT is one of several accepted options alongside other qualifications. If TARGET is Canada, note the SAT is one factor among several and less central than in the US. Only give the standard high-pressure full SAT prep strategy if TARGET is a US tier.\n\nRespond ONLY with valid JSON:\n{"targetSAT":1480,"targetACT":33,"mathTarget":760,"readingTarget":720,"satVsAct":"2 sentences","prepTimeline":"3 sentences","keyStrategies":["strategy 1","strategy 2","strategy 3"],"curricularAdvantage":"2 sentences","aiInsight":"2-3 sentence insight"}';
+  const prompt='You are GlobalCompass SAT Strategy Guide, a careful guide to how the SAT is used internationally.\nMAJOR: "'+major+'"\nTARGET: "'+satTier+'"\nCURRICULUM: "'+satCurr+'"\n\nRULES: If TARGET is UK universities, explain that UK universities generally do not ask for the SAT and focus on school qualifications plus, for some courses, admissions tests such as LNAT for law or UCAT for medicine (never state a score); the SAT is only worth taking if the student also applies to the US. If TARGET is Europe or Singapore, say the SAT is one of several options and policies differ by university. If TARGET is Canada, say the SAT is usually not central and the student should check each university. Give a full SAT preparation strategy only if TARGET is a US tier, and note that many US universities are test-optional or vary in their policy, so the student must check each one. Do not claim that a named university requires or prefers a score. targetSAT, targetACT, mathTarget and readingTarget are rounded indicative figures only (use 0 for all four if the target is not a US tier).\n\nRespond ONLY with valid JSON:\n{"targetSAT":1450,"targetACT":32,"mathTarget":740,"readingTarget":710,"satVsAct":"2 sentences","prepTimeline":"3 sentences","keyStrategies":["strategy 1","strategy 2","strategy 3"],"curricularAdvantage":"2 sentences","aiInsight":"2-3 sentence insight"}';
   try{
-    const res=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:prompt,max_tokens:800})});
+    const res=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt:prompt,max_tokens:1200})});
     const data=await res.json();
+    if(!res.ok||!data.content||!data.content[0])throw new Error('bad response');
     const text=data.content[0].text.replace(/```json|```/g,'').trim();
     showSatResults(JSON.parse(text));
-  }catch(e){console.error('SAT Navigator error:',e);showSatFallback();}
+  }catch(e){console.error('SAT Navigator error:',e);showSatError();}
 }
 function showSatResults(r){
-  document.getElementById('sat-scoreOutput').innerHTML='<div class="sat-box"><div class="sat-title">Your SAT targets</div><div class="sat-grid"><div class="sat-item"><div class="sat-label">Total SAT target</div><div class="sat-score">'+r.targetSAT+'</div><div class="sat-sub">Math: '+r.mathTarget+' · Reading: '+r.readingTarget+'</div></div><div class="sat-item"><div class="sat-label">ACT equivalent</div><div class="sat-score">'+r.targetACT+'</div><div class="sat-sub">'+r.satVsAct+'</div></div></div></div>';
-  document.getElementById('sat-strategyOutput').innerHTML='<div class="card"><div class="card-title" style="margin-bottom:12px">Your SAT strategy</div><div style="font-size:13px;color:#4A6FA5;line-height:1.7;margin-bottom:12px">'+r.prepTimeline+'</div><div style="font-size:13px;color:#4A6FA5;line-height:1.7;margin-bottom:12px">'+r.curricularAdvantage+'</div>'+r.keyStrategies.map(s=>'<div style="display:flex;gap:8px;margin-bottom:8px;font-size:12px;color:#0D1F4A"><span style="color:#F5C842;font-weight:700">→</span><span>'+s+'</span></div>').join('')+'</div>';
-  document.getElementById('sat-aiInsight').textContent=r.aiInsight;
+  const ks=Array.isArray(r.keyStrategies)?r.keyStrategies:[];
+  const hasScores=Number(r.targetSAT)>0;
+  document.getElementById('sat-scoreOutput').innerHTML=hasScores?'<div class="sat-box"><div class="sat-title">Your SAT & ACT: indicative targets</div><div class="sat-grid"><div class="sat-item"><div class="sat-label">SAT guide</div><div class="sat-score">'+numOrDash(r.targetSAT)+'</div><div class="sat-sub">Math: '+numOrDash(r.mathTarget)+' · Reading: '+numOrDash(r.readingTarget)+'<br>Rounded guide figures, not requirements.</div></div><div class="sat-item"><div class="sat-label">ACT guide</div><div class="sat-score">'+numOrDash(r.targetACT)+'</div><div class="sat-sub">'+esc(r.satVsAct)+'</div></div></div></div>':'<div class="card"><div class="card-title" style="margin-bottom:10px">SAT or ACT for this target</div><div style="font-size:13px;color:#4A6FA5;line-height:1.7">'+esc(r.satVsAct)+'</div></div>';
+  document.getElementById('sat-strategyOutput').innerHTML='<div class="card"><div class="card-title" style="margin-bottom:12px">Your SAT strategy</div><div style="font-size:13px;color:#4A6FA5;line-height:1.7;margin-bottom:12px">'+esc(r.prepTimeline)+'</div><div style="font-size:13px;color:#4A6FA5;line-height:1.7;margin-bottom:12px">'+esc(r.curricularAdvantage)+'</div>'+ks.map(s=>'<div style="display:flex;gap:8px;margin-bottom:8px;font-size:12px;color:#0D1F4A"><span style="color:#F5C842;font-weight:700">→</span><span>'+esc(s)+'</span></div>').join('')+'</div>';
+  document.getElementById('sat-aiInsight').textContent=r.aiInsight||'';
   document.getElementById('sat-results').style.display='block';
   document.getElementById('sat-btn').style.display='none';
 }
-function showSatFallback(){showSatResults({targetSAT:1480,targetACT:33,mathTarget:760,readingTarget:720,satVsAct:"For STEM majors the SAT slightly favours students with strong mathematics foundations. The ACT Science section can give an advantage to students from IB or A-Level backgrounds.",prepTimeline:"Begin SAT preparation at least 6 months before your first attempt. Plan for two or three sittings to benefit from superscoring. Most students see their biggest improvements between their first and second attempts.",keyStrategies:["Take a full diagnostic test first to identify your baseline and target the sections with most improvement potential","Practice with official College Board materials only — the real SAT format is distinct from third-party tests","For Reading focus on evidence-based questions — these are the most coachable and highest-value questions"],curricularAdvantage:"Your international curriculum background is a genuine advantage for the SAT Reading section — extended essay writing in IB and A-Levels builds the analytical reading skills the SAT tests. Focus preparation time on Mathematics to close any gaps.",aiInsight:"International students from IB and A-Level backgrounds often outscore American students in SAT Reading due to their extensive analytical writing practice. Do not underestimate your Reading score potential — focus your preparation time on the Mathematics section where the most points are gained."});}
+function showSatError(){
+  document.getElementById('sat-scoreOutput').innerHTML='<div class="card"><div class="card-title" style="margin-bottom:10px">We could not build your SAT strategy</div><div style="font-size:13px;color:#4A6FA5;line-height:1.7">Something went wrong, and we would rather show nothing than something made up. Please press Start again and try once more in a minute.</div></div>';
+  document.getElementById('sat-strategyOutput').innerHTML='';
+  document.getElementById('sat-aiInsight').textContent='You can always check test policies on each university\'s own admissions pages and on collegeboard.org.';
+  document.getElementById('sat-results').style.display='block';
+  document.getElementById('sat-btn').style.display='none';
+}
 function resetSat(){document.getElementById('sat-results').style.display='none';document.getElementById('sat-btn').style.display='block';document.getElementById('sat-btn').disabled=true;document.getElementById('sat-btn').textContent='Generate my SAT strategy ↗';document.getElementById('satMajor').value='';satTier='';satCurr='';document.querySelectorAll('#module-sat .opt-card').forEach(c=>c.classList.remove('selected'));}
 </script>
 </body>
